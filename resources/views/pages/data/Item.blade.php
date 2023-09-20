@@ -81,7 +81,7 @@
                                 <div class="col-12 col-sm-6">
                                     <h5>Bobot Bucket</h5>
                                     <div class="form-control d-flex">
-                                        <input class="w-100 me-2" type="number" id="input-bobot-bucket" name="bobot_bucket" required>
+                                        <input class="w-100 me-2" type="number" id="input-bobot-bucket" name="bobot_bucket" step="0.1" required>
                                         <p>Kg</p>
                                     </div>
                                 </div>
