@@ -434,7 +434,6 @@ $(document).ready(function() {
     $('#table-container').on('blur', '.col-qty', function() {
         let input = $(this).find('input').detach();
         $(this).append("<div class='d-flex align-items-center justify-content-center' style='height: 39.5px;'>" + input.val() + "</div>");
-        alert(input.val());
 
         let id = $(this).closest('tr').attr('id');
         // console.log(id);
