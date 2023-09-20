@@ -71,6 +71,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/setting/karyawan', [UserController::class, 'insert']);
     Route::post('/setting/karyawan/outlet', [UserController::class, 'updateOutlet']);
     Route::post('/setting/karyawan/{id}', [UserController::class, 'update']);
+    Route::get('/setting/karyawan/{id}/delete', [UserController::class, 'delete']); //untuk menghapus data user yang salah tanpa harus mereset database
     Route::post('/setting/karyawan/{user}/change-password', [UserController::class, 'changePassword']);
     Route::get('/component/karyawan', [PageController::class, 'listKaryawan']);
 
