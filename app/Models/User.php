@@ -67,8 +67,11 @@ class User extends Authenticatable
     {
         $user = User::find($id);
         $roles = $user->getRoleNames();
-        $role = $roles[0];
-        return $role;
+        if (count($roles) == 0) {
+            return "error";
+        } else {
+            return $roles[0];
+        }
     }
 
     public function changeRole($role)
