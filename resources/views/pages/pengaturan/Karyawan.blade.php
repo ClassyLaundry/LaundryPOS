@@ -101,7 +101,9 @@
                                     <select class="form-select" id="input-role" name="role" required />
                                         <option value="" selected hidden>-</option>
                                         @foreach ($roles as $role)
+                                            @if($role->name != "administrator")
                                             <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
