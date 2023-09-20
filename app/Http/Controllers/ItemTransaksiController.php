@@ -30,19 +30,29 @@ class ItemTransaksiController extends Controller
             $request['status_proses'] = $role;
             $request['total_bobot'] = $jenis_item->bobot_bucket;
             $finder = ItemTransaksi::where('transaksi_id', $request->transaksi_id)->where('jenis_item_id', $request->jenis_item_id)->first();
+            $trans = Transaksi::find($request->transaksi_id);
+            $tipe_transaksi = str_contains($trans->kode, 'BU'); // if true then bucket, if false then premium
             if ($finder) {
                 $finder->qty = $finder->qty + 1;
-                $finder->bobot_bucket = $jenis_item->bobot_bucket;
-                $finder->harga_premium = $jenis_item->harga_premium;
                 $finder->diskon_jenis_item = $jenis_item->diskon_jenis_item;
-                $finder->total_bobot = $finder->qty * $finder->bobot_bucket;
-                $finder->total_premium = $finder->qty * $finder->harga_premium;
+                if ($tipe_transaksi) {
+                    $finder->bobot_bucket = $jenis_item->bobot_bucket;
+                    $finder->total_bobot = $finder->qty * $finder->bobot_bucket;
+                } else {
+                    $finder->harga_premium = $jenis_item->harga_premium;
+                    $finder->total_premium = $finder->qty * $finder->harga_premium;
+                }
                 $finder->save();
             } else {
                 $item_transaksi = ItemTransaksi::create($request->toArray());
                 $item_transaksi->qty = $item_transaksi->qty + 1;
-                $item_transaksi->total_bobot = $item_transaksi->qty * $item_transaksi->bobot_bucket;
-                $item_transaksi->total_premium = $item_transaksi->qty * $item_transaksi->harga_premium;
+                if ($tipe_transaksi) {
+                    $item_transaksi->total_bobot = $item_transaksi->qty * $item_transaksi->bobot_bucket;
+                    $item_transaksi->total_premium = 0;
+                } else {
+                    $item_transaksi->total_bobot = 0;
+                    $item_transaksi->total_premium = $item_transaksi->qty * $item_transaksi->harga_premium;
+                }
                 $item_transaksi->save();
             }
 
@@ -76,11 +86,16 @@ class ItemTransaksiController extends Controller
     public function updateQty(Request $request, $id)
     {
         $item_transaksi = ItemTransaksi::find($id);
-        $item_transaksi->update([
-            'qty' => $request->qty,
-            'total_bobot' => $request->qty * $item_transaksi->bobot_bucket,
-            'total_premium' => $request->qty * $item_transaksi->harga_premium,
-        ]);
+        $trans = Transaksi::find($item_transaksi->transaksi_id);
+        $tipe_transaksi = str_contains($trans->kode, 'BU'); // if true then bucket, if false then premium
+
+        $item_transaksi->qty = $request->qty;
+        if ($tipe_transaksi) {
+            $item_transaksi->total_bobot = $request->qty * $item_transaksi->bobot_bucket;
+        } else {
+            $item_transaksi->total_premium = $request->qty * $item_transaksi->harga_premium;
+        }
+        $item_transaksi->save();
 
         $transaksi = Transaksi::detail()->find($item_transaksi->transaksi_id)->recalculate();
         $transaksi->modified_by = Auth::id();

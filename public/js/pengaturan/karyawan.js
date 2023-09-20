@@ -4,11 +4,10 @@ $(document).ready(function() {
         $('#list-action').detach();
     }
     var btnIndex = -1, btnId = 0;
-    $('.btn-show-action').on('click', function() {
+    $('#list-karyawan').on('click', '.btn-show-action', function() {
         btnIndex = $(this).index('.btn-show-action') + 1;
         btnId = $(this).attr('id').substring(4);
     });
-
 
     // data karyawan
     function reloadList() {
