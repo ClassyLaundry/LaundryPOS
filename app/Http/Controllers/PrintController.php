@@ -15,23 +15,15 @@ class PrintController extends Controller
     public function preview($transaksi_id)
     {
         $transaksi = Transaksi::detail()->find($transaksi_id);
-        $header = [
-            'nama_usaha' => SettingUmum::where('nama', 'Print Header Nama Usaha')->first()->value,
-            'delivery_text' => SettingUmum::where('nama', 'Print Header Delivery Text')->first()->value
-        ];
-        $pos = strpos($transaksi->kode, 'BU');
-        if ($pos === false) {
-            $transaksi->jenis_transaksi = 'PREMIUM';
-        } else {
-            $transaksi->jenis_transaksi = 'BUCKET';
-        }
-        $data = collect();
-        $data->header = $header;
-        $data->transaksi = $transaksi;
 
-        $paper_size = [0, 0, 612, 792];
-        return view('pages.print.nota', [
-            'data' => $data,
+        $paper_size = [0, 0, 75, 151];
+        $pdf = Pdf::loadView('pages.print.kitir', [
+            'data' => $transaksi
+        ])->setPaper($paper_size, 'landscape');
+        // return $pdf->stream('invoice.pdf');
+
+        return view('pages.print.Kitir', [
+            'data' => $transaksi,
             'height' => $paper_size[2],
             'width' => $paper_size[3],
         ]);

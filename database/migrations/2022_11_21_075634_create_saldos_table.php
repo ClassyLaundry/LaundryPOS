@@ -18,6 +18,9 @@ return new class extends Migration
             $table->foreignId('pelanggan_id')
                 ->constrained()
                 ->cascadeOnDelete();
+            $table->foreignId('outlet_id')
+                ->constrained()
+                ->cascadeOnDelete();
             $table->foreignId('paket_deposit_id')
                 ->nullable()
                 ->constrained()

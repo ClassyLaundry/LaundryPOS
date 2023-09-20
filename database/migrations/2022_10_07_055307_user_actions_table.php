@@ -20,7 +20,8 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->string('action');  // created / updated / deleted
             $table->string('action_model')->nullable();
-            $table->integer('action_id')->nullable();  // CRUD entry ID    
+            $table->integer('action_id')->nullable();  // CRUD entry ID
+            $table->text('model');
             $table->timestamps();
         });
     }

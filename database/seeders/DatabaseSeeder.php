@@ -4,8 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\SettingUmum;
-use App\Models\Transaksi\PickupDelivery;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

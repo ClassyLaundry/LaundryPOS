@@ -61,7 +61,10 @@ class PembayaranController extends Controller
             return $item->name === 'Membuat Pembayaran';
         });
         if ($permissionExist) {
-            $transaksis = Transaksi::where('pelanggan_id', $request->pelanggan_id)->where('lunas', false)->oldest()->get();
+            $transaksis = Transaksi::where('pelanggan_id', $request->pelanggan_id)
+                ->where('lunas', false)
+                ->oldest()
+                ->get();
             $nominal = $request->nominal;
             foreach ($transaksis as $transaksi) {
                 if ($nominal > 0) {
@@ -73,6 +76,7 @@ class PembayaranController extends Controller
                         $nominal -= $tagihan_transaksi;
 
                         Pembayaran::create([
+                            'outlet_id' => $user->outlet_id,
                             'nominal' => $transaksi->total_terbayar,
                             'transaksi_id' => $transaksi->id,
                             'metode_pembayaran' => 'cash'
@@ -131,6 +135,7 @@ class PembayaranController extends Controller
 
             $pembayaran->update([
                 'nominal' => $request->nominal,
+                'outlet_id' => $user->outlet_id,
                 'transaksi_id' => $request->transaksi_id,
                 'saldo_id' => $request->saldo_id,
                 'metode_pembayaran' => $request->metode_pembayaran

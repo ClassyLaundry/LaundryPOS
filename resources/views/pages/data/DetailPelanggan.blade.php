@@ -99,6 +99,8 @@
         </div>
     </section>
 
+
+    @if(in_array("Membuka Menu Pembayaran", Session::get('permissions')) || Session::get('role') == 'administrator')
     <div class="card">
         <div class="card-body">
             <section id="data-tagihan" class="mb-3">
@@ -184,6 +186,7 @@
             @endif
         </div>
     </div>
+    @endif
 </div>
 
 <script src="{{ asset('js/data/detailPelanggan.js') }}"></script>

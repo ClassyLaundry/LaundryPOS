@@ -3,6 +3,7 @@
 use App\Http\Controllers\ItemTransaksiController;
 use App\Http\Controllers\JenisItemController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\OutletController;
 use App\Http\Controllers\ParfumController;
 use App\Http\Controllers\PelangganController;
@@ -27,3 +28,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/test', [TestingController::class, 'test']);
+/**
+ * Laporan
+ */
+Route::get('/mutasi-deposit', [LaporanController::class, 'mutasiDeposit']); // 
+Route::get('/mutasi-deposit-pelanggan', [LaporanController::class, 'mutasiDeposit']); // /mutasi-deposit?pelanggan_id=1&bulan=1&tahun=2023
+Route::get('/kas-masuk', [LaporanController::class, 'kasMasuk']); // /kas-masuk?outlet_id=1&bulan=1&tahun=2023
+Route::get('/semua-piutang', [LaporanController::class, 'semuaPiutang']); //
+Route::get('/piutang-pelanggan', [LaporanController::class, 'piutangPelanggan']); // /piutang-pelanggan?pelanggan_id=1
+Route::get('/omset-bulanan', [LaporanController::class, 'omsetBulanan']); // /omset-bulanan?bulan=1&tahun=2023
+

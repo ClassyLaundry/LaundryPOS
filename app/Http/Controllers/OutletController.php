@@ -89,8 +89,6 @@ class OutletController extends Controller
             $outlet->update([
                 'saldo' => $outlet->saldo + $request->nominal
             ]);
-            $outlet->save();
-
             return redirect()->intended(route('menu-outlet'));
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');

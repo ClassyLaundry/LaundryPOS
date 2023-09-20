@@ -81,7 +81,6 @@ class ItemTransaksiController extends Controller
             'total_bobot' => $request->qty * $item_transaksi->bobot_bucket,
             'total_premium' => $request->qty * $item_transaksi->harga_premium,
         ]);
-        $item_transaksi->save();
 
         $transaksi = Transaksi::detail()->find($item_transaksi->transaksi_id)->recalculate();
         $transaksi->modified_by = Auth::id();

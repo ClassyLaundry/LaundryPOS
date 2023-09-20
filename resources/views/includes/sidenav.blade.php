@@ -219,6 +219,45 @@
             </div>
         </div>
 
+        {{-- <i class="fa-solid fa-file-invoice"></i> --}}
+        <div id="nav-menu-laporan" class="nav-menu">
+            <div class="menu-header px-3 py-1 d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <p class="ms-3">Laporan</p>
+                </div>
+                <i class="fas fa-angle-down"></i>
+            </div>
+            <div class="nav-items">
+                {{-- @if(in_array("Permission Laporan", Session::get('permissions')) || Session::get('role') == 'administrator') --}}
+                <div id="nav-laporan-piutang">
+                    <a href="/laporan/piutang" class="menu-item menu-laporan pe-3 py-1 d-flex align-items-center" style="padding-left: 2rem;">
+                        <i class="fa-solid fa-credit-card"></i>
+                        <p class="ms-3">Piutang</p>
+                    </a>
+                </div>
+                {{-- @endif --}}
+                <div id="nav-laporan-omset">
+                    <a href="/laporan/omset" class="menu-item menu-laporan pe-3 py-1 d-flex align-items-center" style="padding-left: 2rem;">
+                        <i class="fa-solid fa-money-bill-transfer"></i>
+                        <p class="ms-3">Omset</p>
+                    </a>
+                </div>
+                <div id="nav-laporan-kas">
+                    <a href="/laporan/kas" class="menu-item menu-laporan pe-3 py-1 d-flex align-items-center" style="padding-left: 2rem;">
+                        <i class="fa-solid fa-piggy-bank"></i>
+                        <p class="ms-3">Kas Masuk</p>
+                    </a>
+                </div>
+                <div id="nav-laporan-deposit">
+                    <a href="/laporan/deposit" class="menu-item menu-laporan pe-3 py-1 d-flex align-items-center" style="padding-left: 2rem;">
+                        <i class="fa-solid fa-sack-dollar"></i>
+                        <p class="ms-3">Mutasi Deposit</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+
         <div id="nav-menu-setting" class="nav-menu">
             <div class="menu-header px-3 py-1 d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center"><i class="fas fa-cog"></i>

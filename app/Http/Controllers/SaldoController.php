@@ -32,6 +32,7 @@ class SaldoController extends Controller
 
             Saldo::create([
                 'pelanggan_id' => $request->pelanggan_id,
+                'outlet_id' => $user->outlet_id,
                 'paket_deposit_id' => $request->paket_deposit_id,
                 'nominal' => $request->nominal,
                 'jenis_input' => $request->jenis_input,

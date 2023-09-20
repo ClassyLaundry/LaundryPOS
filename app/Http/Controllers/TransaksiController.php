@@ -254,6 +254,7 @@ class TransaksiController extends Controller
                 'status' => $status,
                 'express' => $express,
                 'setrika_only' => $setrika_only,
+                'done_date' => $done_date
             ])->toArray();
             $transaksi = Transaksi::find($id);
             $transaksi->update($merged);
@@ -292,7 +293,8 @@ class TransaksiController extends Controller
         }
     }
 
-    public function setExpress(Request $request, $id){
+    public function setExpress(Request $request, $id)
+    {
         $user = User::find(auth()->id());
         $permissions = $user->getPermissionsViaRoles();
         $permissionExist = collect($permissions)->first(function ($item) {
@@ -313,7 +315,8 @@ class TransaksiController extends Controller
         }
     }
 
-    public function setSetrikaOnly(Request $request, $id){
+    public function setSetrikaOnly(Request $request, $id)
+    {
         $user = User::find(auth()->id());
         $permissions = $user->getPermissionsViaRoles();
         $permissionExist = collect($permissions)->first(function ($item) {

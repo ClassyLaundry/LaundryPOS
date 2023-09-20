@@ -180,7 +180,7 @@
                                 <div class="col-6 mb-2">
                                     <h5>Pilih Pelanggan</h5>
                                     <input id="input-pickup-pelanggan" list="data-pelanggan" class="form-control" type="text" autocomplete="off" required>
-                                    <datalist id="data-pelanggan" style="height:5.1em;overflow:hidden">
+                                    <datalist id="data-pelanggan" style="max-height:5.1em;overflow:hidden">
                                         @foreach ($dataPelanggan as $pelanggan)
                                             <option data-id="{{ $pelanggan->id }}" data-alamat="{{ $pelanggan->alamat }}">{{ $pelanggan->nama }}</option>
                                         @endforeach

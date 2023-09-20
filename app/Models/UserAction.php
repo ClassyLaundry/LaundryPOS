@@ -9,7 +9,15 @@ class UserAction extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'action', 'action_model', 'action_id'];
+    protected $fillable = ['user_id', 'action', 'action_model', 'action_id', 'model'];
+
+    public function getModelInstanceFromAction(UserAction $userAction, $path)
+    {
+        $model = app($path); // Adjust the namespace as needed
+        $modelData = json_decode($userAction->model, true);
+        $model->fill($modelData);
+        return $model;
+    }
 
     public function user()
     {

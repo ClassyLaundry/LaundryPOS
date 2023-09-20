@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Observers\UserActionObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Pelanggan extends Model
 {
@@ -55,5 +56,10 @@ class Pelanggan extends Model
     public function saldo()
     {
         return $this->hasMany(Saldo::class);
+    }
+
+    public function transaksi()
+    {
+        return $this->hasMany(Transaksi::class);
     }
 }

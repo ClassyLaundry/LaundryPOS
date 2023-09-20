@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('pembayarans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('outlet_id')
+                ->constrained()
+                ->cascadeOnDelete();
             $table->foreignId('transaksi_id')
                 ->nullable()
                 ->constrained()

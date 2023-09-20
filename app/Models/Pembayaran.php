@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Observers\UserActionObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Transaksi\Transaksi;
+use App\Models\Saldo;
 
 class Pembayaran extends Model
 {

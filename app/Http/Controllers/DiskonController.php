@@ -48,7 +48,6 @@ class DiskonController extends Controller
                 'maximal_diskon' => ($request->jenis_diskon == 'percentage') ? $request->maximal_diskon : 0,
                 'expired' => Date::createFromFormat('Y-m-d', $request->expired_date),
             ]);
-            $diskon->save();
             return redirect()->intended(route('data-diskon'));
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');

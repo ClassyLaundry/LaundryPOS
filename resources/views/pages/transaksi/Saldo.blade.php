@@ -46,7 +46,7 @@
                     </div>
                     <hr class="d-lg-none">
                     <div class="col-lg-3 border-lg-start border-0" id="info-pelanggan">
-                        <form id="form-saldo" method="POST">
+                        <form id="form-saldo">
                             <div class="mb-2">
                                 <h5>Pelanggan</h5>
                                 <div>

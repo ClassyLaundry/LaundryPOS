@@ -105,7 +105,9 @@ class Transaksi extends Model
         $jumlah_bucket = ceil($sum_bobot / $paket_bucket->jumlah_bobot);
         // $total_harga_bucket = $jumlah_bucket * $paket_bucket->harga_paket;
         $total_harga_bucket = $paket_bucket->harga_paket;
-        if ($sum_bobot > 15) {
+        if ($sum_bobot == 0) {
+            $total_harga_bucket = 0;
+        } else if ($sum_bobot > 15) {
             $total_harga_bucket += ($sum_bobot - 15) * $paket_bucket->harga_per_bobot;
         }
         //simpan bucket dan bobot
