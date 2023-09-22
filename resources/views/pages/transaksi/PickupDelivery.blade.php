@@ -280,13 +280,14 @@
                             <div class="hub-list hub-karyawan">
                                 @foreach ($pickups as $pickup)
                                     @if($driver->id == $pickup->driver_id)
-                                        <div class="p-3 border rounded d-flex justify-content-between align-items-center mt-3 card-pickup"
+                                        <div class="border rounded mt-3 card-pickup"
                                             @if ($pickup->is_done)
                                                 style="border-bottom: 3px solid rgb(75, 192, 192)!important; background-image: linear-gradient(to bottom right, white, rgb(75, 192, 192, .5)); background-color: white;"
                                             @else
                                                 style="border-bottom: 3px solid rgb(75, 192, 192)!important; background-color: white;"
                                             @endif
                                         >
+                                        <div class="p-3 border-bottom rounded d-flex justify-content-between align-items-center">
                                             <div id="{{ $pickup->id }}" class="d-flex flex-column">
                                                 <h4>
                                                     <input class="pelanggan-id" type="hidden" value="{{ $pickup->pelanggan->id }}">
@@ -312,39 +313,47 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="p-3 pesan-pelanggan font-monospace" style="font-size: .75rem; display: none;">
+                                            {{ $pickup->request }}
+                                        </div>
                                     @endif
                                 @endforeach
 
                                 @foreach ($deliveries as $delivery)
                                     @if($driver->id == $pickup->driver_id)
-                                        <div class="p-3 border rounded d-flex justify-content-between align-items-center mt-3 card-delivery" data-transaksi="{{ $delivery->transaksi_id }}"
+                                        <div class="border rounded mt-3 card-delivery" data-transaksi="{{ $delivery->transaksi_id }}"
                                             @if ($delivery->is_done)
                                                 style="border-bottom: 3px solid rgb(153, 102, 255)!important; background-image: linear-gradient(to bottom right, white, rgb(153, 102, 255, .5)); background-color: white;"
                                             @else
                                                 style="border-bottom: 3px solid rgb(153, 102, 255)!important; background-color: white;"
                                             @endif
                                         >
-                                            <div id="{{ $delivery->id }}" class="d-flex flex-column">
-                                                <h4>
-                                                    <input class="pelanggan-id" type="hidden" value="{{ $delivery->pelanggan->id }}">
-                                                    <span class="pelanggan-nama">{{ $delivery->pelanggan->nama }}</span>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 16 16" fill="currentColor" class="bi bi-dot">
-                                                        <path fill-rule="evenodd" d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
-                                                    </svg>
-                                                    <span class="text-muted">{{ $delivery->alamat }}</span>
-                                                </h4>
-                                                <h6>{{ $delivery->kode }}</h6>
-                                            </div>
-                                            <div class="position-relative">
-                                                <h4 class="fw-bold me-4" style="font-style: italic;">Delivery</h4>
-                                                @if ($delivery->is_done)
-                                                    <i class="fa-solid fa-flag-checkered position-absolute top-50 start-0 translate-middle fa-4x" style="font-style: italic; opacity: 0.25;"></i>
-                                                @else
-                                                    <i class="fa-solid fa-spinner position-absolute top-50 start-0 translate-middle fa-4x" style="font-style: italic; opacity: 0.25;"></i>
-                                                    <button class="btn btn-sm btn-show-action position-absolute end-0" type="button" style="top: -12px;" id="trans-{{ $delivery->id }}" style="box-shadow: none;">
-                                                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                                                    </button>
-                                                @endif
+                                            <div class="p-3 border-bottom rounded d-flex justify-content-between align-items-center">
+                                                <div id="{{ $delivery->id }}" class="d-flex flex-column">
+                                                    <h4>
+                                                        <input class="pelanggan-id" type="hidden" value="{{ $delivery->pelanggan->id }}">
+                                                        <span class="pelanggan-nama">{{ $delivery->pelanggan->nama }}</span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 16 16" fill="currentColor" class="bi bi-dot">
+                                                            <path fill-rule="evenodd" d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
+                                                        </svg>
+                                                        <span class="text-muted">{{ $delivery->alamat }}</span>
+                                                    </h4>
+                                                    <h6>{{ $delivery->kode }}</h6>
+                                                </div>
+                                                <div class="position-relative">
+                                                    <h4 class="fw-bold me-4" style="font-style: italic;">Delivery</h4>
+                                                    @if ($delivery->is_done)
+                                                        <i class="fa-solid fa-flag-checkered position-absolute top-50 start-0 translate-middle fa-4x" style="font-style: italic; opacity: 0.25;"></i>
+                                                    @else
+                                                        <i class="fa-solid fa-spinner position-absolute top-50 start-0 translate-middle fa-4x" style="font-style: italic; opacity: 0.25;"></i>
+                                                        <button class="btn btn-sm btn-show-action position-absolute end-0" type="button" style="top: -12px;" id="trans-{{ $delivery->id }}" style="box-shadow: none;">
+                                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                        </button>
+                                                    @endif
+                                                </div>
+                                                <div class="p-3 pesan-pelanggan font-monospace" style="font-size: .75rem; display: none;">
+                                                    {{ $delivery->request }}
+                                                </div>
                                             </div>
                                         </div>
                                     @endif
@@ -355,7 +364,7 @@
                                     <li id="action-detail">Detail Transaksi</li>
                                 @endif
                                 <li id="action-print-memo">Print Memo</li>
-                                <li id="action-pelanggan">Detail Pelanggan</li>
+                                <li id="action-pesan">Toggle Pesan</li>
                                 @if(in_array("Mengganti Status Selesai Pickup Delivery", Session::get('permissions')))
                                     <li id="action-change-status">Selesai</li>
                                 @endif

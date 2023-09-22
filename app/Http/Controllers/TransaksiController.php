@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateTransaksiRequest;
 use App\Http\Requests\UserLoginRequest;
 use App\Models\Data\Pelanggan;
 use App\Models\LogTransaksi;
+use App\Models\Outlet;
 use App\Models\Packing\Packing;
 use App\Models\Packing\PackingInventory;
 use App\Models\Paket\PaketCuci;
@@ -260,10 +261,12 @@ class TransaksiController extends Controller
             $transaksi->update($merged);
 
             $kode = '';
+            $outlet = Outlet::find($transaksi->outlet_id);
+            $kode = $outlet->kode . "-";
             if ($request->tipe_transaksi == 'bucket') {
-                $kode = 'BU-';
+                $kode = $kode . 'BU-';
             } else {
-                $kode = 'PR-';
+                $kode = $kode . 'PR-';
             }
 
             if (empty($transaksi->kode) && $transaksi->status != "draft") {

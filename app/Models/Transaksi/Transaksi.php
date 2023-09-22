@@ -96,26 +96,33 @@ class Transaksi extends Model
         $grand_total = 0;
 
         //find bucket dan premium
-        $sum_bobot = ItemTransaksi::where('transaksi_id', $this->id)->sum('total_bobot');
-        $sum_harga_premium = ItemTransaksi::where('transaksi_id', $this->id)->sum('total_premium');
-        $item_count = ItemTransaksi::where('transaksi_id', $this->id)->count();
-
-        //kalkulasi bobot bucket
-        $paket_bucket = PaketCuci::where('nama_paket', 'BUCKET')->first();
-        $jumlah_bucket = ceil($sum_bobot / $paket_bucket->jumlah_bobot);
-        // $total_harga_bucket = $jumlah_bucket * $paket_bucket->harga_paket;
-        $total_harga_bucket = $paket_bucket->harga_paket;
-        if ($sum_bobot == 0) {
-            $total_harga_bucket = 0;
-        } else if ($sum_bobot > 15) {
-            $total_harga_bucket += ($sum_bobot - 15) * $paket_bucket->harga_per_bobot;
+        if($this->tipe_transaksi=="bucket"){
+            $sum_bobot = ItemTransaksi::where('transaksi_id', $this->id)->sum('total_bobot');
+            $item_count = ItemTransaksi::where('transaksi_id', $this->id)->count();
+            //kalkulasi bobot bucket
+            $paket_bucket = PaketCuci::where('nama_paket', 'BUCKET')->first();
+            $jumlah_bucket = ceil($sum_bobot / $paket_bucket->jumlah_bobot);
+            // $total_harga_bucket = $jumlah_bucket * $paket_bucket->harga_paket;
+            $total_harga_bucket = $paket_bucket->harga_paket;
+            if ($sum_bobot == 0) {
+                $total_harga_bucket = 0;
+            } else if ($sum_bobot > 15) {
+                $total_harga_bucket += ($sum_bobot - 15) * $paket_bucket->harga_per_bobot;
+            }
+            //simpan bucket dan bobot
+            $this->total_bobot = $sum_bobot;
+            $this->jumlah_bucket = $jumlah_bucket;
+            $subtotal = $total_harga_bucket;
+        }else{
+            $sum_harga_premium = ItemTransaksi::where('transaksi_id', $this->id)->sum('total_premium');
+            $subtotal = $sum_harga_premium;
         }
+
         //simpan bucket dan bobot
         $this->total_bobot = $sum_bobot;
         $this->jumlah_bucket = $jumlah_bucket;
 
         //hitung subtotal
-        $subtotal = $sum_harga_premium + $total_harga_bucket;
         $optionalSubtotal = $this->calcSetting($subtotal, $this->express, $this->setrika_only);
         $this->subtotal = $optionalSubtotal;
         $subtotal = $optionalSubtotal;

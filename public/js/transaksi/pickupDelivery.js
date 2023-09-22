@@ -74,8 +74,8 @@ $(document).ready(function() {
         window.location = window.location.origin + "/printMemoProduksi/" + btnId;
     });
 
-    $('#action-pelanggan').on('click', function() {
-        window.location = window.location.origin + "/data/pelanggan/" + pelangganId + "/detail";
+    $('#action-pesan').on('click', function() {
+        $('.btn-show-action').eq(btnIndex - 1).closest('.rounded').next().toggle();
     });
 
     $('#action-change-status').on('click', function() {
