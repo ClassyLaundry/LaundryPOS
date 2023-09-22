@@ -82,7 +82,7 @@
             <p style="position: absolute; left: 400px; top: 120px;">: {{ $data->transaksi->setrika_only ? 'YA' : 'TIDAK' }}</p>
 
             <p style="position: absolute; left: 600px; top: 120px;">DELIVERY</p>
-            <p style="position: absolute; left: 700px; top: 120px;">: {{-- {{ $data->transaksi->setrika_only ? 'YA' : 'TIDAK' }} --}}</p>
+            <p style="position: absolute; left: 700px; top: 120px;">: {{ $data->status_delivery }}</p>
         </div>
         <p class="hr-text" style="margin-bottom: 0px;">
             ============================================================================================================================
@@ -155,10 +155,10 @@
         </p>
         <div style="position: relative; height: 60px;">
             <p style="position: absolute; left: 0px; top: 0px;">Jml Pcs</p>
-            <p style="position: absolute; left: 100px; top: 0px;">: 2</p>
+            <p style="position: absolute; left: 100px; top: 0px;">: {{ $data->total_qty }}</p>
 
             <p style="position: absolute; left: 200px; top: 0px;">Jml Bobot</p>
-            <p style="position: absolute; left: 300px; top: 0px;">: 0.00</p>
+            <p style="position: absolute; left: 300px; top: 0px;">: {{ $data->total_bobot }}</p>
 
             <p style="position: absolute; left: 400px; top: 0px;">Jml M2</p>
             <p style="position: absolute; left: 500px; top: 0px;">: 0</p>
@@ -181,11 +181,11 @@
             <p class="text-center" style="position: absolute; left: 300px; top: 45px; width: 200px;">_______________</p>
             <p class="text-center" style="position: absolute; left: 300px; top: 60px; width: 200px;">setrika</p>
 
-            <p class="text-center" style="position: absolute; left: 500px; top: 40px; width: 200px;">&lt;&lt;NAMA QC&gt;&gt;</p>
+            <p class="text-center" style="position: absolute; left: 500px; top: 40px; width: 200px;"></p>
             <p class="text-center" style="position: absolute; left: 500px; top: 45px; width: 200px;">_______________</p>
             <p class="text-center" style="position: absolute; left: 500px; top: 60px; width: 200px;">packing</p>
 
-            <p class="text-center" style="position: absolute; left: 700px; top: 40px; width: 200px;">&lt;&lt;NAMA DELIVERY&gt;&gt;</p>
+            <p class="text-center" style="position: absolute; left: 700px; top: 40px; width: 200px;"></p>
             <p class="text-center" style="position: absolute; left: 700px; top: 45px; width: 200px;">_______________</p>
             <p class="text-center" style="position: absolute; left: 700px; top: 60px; width: 200px;">delivery</p>
         </div>
