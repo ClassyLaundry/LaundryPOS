@@ -40,12 +40,6 @@ class PrintController extends Controller
             'nama_usaha' => SettingUmum::where('nama', 'Print Header Nama Usaha')->first()->value,
             'delivery_text' => SettingUmum::where('nama', 'Print Header Delivery Text')->first()->value
         ];
-        $pos = strpos($transaksi->kode, 'BU');
-        if ($pos === false) {
-            $transaksi->jenis_transaksi = 'PREMIUM';
-        } else {
-            $transaksi->jenis_transaksi = 'BUCKET';
-        }
         $total_qty = 0;
         $total_bobot = 0;
         foreach ($transaksi->item_transaksi as $item) {
@@ -78,12 +72,6 @@ class PrintController extends Controller
             'nama_usaha' => SettingUmum::where('nama', 'Print Header Nama Usaha')->first()->value,
             'delivery_text' => SettingUmum::where('nama', 'Print Header Delivery Text')->first()->value
         ];
-        $pos = strpos($transaksi->kode, 'BU');
-        if ($pos === false) {
-            $transaksi->jenis_transaksi = 'PREMIUM';
-        } else {
-            $transaksi->jenis_transaksi = 'BUCKET';
-        }
         $total_qty = 0;
         $total_bobot = 0;
         foreach ($transaksi->item_transaksi as $item) {

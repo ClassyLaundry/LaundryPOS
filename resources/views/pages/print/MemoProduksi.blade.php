@@ -61,7 +61,7 @@
             <h1 style="position: absolute; left: 400px; top: -15px;">{{ $data->transaksi->memo_code }}</h1>
 
             <p style="position: absolute; left: 0px; top: 30px;">NO. ORDER</p>
-            <p style="position: absolute; left: 100px; top: 30px;">: {{ $data->transaksi->kode }} / {{ $data->transaksi->jenis_transaksi }}</p>
+            <p style="position: absolute; left: 100px; top: 30px;">: {{ $data->transaksi->kode }} / {{ strtoupper($data->transaksi->tipe_transaksi) }}</p>
 
             <p style="position: absolute; left: 400px; top: 30px;">PENCETAKAN</p>
             <p style="position: absolute; left: 500px; top: 30px;">: {{ date('d-M-Y h:i:s') }}</p>

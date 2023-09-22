@@ -58,7 +58,7 @@
         </p>
         <div style="position: relative; height: 150px;">
             <p style="position: absolute; left: 0px; top: 0px;">NO. ORDER</p>
-            <p style="position: absolute; left: 100px; top: 0px;">: {{ $data->transaksi->kode }} / {{ $data->transaksi->jenis_transaksi }}</p>
+            <p style="position: absolute; left: 100px; top: 0px;">: {{ $data->transaksi->kode }} / {{ strtoupper($data->transaksi->tipe_transaksi) }}</p>
 
             <p style="position: absolute; left: 400px; top: 0px;">PENCETAKAN</p>
             <p style="position: absolute; left: 500px; top: 0px;">: {{ date('d-M-Y h:i:s') }}</p>
