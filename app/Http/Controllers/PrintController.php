@@ -55,7 +55,7 @@ class PrintController extends Controller
         $data->total_bobot = $total_bobot;
         $data->status_delivery = $status_delivery;
 
-        return view('pages.print.nota', ['data' => $data]);
+        return view('pages.print.Nota', ['data' => $data]);
 
         //8.5x 11 inch = 612x792 point
         // $paper_size = [0, 0, 396, 595];
