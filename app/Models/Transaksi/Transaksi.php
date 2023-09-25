@@ -119,8 +119,8 @@ class Transaksi extends Model
         }
 
         //simpan bucket dan bobot
-        $this->total_bobot = $sum_bobot ? $sum_bobot : 0;
-        $this->jumlah_bucket = $jumlah_bucket ? $jumlah_bucket : 0;
+        $this->total_bobot = $sum_bobot != null ? $sum_bobot : 0;
+        $this->jumlah_bucket = $jumlah_bucket != null ? $jumlah_bucket : 0;
 
         //hitung subtotal
         $optionalSubtotal = $this->calcSetting($subtotal, $this->express, $this->setrika_only);
