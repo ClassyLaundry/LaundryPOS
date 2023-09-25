@@ -94,6 +94,8 @@ class Transaksi extends Model
         $total_diskon_promo = 0;
         $diskon_member = $pelanggan->member ? 10 : 0;
         $grand_total = 0;
+        $sum_bobot = 0;
+        $jumlah_bucket = 0;
 
         //find bucket dan premium
         if($this->tipe_transaksi=="bucket"){
@@ -120,7 +122,7 @@ class Transaksi extends Model
 
         //simpan bucket dan bobot
         $this->total_bobot = $sum_bobot != null ? $sum_bobot : 0;
-        $this->jumlah_bucket = $jumlah_bucket;
+        $this->jumlah_bucket = $jumlah_bucket != null ? $jumlah_bucket : 0;
 
         //hitung subtotal
         $optionalSubtotal = $this->calcSetting($subtotal, $this->express, $this->setrika_only);
