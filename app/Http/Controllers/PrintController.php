@@ -55,13 +55,15 @@ class PrintController extends Controller
         $data->total_bobot = $total_bobot;
         $data->status_delivery = $status_delivery;
 
+        return view('pages.print.nota', ['data' => $data]);
+
         //8.5x 11 inch = 612x792 point
-        $paper_size = [0, 0, 612, 792];
-        $pdf = Pdf::loadView('pages.print.Nota', [
-            'data' => $data
-        ])->setPaper($paper_size, 'portrait');
-        return $pdf->stream('invoice.pdf');
-        //stream kalau preview, download kalau lsg download
+        // $paper_size = [0, 0, 396, 595];
+        // $pdf = Pdf::loadView('pages.print.Nota', [
+        //     'data' => $data
+        // ])->setPaper($paper_size, 'portrait');
+        // return $pdf->stream('invoice.pdf');
+        // //stream kalau preview, download kalau lsg download
     }
 
     public function memoProduksi($transaksi_id)
