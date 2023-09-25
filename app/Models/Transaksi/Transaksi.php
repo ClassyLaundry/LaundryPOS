@@ -119,8 +119,8 @@ class Transaksi extends Model
         }
 
         //simpan bucket dan bobot
-        // $this->total_bobot = $sum_bobot != null ? $sum_bobot : 0;
-        // $this->jumlah_bucket = $jumlah_bucket != null ? $jumlah_bucket : 0;
+        $this->total_bobot = $sum_bobot != null ? $sum_bobot : 0;
+        $this->jumlah_bucket = $jumlah_bucket;
 
         //hitung subtotal
         $optionalSubtotal = $this->calcSetting($subtotal, $this->express, $this->setrika_only);
@@ -161,7 +161,7 @@ class Transaksi extends Model
         $diskon_jenis_item = ItemTransaksi::where('transaksi_id', $this->id)->get()->map(function ($t) {
             return $t->diskon_jenis_item * $t->qty;
         })->sum();
-        if ($sum_bobot > 0) {
+        if($this->tipe_transaksi == "premium") {
             $diskon_jenis_item = 0;
         }
         $this->diskon_jenis_item = $diskon_jenis_item;
