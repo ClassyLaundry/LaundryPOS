@@ -168,8 +168,8 @@ class UserController extends Controller
     {
         $role = User::getRole(Auth::id());
         if ($role == "administrator") {
-            $user = User::find(Auth::id());
-            $user->outlet_id = null;
+            // $user = User::find(Auth::id());
+            // $user->outlet_id = null;
         }
 
         Auth::logout();
