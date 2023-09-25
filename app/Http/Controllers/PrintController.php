@@ -59,7 +59,7 @@ class PrintController extends Controller
         $paper_size = [0, 0, 612, 792];
         $pdf = Pdf::loadView('pages.print.Nota', [
             'data' => $data
-        ])->setPaper($paper_size, 'landscape');
+        ])->setPaper($paper_size, 'portrait');
         return $pdf->stream('invoice.pdf');
         //stream kalau preview, download kalau lsg download
     }
@@ -91,7 +91,7 @@ class PrintController extends Controller
         $paper_size = [0, 0, 612, 792];
         $pdf = Pdf::loadView('pages.print.MemoProduksi', [
             'data' => $data
-        ])->setPaper($paper_size, 'landscape');
+        ])->setPaper($paper_size, 'portrait');
         return $pdf->stream('invoice.pdf');
         //stream kalau preview, download kalau lsg download
     }
@@ -103,7 +103,7 @@ class PrintController extends Controller
         $paper_size = [0, 0, 75, 151];
         $pdf = Pdf::loadView('pages.print.kitir', [
             'data' => $transaksi
-        ])->setPaper($paper_size, 'landscape');
+        ])->setPaper($paper_size, 'portrait');
         return $pdf->stream('invoice.pdf');
     }
 }
