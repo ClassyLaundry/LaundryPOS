@@ -182,10 +182,25 @@ $(document).ready(function() {
         $(this).next().toggle();
     });
 
-    $('#table-list-pelanggan-2 tbody tr').on('click', function() {
+    $('#table-list-pelanggan-2').load(window.location.origin + '/component/pelanggan?paginate=5', function() {
+        $('#table-list-pelanggan-2 th:last').hide();
+        $('#table-list-pelanggan-2 .cell-action').hide();
+    });
+    $('#table-list-pelanggan-2').on('click', '.page-link', function(e) {
+        e.preventDefault();
+        $('#table-list-pelanggan-2').load($(this).attr('href'));
+    });
+    $('#search-nama-pelanggan-2').on('click', function() {
+        $('#table-list-pelanggan-2').load(window.location.origin + '/component/pelanggan?key=' + encodeURIComponent($('#input-nama-pelanggan-2').val()) + '&filter=nama&paginate=5', function() {
+            $('#table-list-pelanggan-2 th:last').hide();
+            $('#table-list-pelanggan-2 .cell-action').hide();
+        });
+    });
+
+    $('#table-list-pelanggan-2').on('click', 'tbody tr', function() {
         let parent = $(this).parent();
         parent.addClass('disabled');
-        let id = $(this).attr('id').substring($(this).attr('id').indexOf('row-') + 4);
+        let id = $(this).attr('id').substr(10);
 
         $.ajax({
             url: "/data/pelanggan/" + id,

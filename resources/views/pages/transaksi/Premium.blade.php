@@ -94,38 +94,10 @@
                                     <form class="mb-3">
                                         <div class="d-flex">
                                             <input type="search" class="form-control" id="input-nama-pelanggan-2" placeholder="Nama Pelanggan" />
-                                            <button class="btn btn-primary ms-3" data-bs-toggle="tooltip" id="search-nama-pelanggan-2" type="button" title="Cari transaksi"><i class="fas fa-search"></i></button>
-                                            <button class="btn btn-primary ms-3" data-bs-toggle="tooltip" id="add-new-pelanggan-2" type="button" title="Buat transaksi baru"><i class="fas fa-plus"></i></button>
+                                            <button class="btn btn-primary ms-3" data-bs-toggle="tooltip" id="search-nama-pelanggan-2" type="button" title="Cari pelanggan"><i class="fas fa-search"></i></button>
                                         </div>
                                     </form>
-                                    <div class="table-responsive">
-                                        <table class="table table-striped table-hover" id="table-list-pelanggan-2">
-                                            <thead class="text-center">
-                                                <tr>
-                                                    <th>Nama</th>
-                                                    <th>Tanggal Lahir</th>
-                                                    <th>Alamat</th>
-                                                    <th>Membership</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody style="cursor: pointer">
-                                                @foreach ($data['pelanggan'] as $pelanggan)
-                                                <tr id="row-{{ $pelanggan->id }}" data-bs-toggle="tooltip" data-bss-tooltip="" title="Double klik untuk memilih">
-                                                    <td>{{ $pelanggan->nama }}</td>
-                                                    <td class="text-center">{{ $pelanggan->tanggal_lahir }}</td>
-                                                    <td>{{ $pelanggan->alamat }}</td>
-                                                    <td class="text-center">
-                                                    @if($pelanggan->member)
-                                                        Member
-                                                    @else
-                                                        Bukan member
-                                                    @endif
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    <div id="table-list-pelanggan-2"></div>
                                 </div>
                             </div>
                             <form id="data-pelanggan-2">
