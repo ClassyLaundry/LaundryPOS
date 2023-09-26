@@ -94,8 +94,6 @@ class Transaksi extends Model
         $total_diskon_promo = 0;
         $diskon_member = $pelanggan->member ? 10 : 0;
         $grand_total = 0;
-        $sum_bobot = 0;
-        $jumlah_bucket = 0;
 
         //find bucket dan premium
         if($this->tipe_transaksi=="bucket"){
@@ -103,6 +101,7 @@ class Transaksi extends Model
             $item_count = ItemTransaksi::where('transaksi_id', $this->id)->count();
             //kalkulasi bobot bucket
             $paket_bucket = PaketCuci::where('nama_paket', 'BUCKET')->first();
+            dd($paket_bucket);
             $jumlah_bucket = ceil($sum_bobot / $paket_bucket->jumlah_bobot);
             // $total_harga_bucket = $jumlah_bucket * $paket_bucket->harga_paket;
             $total_harga_bucket = $paket_bucket->harga_paket;
