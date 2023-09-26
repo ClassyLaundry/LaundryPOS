@@ -101,7 +101,6 @@ class Transaksi extends Model
             $item_count = ItemTransaksi::where('transaksi_id', $this->id)->count();
             //kalkulasi bobot bucket
             $paket_bucket = PaketCuci::where('nama_paket', 'BUCKET')->first();
-            dd($paket_bucket);
             $jumlah_bucket = ceil($sum_bobot / $paket_bucket->jumlah_bobot);
             // $total_harga_bucket = $jumlah_bucket * $paket_bucket->harga_paket;
             $total_harga_bucket = $paket_bucket->harga_paket;
