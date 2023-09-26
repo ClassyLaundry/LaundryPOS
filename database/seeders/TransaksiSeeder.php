@@ -21,6 +21,7 @@ class TransaksiSeeder extends Seeder
             'outlet_id' => 1,
             'cashier_id' => 1,
             'parfum_id' => 1,
+            'tipe_transaksi' => 'premium',
             'status' => 'confirmed',
             'modified_by' => 1,
         ]);
@@ -30,6 +31,7 @@ class TransaksiSeeder extends Seeder
             'outlet_id' => 1,
             'cashier_id' => 1,
             'parfum_id' => 1,
+            'tipe_transaksi' => 'bucket',
             'status' => 'confirmed',
             'modified_by' => 1,
         ]);
