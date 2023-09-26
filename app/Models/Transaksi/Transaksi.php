@@ -95,8 +95,9 @@ class Transaksi extends Model
         $diskon_member = $pelanggan->member ? 10 : 0;
         $grand_total = 0;
 
+        dd($this->tipe_transaksi);
         //find bucket dan premium
-        if($this->tipe_transaksi=="bucket"){
+        if($this->tipe_transaksi == "bucket"){
             $sum_bobot = ItemTransaksi::where('transaksi_id', $this->id)->sum('total_bobot');
             $item_count = ItemTransaksi::where('transaksi_id', $this->id)->count();
             //kalkulasi bobot bucket
