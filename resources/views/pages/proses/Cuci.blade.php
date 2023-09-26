@@ -71,7 +71,7 @@
                                                     @else
                                                         <td class="text-center">Normal</td>
                                                     @endif
-                                                    <td class="text-center">{{ $transaksi->pencuci }}</td>
+                                                    <td class="text-center">{{ $transaksi->tukang_cuci->name }}</td>
                                                 </tr>
                                                 @endif
                                             @endforeach
@@ -104,7 +104,7 @@
                                                     @else
                                                         <td class="text-center">Normal</td>
                                                     @endif
-                                                    <td class="text-center">{{ $transaksi->pencuci }}</td>
+                                                    <td class="text-center">{{ $transaksi->tukang_cuci->name }}</td>
                                                 </tr>
                                                 @endif
                                             @endforeach

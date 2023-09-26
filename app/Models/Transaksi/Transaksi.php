@@ -213,4 +213,14 @@ class Transaksi extends Model
     {
         return $this->hasOne(Packing::class);
     }
+
+    public function tukang_cuci()
+    {
+        return $this->belongsTo(User::class, 'pencuci', 'id');
+    }
+
+    public function tukang_setrika()
+    {
+        return $this->belongsTo(User::class, 'penyetrika', 'id');
+    }
 }

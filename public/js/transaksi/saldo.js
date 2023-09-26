@@ -5,6 +5,9 @@ $(document).ready(function() {
 
         selectedPaketId = $(this).attr('id');
         $(this).addClass('selected');
+        if ($('#submit-saldo').prop('disabled')) {
+            $('#submit-saldo').prop('disabled', false);
+        }
 
         if (selectedPaketId != 1) {
             $('#input-dibayarkan').val(removeDot($('#paket-container .card.selected .harga-paket .thousand-separator').text()).toLocaleString(['ban', 'id']));
@@ -17,37 +20,59 @@ $(document).ready(function() {
         if ($(this).val() != "") {
             $('#input-dibayarkan').val(parseInt($(this).val()).toLocaleString(['ban', 'id']));
         }
-    })
-
-    var pelangganId = 0;
-    $('#nama-pelanggan').on('change', function() {
-        if ($(this).val() != '') {
-            pelangganId = $('#data-pelanggan option[data-id=' + $(this).val().split(' - ')[0] +']').data('id');
-
-            if (pelangganId !== undefined) {
-                $.ajax({
-                    url: "/pelanggan/" + pelangganId + "/check-saldo",
-                }).done(function(data) {
-                    // console.log(data);
-                    let saldo = data.saldo;
-                    $('#input-saldo-akhir').val(parseInt(saldo).toLocaleString(['ban', 'id']));
-
-                }).fail(function(jqXHR, textStatus, errorThrown) {
-                    console.log(jqXHR);
-                    console.log(textStatus);
-                    console.log(errorThrown);
-                });
-            } else {
-                $('#input-saldo-akhir').val('');
-            }
-        }
     });
 
+    $('#pilih-pelanggan').on('click', function() {
+        $('#modal-data-pelanggan').modal('show');
+    });
+
+    var pelangganId = 0;
+    $('#table-pelanggan').load(window.location.origin + '/component/pelanggan?paginate=5', function() {
+        $('#table-pelanggan th:last').hide();
+        $('#table-pelanggan .cell-action').hide();
+    });
+    $('#table-pelanggan').on('click', '.page-link', function(e) {
+        e.preventDefault();
+        $('#table-pelanggan').load($(this).attr('href'));
+    });
+
+    function search() {
+        $('#table-pelanggan').load(window.location.origin + '/component/pelanggan?key=' + encodeURIComponent($('#input-nama-pelanggan').val()) + '&filter=nama&paginate=5', function() {
+            $('#table-pelanggan th:last').hide();
+            $('#table-pelanggan .cell-action').hide();
+        });
+    }
+
+    $('#search-pelanggan').on('click', function() {
+        search();
+    });
+
+    $('#table-pelanggan').on('click', 'tr', function() {
+        pelangganId = $(this).attr('id').substr(10);
+
+        let tempNama = $(this).find('td').eq(1).html();
+        $.ajax({
+            url: "/pelanggan/" + pelangganId + "/check-saldo",
+        }).done(function(data) {
+            $('#data-nama-pelanggan').val(tempNama);
+            $('#data-saldo-akhir').val(parseInt(data.saldo).toLocaleString(['ban', 'id']));
+
+            if ($('#submit-saldo').css('display') == 'none') {
+                $('#submit-saldo').show();
+            }
+            $('#modal-data-pelanggan').modal('hide');
+
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+        });
+    })
 
     $('#form-saldo').on('submit', function(e) {
         e.preventDefault();
 
-        if (pelangganId !== undefined && selectedPaketId != 0) {
+        if (selectedPaketId != 0) {
             $.ajax({
                 url: "/data/pelanggan/" + pelangganId + "/detail",
             }).done(function(data) {
@@ -91,7 +116,7 @@ $(document).ready(function() {
         if (selectedPaketId == 1) {
             nominal = $('#input-manual').val();
         }
-        let saldoAkhir = nominal + removeDot($('#input-saldo-akhir').val());
+        let saldoAkhir = nominal + removeDot($('#data-saldo-akhir').val());
 
         let formData = new FormData();
         formData.append('pelanggan_id', pelangganId);

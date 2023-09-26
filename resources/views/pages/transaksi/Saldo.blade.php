@@ -45,28 +45,20 @@
                         </div>
                     </div>
                     <hr class="d-lg-none">
-                    <div class="col-lg-3 border-lg-start border-0" id="info-pelanggan">
+                    <div class="col-lg-3 border-start border-md-0" id="info-pelanggan">
                         <form id="form-saldo">
                             <div class="mb-2">
                                 <h5>Pelanggan</h5>
-                                <div>
-                                    <input id="nama-pelanggan" list="data-pelanggan" class="form-control" required>
-                                    <datalist id="data-pelanggan">
-                                        @foreach ($pelanggans as $pelanggan)
-                                            <option data-id="{{ $pelanggan->id }}">{{ $pelanggan->id }} - {{ $pelanggan->nama }}</option>
-                                        @endforeach
-                                    </datalist>
-                                </div>
+                                <input id="data-nama-pelanggan" class="form-control disabled" required />
                             </div>
                             <div class="mb-2">
                                 <h5>Saldo Akhir</h5>
-                                <input id="input-saldo-akhir" type="text" class="form-control disabled" required />
+                                <input id="data-saldo-akhir" type="text" class="form-control disabled" required/>
                             </div>
                             <input id="input-dibayarkan" type="hidden" class="form-control disabled" required />
                             @if(in_array("Topup Saldo Pelanggan", Session::get('permissions')) || Session::get('role') == 'administrator')
-                            <div class="text-end">
-                                <button id="submit-saldo" class="btn btn-primary" type="submit">Beli</button>
-                            </div>
+                                <button id="pilih-pelanggan" class="btn btn-primary w-100" type="button">Pilih Pelanggan</button>
+                                <button id="submit-saldo" class="btn btn-primary w-100 mt-2" type="submit" style="display: none;" disabled>Beli</button>
                             @endif
                         </form>
                     </div>
@@ -74,6 +66,28 @@
             </div>
         </div>
     </section>
+
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-data-pelanggan">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-fullscreen-sm-down" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Pelanggan</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex mb-3">
+                        <div class="intro-1 d-flex flex-fill">
+                            <input class="form-control" type="search" id="input-nama-pelanggan" placeholder="Cari nama pelanggan">
+                            <button class="btn btn-primary ms-3" id="search-pelanggan" type="button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="table-pelanggan"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div role="dialog" tabindex="-1" class="modal fade" id="modal-pembayaran">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">

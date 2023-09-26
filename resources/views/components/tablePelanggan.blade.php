@@ -14,7 +14,7 @@
         </thead>
         <tbody>
             @foreach ($pelanggans as $pelanggan)
-            <tr>
+            <tr id="pelanggan-{{ $pelanggan->id }}">
                 @if ($pelanggan->member)
                     <td class="text-center">Member</td>
                 @else
