@@ -159,7 +159,7 @@ class Transaksi extends Model
         $diskon_jenis_item = ItemTransaksi::where('transaksi_id', $this->id)->get()->map(function ($t) {
             return $t->diskon_jenis_item * $t->qty;
         })->sum();
-        if($this->tipe_transaksi == "premium") {
+        if($this->tipe_transaksi == "bucket") {
             $diskon_jenis_item = 0;
         }
         $this->diskon_jenis_item = $diskon_jenis_item;
