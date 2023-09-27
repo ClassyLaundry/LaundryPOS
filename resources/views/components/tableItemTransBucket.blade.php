@@ -103,6 +103,12 @@
                 <td class="p-1" style="width: 46.25px;"></td>
             </tr>
             <tr>
+                <td class="text-end p-1">Diskon Spesial</td>
+                <td class="p-1" style="width: 5%">Rp</td>
+                <td class="text-end thousand-separator p-1" id="diskon-pelanggan_spesial">{{ $trans->diskon_pelanggan_spesial }}</td>
+                <td class="p-1" style="width: 46.25px;"></td>
+            </tr>
+            <tr>
                 <td class="text-end p-1">Grand Total</td>
                 <td class="p-1" style="width: 5%">Rp</td>
                 <td class="text-end thousand-separator p-1" id="grand-total">{{ $trans->grand_total }}</td>

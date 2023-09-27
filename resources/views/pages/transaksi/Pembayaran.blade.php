@@ -56,8 +56,11 @@
 
                 <ul class="list-unstyled form-control" id="list-action">
                     @if(in_array("Melihat Detail Pembayaran", Session::get('permissions')) || Session::get('role') == 'administrator')
-                    <li id="action-detail">Lihat detail</li>
+                        <li id="action-detail">Lihat detail</li>
                     @endif
+                    <li id="action-print-nota">Print nota</li>
+                    <li id="action-print-memo">Print memo</li>
+                    <li id="action-print-kitir">Print kitir</li>
                     {{-- <li id="action-delete">Hapus data</li> --}}
                 </ul>
             </div>
@@ -105,7 +108,6 @@
                 </div>
                 <div class="modal-footer">
                     <button id="btn-bayar" class="btn btn-primary">Bayar</button>
-                    <button id="btn-print" class="btn btn-primary">Print Nota</button>
                 </div>
             </div>
         </div>

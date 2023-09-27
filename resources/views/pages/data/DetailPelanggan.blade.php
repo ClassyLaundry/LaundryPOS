@@ -61,14 +61,30 @@
                             <h5>Nomor Identitas</h5>
                             <input class="form-control" type="text" id="input-nomor-identitas" name="no_id" value="{{ $pelanggan->no_id }}"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" disabled>
                         </div>
-                        <div class="col-12 col-lg-6 mb-2">
-                            <h5>Telephone*</h5>
-                            <input class="form-control" type="text" id="input-telepon" name="telephone" value="{{ $pelanggan->telephone }}" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" disabled>
-                        </div>
-                        <div class="col-12 col-lg-6 mb-2">
-                            <h5>E-mail</h5>
-                            <input class="form-control" type="text" id="input-email" name="email" value="{{ $pelanggan->email }}" disabled>
-                        </div>
+
+                        @if(Session::get('role') == 'administrator')
+                            <div class="col-12 col-md-4 mb-2">
+                                <h5>Telephone*</h5>
+                                <input class="form-control" type="text" id="input-telepon" name="telephone" value="{{ $pelanggan->telephone }}" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" disabled>
+                            </div>
+                            <div class="col-12 col-md-4 mb-2">
+                                <h5>E-mail</h5>
+                                <input class="form-control" type="text" id="input-email" name="email" value="{{ $pelanggan->email }}" disabled>
+                            </div>
+                            <div class="col-12 col-md-4 mb-2">
+                                <h5>Diskon Spesial</h5>
+                                <input class="form-control" type="text" id="input-diskon" name="diskon" value="{{ $pelanggan->diskon }}" disabled>
+                            </div>
+                        @else
+                            <div class="col-12 col-md-6 mb-2">
+                                <h5>Telephone*</h5>
+                                <input class="form-control" type="text" id="input-telepon" name="telephone" value="{{ $pelanggan->telephone }}" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" disabled>
+                            </div>
+                            <div class="col-12 col-md-6 mb-2">
+                                <h5>E-mail</h5>
+                                <input class="form-control" type="text" id="input-email" name="email" value="{{ $pelanggan->email }}" disabled>
+                            </div>
+                        @endif
                         <div class="col-12 mb-2">
                             <h5>Catatan Pelanggan</h5>
                             <textarea class="form-control" id="input-catatan-khusus" name="catatan_khusus" disabled></textarea>

@@ -488,7 +488,7 @@ $(document).ready(function() {
 
     var btnIndex = -1, currentlySelectedItemTransactionID = 0, currentlySelectedItemName = '';
     $('#table-container').on('click', '.btn-show-action', function() {
-        btnIndex = $(this).index('.btn-show-action') + 1;
+        btnIndex = $(this).index('#table-container .btn-show-action') + 1;
         currentlySelectedItemTransactionID = $('#table-container tbody tr:nth-child(' + btnIndex + ')').attr('id');
         currentlySelectedItemName = $('#table-container tbody tr:nth-child(' + btnIndex + ')').children().eq(0).html();
     });
@@ -509,6 +509,7 @@ $(document).ready(function() {
                 $('#diskon-item').html(trans.diskon_jenis_item);
                 $('#diskon-promo').html(trans.total_diskon_promo);
                 $('#diskon-member').html(trans.diskon_member);
+                $('#diskon-pelanggan_spesial').html(trans.diskon_pelanggan_spesial);
                 $('#grand-total').html(trans.grand_total);
 
                 $('#table-trans-item tbody tr:nth-child(' + btnIndex + ')').detach();

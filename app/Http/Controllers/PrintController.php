@@ -55,14 +55,14 @@ class PrintController extends Controller
         $data->total_bobot = $total_bobot;
         $data->status_delivery = $status_delivery;
 
-        return view('pages.print.Nota', ['data' => $data]);
+        // return view('pages.print.Nota', ['data' => $data]);
 
         //8.5x 11 inch = 612x792 point
-        // $paper_size = [0, 0, 396, 595];
-        // $pdf = Pdf::loadView('pages.print.Nota', [
-        //     'data' => $data
-        // ])->setPaper($paper_size, 'portrait');
-        // return $pdf->stream('invoice.pdf');
+        $paper_size = [0, 0, 792, 612];
+        $pdf = Pdf::loadView('pages.print.Nota', [
+            'data' => $data
+        ])->setPaper($paper_size, 'portrait');
+        return $pdf->stream('invoice.pdf');
         // //stream kalau preview, download kalau lsg download
     }
 
@@ -90,7 +90,7 @@ class PrintController extends Controller
         $data->status_delivery = $status_delivery;
 
         //8.5x 11 inch = 612x792 point
-        $paper_size = [0, 0, 612, 792];
+        $paper_size = [0, 0, 792, 612];
         $pdf = Pdf::loadView('pages.print.MemoProduksi', [
             'data' => $data
         ])->setPaper($paper_size, 'portrait');
@@ -102,8 +102,8 @@ class PrintController extends Controller
     {
         $transaksi = Transaksi::detail()->find($transaksi_id);
 
-        $paper_size = [0, 0, 75, 151];
-        $pdf = Pdf::loadView('pages.print.kitir', [
+        $paper_size = [0, 0, 225, 75];
+        $pdf = Pdf::loadView('pages.print.Kitir', [
             'data' => $transaksi
         ])->setPaper($paper_size, 'portrait');
         return $pdf->stream('invoice.pdf');

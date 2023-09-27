@@ -6,7 +6,7 @@
     <style>
         /* Add any styles you want to use for the PDF here */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Courier New', Courier, monospace;
             font-size: 10pt
         }
 
@@ -54,7 +54,7 @@
     </div>
     <div id=data-transaksi>
         <p class="hr-text" style="margin-bottom: 0px;">
-            ============================================================================================================================
+            =========================================================================================================================
         </p>
         <div style="position: relative; height: 150px;">
             <p style="position: absolute; left: 0px; top: 0px;">NO. ORDER</p>
@@ -85,7 +85,7 @@
             <p style="position: absolute; left: 700px; top: 120px;">: {{ $data->status_delivery }}</p>
         </div>
         <p class="hr-text" style="margin-bottom: 0px;">
-            ============================================================================================================================
+            =========================================================================================================================
         </p>
     </div>
     <div id="detail-transaksi">
@@ -157,7 +157,7 @@
         </table>
         @endif
         <p class="hr-text" style="margin: 0px;">
-            ============================================================================================================================
+            =========================================================================================================================
         </p>
         <div style="position: relative; height: 60px;">
             <p style="position: absolute; left: 0px; top: 0px;">Jml Pcs</p>
@@ -173,7 +173,7 @@
             <p style="position: absolute; left: 100px; top: 30px;">: {{ $data->transaksi->catatan }}</p>
         </div>
         <p class="hr-text" style="margin-bottom: 0px;">
-            ============================================================================================================================
+            =========================================================================================================================
         </p>
         <div style="position: relative; height: 90px;">
             <p style="position: absolute; left: 0px; top: 0px;">Subtotal</p>
@@ -204,7 +204,7 @@
             @endif
         </div>
         <p class="hr-text">
-            ============================================================================================================================
+            =========================================================================================================================
         </p>
         <div style="position: relative; height: 30px;">
             <div style="position: absolute; left: 0px; top: 0px;">KASIR</div>
@@ -213,7 +213,7 @@
             <div style="position: absolute; left: 500px; top: 0px;">: {{ number_format($data->transaksi->pelanggan->tagihan, 0, ',', '.') }}</div>
         </div>
         <p class="hr-text" style="margin-top: 0px;">
-            ============================================================================================================================
+            =========================================================================================================================
         </p>
     </div>
 </body>

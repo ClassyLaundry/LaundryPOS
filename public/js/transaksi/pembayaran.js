@@ -8,7 +8,6 @@ $(document).ready(function() {
         btnId = $(this).attr('id').substring(4);
     });
 
-    // untuk menampilkan nota
     $('#action-detail').on('click', function() {
         $('#diskon').parent().show();
         $.ajax({
@@ -99,8 +98,16 @@ $(document).ready(function() {
         });
     });
 
-    $('#btn-print').on('click', function() {
+    $('#action-print-nota').on('click', function() {
         window.location = window.location.origin + "/printNota/" + btnId;
+    });
+
+    $('#action-print-memo').on('click', function() {
+        window.location = window.location.origin + "/printMemoProduksi/" + btnId;
+    });
+
+    $('#action-print-kitir').on('click', function() {
+        window.location = window.location.origin + "/printKitir/" + btnId;
     });
 
     var calculateNow;

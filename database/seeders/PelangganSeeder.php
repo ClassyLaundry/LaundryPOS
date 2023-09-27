@@ -25,6 +25,7 @@ class PelangganSeeder extends Seeder
             'telephone' => '08123456789',
             'email' => 'abdul123@mail.com',
             'gender' => 'pria',
+            'diskon' => 0,
             'modified_by' => 1
         ]);
 
@@ -38,6 +39,7 @@ class PelangganSeeder extends Seeder
             'telephone' => '08123456789',
             'email' => 'kevin123@mail.com',
             'gender' => 'pria',
+            'diskon' => 0,
             'modified_by' => 1
         ]);
 
@@ -51,6 +53,7 @@ class PelangganSeeder extends Seeder
             'telephone' => '08123456789',
             'email' => 'javar123@mail.com',
             'gender' => 'pria',
+            'diskon' => 0,
             'modified_by' => 1
         ]);
 
@@ -64,6 +67,7 @@ class PelangganSeeder extends Seeder
             'telephone' => '08123456789',
             'email' => 'clyde123@mail.com',
             'gender' => 'pria',
+            'diskon' => 0,
             'modified_by' => 1
         ]);
     }

@@ -161,8 +161,11 @@ class Transaksi extends Model
             $diskon_jenis_item = 0;
         }
         $this->diskon_jenis_item = $diskon_jenis_item;
+        //diskon pelanggan spesial
+        $diskon_pelanggan_spesial = floor($subtotal * $pelanggan->diskon / 100);
+        $this->diskon_pelanggan_spesial = $diskon_pelanggan_spesial;
         //calculate grand total
-        $grand_total = $subtotal - ($diskon_jenis_item + $diskon_member + $total_diskon_promo);
+        $grand_total = $subtotal - ($diskon_jenis_item + $diskon_member + $total_diskon_promo + $diskon_pelanggan_spesial);
         $grand_total < 0 ? $this->grand_total = 0 : $this->grand_total = $grand_total;
         if ($this->lunas) {
             if ($this->total_terbayar < $grand_total) {

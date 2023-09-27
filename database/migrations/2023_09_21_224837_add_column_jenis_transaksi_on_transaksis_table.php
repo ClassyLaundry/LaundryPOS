@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('tipe_transaksi')
                 ->nullable()
                 ->after('parfum_id');
+
+            $table->integer('diskon_pelanggan_spesial')
+                ->default(0)
+                ->after('diskon_member');
         });
     }
 
@@ -29,6 +33,7 @@ return new class extends Migration
     {
         Schema::table('transaksis', function (Blueprint $table) {
             $table->dropColumn('tipe_transaksi');
+            $table->dropColumn('diskon_pelanggan_spesial');
         });
     }
 };
