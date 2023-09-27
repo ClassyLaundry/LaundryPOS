@@ -29,8 +29,8 @@ class UserController extends Controller
 
         if ($auth && ($user->status == true)) {
 
-            $user->outlet_id = $request->outlet_id;
-            $user->save();
+            // $user->outlet_id = $request->outlet_id;
+            // $user->save();
 
             $request->session()->regenerate();
             Session::put('user', $user);

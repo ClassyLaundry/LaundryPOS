@@ -24,6 +24,7 @@
                             <tr>
                                 <th>Nama</th>
                                 <th>Deskripsi</th>
+                                <th>Tipe</th>
                                 <th>Stok</th>
                                 <th></th>
                             </tr>
@@ -33,6 +34,7 @@
                             <tr>
                                 <td>{{ $inventory->nama }}</td>
                                 <td>{{ $inventory->deskripsi }}</td>
+                                <td class="text-center">{{ $inventory->kategori }}</td>
                                 <td class="text-center thousand-separator">{{ $inventory->stok }}</td>
                                 <td class="cell-action">
                                     <button id="btn-{{ $inventory->id }}" class="btn btn-primary btn-sm btn-show-action" type="button">

@@ -46,12 +46,13 @@ class InventoryController extends Controller
             $request->validate([
                 'nama' => 'required|string',
                 'stok' => 'numeric|min:0',
-                'kategori' => 'required|kategori',
+                'kategori' => 'required|string',
             ]);
 
             $inventory->update([
                 'nama' => $request->nama,
                 'deskripsi' => $request->deskripsi,
+                'kategori' => $request->kategori,
                 'stok' => $request->stok
             ]);
 

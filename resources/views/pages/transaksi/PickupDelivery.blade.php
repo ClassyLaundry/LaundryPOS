@@ -201,7 +201,7 @@
                                     <input id="input-pickup-alamat" type="text" class="form-control" name="alamat" required />
                                 </div>
                                 <div class="col-12 mb-2">
-                                    <h5>Catatan Pelanggan</h5>
+                                    <h5>Pesan Pelanggan</h5>
                                     <textarea class="form-control" name="request"></textarea>
                                 </div>
                             </div>
@@ -250,7 +250,7 @@
                                     <input type="text" class="form-control" name="alamat" required />
                                 </div>
                                 <div class="col-12 mb-2">
-                                    <h5>Catatan Pelanggan</h5>
+                                    <h5>Pesan Pelanggan</h5>
                                     <textarea class="form-control" name="request"></textarea>
                                 </div>
                             </div>
@@ -280,48 +280,49 @@
                             <div class="hub-list hub-karyawan">
                                 @foreach ($pickups as $pickup)
                                     @if($driver->id == $pickup->driver_id)
-                                        <div class="border rounded mt-3 card-pickup"
+                                        <div class="border rounded mt-3 card-pickup" id="pickup-{{ $pickup->id }}"
                                             @if ($pickup->is_done)
                                                 style="border-bottom: 3px solid rgb(75, 192, 192)!important; background-image: linear-gradient(to bottom right, white, rgb(75, 192, 192, .5)); background-color: white;"
                                             @else
                                                 style="border-bottom: 3px solid rgb(75, 192, 192)!important; background-color: white;"
                                             @endif
                                         >
-                                        <div class="p-3 border-bottom rounded d-flex justify-content-between align-items-center">
-                                            <div id="{{ $pickup->id }}" class="d-flex flex-column">
-                                                <h4>
-                                                    <input class="pelanggan-id" type="hidden" value="{{ $pickup->pelanggan->id }}">
-                                                    <span class="pelanggan-nama">{{ $pickup->pelanggan->nama }}</span>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 16 16" fill="currentColor" class="bi bi-dot">
-                                                        <path fill-rule="evenodd" d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
-                                                    </svg>
-                                                    <span class="text-muted">{{ $pickup->alamat }}</span>
-                                                </h4>
-                                                <h6>{{ $pickup->kode }}</h6>
-                                            </div>
-                                            <div class="d-flex h-100">
-                                                <div class="position-relative h-100">
-                                                    <h4 class="fw-bold" style="font-style: italic; margin-right: 2.5rem;">Pickup</h4>
-                                                    @if ($pickup->is_done)
-                                                        <i class="fa-solid fa-flag-checkered position-absolute top-50 start-0 translate-middle fa-4x" style="font-style: italic; opacity: 0.25;"></i>
-                                                    @else
-                                                        <i class="fa-solid fa-spinner position-absolute top-50 start-0 translate-middle fa-4x" style="font-style: italic; opacity: 0.25;"></i>
-                                                        <button class="btn btn-sm btn-show-action position-absolute end-0" type="button" style="top: -12px;" id="trans-{{ $pickup->id }}" style="box-shadow: none;">
-                                                            <i class="fa-solid fa-ellipsis-vertical"></i>
-                                                        </button>
-                                                    @endif
+                                            <div class="p-3 border-bottom rounded d-flex justify-content-between align-items-center">
+                                                <div id="{{ $pickup->id }}" class="d-flex flex-column">
+                                                    <h4>
+                                                        <input class="pelanggan-id" type="hidden" value="{{ $pickup->pelanggan->id }}">
+                                                        <span class="pelanggan-nama">{{ $pickup->pelanggan->nama }}</span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 16 16" fill="currentColor" class="bi bi-dot">
+                                                            <path fill-rule="evenodd" d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
+                                                        </svg>
+                                                        <span class="text-muted">{{ $pickup->alamat }}</span>
+                                                    </h4>
+                                                    <h6>{{ $pickup->kode }}</h6>
+                                                </div>
+                                                <div class="d-flex h-100">
+                                                    <div class="position-relative h-100">
+                                                        <h4 class="fw-bold" style="font-style: italic; margin-right: 2.5rem;">Pickup</h4>
+                                                        @if ($pickup->is_done)
+                                                            <i class="fa-solid fa-flag-checkered position-absolute top-50 start-0 translate-middle fa-4x" style="font-style: italic; opacity: 0.25;"></i>
+                                                        @else
+                                                            <i class="fa-solid fa-spinner position-absolute top-50 start-0 translate-middle fa-4x" style="font-style: italic; opacity: 0.25;"></i>
+                                                            <button class="btn btn-sm btn-show-action position-absolute end-0" type="button" style="top: -12px;" id="trans-{{ $pickup->id }}" style="box-shadow: none;">
+                                                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                            </button>
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="p-3 pesan-pelanggan font-monospace" style="font-size: .75rem; display: none;">
-                                            {{ $pickup->request }}
+                                            <div class="p-3 pesan-pelanggan font-monospace" style="font-size: .75rem; display: none;">
+                                                {{ $pickup->request }}
+                                            </div>
                                         </div>
                                     @endif
                                 @endforeach
 
                                 @foreach ($deliveries as $delivery)
                                     @if($driver->id == $pickup->driver_id)
-                                        <div class="border rounded mt-3 card-delivery" data-transaksi="{{ $delivery->transaksi_id }}"
+                                        <div class="border rounded mt-3 card-delivery" id="delivery-{{ $delivery->id }}" data-transaksi="{{ $delivery->transaksi_id }}"
                                             @if ($delivery->is_done)
                                                 style="border-bottom: 3px solid rgb(153, 102, 255)!important; background-image: linear-gradient(to bottom right, white, rgb(153, 102, 255, .5)); background-color: white;"
                                             @else
@@ -351,9 +352,9 @@
                                                         </button>
                                                     @endif
                                                 </div>
-                                                <div class="p-3 pesan-pelanggan font-monospace" style="font-size: .75rem; display: none;">
-                                                    {{ $delivery->request }}
-                                                </div>
+                                            </div>
+                                            <div class="p-3 pesan-pelanggan font-monospace" style="font-size: .75rem; display: none;">
+                                                {{ $delivery->request }}
                                             </div>
                                         </div>
                                     @endif
@@ -385,18 +386,8 @@
                     <div class="modal-body">
                         <div id="table-short-trans"></div>
                     </div>
-                    <div class="modal-footer d-flex justify-content-between align-items-center">
-                        <div>
-                            Status Pembayaran: <span id="status-transaksi"></span>
-                        </div>
-                        <div>
-                            <button class="btn btn-sm btn-outline-primary" type="button" id="show-memo-produksi">
-                                Memo Produksi
-                            </button>
-                            <button class="btn btn-sm btn-primary" type="button" id="show-nota">
-                                Nota
-                            </button>
-                        </div>
+                    <div class="modal-footer d-flex justify-content-start align-items-center">
+                        Status Pembayaran: <span id="status-transaksi"></span>
                     </div>
                 </div>
             </div>

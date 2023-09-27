@@ -211,7 +211,6 @@ $(document).ready(function() {
             $('#input-alamat-2').val(pelanggan.alamat);
             $('#input-email-2').val(pelanggan.email);
             $('#input-tanggal-lahir-2').val(pelanggan.tanggal_lahir);
-
         });
 
         $('#search-pelanggan-2').text('Ganti pelanggan');

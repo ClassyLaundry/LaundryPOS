@@ -224,7 +224,7 @@
                             <hr />
                             <div class="hub-list hub-cuci">
                                 @foreach ($transaksis as $transaksi)
-                                @if ($transaksi->status != 'done' && $transaksi->pencuci == null && !$transaksi->setrika_only && !$transaksi->is_done_cuci)
+                                @if ($transaksi->status != 'done' && $transaksi->pencuci == null && !$transaksi->setrika_only && !$transaksi->is_done_cuci && $transaksi->kode != null)
                                     <div class="p-3 border rounded item d-flex justify-content-between align-items-center my-3" style="border-bottom: 3px solid rgb(54, 162, 235)!important; background-color: white;">
                                         <div class="d-flex flex-column">
                                             <h4>{{ $transaksi->kode }}</h4>
@@ -306,7 +306,8 @@
                     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title">Catatan Item</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h4 class="modal-title">Catatan Item</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body position-relative">
                                 <div id="table-catatan-item"></div>
@@ -336,26 +337,20 @@
                                             </div>
                                             <div class="h-100">
                                                 <h5>Notes</h5>
-                                                <textarea class="form-control" id="catatan-item" required></textarea>
+                                                <textarea class="form-control" id="catatan-item" required style="max-height: 496px;"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-8">
-                                            <ul role="tablist" class="nav nav-tabs">
-                                                <li role="presentation" class="nav-item"><a role="tab" data-bs-toggle="tab" class="nav-link active" href="#tab-foto">Foto</a></li>
-                                                <li role="presentation" class="nav-item"><a role="tab" data-bs-toggle="tab" class="nav-link" href="#tab-noda">Tandai Noda</a></li>
-                                            </ul>
-                                            <div class="tab-content card" style="border-top: none;border-radius: 0;height: 513px;">
-                                                <div role="tabpanel" class="tab-pane active p-2" id="tab-foto">
-                                                    <img id="container-image-item" class="w-100 mb-2" style="object-fit: contain;max-height: 450px;height: 450px;" />
-                                                    <div class="text-end">
-                                                        <input type="file" class="form-control" id="input-foto-item" accept="image/*" onchange="document.getElementById('container-image-item').src = window.URL.createObjectURL(this.files[0])" required />
-                                                    </div>
-                                                </div>
-                                                <div role="tabpanel" class="tab-pane p-2" id="tab-noda">
-                                                </div>
+                                            <h5>Foto</h5>
+                                            <img id="container-image-item" class="w-100 mb-2" style="object-fit: contain;max-height: 450px;height: 450px;" />
+                                            <div class="text-end">
+                                                <input type="file" class="form-control" id="input-foto-item" accept="image/*" onchange="document.getElementById('container-image-item').src = window.URL.createObjectURL(this.files[0])" required />
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary" type="button" id="simpan-catatan-item">Simpan</button>
                                 </div>
                             </form>
                         </div>

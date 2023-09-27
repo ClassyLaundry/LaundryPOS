@@ -1,6 +1,6 @@
 $(document).ready(function() {
     if ($('#table-inventory tbody').children().length == 0) {
-        $('#table-inventory tbody').append('<tr><td colspan=4 class="text-center">Data masih kosong</td></tr>');
+        $('#table-inventory tbody').append('<tr><td colspan=5 class="text-center">Data masih kosong</td></tr>');
     }
 
     if($('#list-action').children().length == 0) {
@@ -30,7 +30,8 @@ $(document).ready(function() {
 
         $('#input-nama-inventory').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(1)').html());
         $('#input-deskripsi').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(2)').html());
-        $('#input-stok').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(3)').html().replace('.', ''));
+        $('#input-kategori').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(3)').html());
+        $('#input-stok').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(4)').html().replace('.', ''));
 
         $('#modal-inventory').modal('show');
     });

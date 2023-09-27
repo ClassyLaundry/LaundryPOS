@@ -52,19 +52,19 @@ $(document).ready(function() {
         }
     });
 
-    var btnIndex = -1, btnId = 0, currentlySelectedType = '', transId = 0, pelangganId = 0;
+    var btnIndex = -1, btnId = 0, currentlySelectedType = '', pelangganId = 0, orderId = 0;;
     $('.btn-show-action').on('click', function() {
         btnIndex = $(this).index('.btn-show-action') + 1;
         btnId = $(this).closest('.border.rounded').data('transaksi');
         pelangganId = $(this).closest('.border.rounded').find('.pelanggan-id').val();
         if ($(this).closest('.card-pickup').length == 1) {
             currentlySelectedType = "pickup";
-            transId = 0;
+            orderId = $(this).closest('.border.rounded').attr('id').substr(7);
             $('#action-detail').hide();
             $('#action-print-memo').hide();
         } else if ($(this).closest('.card-delivery').length == 1) {
             currentlySelectedType = "delivery";
-            transId = $(this).closest('.card-delivery').data('transaksi');
+            orderId = $(this).closest('.border.rounded').attr('id').substr(9);
             $('#action-detail').show();
             $('#action-print-memo').show();
         }
@@ -81,7 +81,7 @@ $(document).ready(function() {
     $('#action-change-status').on('click', function() {
         if (confirm('Nyatakan ' + currentlySelectedType + ' selesai ?') == true) {
             $.ajax({
-                url: "/transaksi/pickup-delivery/" + btnId + "/is-done",
+                url: "/transaksi/pickup-delivery/" + orderId + "/is-done",
             }).done(function(data) {
                 window.location = window.location.origin + window.location.pathname;
             });
@@ -93,17 +93,17 @@ $(document).ready(function() {
     $('#action-detail').on('click', function() {
         $('#kode-transaksi').text($('h6').eq(btnIndex).text());
 
-        // not done
         $('#table-short-trans').load(window.location.origin + '/component/shortTrans/' + btnId + '/delivery', function() {
+            $('#table-short-trans').find('.cell-action').detach();
             $.ajax({
-                url: "/transaksi/detail/" + transId,
+                url: "/transaksi/detail/" + btnId,
             }).done(function(data) {
                 if (data.lunas) {
                     $('#status-transaksi').text('Lunas');
                 } else {
                     $('#status-transaksi').text('Belum lunas');
                 }
-                console.log(data);
+                // console.log(data);
             });
         });
 

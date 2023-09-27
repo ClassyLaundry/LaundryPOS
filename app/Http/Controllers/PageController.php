@@ -451,7 +451,7 @@ class PageController extends Controller
             return view(
                 'pages.proses.Packing',
                 [
-                    'last_transaksi' => Transaksi::latest()->paginate(5),
+                    'last_transaksi' => Transaksi::with('packing')->latest()->paginate(5),
                     'inventories' => Inventory::where('kategori', 'packing')->get(),
                 ]
             );

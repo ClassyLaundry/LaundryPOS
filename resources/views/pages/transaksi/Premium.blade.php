@@ -342,7 +342,7 @@
                                                         </div>
                                                         <div class="h-100">
                                                             <h5>Notes</h5>
-                                                            <textarea class="form-control" id="catatan-item" required ></textarea>
+                                                            <textarea class="form-control" id="catatan-item" required style="max-height: 531px;"></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="col-8">

@@ -31,26 +31,28 @@
                         </thead>
                         <tbody style="cursor: pointer">
                             @foreach ($last_transaksi as $trans)
-                            <tr id="{{ $trans->id }}" data-bs-toggle="tooltip" data-bss-tooltip="" title="Double klik untuk memilih">
-                                <td class="text-center">{{ $trans->kode }}</td>
-                                <td class="text-center">{{ $trans->outlet->nama }}</td>
-                                <td class="d-none d-lg-table-cell text-center">{{ $trans->created_at }}</td>
-                                <td>{{ $trans->pelanggan->nama }}</td>
-                                @if(Session::get('role') == 'administrator')
-                                    <td>Rp</td>
-                                    <td class="text-end thousand-separator">{{ $trans->grand_total }}</td>
-                                    <td class="text-center" style="white-space: nowrap">
-                                    @if($trans->lunas)
-                                        Lunas
-                                    @else
-                                        Belum Lunas
+                                @if ($trans->packing == null)
+                                <tr id="{{ $trans->id }}" data-bs-toggle="tooltip" data-bss-tooltip="" title="Double klik untuk memilih">
+                                    <td class="text-center">{{ $trans->kode }}</td>
+                                    <td class="text-center">{{ $trans->outlet->nama }}</td>
+                                    <td class="d-none d-lg-table-cell text-center">{{ $trans->created_at }}</td>
+                                    <td>{{ $trans->pelanggan->nama }}</td>
+                                    @if(Session::get('role') == 'administrator')
+                                        <td>Rp</td>
+                                        <td class="text-end thousand-separator">{{ $trans->grand_total }}</td>
+                                        <td class="text-center" style="white-space: nowrap">
+                                        @if($trans->lunas)
+                                            Lunas
+                                        @else
+                                            Belum Lunas
+                                        @endif
                                     @endif
+                                    </td>
+                                    <td class="cell-action">
+                                        <button id="btn-{{ $trans->id }}" class="btn btn-primary btn-sm btn-show-action" type="button"><i class="fas fa-bars"></i></button>
+                                    </td>
+                                </tr>
                                 @endif
-                                </td>
-                                <td class="cell-action">
-                                    <button id="btn-{{ $trans->id }}" class="btn btn-primary btn-sm btn-show-action" type="button"><i class="fas fa-bars"></i></button>
-                                </td>
-                            </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -59,8 +61,6 @@
                 <ul class="list-unstyled form-control" id="list-action">
                     <li id="action-detail">Lihat Detail</li>
                     <li id="action-kemas">Kemas</li>
-                    <li id="action-print-memo">Print Memo</li>
-                    <li id="action-print-kitir">Print Kitir</li>
                 </ul>
             </div>
         </div>

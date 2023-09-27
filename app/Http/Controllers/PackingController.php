@@ -42,7 +42,6 @@ class PackingController extends Controller
             ]);
 
             $inventories = json_decode($request->inventories);
-            // dd($request->inventories);
             foreach ($inventories as $inventory) {
                 $packing_inventory = PackingInventory::create([
                     'packing_id' => $packing->id,
