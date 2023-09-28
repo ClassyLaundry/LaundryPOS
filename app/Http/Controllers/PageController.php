@@ -168,7 +168,7 @@ class PageController extends Controller
             return view(
                 'pages.data.Rewash',
                 [
-                    'jenisRewashes' => JenisRewash::paginate(5),
+                    'jenisRewashes' => JenisRewash::with('user')->paginate(5),
                 ]
             );
         } else {

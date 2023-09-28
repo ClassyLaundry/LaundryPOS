@@ -18,4 +18,9 @@ class JenisRewash extends Model
         parent::boot();
         JenisRewash::observe(new UserActionObserver);
     }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'modified_by');
+    }
 }

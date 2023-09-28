@@ -31,7 +31,7 @@
                             @foreach ($jenisRewashes as $jenisRewash)
                             <tr>
                                 <td>{{ $jenisRewash->keterangan }}</td>
-                                <td>{{ $jenisRewash->modified_by }}</td>
+                                <td class="text-center">{{ $jenisRewash->user->name }}</td>
                                 <td class="cell-action">
                                     <button id="btn-{{ $jenisRewash->id }}" class="btn btn-primary btn-sm btn-show-action" type="button">
                                         <i class="fas fa-bars"></i>
