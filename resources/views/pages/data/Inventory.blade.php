@@ -10,7 +10,7 @@
     <section id="data-inventory">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Data Invetory</h4>
+                <h4 class="card-title">Data Inventory</h4>
                 <hr>
                 <div class="d-flex justify-content-end">
                     <form method="GET" action="/data/inventory" class="d-flex align-items-center">
