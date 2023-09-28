@@ -10,7 +10,7 @@
     <section id="data-rewash">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Data Item</h4>
+                <h4 class="card-title">Data Rewash</h4>
                 <hr>
                 <div class="d-flex justify-content-end">
                     <form method="GET" action="/data/rewash" class="d-flex align-items-center">
