@@ -39,6 +39,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TransaksiSeeder::class);
         $this->call(PickupDeliverySeeder::class);
         $this->call(DiskonSeeder::class);
-        $this->call(LaporanSeeder::class);
+        // $this->call(LaporanSeeder::class);
     }
 }
