@@ -4,15 +4,47 @@ $(document).ready(function() {
         $('#modal-create-pickup').modal('show');
     });
 
-    $('#data-pelanggan').on('click', 'option', function() {
-        let selectedValue = $(this).val();
-        let dataListOptions = $('#data-pelanggan').find('option');
+    $('#input-pickup-pelanggan').on('click', function() {
+        $('#modal-data-pelanggan').modal('show');
+    });
 
-        dataListOptions.each(function() {
-            if ($(this).val() === selectedValue) {
-                $('#input-pickup-alamat').val($(this).data('alamat'));
-                $('#input-pickup-pelanggan-id').val($(this).data('id'));
-            }
+    var pelangganId = 0;
+    $('#table-pelanggan').load(window.location.origin + '/component/pelanggan?paginate=5', function() {
+        $('#table-pelanggan th:last').hide();
+        $('#table-pelanggan .cell-action').hide();
+    });
+    $('#table-pelanggan').on('click', '.page-link', function(e) {
+        e.preventDefault();
+        $('#table-pelanggan').load($(this).attr('href'));
+    });
+
+    function search() {
+        $('#table-pelanggan').load(window.location.origin + '/component/pelanggan?key=' + encodeURIComponent($('#input-nama-pelanggan').val()) + '&filter=nama&paginate=5', function() {
+            $('#table-pelanggan th:last').hide();
+            $('#table-pelanggan .cell-action').hide();
+        });
+    }
+
+    $('#search-pelanggan').on('click', function() {
+        search();
+    });
+
+    $('#table-pelanggan').on('click', 'tr', function() {
+        pelangganId = $(this).attr('id').substr(10);
+
+        $.ajax({
+            url: "/data/pelanggan/" + pelangganId,
+        }).done(function(data) {
+            $('#input-pickup-pelanggan').val(data[0].nama);
+            $('#input-pickup-pelanggan-id').val(pelangganId);
+            $('#input-pickup-alamat').val(data[0].alamat);
+
+            $('#modal-data-pelanggan').modal('hide');
+
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
         });
     });
 

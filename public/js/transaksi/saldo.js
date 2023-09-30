@@ -67,7 +67,7 @@ $(document).ready(function() {
             console.log(textStatus);
             console.log(errorThrown);
         });
-    })
+    });
 
     $('#form-saldo').on('submit', function(e) {
         e.preventDefault();

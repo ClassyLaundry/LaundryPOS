@@ -180,11 +180,6 @@
                                 <div class="col-6 mb-2">
                                     <h5>Pilih Pelanggan</h5>
                                     <input id="input-pickup-pelanggan" list="data-pelanggan" class="form-control" type="text" autocomplete="off" required>
-                                    <datalist id="data-pelanggan" style="max-height:5.1em;overflow:hidden">
-                                        @foreach ($dataPelanggan as $pelanggan)
-                                            <option data-id="{{ $pelanggan->id }}" data-alamat="{{ $pelanggan->alamat }}">{{ $pelanggan->nama }}</option>
-                                        @endforeach
-                                    </datalist>
                                     <input id="input-pickup-pelanggan-id" type="hidden" name="pelanggan_id" value="">
                                 </div>
                                 <div class="col-6 mb-2">
@@ -214,6 +209,7 @@
                 </div>
             </div>
         </div>
+
         <div role="dialog" tabindex="-1" class="modal fade" id="modal-create-delivery">
             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -260,6 +256,28 @@
                             <button class="btn btn-primary" type="submit">Save</button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" role="dialog" tabindex="-1" id="modal-data-pelanggan">
+            <div class="modal-dialog modal-xl modal-dialog-centered modal-fullscreen-sm-down" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Pelanggan</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex mb-3">
+                            <div class="intro-1 d-flex flex-fill">
+                                <input class="form-control" type="search" id="input-nama-pelanggan" placeholder="Cari nama pelanggan">
+                                <button class="btn btn-primary ms-3" id="search-pelanggan" type="button">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="table-pelanggan"></div>
+                    </div>
                 </div>
             </div>
         </div>
