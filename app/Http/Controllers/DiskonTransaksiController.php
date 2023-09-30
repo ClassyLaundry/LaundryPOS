@@ -56,8 +56,8 @@ class DiskonTransaksiController extends Controller
 
     public function delete($id)
     {
-        $transaksi = Transaksi::find($id);
         $diskon_transaksi = DiskonTransaksi::find($id);
+        $transaksi = Transaksi::find($diskon_transaksi->transaksi_id);
         DiskonTransaksi::destroy($id);
         $transaksi->recalculate();
         LogTransaksi::create([

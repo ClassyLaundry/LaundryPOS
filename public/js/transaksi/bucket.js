@@ -809,8 +809,8 @@ $(document).ready(function() {
         $.ajax({
             url: "/diskon-transaksi/" + $(this).prev().find('.kode-diskon').data('id') + "/delete",
         }).done(function(response) {
-            console.log(response);
             getActivePromo(false);
+            $('#input-kode-diskon').val("");
             $('#table-container').load(window.location.origin + '/component/transBucket/' + transId, function() {
                 adjustWidth();
                 setThousandSeparator();

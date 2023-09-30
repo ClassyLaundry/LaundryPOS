@@ -809,6 +809,7 @@ $(document).ready(function() {
         }).done(function(response) {
             console.log(response);
             getActivePromo(false);
+            $('#input-kode-diskon').val("");
             $('#table-container').load(window.location.origin + '/component/transPremium/' + transId, function() {
                 adjustWidth();
                 setThousandSeparator();
