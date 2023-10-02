@@ -25,6 +25,7 @@ class InsertTransaksiRequest extends FormRequest
     {
         return [
             'pelanggan_id' => 'required|exists:pelanggans,id',
+            'tipe_transaksi' => 'required|string'
         ];
     }
 }
