@@ -172,22 +172,22 @@
         <div style="position: relative; height: 90px;">
             <p style="position: absolute; left: 0px; top: 25px;">Tim Produksi</p>
 
-            <p class="text-center" style="position: absolute; left: 100px; top: 40px; width: 200px;">{{ $data->transaksi->pencuci }}</p>
-            <p class="text-center" style="position: absolute; left: 100px; top: 45px; width: 200px;">_______________</p>
-            <p class="text-center" style="position: absolute; left: 100px; top: 60px; width: 200px;">cuci</p>
+            <p class="text-center" style="position: absolute; left: 75px; top: 40px; width: 200px;">{{ $data->transaksi->pencuci }}</p>
+            <p class="text-center" style="position: absolute; left: 75px; top: 45px; width: 200px;">_______________</p>
+            <p class="text-center" style="position: absolute; left: 75px; top: 60px; width: 200px;">cuci</p>
 
 
-            <p class="text-center" style="position: absolute; left: 300px; top: 40px; width: 200px;">{{ $data->transaksi->penyetrika }}</p>
-            <p class="text-center" style="position: absolute; left: 300px; top: 45px; width: 200px;">_______________</p>
-            <p class="text-center" style="position: absolute; left: 300px; top: 60px; width: 200px;">setrika</p>
+            <p class="text-center" style="position: absolute; left: 225px; top: 40px; width: 200px;">{{ $data->transaksi->penyetrika }}</p>
+            <p class="text-center" style="position: absolute; left: 225px; top: 45px; width: 200px;">_______________</p>
+            <p class="text-center" style="position: absolute; left: 225px; top: 60px; width: 200px;">setrika</p>
 
-            <p class="text-center" style="position: absolute; left: 500px; top: 40px; width: 200px;"></p>
-            <p class="text-center" style="position: absolute; left: 500px; top: 45px; width: 200px;">_______________</p>
-            <p class="text-center" style="position: absolute; left: 500px; top: 60px; width: 200px;">packing</p>
+            <p class="text-center" style="position: absolute; left: 375px; top: 40px; width: 200px;"></p>
+            <p class="text-center" style="position: absolute; left: 375px; top: 45px; width: 200px;">_______________</p>
+            <p class="text-center" style="position: absolute; left: 375px; top: 60px; width: 200px;">packing</p>
 
-            <p class="text-center" style="position: absolute; left: 700px; top: 40px; width: 200px;"></p>
-            <p class="text-center" style="position: absolute; left: 700px; top: 45px; width: 200px;">_______________</p>
-            <p class="text-center" style="position: absolute; left: 700px; top: 60px; width: 200px;">delivery</p>
+            <p class="text-center" style="position: absolute; left: 525px; top: 40px; width: 200px;"></p>
+            <p class="text-center" style="position: absolute; left: 525px; top: 45px; width: 200px;">_______________</p>
+            <p class="text-center" style="position: absolute; left: 525px; top: 60px; width: 200px;">delivery</p>
         </div>
         <p class="hr-text" style="margin-top: 0px;">
             =========================================================================================================================
