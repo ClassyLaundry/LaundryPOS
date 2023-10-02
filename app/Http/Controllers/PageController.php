@@ -357,7 +357,7 @@ class PageController extends Controller
         });
         if ($permissionExist) {
             $data['transaksi_id'] = Transaksi::count() == 0 ? 1 : Transaksi::latest()->first()->id + 1;
-            $data['last_transaksi'] = Transaksi::where('tipe_transaksi', 'not like', 'premium')->orwhere('kode', null)->latest()->take(5)->get();
+            $data['last_transaksi'] = Transaksi::where('tipe_transaksi', 'not like', 'premium')->orwhere('kode', null)->latest()->paginate(15);
             $data['pelanggan'] = Pelanggan::latest()->take(5)->get();
             $data['pickup'] = PickupDelivery::where('action', 'pickup')->get();
             $data['delivery'] = PickupDelivery::where('action', 'delivery')->get();
@@ -491,7 +491,7 @@ class PageController extends Controller
             return view(
                 'pages.transaksi.Pembayaran',
                 [
-                    'transaksis' => Transaksi::with('pelanggan')->latest()->take(5)->get(),
+                    'transaksis' => Transaksi::with('pelanggan')->latest()->paginate(15),
                 ]
             );
         } else {

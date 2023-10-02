@@ -52,7 +52,7 @@
                         </tbody>
                     </table>
                 </div>
-                {{-- {{ $transaksis->links() }} --}}
+                {{ $transaksis->links() }}
 
                 <ul class="list-unstyled form-control" id="list-action">
                     @if(in_array("Melihat Detail Pembayaran", Session::get('permissions')) || Session::get('role') == 'administrator')

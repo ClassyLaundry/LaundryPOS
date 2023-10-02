@@ -404,8 +404,13 @@
                     <div class="modal-body">
                         <div id="table-short-trans"></div>
                     </div>
-                    <div class="modal-footer d-flex justify-content-start align-items-center">
-                        Status Pembayaran: <span id="status-transaksi"></span>
+                    <div class="modal-footer d-flex justify-content-between align-items-center">
+                        <div>
+                            Status Pembayaran: <span id="status-transaksi"></span>
+                        </div>
+                        <div class="invisible">
+                            Total tagihan: <span id="tagihan-transaksi" class="thousand-separator"></span>
+                        </div>
                     </div>
                 </div>
             </div>

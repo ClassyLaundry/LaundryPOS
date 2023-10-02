@@ -130,16 +130,36 @@ $(document).ready(function() {
             $.ajax({
                 url: "/transaksi/detail/" + btnId,
             }).done(function(data) {
+                console.log(data);
                 if (data.lunas) {
                     $('#status-transaksi').text('Lunas');
+                    $('#tagihan-transaksi').parent().addClass('invisible');
                 } else {
                     $('#status-transaksi').text('Belum lunas');
+                    $('#tagihan-transaksi').text(data.grand_total - data.total_terbayar);
+                    setThousandSeparator();
+                    $('#tagihan-transaksi').parent().removeClass('invisible');
                 }
-                // console.log(data);
             });
         });
 
         $('#kode-trans').text($('.btn-show-action').eq(btnIndex - 1).prev().find('h4').text());
         $('#modal-transaksi').modal('show');
     });
+
+    function setThousandSeparator () {
+        let length = $('.thousand-separator').length;
+        if (length != 0) {
+            $('.thousand-separator').each(function(index, element) {
+                let val = $(element).text();
+                if (val != '') {
+                    while(val.indexOf('.') != -1) {
+                        val = val.replace('.', '');
+                    }
+                    let number = parseInt(val);
+                    $(element).text(number.toLocaleString(['ban', 'id']));
+                }
+            });
+        }
+    };
 });

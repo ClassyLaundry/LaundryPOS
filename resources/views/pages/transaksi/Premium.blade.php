@@ -98,7 +98,7 @@
                                             <a href="/data/pelanggan" class="ms-3"><button class="btn btn-primary" data-bs-toggle="tooltip" id="new-pelanggan-2" type="button" title="Pelanggan baru"><i class="fas fa-plus"></i></button></a>
                                         </div>
                                     </form>
-                                    <div id="table-list-pelanggan-2"></div>
+                                    <div id="table-list-pelanggan-2" class="overflow-auto"></div>
                                 </div>
                             </div>
                             <form id="data-pelanggan-2">

@@ -50,7 +50,7 @@
                                     </tr>
                                 </thead>
                                 <tbody style="cursor: pointer">
-                                    @foreach ($data['last_transaksi'] as $trans)
+                                @foreach ($data['last_transaksi'] as $trans)
                                     <tr data-bs-toggle="tooltip" data-bss-tooltip="" title="Double klik untuk memilih" id={{ $trans->id }}>
                                         <td>{{ $trans->kode }}</td>
                                         <td>{{ $trans->outlet->nama }}</td>
@@ -68,6 +68,7 @@
                                     </tr>
                                     @endforeach
                                 </tbody>
+                                {{ $data['last_transaksi']->links() }}
                             </table>
                         </div>
                     @endif
@@ -99,7 +100,7 @@
                                             <a href="/data/pelanggan" class="ms-3"><button class="btn btn-primary" data-bs-toggle="tooltip" id="new-pelanggan-2" type="button" title="Pelanggan baru"><i class="fas fa-plus"></i></button></a>
                                         </div>
                                     </form>
-                                    <div id="table-list-pelanggan-2"></div>
+                                    <div id="table-list-pelanggan-2" class="overflow-auto"></div>
                                 </div>
                             </div>
                             <form id="data-pelanggan-2">
