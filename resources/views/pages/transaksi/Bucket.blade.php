@@ -78,7 +78,7 @@
     </div>
 
     <div role="dialog" id="modal-new-trans" tabindex="-1" class="modal fade">
-        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-fullscreen-sm-down" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Transaksi Baru</h4>
@@ -227,7 +227,7 @@
                             </form>
 
                             <div role="dialog" tabindex="-1" class="modal fade" id="modal-kode-promo">
-                                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h4 class="modal-title">Promo Diskon</h4>
@@ -280,7 +280,7 @@
                             </div>
 
                             <div role="dialog" tabindex="-1" class="modal fade" id="modal-add-item">
-                                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h4 class="modal-title">Pilih Item</h4>
@@ -312,7 +312,7 @@
                             </div>
 
                             <div role="dialog" tabindex="-1" class="modal fade" id="modal-list-catatan-item">
-                                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h4 class="modal-title">Catatan Item</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -329,7 +329,7 @@
                             </div>
 
                             <div role="dialog" tabindex="-1" class="modal fade" id="modal-catatan-item">
-                                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h4 class="modal-title">Catatan Item <span id="catatan-item-name">nama item</span></h4>
@@ -390,7 +390,7 @@
                                         </header>
                                         <div id="info-pelanggan" class="mt-2" style="display: none;">
                                             <div class="modal fade" role="dialog" tabindex="-1" id="modal-list-pelanggan">
-                                                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                                <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h4 class="modal-title">Cari Pelanggan</h4>
@@ -633,7 +633,7 @@
                     </div>
                 </div>
                 <div role="dialog" tabindex="-1" class="modal fade" id="modal-pembayaran">
-                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title">Pembayaran <span class="kode-trans">kode trans</span></h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
