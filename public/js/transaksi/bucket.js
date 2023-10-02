@@ -221,7 +221,7 @@ $(document).ready(function() {
     $('#create-trans').on('click', function() {
         let pelanggan_id = $('#input-id-2').val();
         $.ajax({
-            url: "/transaksi/create?pelanggan_id=" + pelanggan_id,
+            url: "/transaksi/create?pelanggan_id=" + pelanggan_id + '&tipe_transaksi=bucket',
         }).done(function(data) {
             window.location = window.location;
         });
