@@ -6,7 +6,7 @@
     <style>
         /* Add any styles you want to use for the PDF here */
         body {
-            font-family: Arial, sans-serif;
+            font-family: sans-serif;
             font-size: 10pt
         }
 
