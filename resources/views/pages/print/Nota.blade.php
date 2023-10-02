@@ -60,14 +60,14 @@
             <p style="position: absolute; left: 0px; top: 0px;">NO. ORDER</p>
             <p style="position: absolute; left: 100px; top: 0px;">: {{ $data->transaksi->kode }} / {{ strtoupper($data->transaksi->tipe_transaksi) }}</p>
 
-            <p style="position: absolute; left: 400px; top: 0px;">PENCETAKAN</p>
-            <p style="position: absolute; left: 500px; top: 0px;">: {{ date('d-M-Y h:i:s') }}</p>
+            <p style="position: absolute; left: 350px; top: 0px;">PENCETAKAN</p>
+            <p style="position: absolute; left: 450px; top: 0px;">: {{ date('d-M-Y h:i:s') }}</p>
 
             <p style="position: absolute; left: 0px; top: 30px;">PELANGGAN</p>
             <p style="position: absolute; left: 100px; top: 30px;">: {{ $data->transaksi->pelanggan->no_id }} / {{ $data->transaksi->pelanggan->nama }}</p>
 
-            <p style="position: absolute; left: 400px; top: 30px;">TGL CUCI</p>
-            <p style="position: absolute; left: 500px; top: 30px;">: {{ date('d-M-Y h:i:s', strtotime($data->transaksi->created_at)) }} s.d {{ date('d-M-Y', strtotime($data->transaksi->done_date)) }}</p>
+            <p style="position: absolute; left: 350px; top: 30px;">TGL CUCI</p>
+            <p style="position: absolute; left: 450px; top: 30px;">: {{ date('d-M-Y', strtotime($data->transaksi->created_at)) }} s.d {{ date('d-M-Y', strtotime($data->transaksi->done_date)) }}</p>
 
             <p style="position: absolute; left: 0px; top: 60px;">ALAMAT/TELP</p>
             <p style="position: absolute; left: 100px; top: 60px;">: {{ $data->transaksi->pelanggan->alamat }} / {{ $data->transaksi->pelanggan->telephone }}</p>
@@ -78,11 +78,11 @@
             <p style="position: absolute; left: 0px; top: 120px;">EXPRESS</p>
             <p style="position: absolute; left: 100px; top: 120px;">: {{ $data->transaksi->express ? 'YA' : 'TIDAK' }}</p>
 
-            <p style="position: absolute; left: 300px; top: 120px;">SETRIKA SAJA</p>
-            <p style="position: absolute; left: 400px; top: 120px;">: {{ $data->transaksi->setrika_only ? 'YA' : 'TIDAK' }}</p>
+            <p style="position: absolute; left: 250px; top: 120px;">SETRIKA SAJA</p>
+            <p style="position: absolute; left: 350px; top: 120px;">: {{ $data->transaksi->setrika_only ? 'YA' : 'TIDAK' }}</p>
 
-            <p style="position: absolute; left: 600px; top: 120px;">DELIVERY</p>
-            <p style="position: absolute; left: 700px; top: 120px;">: {{ $data->status_delivery }}</p>
+            <p style="position: absolute; left: 500px; top: 120px;">DELIVERY</p>
+            <p style="position: absolute; left: 600px; top: 120px;">: {{ $data->status_delivery }}</p>
         </div>
         <p class="hr-text" style="margin-bottom: 0px;">
             =========================================================================================================================
