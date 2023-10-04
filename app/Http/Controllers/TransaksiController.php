@@ -168,6 +168,7 @@ class TransaksiController extends Controller
         ];
     }
 
+    //
     public function insert(InsertTransaksiRequest $request)
     {
         $user = User::find(auth()->id());
