@@ -74,6 +74,10 @@ $(document).ready(function() {
         });
     });
 
+    $('#action-pesan').on('click', function() {
+        $('.btn-show-action').eq(btnIndex - 1).closest('.rounded').next().toggle();
+    });
+
     $('#action-remove').on('click', function() {
         $('#trans-' + btnId).addClass('disabled');
         let temp = $('#trans-' + btnId).parent().parent().detach();

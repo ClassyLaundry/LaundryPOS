@@ -225,17 +225,22 @@
                             <div class="hub-list hub-cuci">
                                 @foreach ($transaksis as $transaksi)
                                 @if ($transaksi->status != 'done' && $transaksi->pencuci == null && !$transaksi->setrika_only && !$transaksi->is_done_cuci && $transaksi->kode != null)
-                                    <div class="p-3 border rounded item d-flex justify-content-between align-items-center my-3" style="border-bottom: 3px solid rgb(54, 162, 235)!important; background-color: white;">
-                                        <div class="d-flex flex-column">
-                                            <h4>{{ $transaksi->kode }}</h4>
-                                            <h6 class="text-muted">{{ $transaksi->created_at }}</h6>
+                                    <div class="border rounded mt-3 item" style="border-bottom: 3px solid rgb(54, 162, 235)!important; background-color: white;">
+                                        <div class="p-3 border-bottom rounded d-flex justify-content-between align-items-center">
+                                            <div class="d-flex flex-column">
+                                                <h4>{{ $transaksi->kode }}</h4>
+                                                <h6 class="text-muted">{{ $transaksi->created_at }}</h6>
+                                            </div>
+                                            <div class="position-relative">
+                                                <h4 class="fw-bold me-4" style="font-style: italic;">Process</h4>
+                                                <i class="fa-solid fa-spinner position-absolute top-50 start-0 translate-middle fa-4x" style="font-style: italic; opacity: 0.25;"></i>
+                                                <button class="btn btn-sm btn-show-action position-absolute end-0" type="button" style="top: -12px;" id="trans-{{ $transaksi->id }}" style="box-shadow: none;">
+                                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div class="position-relative">
-                                            <h4 class="fw-bold me-4" style="font-style: italic;">Process</h4>
-                                            <i class="fa-solid fa-spinner position-absolute top-50 start-0 translate-middle fa-4x" style="font-style: italic; opacity: 0.25;"></i>
-                                            <button class="btn btn-sm btn-show-action position-absolute end-0" type="button" style="top: -12px;" id="trans-{{ $transaksi->id }}" style="box-shadow: none;">
-                                                <i class="fa-solid fa-ellipsis-vertical"></i>
-                                            </button>
+                                        <div class="p-3 pesan-pelanggan font-monospace" style="font-size: .75rem; display: none;">
+                                            {{ $transaksi->catatan }}
                                         </div>
                                     </div>
                                 @endif
@@ -250,26 +255,33 @@
                             <div class="hub-list hub-karyawan">
                                 @foreach ($transaksis as $transaksi)
                                 @if ($transaksi->status != 'done' && $transaksi->pencuci == Auth::id() && !$transaksi->setrika_only)
-                                    @if ($transaksi->is_done_cuci == 1)
-                                        <div class="p-3 border rounded d-flex justify-content-between align-items-center my-3" style="border-bottom: 3px solid rgb(54, 162, 235)!important; background-image: linear-gradient(to bottom right, white, rgb(54, 162, 235, .5)); background-color: white;">
-                                    @else
-                                        <div class="p-3 border rounded item d-flex justify-content-between align-items-center my-3" style="border-bottom: 3px solid rgb(54, 162, 235)!important; background-color: white;">
-                                    @endif
-                                        <div class="d-flex flex-column">
-                                            <h4>{{ $transaksi->kode }}</h4>
-                                            <h6 class="text-muted">{{ $transaksi->created_at }}</h6>
+                                    <div
+                                        @if ($transaksi->is_done_cuci == 1)
+                                        class="border rounded mt-3" style="border-bottom: 3px solid rgb(54, 162, 235)!important; background-image: linear-gradient(to bottom right, white, rgb(54, 162, 235, .5)); background-color: white;"
+                                        @else
+                                        class="border rounded mt-3 item" style="border-bottom: 3px solid rgb(54, 162, 235)!important; background-color: white;"
+                                        @endif
+                                    >
+                                        <div class="p-3 border-bottom rounded d-flex justify-content-between align-items-center">
+                                            <div class="d-flex flex-column">
+                                                <h4>{{ $transaksi->kode }}</h4>
+                                                <h6 class="text-muted">{{ $transaksi->created_at }}</h6>
+                                            </div>
+                                            <div class="position-relative">
+                                                @if ($transaksi->is_done_cuci == 1)
+                                                    <h4 class="fw-bold me-4" style="font-style: italic;">Done</h4>
+                                                    <i class="fa-solid fa-flag-checkered position-absolute top-50 start-0 translate-middle fa-4x" style="font-style: italic; opacity: 0.25;"></i>
+                                                @else
+                                                    <h4 class="fw-bold me-4" style="font-style: italic;">Process</h4>
+                                                    <i class="fa-solid fa-spinner position-absolute top-50 start-0 translate-middle fa-4x" style="font-style: italic; opacity: 0.25;"></i>
+                                                    <button class="btn btn-sm btn-show-action position-absolute end-0" type="button" style="top: -12px;" id="trans-{{ $transaksi->id }}" style="box-shadow: none;">
+                                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                    </button>
+                                                @endif
+                                            </div>
                                         </div>
-                                        <div class="position-relative">
-                                            @if ($transaksi->is_done_cuci == 1)
-                                                <h4 class="fw-bold me-4" style="font-style: italic;">Done</h4>
-                                                <i class="fa-solid fa-flag-checkered position-absolute top-50 start-0 translate-middle fa-4x" style="font-style: italic; opacity: 0.25;"></i>
-                                            @else
-                                                <h4 class="fw-bold me-4" style="font-style: italic;">Process</h4>
-                                                <i class="fa-solid fa-spinner position-absolute top-50 start-0 translate-middle fa-4x" style="font-style: italic; opacity: 0.25;"></i>
-                                                <button class="btn btn-sm btn-show-action position-absolute end-0" type="button" style="top: -12px;" id="trans-{{ $transaksi->id }}" style="box-shadow: none;">
-                                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                                </button>
-                                            @endif
+                                        <div class="p-3 pesan-pelanggan font-monospace" style="font-size: .75rem; display: none;">
+                                            {{ $transaksi->catatan }}
                                         </div>
                                     </div>
                                 @endif
@@ -281,6 +293,7 @@
                         <li id="action-add">Tambahkan</li>
                         <li id="action-remove">Kembalikan</li>
                         <li id="action-detail">Detail</li>
+                        <li id="action-pesan">Toggle Pesan</li>
                         <li id="action-done">Selesai</li>
                     </ul>
                 </div>

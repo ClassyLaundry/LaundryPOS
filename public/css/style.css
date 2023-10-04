@@ -301,10 +301,10 @@ thead tr {
     border: 1px solid rgba(0,0,0,0.125);
     z-index: 1;
     background: white;
-    margin-bottom: 1rem;
 }
 
 .sortable-placeholder {
+    margin-top: 1rem;
     height: 82px;
     border-radius: 1rem;
     border: 4px dashed #dee2e6;
