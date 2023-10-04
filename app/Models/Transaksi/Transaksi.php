@@ -40,12 +40,10 @@ class Transaksi extends Model
         $kode_outlet = $outlet->kode;
 
         $today = Carbon::today();
+        $formattedDate = $today->format('dm');
 
-        $code = $kode_outlet . "-" . $today->format('M') . str_pad(Carbon::today()->format('d'), 2, '0', STR_PAD_LEFT) . ".";
-
-        $count = Transaksi::where('kitir_code', 'LIKE', $code . '%')->whereNotNull('kode')->count() + 1;
-
-        $code = $code . str_pad($count, 3, '0', STR_PAD_LEFT);
+        $count = Transaksi::where('kitir_code', 'LIKE', '%' . $formattedDate . '%')->count() + 1;
+        $code = ($transaksi->tipe_transaksi == "bucket" ? "B/" : "P/") . $kode_outlet . $formattedDate . str_pad($count, 2, '0', STR_PAD_LEFT);
         return $code;
     }
 
@@ -58,10 +56,10 @@ class Transaksi extends Model
         $kode_outlet = $outlet->kode;
 
         $today = Carbon::today();
-        $formattedDate = $today->format('dmY');
+        $formattedDate = $today->format('dmy');
 
         $count = Transaksi::where('memo_code', 'LIKE', '%' . $formattedDate . '%')->count() + 1;
-        $code = $kode_outlet . strval($transaksi->pelanggan_id) . $formattedDate . str_pad($count, 3, '0', STR_PAD_LEFT);
+        $code = $kode_outlet . $formattedDate . str_pad($count, 2, '0', STR_PAD_LEFT);
         return $code;
     }
 
