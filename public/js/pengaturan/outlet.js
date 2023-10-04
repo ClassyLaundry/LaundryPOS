@@ -13,15 +13,15 @@ $(document).ready(function() {
         $('#form-outlet').attr('action', "/setting/outlet/" + btnId);
         $('#modal-outlet .modal-title').text('Rubah outlet');
 
-        $('#input-kode').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(1)').html());
-        $('#input-nama').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(2)').html());
-        $('#input-alamat').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(3)').html());
-        $('#input-telp1').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(4)').html());
-        $('#input-telp2').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(5)').html());
-        $('#input-fax').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(6)').html());
-        if ($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(9)').html() == 'Aktif') {
+        $('#input-kode').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(1)').text());
+        $('#input-nama').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(2)').text());
+        $('#input-alamat').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(3)').text());
+        $('#input-telp1').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(4)').text());
+        $('#input-telp2').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(5)').text());
+        $('#input-fax').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(6)').text());
+        if ($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(9)').text() == 'Aktif') {
             $('#radio-status-aktif').attr('checked', true);
-        } else if ($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(9)').html() == 'Tidak aktif') {
+        } else if ($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(9)').text() == 'Tidak aktif') {
             $('#radio-status-nonaktif').attr('checked', true);
         }
 
