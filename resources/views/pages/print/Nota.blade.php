@@ -89,7 +89,7 @@
         </p>
     </div>
     <div id="detail-transaksi">
-        @if (str_contains($data->tipe_transaksi, 'bucket'))
+        @if ($data->transaksi->tipe_transaksi == 'bucket')
         <table style="font-size: 10pt">
             <thead style="border-bottom: 1px solid black;">
                 <tr>
@@ -122,7 +122,7 @@
                 @endforeach
             </tbody>
         </table>
-        @elseif (str_contains($data->transaksi->kode, 'PR-'))
+        @elseif ($data->transaksi->tipe_transaksi == 'premium')
         <table style="font-size: 10pt">
             <thead style="border-bottom: 1px solid black;">
                 <tr>
