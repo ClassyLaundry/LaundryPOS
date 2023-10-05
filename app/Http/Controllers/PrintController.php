@@ -63,7 +63,7 @@ class PrintController extends Controller
             'data' => $data
         ])->setPaper('A4', 'portrait');
         return $pdf->stream('invoice.pdf');
-        // //stream kalau preview, download kalau lsg download
+        // stream kalau preview, download kalau lsg download
     }
 
     public function memoProduksi($transaksi_id)
@@ -98,13 +98,15 @@ class PrintController extends Controller
         //stream kalau preview, download kalau lsg download
     }
 
-    public function kitir($transaksi_id)
+    public function kitir(Request $request, $transaksi_id)
     {
         $transaksi = Transaksi::detail()->find($transaksi_id);
+        $cetak = $request->cetak;
 
-        $paper_size = [0, 0, 225, 75];
+        $paper_size = [0, 0, 120, 80 * $cetak - intval(($cetak - 1) * 27.5)];
         $pdf = Pdf::loadView('pages.print.Kitir', [
-            'data' => $transaksi
+            'data' => $transaksi,
+            'cetak' => $cetak,
         ])->setPaper($paper_size, 'portrait');
         return $pdf->stream('invoice.pdf');
     }

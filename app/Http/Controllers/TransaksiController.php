@@ -120,14 +120,8 @@ class TransaksiController extends Controller
     //Mencari Transaksi dengan KEY id, Kode Transaksi, atau Nama Pelanggan
     public function search(Request $request)
     {
-        $tipe = '';
-        if ($request->tipe == "bucket") {
-            $tipe = 'BU-';
-        } else {
-            $tipe = 'PR-';
-        }
         $transaksi = Transaksi::detail()
-            ->where('kode', 'like', $tipe . '%')
+            ->where('tipe_transaksi', $request->tipe)
             ->where(function ($query) use ($request) {
                 $query->where('id', 'like', '%' . $request->key . '%')
                     ->orWhereHas('pelanggan', function ($q) use ($request) {
@@ -262,16 +256,13 @@ class TransaksiController extends Controller
 
             $kode = '';
             $outlet = Outlet::find($transaksi->outlet_id);
-            $kode = $outlet->kode . "-";
-            if ($request->tipe_transaksi == 'bucket') {
-                $kode = $kode . 'BU-';
-            } else {
-                $kode = $kode . 'PR-';
-            }
+            $today = Carbon::today();
+            $formattedDate = $today->format('ymd');
+            $kode = $outlet->kode . $formattedDate;
 
             if (empty($transaksi->kode) && $transaksi->status != "draft") {
                 $count = Transaksi::where('status', '!=', 'draft')->where('kode', 'like', $kode . '%')->count() + 1;
-                $paded = str_pad($count, 6, '0', STR_PAD_LEFT);
+                $paded = str_pad($count, 5, '0', STR_PAD_LEFT);
 
                 $transaksi->kode = $kode . $paded;
             }

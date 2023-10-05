@@ -89,7 +89,7 @@
         </p>
     </div>
     <div id="detail-transaksi">
-        @if (str_contains($data->transaksi->kode, 'BU-'))
+        @if (str_contains($data->tipe_transaksi, 'bucket'))
         <table style="font-size: 10pt">
             <thead style="border-bottom: 1px solid black;">
                 <tr>

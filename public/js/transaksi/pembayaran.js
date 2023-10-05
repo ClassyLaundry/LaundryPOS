@@ -6,6 +6,8 @@ $(document).ready(function() {
     $('.btn-show-action').on('click', function() {
         btnIndex = $(this).index('.btn-show-action') + 1;
         btnId = $(this).attr('id').substring(4);
+        $('#form-cetak-kitir').attr('action', '/printKitir/' + btnId);
+        $('#kode-trans-kitir').text($(this).closest('tr').children().eq(0).text());
     });
 
     $('#action-detail').on('click', function() {
@@ -107,7 +109,17 @@ $(document).ready(function() {
     });
 
     $('#action-print-kitir').on('click', function() {
-        window.location = window.location.origin + "/printKitir/" + btnId;
+        $.ajax({
+            url: "/transaksi/detail/" + btnId,
+        }).done(function(data) {
+            let trans = data;
+            let total_qty = 0;
+            trans['item_transaksi'].forEach(function(item) {
+                total_qty += item['qty'];
+            });
+            $('#input-cetak').val(total_qty);
+            $('#modal-cetak-kitir').modal('show');
+        });
     });
 
     var calculateNow;

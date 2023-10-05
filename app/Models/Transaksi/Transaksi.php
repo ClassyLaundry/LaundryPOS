@@ -40,7 +40,7 @@ class Transaksi extends Model
         $kode_outlet = $outlet->kode;
 
         $today = Carbon::today();
-        $formattedDate = $today->format('dm');
+        $formattedDate = $today->format('m') . ' ' . $today->format('d');
 
         $count = Transaksi::where('kitir_code', 'LIKE', '%' . $formattedDate . '%')->count() + 1;
         $code = ($transaksi->tipe_transaksi == "bucket" ? "B/" : "P/") . $kode_outlet . $formattedDate . str_pad($count, 2, '0', STR_PAD_LEFT);
@@ -56,7 +56,7 @@ class Transaksi extends Model
         $kode_outlet = $outlet->kode;
 
         $today = Carbon::today();
-        $formattedDate = $today->format('dmy');
+        $formattedDate = $today->format('ymd');
 
         $count = Transaksi::where('memo_code', 'LIKE', '%' . $formattedDate . '%')->count() + 1;
         $code = $kode_outlet . $formattedDate . str_pad($count, 2, '0', STR_PAD_LEFT);

@@ -3,19 +3,18 @@ $(document).ready(function() {
     $('.btn-show-action').on('click', function() {
         btnIndex = $(this).index('.btn-show-action') + 1;
         btnId = $(this).attr('id').substring(4);
+        tipeTrans = $(this).closest('tr').children().eq(1).text().toLowerCase();
     });
 
     $('#action-detail').on('click', function() {
         $('#container-bucket').empty();
         $('#container-premium').empty();
-        if ($('tr:nth-child(' + btnIndex + ') td:nth-child(1)').html().includes('BU-')) {
+        if (tipeTrans == 'bucket') {
             $('#container-bucket').load(window.location.origin + '/component/shortTrans/' + btnId, function() {
-                tipeTrans = 'bucket';
                 $('#modal-detail').modal('show');
             });
         } else {
             $('#container-premium').load(window.location.origin + '/component/shortTrans/' + btnId, function() {
-                tipeTrans = 'premium';
                 $('#modal-detail').modal('show');
             });
         }

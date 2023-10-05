@@ -19,6 +19,7 @@
                         <thead class="text-center">
                             <tr>
                                 <th>Kode</th>
+                                <th>Tipe</th>
                                 <th>Outlet</th>
                                 <th class="d-none d-lg-table-cell">Tanggal Transaksi</th>
                                 <th>Nama Pelanggan</th>
@@ -34,6 +35,7 @@
                                 @if ($trans->packing == null)
                                 <tr id="{{ $trans->id }}" data-bs-toggle="tooltip" data-bss-tooltip="" title="Double klik untuk memilih">
                                     <td class="text-center">{{ $trans->kode }}</td>
+                                    <td class="text-center">{{ ucwords($trans->tipe_transaksi) }}</td>
                                     <td class="text-center">{{ $trans->outlet->nama }}</td>
                                     <td class="d-none d-lg-table-cell text-center">{{ $trans->created_at }}</td>
                                     <td>{{ $trans->pelanggan->nama }}</td>
