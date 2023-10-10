@@ -22,12 +22,8 @@ class PembayaranController extends Controller
             $request->validate([
                 'nominal' => 'required|integer'
             ]);
-            // $transaksi = Transaksi::find($request->transaksi_id);
-            // $pelanggan = Pelanggan::find($transaksi->pelanggan_id);
-            // $saldo = Saldo::where('pelanggan_id', $transaksi->pelanggan_id);
-            // if ($saldo->saldo_akhir > 0) {
-            // }else{
-            // }
+            $transaksi = Transaksi::find($request->transaksi_id);
+            $total_terbayar = $transaksi->total_terbayar;
             Pembayaran::create([
                 'nominal' => $request->nominal,
                 'outlet_id' => $user->outlet_id,
@@ -37,12 +33,40 @@ class PembayaranController extends Controller
             ]);
 
             if ($request->metode_pembayaran == 'deposit') {
-                
+                $pelanggan = Pelanggan::find($transaksi->pelanggan_id);
+                $latestSaldo = Saldo::where('pelanggan_id', $transaksi->pelanggan_id)
+                    ->latest('created_at')
+                    ->first();
+                if ($latestSaldo->saldo_akhir > 0) {
+                    if($latestSaldo->saldo_akhir < $request->nominal){
+                        $total_terbayar = $total_terbayar + $latestSaldo->saldo_akhir;
+                        Saldo::create([
+                            'pelanggan_id' => $transaksi->pelanggan_id,
+                            'outlet_id' => $user->outlet_id,
+                            'nominal' => $request->nominal,
+                            'jenis_input' => 'pembayaran',
+                            'saldo_akhir' => 0,
+                            'modified_by' => Auth::id()
+                        ]);
+                    }else{
+                        $total_terbayar = $total_terbayar + $request->nominal;
+                        Saldo::create([
+                            'pelanggan_id' => $transaksi->pelanggan_id,
+                            'outlet_id' => $user->outlet_id,
+                            'nominal' => $request->nominal,
+                            'jenis_input' => 'pembayaran',
+                            'saldo_akhir' => $latestSaldo->saldo_akhir - $request->nominal,
+                            'modified_by' => Auth::id()
+                        ]);
+                    }
+                }else{
+                    abort(400, 'SALDO IS 0');
+                }
+            }else{
+                $total_terbayar = $transaksi->total_terbayar + (int) $request->nominal;
             }
 
             //Mengubah Total Transaksi
-            $transaksi = Transaksi::find($request->transaksi_id);
-            $total_terbayar = $transaksi->total_terbayar + (int) $request->nominal;
             if ($total_terbayar >= $transaksi->grand_total) {
                 $transaksi->total_terbayar = $transaksi->grand_total;
                 $transaksi->lunas = true;
