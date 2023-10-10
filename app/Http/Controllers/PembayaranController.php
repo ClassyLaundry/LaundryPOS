@@ -36,6 +36,10 @@ class PembayaranController extends Controller
                 'metode_pembayaran' => $request->metode_pembayaran
             ]);
 
+            if ($request->metode_pembayaran == 'deposit') {
+                
+            }
+
             //Mengubah Total Transaksi
             $transaksi = Transaksi::find($request->transaksi_id);
             $total_terbayar = $transaksi->total_terbayar + (int) $request->nominal;

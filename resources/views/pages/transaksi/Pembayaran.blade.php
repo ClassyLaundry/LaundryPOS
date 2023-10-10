@@ -142,14 +142,15 @@
                                 <p class="d-flex align-items-center justify-content-end" style="height: 38px;">Metode Pembayaran :</p>
                             </div>
                             <div class="col-9 mb-2">
-                                <select class="form-select" name="metode_pembayaran" required>
+                                <select class="form-select" name="metode_pembayaran" id="input-metode-pembayaran" required>
                                     <option value hidden selected>-</option>
+                                    <option value="deposit">Deposit</option>
                                     <option value="tunai">Tunai</option>
-                                    <option value="saldo">Saldo</option>
                                     <option value="kredit">Kredit</option>
                                     <option value="debit">Debit</option>
                                 </select>
                             </div>
+                            <input type="hidden" id="input-saldo-pelanggan">
                             <div class="col-3 mb-2">
                                 <p class="d-flex align-items-center justify-content-end" style="height: 38px;" >Nominal :</p>
                             </div>

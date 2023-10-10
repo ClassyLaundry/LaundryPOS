@@ -24,9 +24,11 @@ $(document).ready(function() {
 
             let items = trans.item_transaksi;
             items.forEach(item => {
-                let temp = "<td>Rp</td><td class='text-end'>" + item.harga_premium + "</td>";
-                if (item.harga_premium == 0) {
+                let temp = "";
+                if (trans.tipe_transaksi == 'bucket') {
                     temp = "<td colspan='2' class='text-center'>" + parseFloat(item.bobot_bucket) + "</td>";
+                } else if (trans.tipe_transaksi == 'premium') {
+                    temp = "<td>Rp</td><td class='text-end'>" + item.harga_premium.toLocaleString(['ban', 'id']) + "</td>";
                 }
                 $('#table-item-transaksi tbody').append(
                     "<tr id='item-" + item.jenis_item_id + "'>" +
@@ -82,6 +84,18 @@ $(document).ready(function() {
                 url: "/pelanggan/" + pelanggan.id + "/check-saldo",
             }).done(function(data) {
                 let saldo = data.saldo;
+                let total = removeDot($('#input-total').val());
+
+                $('#input-saldo-pelanggan').val(saldo);
+
+                if (saldo != 0) {
+                    $('#input-metode-pembayaran').val('deposit');
+                    if (saldo >= total) {
+                        $('#input-nominal').val(total.toLocaleString(['ban', 'id']));
+                    } else {
+                        $('#input-nominal').val(saldo.toLocaleString(['ban', 'id']));
+                    }
+                }
 
                 if (saldo >= 100000) {
                     $('#alert-saldo').alert('close');
