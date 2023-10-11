@@ -89,12 +89,16 @@ $(document).ready(function() {
                 $('#input-saldo-pelanggan').val(saldo);
 
                 if (saldo != 0) {
+                    $('#input-metode-pembayaran option[value=deposit]').removeAttr('disabled');
                     $('#input-metode-pembayaran').val('deposit');
+                    $('#input-metode-pembayaran').trigger('change');
                     if (saldo >= total) {
                         $('#input-nominal').val(total.toLocaleString(['ban', 'id']));
                     } else {
                         $('#input-nominal').val(saldo.toLocaleString(['ban', 'id']));
                     }
+                } else {
+                    $('#input-metode-pembayaran option[value=deposit]').attr('disabled','disabled');
                 }
 
                 if (saldo >= 100000) {
@@ -112,6 +116,14 @@ $(document).ready(function() {
                 console.log(errorThrown);
             });
         });
+    });
+
+    $('#input-metode-pembayaran').on('change', function() {
+        if ($(this).val() == "deposit") {
+            $('#input-nominal').attr('disabled','disabled');
+        } else {
+            $('#input-nominal').removeAttr('disabled');
+        }
     });
 
     $('#action-print-nota').on('click', function() {
