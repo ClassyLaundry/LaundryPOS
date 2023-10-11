@@ -75,7 +75,9 @@ $(document).ready(function() {
         }
     };
 
+    var pelangganSaldo = 0;
     $('#btn-bayar').on('click', function() {
+        pelangganSaldo = 0;
         $.ajax({
             url: "/transaksi/detail/" + btnId,
         }).done(function(data) {
@@ -84,6 +86,7 @@ $(document).ready(function() {
                 url: "/pelanggan/" + pelanggan.id + "/check-saldo",
             }).done(function(data) {
                 let saldo = data.saldo;
+                pelangganSaldo = saldo;
                 let total = removeDot($('#input-total').val());
 
                 $('#input-saldo-pelanggan').val(saldo);
@@ -119,10 +122,19 @@ $(document).ready(function() {
     });
 
     $('#input-metode-pembayaran').on('change', function() {
+
         if ($(this).val() == "deposit") {
             $('#input-nominal').attr('disabled','disabled');
+
+            let total = removeDot($('#input-total').val());
+            if (pelangganSaldo >= total) {
+                $('#input-nominal').val(total.toLocaleString(['ban', 'id']));
+            } else {
+                $('#input-nominal').val(pelangganSaldo.toLocaleString(['ban', 'id']));
+            }
         } else {
             $('#input-nominal').removeAttr('disabled');
+            $('#input-nominal').val(0);
         }
     });
 
