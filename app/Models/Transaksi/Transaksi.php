@@ -55,11 +55,8 @@ class Transaksi extends Model
         $outlet = Outlet::find($transaksi->outlet_id);
         $kode_outlet = $outlet->kode;
 
-        $today = Carbon::today();
-        $formattedDate = $today->format('ymd');
-
-        $count = Transaksi::where('memo_code', 'LIKE', '%' . $formattedDate . '%')->count() + 1;
-        $code = $kode_outlet . $formattedDate . str_pad($count, 2, '0', STR_PAD_LEFT);
+        $index = str_pad(intval(substr($transaksi->kode, strlen($kode_outlet) + 6)), 2, '0', STR_PAD_LEFT);
+        $code = substr($transaksi->kode, 0, strlen($kode_outlet) + 6) . $index;
         return $code;
     }
 

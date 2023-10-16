@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Data\Pelanggan;
 use App\Models\SettingUmum;
 use App\Models\Transaksi\PickupDelivery;
 use App\Models\Transaksi\Transaksi;
@@ -36,6 +37,7 @@ class PrintController extends Controller
     public function nota($transaksi_id)
     {
         $transaksi = Transaksi::detail()->with('item_transaksi.item_notes')->find($transaksi_id);
+        $pelanggan = Pelanggan::with('catatan_pelanggan')->find($transaksi->pelanggan_id);
         $header = [
             'nama_usaha' => SettingUmum::where('nama', 'Print Header Nama Usaha')->first()->value,
             'delivery_text' => SettingUmum::where('nama', 'Print Header Delivery Text')->first()->value
@@ -54,6 +56,7 @@ class PrintController extends Controller
         $data->total_qty = $total_qty;
         $data->total_bobot = $total_bobot;
         $data->status_delivery = $status_delivery;
+        $data->pelanggan = $pelanggan;
 
         // return view('pages.print.Nota', ['data' => $data]);
 
@@ -69,7 +72,7 @@ class PrintController extends Controller
     public function memoProduksi($transaksi_id)
     {
         $transaksi = Transaksi::detail()->find($transaksi_id);
-        // return $transaksi;
+        $pelanggan = Pelanggan::with('catatan_pelanggan')->find($transaksi->pelanggan_id);
         $header = [
             'nama_usaha' => SettingUmum::where('nama', 'Print Header Nama Usaha')->first()->value,
             'delivery_text' => SettingUmum::where('nama', 'Print Header Delivery Text')->first()->value
@@ -88,6 +91,7 @@ class PrintController extends Controller
         $data->total_qty = $total_qty;
         $data->total_bobot = $total_bobot;
         $data->status_delivery = $status_delivery;
+        $data->pelanggan = $pelanggan;
 
         //8.5x 11 inch = 612x792 point
         // $paper_size = [0, 0, 792, 612];

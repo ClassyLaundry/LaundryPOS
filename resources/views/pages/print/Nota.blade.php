@@ -46,6 +46,7 @@
         }
     </style>
 </head>
+{{-- @dd($data->pelanggan) --}}
 <body style="width: 100%; height: 100%;">
     <div id="data-header">
         <h4> {{ $data->header['nama_usaha'] }}</h4>
@@ -141,7 +142,7 @@
                         <td class="text-center">{{$item->qty}}</td>
                         <td class="text-center">{{$item->satuan_unit}}</td>
                         <td class="text-center">{{$item->diskon_jenis_item}}</td>
-                        <td class="text-center">{{$item->total_premium}}</td>
+                        <td class="text-center">{{ number_format($item->total_premium, 0, ',', '.') }}</td>
                         <td class="text-start">
                             @foreach ($item->item_notes as $item_note)
                                 @if ($loop->index == 0)
@@ -186,7 +187,7 @@
 
             <p style="position: absolute; left: 0px; top: 30px;">Diskon</p>
             <p style="position: absolute; left: 100px; top: 30px;">:</p>
-            <p style="position: absolute; left: 100px; top: 30px; width: 75px;" class="text-end">{{ number_format($data->transaksi->diskon_jenis_item + $data->transaksi->total_diskon_promo + $data->transaksi->diskon_member, 0, ',', '.') }}</p>
+            <p style="position: absolute; left: 100px; top: 30px; width: 75px;" class="text-end">{{ number_format($data->transaksi->subtotal - $data->transaksi->grand_total, 0, ',', '.') }}</p>
 
             <p style="position: absolute; left: 300px; top: 30px;">Telah Bayar</p>
             <p style="position: absolute; left: 400px; top: 30px;">:</p>

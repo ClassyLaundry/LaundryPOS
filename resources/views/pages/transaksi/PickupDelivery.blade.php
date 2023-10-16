@@ -357,7 +357,13 @@
                                                         </svg>
                                                         <span class="text-muted">{{ $delivery->alamat }}</span>
                                                     </h4>
-                                                    <h6>{{ $delivery->kode }}</h6>
+                                                    <h6>
+                                                        {{ $delivery->kode }}
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width=".5rem" height=".5rem" viewBox="0 0 16 16" fill="currentColor" class="bi bi-dot">
+                                                            <path fill-rule="evenodd" d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
+                                                        </svg>
+                                                        <span class="text-muted">{{ $delivery->transaksi->kode }}</span>
+                                                    </h6>
                                                 </div>
                                                 <div class="position-relative">
                                                     <h4 class="fw-bold me-4" style="font-style: italic;">Delivery</h4>

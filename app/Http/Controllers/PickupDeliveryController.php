@@ -76,7 +76,7 @@ class PickupDeliveryController extends Controller
             return $item->name === 'Melihat Detail Pickup Delivery';
         });
         if ($permissionExist) {
-            $pickup_delivery = PickupDelivery::find($id);
+            $pickup_delivery = PickupDelivery::with('transaksi')->find($id);
             return [
                 'status' => 200,
                 $pickup_delivery,

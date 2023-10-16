@@ -86,12 +86,12 @@ class ItemTransaksiController extends Controller
     {
         $item_transaksi = ItemTransaksi::find($id);
         $trans = Transaksi::find($item_transaksi->transaksi_id);
-        $tipe_transaksi = str_contains($trans->kode, 'BU'); // if true then bucket, if false then premium
+        $tipe_transaksi = $trans->tipe_transaksi;
 
         $item_transaksi->qty = $request->qty;
-        if ($tipe_transaksi) {
+        if ($tipe_transaksi == "bucket") {
             $item_transaksi->total_bobot = $request->qty * $item_transaksi->bobot_bucket;
-        } else {
+        } else if ($tipe_transaksi == "premium"){
             $item_transaksi->total_premium = $request->qty * $item_transaksi->harga_premium;
         }
         $item_transaksi->save();

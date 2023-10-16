@@ -265,6 +265,7 @@ class TransaksiController extends Controller
                 $paded = str_pad($count, 5, '0', STR_PAD_LEFT);
 
                 $transaksi->kode = $kode . $paded;
+                $transaksi->save();
             }
 
             if (empty($transaksi->memo_code)) {

@@ -23,21 +23,27 @@ $(document).ready(function() {
             $('#table-item-transaksi tbody').empty();
 
             let items = trans.item_transaksi;
-            items.forEach(item => {
-                let temp = "";
-                if (trans.tipe_transaksi == 'bucket') {
-                    temp = "<td colspan='2' class='text-center'>" + parseFloat(item.bobot_bucket) + "</td>";
-                } else if (trans.tipe_transaksi == 'premium') {
-                    temp = "<td>Rp</td><td class='text-end'>" + item.harga_premium.toLocaleString(['ban', 'id']) + "</td>";
-                }
-                $('#table-item-transaksi tbody').append(
-                    "<tr id='item-" + item.jenis_item_id + "'>" +
-                        "<td>" + item.nama + "</td>" +
-                        "<td class='text-center'>" + item.nama_kategori + "</td>" +
-                        temp +
-                    "</tr>"
-                );
-            });
+            if (trans.tipe_transaksi == "bucket") {
+                items.forEach(item => {
+                    $('#table-item-transaksi tbody').append(
+                        "<tr id='item-" + item.jenis_item_id + "'>" +
+                            "<td>" + item.nama + "</td>" +
+                            "<td class='text-center'>" + item.nama_kategori + "</td>" +
+                            "<td colspan='2' class='text-center'>" + parseFloat(item.bobot_bucket) + "</td>" +
+                        "</tr>"
+                    );
+                });
+            } else if (trans.tipe_transaksi == "premium") {
+                items.forEach(item => {
+                    $('#table-item-transaksi tbody').append(
+                        "<tr id='item-" + item.jenis_item_id + "'>" +
+                            "<td>" + item.nama + "</td>" +
+                            "<td class='text-center'>" + item.nama_kategori + "</td>" +
+                            "<td>Rp</td><td class='text-end'>" + item.harga_premium.toLocaleString(['ban', 'id']) + "</td>" +
+                        "</tr>"
+                    );
+                });
+            }
 
             if (trans.diskon + trans.diskon_member == 0) {
                 $('#diskon').parent().hide();

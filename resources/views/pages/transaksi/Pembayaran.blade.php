@@ -18,6 +18,7 @@
                             <tr>
                                 <th>Kode</th>
                                 <th>Pelanggan</th>
+                                <th>Tipe</th>
                                 <th colspan="2">Total</th>
                                 <th>Lunas</th>
                                 <th colspan="2">Terbayar</th>
@@ -30,6 +31,7 @@
                             {{-- @if($transaksi != 'draft') --}}
                             <tr>
                                 <td class="text-center">{{ $transaksi->kode }}</td>
+                                <td class="text-center">{{ $transaksi->tipe_transaksi }}</td>
                                 <td class="text-center">{{ $transaksi->pelanggan->nama }}</td>
                                 <td style="width: 35px;">Rp</td>
                                 <td class="thousand-separator text-end">{{ $transaksi->grand_total }}</td>

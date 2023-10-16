@@ -13,7 +13,7 @@
 </head>
 <body style="width: 100%; height: 100%;">
     @for($i = 0; $i < $cetak; $i++)
-        <h2 style="position: absolute; left: 0px; top: {{ $i * 70 - 30 }}px; width: 100%;">{{ $data->kitir_code }}</h2>
+        <h3 style="position: absolute; left: 0px; top: {{ $i * 70 - 30 }}px; width: 100%;">{{ $data->kitir_code }}</h3>
     @endfor
 </body>
 
