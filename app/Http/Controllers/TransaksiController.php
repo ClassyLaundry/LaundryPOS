@@ -128,7 +128,7 @@ class TransaksiController extends Controller
                         $q->where('nama', 'like', '%' . $request->key . '%');
                     });
             })
-            ->paginate(15);
+            ->latest()->paginate(15);
 
         return view('components.tableListTrans', [
             'status' => 200,
