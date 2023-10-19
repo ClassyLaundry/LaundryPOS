@@ -157,7 +157,7 @@
                                 <p class="d-flex align-items-center justify-content-end" style="height: 38px;" >Nominal :</p>
                             </div>
                             <div class="col-9 mb-2">
-                                <input type="text" class="form-control input-thousand-separator" id="input-nominal" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" name="nominal" required />
+                                <input type="text" name="nominal" class="form-control input-thousand-separator" id="input-nominal" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required />
                             </div>
                             <div class="col-3 mb-2">
                                 <p class="d-flex align-items-center justify-content-end fw-bold" style="height: 38px;">Total Terbayar :</p>

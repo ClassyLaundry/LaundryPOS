@@ -201,8 +201,27 @@ $(document).ready(function() {
     }
 
     $('#form-pembayaran').on('submit', function(e) {
-        e.preventDefault;
-        $('#input-nominal').val(removeDot($('#input-nominal').val()));
-        $(this).submit();
+        e.preventDefault();
+
+        let formData = new FormData();
+        formData.append('transaksi_id', $('#input-trans-id').val());
+        formData.append('metode_pembayaran', $('#input-metode-pembayaran').val());
+        formData.append('nominal', removeDot($('#input-nominal').val()));
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            url: "/transaksi/pembayaran",
+            method: "POST",
+            contentType: false,
+            processData: false,
+            data: formData,
+        }).done(function(response) {
+            alert("Pembayaran berhasil");
+            window.location = window.location;
+        }).fail(function(message) {
+            console.log(message);
+        });
     });
 });

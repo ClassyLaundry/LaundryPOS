@@ -19,14 +19,13 @@ class PembayaranController extends Controller
         $permissionExist = collect($permissions)->first(function ($item) {
             return $item->name === 'Membuat Pembayaran';
         });
+
         if ($permissionExist) {
-            $request->validate([
-                'nominal' => 'required|integer'
-            ]);
             $transaksi = Transaksi::find($request->transaksi_id);
             $total_terbayar = $transaksi->total_terbayar;
+            $nominal = intval($request->nominal);
             Pembayaran::create([
-                'nominal' => $request->nominal,
+                'nominal' => $nominal,
                 'outlet_id' => $user->outlet_id,
                 'transaksi_id' => $request->transaksi_id,
                 'saldo_id' => $request->saldo_id,
@@ -39,24 +38,24 @@ class PembayaranController extends Controller
                     ->latest('created_at')
                     ->first();
                 if ($latestSaldo->saldo_akhir > 0) {
-                    if($latestSaldo->saldo_akhir < $request->nominal){
+                    if($latestSaldo->saldo_akhir < $nominal){
                         $total_terbayar = $total_terbayar + $latestSaldo->saldo_akhir;
                         Saldo::create([
                             'pelanggan_id' => $transaksi->pelanggan_id,
                             'outlet_id' => $user->outlet_id,
-                            'nominal' => $request->nominal,
+                            'nominal' => $nominal,
                             'jenis_input' => 'pembayaran',
                             'saldo_akhir' => 0,
                             'modified_by' => Auth::id()
                         ]);
                     }else{
-                        $total_terbayar = $total_terbayar + $request->nominal;
+                        $total_terbayar = $total_terbayar + $nominal;
                         Saldo::create([
                             'pelanggan_id' => $transaksi->pelanggan_id,
                             'outlet_id' => $user->outlet_id,
-                            'nominal' => $request->nominal,
+                            'nominal' => $nominal,
                             'jenis_input' => 'pembayaran',
-                            'saldo_akhir' => $latestSaldo->saldo_akhir - $request->nominal,
+                            'saldo_akhir' => $latestSaldo->saldo_akhir - $nominal,
                             'modified_by' => Auth::id()
                         ]);
                     }
@@ -64,7 +63,7 @@ class PembayaranController extends Controller
                     abort(400, 'SALDO IS 0');
                 }
             }else{
-                $total_terbayar = $transaksi->total_terbayar + (int) $request->nominal;
+                $total_terbayar = $transaksi->total_terbayar + (int) $nominal;
             }
 
             //Mengubah Total Transaksi
@@ -76,7 +75,11 @@ class PembayaranController extends Controller
             }
             $transaksi->save();
 
-            return redirect()->intended(route('menu_pembayaran'));
+            // return redirect()->intended(route('menu_pembayaran'));
+            return  [
+                'status' => 200,
+                'message' => 'success',
+            ];
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
         }
