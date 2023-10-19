@@ -18,7 +18,7 @@ $(document).ready(function() {
             let trans = data;
             $('.kode-trans').text(trans.kode);
             $('#subtotal').html(trans.subtotal);
-            $('#diskon').html(trans.diskon + trans.diskon_member);
+            $('#diskon').html(trans.subtotal - trans.grand_total);
             $('#grand-total').html(trans.grand_total);
             $('#table-item-transaksi tbody').empty();
 
@@ -103,18 +103,23 @@ $(document).ready(function() {
                     $('#input-metode-pembayaran').trigger('change');
                     if (saldo >= total) {
                         $('#input-nominal').val(total.toLocaleString(['ban', 'id']));
+                        alert(1);
                     } else {
                         $('#input-nominal').val(saldo.toLocaleString(['ban', 'id']));
+                        alert(2);
                     }
                 } else {
                     $('#input-metode-pembayaran option[value=deposit]').attr('disabled','disabled');
+                    alert(3);
                 }
 
                 if (saldo >= 100000) {
                     $('#alert-saldo').alert('close');
+                    alert(4);
                 }
                 if (pelanggan.member) {
                     $('#alert-member').alert('close');
+                    alert(5);
                 }
 
                 setThousandSeparator();
