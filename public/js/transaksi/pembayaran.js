@@ -103,23 +103,18 @@ $(document).ready(function() {
                     $('#input-metode-pembayaran').trigger('change');
                     if (saldo >= total) {
                         $('#input-nominal').val(total.toLocaleString(['ban', 'id']));
-                        alert(1);
                     } else {
                         $('#input-nominal').val(saldo.toLocaleString(['ban', 'id']));
-                        alert(2);
                     }
                 } else {
                     $('#input-metode-pembayaran option[value=deposit]').attr('disabled','disabled');
-                    alert(3);
                 }
 
                 if (saldo >= 100000) {
                     $('#alert-saldo').alert('close');
-                    alert(4);
                 }
                 if (pelanggan.member) {
                     $('#alert-member').alert('close');
-                    alert(5);
                 }
 
                 setThousandSeparator();
