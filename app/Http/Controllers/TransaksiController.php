@@ -128,12 +128,12 @@ class TransaksiController extends Controller
                         $q->where('nama', 'like', '%' . $request->key . '%');
                     });
             })
-            ->take(5)->get();
+            ->paginate(15);
 
-        return [
+        return view('components.tableListTrans', [
             'status' => 200,
-            $transaksi
-        ];
+            'transaksis' => $transaksi
+        ]);
     }
 
     //Mendapatkan harga Paket Bucket

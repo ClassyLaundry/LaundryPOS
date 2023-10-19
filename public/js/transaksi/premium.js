@@ -11,7 +11,7 @@ $(document).ready(function() {
     });
 
     var transId;
-    $('#table-list-trans tbody').on('click', 'tr', function() {
+    $('#container-list-trans').on('click', '#table-list-trans tbody tr', function() {
         let parent = $(this).parent();
         parent.addClass('disabled');
         let id = $(this).attr('id');
@@ -141,30 +141,22 @@ $(document).ready(function() {
         });
     });
 
-    $('#search-key-trans').on('click', function() {
-        let key = $('#input-key-trans').val()
-        $.ajax({
-            url: "/transaksi/search?tipe=premium&key=" + key,
-        }).done(function(data) {
-            console.log(data);
-            let transaksi = data[0];
+    let key = '';
+    $('#container-list-trans').load(window.location.origin + '/transaksi/search?tipe=premium&key=' + key, function() {
+        setThousandSeparator();
+    });
 
-            $('#table-list-trans tbody').empty();
-            for (let i = 0; i < transaksi.length; i++) {
-                const trans = transaksi[i];
-                console.log(trans);
-                $('#table-list-trans tbody').prepend(
-                    "<tr>data-bs-toggle='tooltip' data-bss-tooltip='' title='Double klik untuk memilih' id=" + trans.id + ">" +
-                        "<td>" + trans.kode + "</td>" +
-                        "<td>" + trans.outlet.nama + "</td>" +
-                        "<td class='d-none d-lg-table-cell text-center'>" + trans.created_at + "</td>" +
-                        "<td>" + trans.pelanggan.nama + "</td>" +
-                        "<td>Rp</td>" +
-                        "<td class='text-end thousand-separator'>" + trans.grand_total + "</td>" +
-                        "<td class='text-center' style='white-space: nowrap'>" + ((trans.lunas) ? 'Lunas' : 'Belum Lunas') + "</td>" +
-                    "</tr>"
-                );
-            }
+    $('#search-key-trans').on('click', function() {
+        key = $('#input-key-trans').val();
+        $('#container-list-trans').load(window.location.origin + '/transaksi/search?tipe=premium&key=' + key, function() {
+            setThousandSeparator();
+        });
+    });
+
+    $('#container-list-trans').on('click', '.page-link', function(e) {
+        e.preventDefault();
+        let page = $(this).attr('href').substr(-1);
+        $('#container-list-trans').load(window.location.origin + '/transaksi/search?tipe=premium&key=' + key + '&page=' + page, function() {
             setThousandSeparator();
         });
     });
