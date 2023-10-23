@@ -123,6 +123,9 @@
                             <div id="table-container"></div>
 
                             <ul class="list-unstyled form-control" id="list-action">
+                                @if(in_array("Mengubah Data Item Transaksi", Session::get('permissions')) || Session::get('role') == 'administrator')
+                                    <li id="action-change-qty">Rubah qty item</li>
+                                @endif
                                 @if(in_array("Melihat Detail Daftar Catatan Item", Session::get('permissions')) || Session::get('role') == 'administrator')
                                     <li id="action-notes">Catatan item</li>
                                 @endif

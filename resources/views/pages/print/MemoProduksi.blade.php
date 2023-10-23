@@ -70,7 +70,7 @@
             <p style="position: absolute; left: 100px; top: 60px;">: {{ $data->transaksi->pelanggan->no_id }} / {{ $data->transaksi->pelanggan->nama }}</p>
 
             <p style="position: absolute; left: 350px; top: 60px;">TGL CUCI</p>
-            <p style="position: absolute; left: 450px; top: 60px;">: {{ date('d-M-Y', strtotime($data->transaksi->created_at)) }} s.d {{ date('d-M-Y', strtotime($data->transaksi->updated_at)) }}</p>
+            <p style="position: absolute; left: 450px; top: 60px;">: {{ date('d-M-Y', strtotime($data->transaksi->created_at)) }} s.d {{ date('d-M-Y', strtotime($data->transaksi->done_date)) }}</p>
 
             <p style="position: absolute; left: 0px; top: 90px;">ALAMAT/TELP</p>
             <p style="position: absolute; left: 100px; top: 90px;">: {{ $data->transaksi->pelanggan->alamat }} / {{ $data->transaksi->pelanggan->telephone }}</p>

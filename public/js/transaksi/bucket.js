@@ -471,11 +471,19 @@ $(document).ready(function() {
         $(this).closest('div').hide();
     });
 
-    var btnIndex = -1, currentlySelectedItemTransactionID = 0, currentlySelectedItemName = '';
+    var btnIndex = -1, currentlySelectedItemTransactionID = 0, currentlySelectedItemName = '', btnId = '';
     $('#table-container').on('click', '.btn-show-action', function() {
+        btnId = $(this).attr('id');
         btnIndex = $(this).index('#table-container .btn-show-action') + 1;
         currentlySelectedItemTransactionID = $('#table-container tbody tr:nth-child(' + btnIndex + ')').attr('id');
         currentlySelectedItemName = $('#table-container tbody tr:nth-child(' + btnIndex + ')').children().eq(0).html();
+    });
+
+    $('#action-change-qty').on('click', function() {
+        let currentField = $('#' + btnId).parent().siblings('.col-qty');
+        let div = $(currentField).find('div').detach();
+        $(currentField).append('<input class="form-control text-center" type="number" step=0.1 min=1 name="qty" value=' + div.text() + '>');
+        $(currentField).find('input').focus();
     });
 
     $('#action-notes').on('click', function() {
