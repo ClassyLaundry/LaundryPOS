@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Data\Pelanggan;
+use App\Models\Packing\Packing;
 use App\Models\SettingUmum;
 use App\Models\Transaksi\PickupDelivery;
 use App\Models\Transaksi\Transaksi;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -84,6 +86,8 @@ class PrintController extends Controller
             $total_bobot += $item->total_bobot;
         }
         $status_delivery = PickupDelivery::where("transaksi_id", $transaksi_id)->where('action', 'delivery')->get()->count() != 0 ? 'YA' : 'TIDAK';
+        $dataPacking = Packing::where('transaksi_id', $transaksi_id)->first();
+        $packing = User::where('id', $dataPacking->modified_by)->first();
 
         $data = collect();
         $data->header = $header;
@@ -92,6 +96,7 @@ class PrintController extends Controller
         $data->total_bobot = $total_bobot;
         $data->status_delivery = $status_delivery;
         $data->pelanggan = $pelanggan;
+        $data->packing = $packing;
 
         //8.5x 11 inch = 612x792 point
         // $paper_size = [0, 0, 792, 612];

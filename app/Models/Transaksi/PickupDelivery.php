@@ -52,4 +52,9 @@ class PickupDelivery extends Model
     {
         return $this->belongsTo(User::class, 'id', 'driver_id');
     }
+
+    public static function delivery_driver($id){
+        $data = PickupDelivery::where('action','delivery')->where('driver_id',$id)->get();
+        return $data;
+    }
 }
