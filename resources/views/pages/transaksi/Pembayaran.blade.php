@@ -17,8 +17,8 @@
                         <thead>
                             <tr>
                                 <th>Kode</th>
-                                <th>Pelanggan</th>
                                 <th>Tipe</th>
+                                <th>Pelanggan</th>
                                 <th colspan="2">Total</th>
                                 <th>Lunas</th>
                                 <th colspan="2">Terbayar</th>
