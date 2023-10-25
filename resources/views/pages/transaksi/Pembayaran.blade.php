@@ -12,49 +12,26 @@
             <div class="card-body">
                 <h4>List Transaksi</h4>
                 <hr />
-                <div class="table-responsive">
-                    <table class="table table-striped" id="table-pembayaran">
-                        <thead>
-                            <tr>
-                                <th>Kode</th>
-                                <th>Tipe</th>
-                                <th>Pelanggan</th>
-                                <th colspan="2">Total</th>
-                                <th>Lunas</th>
-                                <th colspan="2">Terbayar</th>
-                                <th>Status</th>
-                                <th style="width: 50px;"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @foreach ($transaksis as $transaksi)
-                            {{-- @if($transaksi != 'draft') --}}
-                            <tr>
-                                <td class="text-center">{{ $transaksi->kode }}</td>
-                                <td class="text-center">{{ $transaksi->tipe_transaksi }}</td>
-                                <td class="text-center">{{ $transaksi->pelanggan->nama }}</td>
-                                <td style="width: 35px;">Rp</td>
-                                <td class="thousand-separator text-end">{{ $transaksi->grand_total }}</td>
-                                @if ($transaksi->lunas)
-                                    <td class="text-center">Lunas</td>
-                                @else
-                                    <td class="text-center">Belum lunas</td>
-                                @endif
-                                <td style="width: 35px;">Rp</td>
-                                <td class="thousand-separator text-end">{{ $transaksi->total_terbayar }}</td>
-                                <td class="text-center">{{ $transaksi->status }}</td>
-                                <td class="cell-action">
-                                    <button id="btn-{{ $transaksi->id }}" class="btn btn-primary btn-sm btn-show-action" type="button">
-                                        <i class="fas fa-bars"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            {{-- @endif --}}
-                        @endforeach
-                        </tbody>
-                    </table>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        Tanggal:
+                        <input class="form-control mx-1" id="input-search-by-date" type="date">
+
+                        <button class="btn btn-outline-primary d-none" id="btn-reset">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                        </button>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        Search:
+                        <input class="form-control ms-1" id="input-search-by-name" type="search" style="max-width: 200px; border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                        <button class="btn btn-primary" data-bs-toggle="tooltip" data-bss-tooltip="" id="btn-search" type="button" title="Cari transaksi" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
-                {{ $transaksis->links() }}
+
+                <div id="table-container" class="mt-3"></div>
 
                 <ul class="list-unstyled form-control" id="list-action">
                     @if(in_array("Melihat Detail Pembayaran", Session::get('permissions')) || Session::get('role') == 'administrator')

@@ -136,6 +136,22 @@ class PembayaranController extends Controller
         }
     }
 
+    public function tablePembayaran(Request $request)
+    {
+        $transaksis = Transaksi::join('pelanggans', 'transaksis.pelanggan_id', '=', 'pelanggans.id')
+            ->select('transaksis.*')
+            ->where(function ($query) use ($request) {
+                $query->where('pelanggans.nama', 'like', "%{$request->name}%")
+                    ->where('transaksis.created_at', 'like', "{$request->date}%");
+            })
+            ->orderBy("transaksis.created_at", "desc")
+            ->paginate(15);
+        return view('components.tablePembayaran', [
+            'transaksis' => $transaksis,
+        ]);
+    }
+
+
     public function show(Pembayaran $pembayaran)
     {
         $user = User::find(auth()->id());

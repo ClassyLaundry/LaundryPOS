@@ -232,6 +232,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/transaksi/pembayaran-tagihan', [PembayaranController::class, 'bayarTagihan']);;
     Route::post('/transaksi/pembayaran/{pembayaran}', [PembayaranController::class, 'update']);
     Route::get('/transaksi/pembayaran/delete/{pembayaran}', [PembayaranController::class, 'delete']);
+    Route::get('/component/pembayaran', [PembayaranController::class, 'tablePembayaran']);
     //Inventory
     Route::get('/data/inventory', [PageController::class, 'inventory'])->name('menu-inventory');
     Route::post('/data/inventory/insert', [InventoryController::class, 'insert']);

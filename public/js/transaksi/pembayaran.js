@@ -3,7 +3,7 @@ $(document).ready(function() {
         $('#list-action').detach();
     }
     var btnIndex = -1, btnId = 0;
-    $('.btn-show-action').on('click', function() {
+    $('#table-container').on('click', '.btn-show-action',function() {
         btnIndex = $(this).index('.btn-show-action') + 1;
         btnId = $(this).attr('id').substring(4);
         $('#form-cetak-kitir').attr('action', '/printKitir/' + btnId);
@@ -128,7 +128,6 @@ $(document).ready(function() {
     });
 
     $('#input-metode-pembayaran').on('change', function() {
-
         if ($(this).val() == "deposit") {
             $('#input-nominal').attr('disabled','disabled');
 
@@ -224,4 +223,19 @@ $(document).ready(function() {
             console.log(message);
         });
     });
+
+    $('#table-container').load(window.location.origin + '/component/pembayaran');
+
+    function search() {
+        $('#table-container').load(window.location.origin + '/component/pembayaran?name=' + encodeURIComponent($('#input-search-by-name').val()) + '&date=' + $('#input-search-by-date').val(), function (){
+            if ($('#table-container tbody').children().length == 0) {
+                alert('Transaksi tidak ditemukan');
+            }
+        });
+    }
+
+    $('#btn-search').on('click', function() { search(); });
+    $('#btn-reset').on('click', function() { $('#input-search-by-date').val(''); search(); $(this).addClass('d-none'); });
+
+    $('#input-search-by-date').on('change', function() { search(); $('#btn-reset').removeClass('d-none');});
 });

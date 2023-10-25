@@ -488,12 +488,7 @@ class PageController extends Controller
             return $item->name === 'Membuka Menu Pembayaran';
         });
         if ($permissionExist) {
-            return view(
-                'pages.transaksi.Pembayaran',
-                [
-                    'transaksis' => Transaksi::with('pelanggan')->latest()->paginate(15),
-                ]
-            );
+            return view('pages.transaksi.Pembayaran');
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
         }
