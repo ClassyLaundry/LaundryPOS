@@ -169,5 +169,10 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'Menambah Data Diskon']);
         Permission::create(['name' => 'Mengubah Data Diskon']);
         Permission::create(['name' => 'Menghapus Data Diskon']);
+
+        //Catatan Pelanggan
+        Permission::create(['name' => 'Menambah Catatan Pelanggan']);
+        Permission::create(['name' => 'Melihat Catatan Pelanggan']);
+        Permission::create(['name' => 'Mengupdate Catatan Pelanggan']);
     }
 }
