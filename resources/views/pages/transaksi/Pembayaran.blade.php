@@ -150,7 +150,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer"><button class="btn btn-primary" type="submit">Simpan</button></div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <p>Saldo Pelanggan: <span id="saldo-pelanggan"></span></p>
+                        <button class="btn btn-primary" type="submit">Simpan</button>
+                    </div>
                 </form>
             </div>
         </div>

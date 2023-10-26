@@ -96,6 +96,7 @@ $(document).ready(function() {
                 let total = removeDot($('#input-total').val());
 
                 $('#input-saldo-pelanggan').val(saldo);
+                $('#saldo-pelanggan').text(saldo.toLocaleString(['ban', 'id']));
 
                 if (saldo != 0) {
                     $('#input-metode-pembayaran option[value=deposit]').removeAttr('disabled');
