@@ -87,7 +87,11 @@ class PrintController extends Controller
         }
         $status_delivery = PickupDelivery::where("transaksi_id", $transaksi_id)->where('action', 'delivery')->get()->count() != 0 ? 'YA' : 'TIDAK';
         $dataPacking = Packing::where('transaksi_id', $transaksi_id)->first();
-        $packing = User::where('id', $dataPacking->modified_by)->first();
+        if ($dataPacking !== null && $dataPacking->modified_by !== null) {
+            $packing = User::where('id', $dataPacking->modified_by)->first();
+        } else {
+            $packing = null;
+        }
 
         $data = collect();
         $data->header = $header;
