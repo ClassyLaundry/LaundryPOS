@@ -339,7 +339,7 @@
                                 @endforeach
 
                                 @foreach ($deliveries as $delivery)
-                                    @if($driver->id == $pickup->driver_id)
+                                    @if($driver->id == $delivery->driver_id)
                                         <div class="border rounded mt-3 card-delivery" id="delivery-{{ $delivery->id }}" data-transaksi="{{ $delivery->transaksi_id }}"
                                             @if ($delivery->is_done)
                                                 style="border-bottom: 3px solid rgb(153, 102, 255)!important; background-image: linear-gradient(to bottom right, white, rgb(153, 102, 255, .5)); background-color: white;"

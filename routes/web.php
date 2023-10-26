@@ -249,7 +249,8 @@ Route::middleware(['auth'])->group(function () {
     //Packing
     Route::get('/proses/packing', [PageController::class, 'packing']);
     Route::post('/proses/packing', [PackingController::class, 'create']);
-    Route::get('/component/packing/{id}', [PackingController::class, 'tablePacking']);
+    Route::get('/component/packing/{id}/bucket', [PackingController::class, 'tablePackingBucket']);
+    Route::get('/component/packing/{id}/premium', [PackingController::class, 'tablePackingPremium']);
 
     //Laporan
     Route::get('/laporan/piutang', [LaporanController::class, 'laporanPiutangPelanggan']);

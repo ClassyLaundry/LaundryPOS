@@ -21,34 +21,51 @@ $(document).ready(function() {
     });
 
     $('#action-kemas').on('click', function() {
-        $('#table-container').load(window.location.origin + '/component/packing/' + btnId, function() {
-            $('#modal-packing').modal('show');
+        $('#table-container-' + tipeTrans).load(window.location.origin + '/component/packing/' + btnId + '/' + tipeTrans, function() {
+            $('#modal-packing-' + tipeTrans).modal('show');
         });
     });
 
-    $('#form-packing').on('submit', function(e) {
+    $('#form-packing-bucket').on('submit', function(e) {
         e.preventDefault();
 
-        let inventories = [], newData;
+        let inventories = [];
+        inventories.push({
+            inventory_id: $('#table-container-bucket #input-inventory').val(),
+            qty: $('#table-container-bucket #input-inventory-qty').val(),
+        });
+
+        let formData = new FormData();
+        formData.append('transaksi_id', btnId);
+        formData.append('inventories', JSON.stringify(inventories));
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            url: "/proses/packing",
+            method: "POST",
+            contentType: false,
+            processData: false,
+            data: formData,
+        }).done(function() {
+            alert('Data packing berhasil disimpan');
+            window.location = window.location.origin + window.location.pathname;
+        }).fail(function(message) {
+            alert('error');
+            console.log(message);
+        });
+    });
+
+    $('#form-packing-premium').on('submit', function(e) {
+        e.preventDefault();
+
+        let inventories = [];
         for (let i = 0; i < $('.input-inventory').length; i++) {
-            let currentInventory = $('.input-inventory').eq(i);
-            let tempData = {
-                inventory_id: currentInventory.val(),
+            inventories.push({
+                inventory_id: $('.input-inventory').eq(i).val(),
                 qty: 1,
-            };
-            newData = true;
-
-            for (let j = 0; j < inventories.length; j++) {
-                if (inventories[j].inventory_id == tempData.inventory_id) {
-                    inventories[j].qty++;
-                    newData = false;
-                    break;
-                }
-            };
-
-            if (newData) {
-                inventories.push(tempData);
-            }
+            });
         }
 
         let formData = new FormData();
@@ -65,7 +82,7 @@ $(document).ready(function() {
             processData: false,
             data: formData,
         }).done(function() {
-            alert('success');
+            alert('Data packing berhasil disimpan');
             window.location = window.location.origin + window.location.pathname;
         }).fail(function(message) {
             alert('error');
