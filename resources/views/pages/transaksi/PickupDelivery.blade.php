@@ -331,8 +331,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="p-3 pesan-pelanggan font-monospace" style="font-size: .75rem; display: none;">
-                                                {{ $pickup->request }}
+                                            <div class="px-3 py-1 pesan-pelanggan font-monospace" style="display: none;">
+                                                <h4>{{ $pickup->request }}</h4>
                                             </div>
                                         </div>
                                     @endif
@@ -377,8 +377,8 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                            <div class="p-3 pesan-pelanggan font-monospace" style="font-size: .75rem; display: none;">
-                                                {{ $delivery->request }}
+                                            <div class="px-3 py-1 pesan-pelanggan font-monospace" style="display: none;">
+                                                <h4>{{ $delivery->request }}</h4>
                                             </div>
                                         </div>
                                     @endif

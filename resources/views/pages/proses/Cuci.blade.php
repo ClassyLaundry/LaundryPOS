@@ -239,8 +239,8 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="p-3 pesan-pelanggan font-monospace" style="font-size: .75rem; display: none;">
-                                            {{ $transaksi->catatan }}
+                                        <div class="px-3 py-1 pesan-pelanggan font-monospace" style="display: none;">
+                                            <h4>{{ $transaksi->catatan }}</h4>
                                         </div>
                                     </div>
                                 @endif
@@ -280,8 +280,8 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="p-3 pesan-pelanggan font-monospace" style="font-size: .75rem; display: none;">
-                                            {{ $transaksi->catatan }}
+                                        <div class="px-3 py-1 pesan-pelanggan font-monospace" style="display: none;">
+                                            <h4>{{ $transaksi->catatan }}</h4>
                                         </div>
                                     </div>
                                 @endif
