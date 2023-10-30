@@ -313,16 +313,29 @@ class PageController extends Controller
             return $item->name === 'Membuka Menu Pickup Delivery';
         });
         if ($permissionExist) {
-            return view(
-                'pages.transaksi.PickupDelivery',
-                [
-                    'pickups' => PickupDelivery::where('action', 'pickup')->get(),
-                    'deliveries' => PickupDelivery::where('action', 'delivery')->get(),
-                    'dataTransaksi' => Transaksi::get(),
-                    'dataPelanggan' => Pelanggan::get(),
-                    'dataDriver' => User::role('delivery')->get(),
-                ]
-            );
+            if (Auth::user()->role == 'delivery') {
+                return view(
+                    'pages.transaksi.PickupDeliveryDelivery',
+                    [
+                        'on_going_pickups' => PickupDelivery::with('transaksi')->where('action', 'pickup')->where('driver_id', $user->id)->where('is_done', 0)->get(),
+                        'is_done_pickups' => PickupDelivery::with('transaksi')->where('action', 'pickup')->where('driver_id', $user->id)->where('is_done', 1)->get(),
+                        'on_going_deliveries' => PickupDelivery::with('transaksi')->where('action', 'delivery')->where('driver_id', $user->id)->where('is_done', 0)->get(),
+                        'is_done_deliveries' => PickupDelivery::with('transaksi')->where('action', 'delivery')->where('driver_id', $user->id)->where('is_done', 1)->get(),
+                        'driver' => $user,
+                        // 'transaksis' => Transaksi::join('pickup_deliveries', 'transaksis.id', '=', 'pickup_deliveries.transaksi_id')->where('pickup_deliveries.driver_id', $user->id)->select('transaksis.*')->get(),
+                    ]
+                );
+            } else {
+                return view(
+                    'pages.transaksi.PickupDeliveryAdmin',
+                    [
+                        'pickups' => PickupDelivery::where('action', 'pickup')->get(),
+                        'deliveries' => PickupDelivery::where('action', 'delivery')->get(),
+                        'transaksis' => Transaksi::detail()->get(),
+                        'drivers' => User::role('delivery')->get(),
+                    ]
+                );
+            }
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
         }

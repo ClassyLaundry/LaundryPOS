@@ -1,76 +1,4 @@
 $(document).ready(function() {
-    // untuk menampilkan modal pickup
-    $('#create-pickup').on('click', function() {
-        $('#modal-create-pickup').modal('show');
-    });
-
-    $('#input-pickup-pelanggan').on('click', function() {
-        $('#modal-data-pelanggan').modal('show');
-    });
-
-    var pelangganId = 0;
-    $('#table-pelanggan').load(window.location.origin + '/component/pelanggan?paginate=5', function() {
-        $('#table-pelanggan th:last').hide();
-        $('#table-pelanggan .cell-action').hide();
-    });
-    $('#table-pelanggan').on('click', '.page-link', function(e) {
-        e.preventDefault();
-        $('#table-pelanggan').load($(this).attr('href'));
-    });
-
-    function search() {
-        $('#table-pelanggan').load(window.location.origin + '/component/pelanggan?key=' + encodeURIComponent($('#input-nama-pelanggan').val()) + '&filter=nama&paginate=5', function() {
-            $('#table-pelanggan th:last').hide();
-            $('#table-pelanggan .cell-action').hide();
-        });
-    }
-
-    $('#search-pelanggan').on('click', function() {
-        search();
-    });
-
-    $('#table-pelanggan').on('click', 'tr', function() {
-        pelangganId = $(this).attr('id').substr(10);
-
-        $.ajax({
-            url: "/data/pelanggan/" + pelangganId,
-        }).done(function(data) {
-            $('#input-pickup-pelanggan').val(data[0].nama);
-            $('#input-pickup-pelanggan-id').val(pelangganId);
-            $('#input-pickup-alamat').val(data[0].alamat);
-
-            $('#modal-data-pelanggan').modal('hide');
-
-        }).fail(function(jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR);
-            console.log(textStatus);
-            console.log(errorThrown);
-        });
-    });
-
-    // untuk menampilkan modal delivery
-    $('#create-delivery').on('click', function() {
-        $('#modal-create-delivery').modal('show');
-    });
-
-    $('#table-pickup').load(window.location.origin + '/component/pickup');
-    $('#section-pickup').on('click', '.page-link', function(e) {
-        e.preventDefault();
-        $('#table-pickup').load($(this).attr('href'));
-    });
-
-    $('#table-delivery').load(window.location.origin + '/component/delivery');
-    $('#section-delivery').on('click', '.page-link', function(e) {
-        e.preventDefault();
-        $('#table-delivery').load($(this).attr('href'));
-    });
-
-    $('#table-di-outlet').load(window.location.origin + '/component/ambil_di_outlet');
-    $('#section-ambil-outlet').on('click', '.page-link', function(e) {
-        e.preventDefault();
-        $('#table-di-outlet').load($(this).attr('href'));
-    });
-
     $('.btn-toggle').on('click', function() {
         let icon = $(this).children();
         if (icon.hasClass('fa-down-left-and-up-right-to-center')) {
@@ -107,7 +35,7 @@ $(document).ready(function() {
     });
 
     $('#action-pesan').on('click', function() {
-        $('.btn-show-action').eq(btnIndex - 1).closest('.rounded').next().toggle();
+        $('.btn-show-action').eq(btnIndex - 1).closest('.rounded').siblings('.pesan-pelanggan').toggle();
     });
 
     $('#action-change-status').on('click', function() {
