@@ -425,12 +425,15 @@
                                                         <input class="form-control disabled" type="text" id="input-telepon">
                                                     </div>
                                                     <div class="col-12 mb-2">
-                                                        <h6>E-mail</h6>
-                                                        <input class="form-control disabled" type="text" id="input-email">
+                                                        <h6>Status Membership</h6>
+                                                        <input class="form-control disabled" type="text" id="input-member">
                                                     </div>
                                                     <div class="col-12 mb-2">
-                                                        <h6>Tanggal Lahir</h6>
-                                                        <input class="form-control disabled" id="input-tanggal-lahir" type="date">
+                                                        <h6>Saldo</h6>
+                                                        <div class="form-control disabled d-flex justify-content-between">
+                                                            <p>Rp</p>
+                                                            <input class="text-end input-thousand-separator" type="text" id="input-saldo">
+                                                        </div>
                                                     </div>
                                                     <div class="col-12">
                                                         <h6>Catatan Pelanggan</h6>

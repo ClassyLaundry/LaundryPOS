@@ -254,18 +254,6 @@ thead tr {
     width: 100%!important;
 }
 
-.tbody-wrap thead, .tbody-wrap tbody tr, .tbody-wrap tfoot tr  {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-}
-
-.tbody-wrap tbody {
-    display: block;
-    max-height: 300px;
-    overflow-y: auto;
-}
-
 #table-trans-item tbody::-webkit-scrollbar {
     width: 3px;
 }

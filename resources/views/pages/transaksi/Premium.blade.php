@@ -85,12 +85,12 @@
                                         <input type="text" class="form-control disabled" id="input-telepon-2" />
                                     </div>
                                     <div class="col-12 mb-2">
-                                        <h5>E-mail</h5>
-                                        <input type="text" class="form-control disabled" id="input-email-2" />
+                                        <h5>Member</h5>
+                                        <input type="text" class="form-control disabled" id="input-member-2" />
                                     </div>
                                     <div class="col-12 mb-2">
-                                        <h5>Tanggal Lahir</h5>
-                                        <input type="date" class="form-control disabled" id="input-tanggal-lahir-2" />
+                                        <h5>Saldo Deposit</h5>
+                                        <input type="date" class="form-control disabled" id="input-Saldo-2" />
                                     </div>
                                 </div>
                             </form>
@@ -453,12 +453,15 @@
                                                         <input class="form-control disabled" type="text" id="input-telepon">
                                                     </div>
                                                     <div class="col-12 mb-2">
-                                                        <h6>E-mail</h6>
-                                                        <input class="form-control disabled" type="text" id="input-email">
+                                                        <h6>Status Membership</h6>
+                                                        <input class="form-control disabled" type="text" id="input-member">
                                                     </div>
                                                     <div class="col-12 mb-2">
-                                                        <h6>Tanggal Lahir</h6>
-                                                        <input class="form-control disabled" id="input-tanggal-lahir" type="date">
+                                                        <h6>Saldo</h6>
+                                                        <div class="form-control disabled d-flex justify-content-between">
+                                                            <p>Rp</p>
+                                                            <input class="text-end input-thousand-separator" type="text" id="input-saldo">
+                                                        </div>
                                                     </div>
                                                     <div class="col-12">
                                                         <h6>Catatan Pelanggan</h6>

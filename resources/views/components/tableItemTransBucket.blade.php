@@ -1,14 +1,14 @@
-<div class="table-responsive my-2 tbody-wrap">
+<div class="table-responsive my-2">
     <table class="table table-striped mb-0" id="table-trans-item">
         <thead>
             <tr>
-                <th>Nama Item</th>
+                <th style="width: 30%">Nama Item</th>
                 <th class="d-none d-lg-table-cell">Kategori</th>
                 <th class="d-none d-md-table-cell">Proses</th>
                 <th class="d-none d-md-table-cell">Qty</th>
                 <th class="d-none d-md-table-cell">Bobot</th>
-                <th>Total</th>
-                <th style="width: 46.25px;"></th>
+                <th style="width: 135px;">Total</th>
+                <th style="width: 38.25px;"></th>
             </tr>
         </thead>
         <tbody>
@@ -34,22 +34,12 @@
                 @endif
                 <td class='d-none d-md-table-cell text-center'>{{ $item->bobot_bucket }}</td>
                 <td class='text-center'>{{ $item->total_bobot }}</td>
-                <td class='text-end p-1' style='width: 46.25px;'>
+                <td class='text-end p-1'>
                     <button id='btn-{{ $item->id }}' class='btn btn-primary btn-sm btn-show-action' type='button'>
                         <i class='fas fa-bars' aria-hidden='true'></i>
                     </button>
                 </td>
             </tr>
-            {{-- @if($item->diskon_jenis_item != 0)
-            <tr id='row-diskon-{{ $item->id }}' class="diskon">
-                <td class="text-end" colspan="4">Diskon jenis item</td>
-                <td class="d-none d-md-table-cell">Rp</td>
-                <td class="d-none d-md-table-cell thousand-separator text-end">{{ $item->diskon_jenis_item }}</td>
-                <td>Rp</td>
-                <td class="thousand-separator text-end">{{ $item->diskon_jenis_item * $item->qty }}</td>
-                <td style='width: 46.25px;'></td>
-            </tr>
-            @endif --}}
             @endforeach
             @if(in_array("Menambahkan Item Ke Transaksi", Session::get('permissions')) || Session::get('role') == 'administrator')
             <tr>
@@ -62,57 +52,57 @@
             @endif
         </tbody>
         <tfoot>
+            <tr>
+                <td class="text-end py-1 px-2" colspan="4">Jumlah Item</td>
+                <td class="py-1 px-2" style="width: 35px"></td>
+                <td class="text-end py-1 px-2">{{ $total_qty }}</td>
+                <td class="p-1"></td>
+            </tr>
             @if($trans->express)
             <tr>
-                <td class="text-end p-1">Multiplier Express</td>
-                <td class="p-1" style="width: 5%"></td>
-                <td class="text-end p-1">{{ $multiplier_express->value }} x</td>
-                <td class="p-1" style="width: 46.25px;"></td>
+                <td class="text-end py-1 px-2" colspan="4">Multiplier Express</td>
+                <td class="p-1" style="width: 35px"></td>
+                <td class="text-end py-1 px-2">{{ $multiplier_express->value }} x</td>
+                <td class="p-1"></td>
             </tr>
             @endif
             @if($trans->setrika_only)
             <tr>
-                <td class="text-end p-1">Multiplier Setrika Only</td>
-                <td class="p-1" style="width: 5%"></td>
-                <td class="text-end p-1">{{ $multiplier_setrika->value }} x</td>
-                <td class="p-1" style="width: 46.25px;"></td>
+                <td class="text-end py-1 px-2" colspan="4">Multiplier Setrika Only</td>
+                <td class="p-1" style="width: 35px"></td>
+                <td class="text-end py-1 px-2">{{ $multiplier_setrika->value }} x</td>
+                <td class="p-1"></td>
             </tr>
             @endif
             <tr>
-                <td class="text-end p-1">Sub Total</td>
-                <td class="p-1" style="width: 5%">Rp</td>
-                <td class="text-end thousand-separator p-1" id="sub-total">{{ $trans->subtotal }}</td>
-                <td class="p-1" style="width: 46.25px;"></td>
-            </tr>
-            {{-- <tr>
-                <td class="text-end p-1">Diskon Jenis Item</td>
-                <td class="p-1" style="width: 5%">Rp</td>
-                <td class="text-end thousand-separator p-1" id="diskon-item">{{ $trans->diskon_jenis_item }}</td>
-                <td class="p-1" style="width: 46.25px;"></td>
-            </tr> --}}
-            <tr>
-                <td class="text-end p-1">Diskon Promo</td>
-                <td class="p-1" style="width: 5%">Rp</td>
-                <td class="text-end thousand-separator p-1" id="diskon-promo">{{ $trans->total_diskon_promo }}</td>
-                <td class="p-1" style="width: 46.25px;"></td>
+                <td class="text-end py-1 px-2" colspan="4">Sub Total</td>
+                <td class="p-1" style="width: 35px">Rp</td>
+                <td class="text-end thousand-separator py-1 px-2" id="sub-total">{{ $trans->subtotal }}</td>
+                <td class="p-1"></td>
             </tr>
             <tr>
-                <td class="text-end p-1">Diskon Member</td>
-                <td class="p-1" style="width: 5%">Rp</td>
-                <td class="text-end thousand-separator p-1" id="diskon-member">{{ $trans->diskon_member }}</td>
-                <td class="p-1" style="width: 46.25px;"></td>
+                <td class="text-end py-1 px-2" colspan="4">Diskon Promo</td>
+                <td class="p-1" style="width: 35px">Rp</td>
+                <td class="text-end thousand-separator py-1 px-2" id="diskon-promo">{{ $trans->total_diskon_promo }}</td>
+                <td class="p-1"></td>
             </tr>
             <tr>
-                <td class="text-end p-1">Diskon Spesial</td>
-                <td class="p-1" style="width: 5%">Rp</td>
-                <td class="text-end thousand-separator p-1" id="diskon-pelanggan_spesial">{{ $trans->diskon_pelanggan_spesial }}</td>
-                <td class="p-1" style="width: 46.25px;"></td>
+                <td class="text-end py-1 px-2" colspan="4">Diskon Member</td>
+                <td class="p-1" style="width: 35px">Rp</td>
+                <td class="text-end thousand-separator py-1 px-2" id="diskon-member">{{ $trans->diskon_member }}</td>
+                <td class="p-1"></td>
             </tr>
             <tr>
-                <td class="text-end p-1">Grand Total</td>
-                <td class="p-1" style="width: 5%">Rp</td>
-                <td class="text-end thousand-separator p-1" id="grand-total">{{ $trans->grand_total }}</td>
-                <td class="p-1" style="width: 46.25px;"></td>
+                <td class="text-end py-1 px-2" colspan="4">Diskon Spesial</td>
+                <td class="p-1" style="width: 35px">Rp</td>
+                <td class="text-end thousand-separator py-1 px-2" id="diskon-pelanggan_spesial">{{ $trans->diskon_pelanggan_spesial }}</td>
+                <td class="p-1"></td>
+            </tr>
+            <tr>
+                <td class="text-end py-1 px-2" colspan="4">Grand Total</td>
+                <td class="p-1" style="width: 35px">Rp</td>
+                <td class="text-end thousand-separator py-1 px-2" id="grand-total">{{ $trans->grand_total }}</td>
+                <td class="p-1"></td>
             </tr>
         </tfoot>
     </table>

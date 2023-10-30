@@ -40,8 +40,12 @@ $(document).ready(function() {
             $('#input-nama').val(pelanggan.nama);
             $('#input-telepon').val(pelanggan.telephone);
             $('#input-alamat').val(pelanggan.alamat);
-            $('#input-email').val(pelanggan.email);
-            $('#input-tanggal-lahir').val(pelanggan.tanggal_lahir);
+            if (pelanggan.member) {
+                $('#input-member').val('Member');
+            } else {
+                $('#input-member').val('Bukan member');
+            }
+            $('#input-saldo').val(pelanggan.saldo_akhir.toLocaleString(['ban', 'id']));
             if (pelanggan.catatan_pelanggan != null) {
                 $('#input-catatan-pelanggan').val(pelanggan.catatan_pelanggan.catatan_cuci);
             }
@@ -121,7 +125,6 @@ $(document).ready(function() {
             }
 
             $('#table-container').load(window.location.origin + '/component/transPremium/' + id, function() {
-                adjustWidth();
                 setThousandSeparator();
             });
 
@@ -326,56 +329,6 @@ $(document).ready(function() {
         window.location = "/transaksi/pickup-delivery/";
     });
 
-    function adjustWidth() {
-        if ($(window).width() < 576) {
-            $('#table-trans-item thead th:nth-child(1)').css('width', '60%');
-
-            $('#table-trans-item tbody tr.item td:nth-child(1)').css('width', '60%');
-            $('#table-trans-item tbody tr.item td:nth-child(1)').css('white-space', 'initial');
-            $('#table-trans-item tbody tr.diskon td:nth-child(1)').css('width', '60%');
-            $('#table-trans-item tbody tr.diskon td:nth-child(1)').attr('colspan', 0);
-
-            $('#table-trans-item tfoot tr td:nth-child(1)').css('width', '55%');
-            $('#table-trans-item tfoot tr td:nth-child(2)').css('width', '10%');
-        } else if ($(window).width() < 992) {
-            $('#table-trans-item thead th:nth-child(1)').css('width', '35%');
-            $('#table-trans-item thead th:nth-child(3)').css('width', '15%');
-            $('#table-trans-item thead th:nth-child(4)').css('width', '10%');
-            $('#table-trans-item thead th:nth-child(5)').css('width', '20%');
-
-            $('#table-trans-item tbody tr.item td:nth-child(1)').css('width', '35%');
-            $('#table-trans-item tbody tr.item td:nth-child(1)').css('white-space', 'nowrap');
-            $('#table-trans-item tbody tr.item td:nth-child(3)').css('width', '15%');
-            $('#table-trans-item tbody tr.item td:nth-child(4)').css('width', '10%');
-            $('#table-trans-item tbody tr.diskon td:nth-child(1)').css('width', '60%');
-            $('#table-trans-item tbody tr.diskon td:nth-child(1)').attr('colspan', 3);
-
-            $('#table-trans-item tfoot tr td:nth-child(1)').css('width', '70%');
-            $('#table-trans-item tfoot tr td:nth-child(2)').css('width', '10%');
-        } else {
-            $('#table-trans-item thead th:nth-child(1)').css('width', '30%');
-            $('#table-trans-item thead th:nth-child(2)').css('width', '20%');
-            $('#table-trans-item thead th:nth-child(3)').css('width', '10%');
-            $('#table-trans-item thead th:nth-child(4)').css('width', '5%');
-            $('#table-trans-item thead th:nth-child(5)').css('width', '15%');
-
-            $('#table-trans-item tbody tr.item td:nth-child(1)').css('width', '30%');
-            $('#table-trans-item tbody tr.item td:nth-child(1)').css('white-space', 'nowrap');
-            $('#table-trans-item tbody tr.item td:nth-child(2)').css('width', '20%');
-            $('#table-trans-item tbody tr.item td:nth-child(3)').css('width', '10%');
-            $('#table-trans-item tbody tr.item td:nth-child(4)').css('width', '5%');
-            $('#table-trans-item tbody tr.diskon td:nth-child(1)').css('width', '65%');
-            $('#table-trans-item tbody tr.diskon td:nth-child(1)').attr('colspan', 4);
-
-            $('#table-trans-item tfoot tr td:nth-child(1)').css('width', '80%');
-            $('#table-trans-item tfoot tr td:nth-child(2)').css('width', '5%');
-        }
-    }
-
-    $(window).on('resize', function() {
-        adjustWidth();
-    });
-
     $('#table-container').on('click', '#add-item',function() {
         $('#table-items tbody').empty();
 
@@ -423,7 +376,6 @@ $(document).ready(function() {
                 url: "/transaksi/addItem?jenis_item_id=" + item.id + "&transaksi_id=" + $('#id-trans').text(),
             }).done(function(data) {
                 $('#table-container').load(window.location.origin + '/component/transPremium/' + transId, function() {
-                    adjustWidth();
                     setThousandSeparator();
                     parent.removeClass('disabled');
                     $('#modal-add-item').modal('hide');
@@ -459,7 +411,6 @@ $(document).ready(function() {
         }).done(function(data) {
             // console.log(data)
             $('#table-container').load(window.location.origin + '/component/transPremium/' + transId, function() {
-                adjustWidth();
                 setThousandSeparator();
             });
         }).fail(function(message) {
@@ -683,7 +634,6 @@ $(document).ready(function() {
             data: formData,
         }).done(function() {
             $('#table-container').load(window.location.origin + '/component/transPremium/' + transId, function() {
-                adjustWidth();
                 setThousandSeparator();
             });
         }).fail(function(message) {
@@ -706,7 +656,6 @@ $(document).ready(function() {
             data: formData,
         }).done(function() {
             $('#table-container').load(window.location.origin + '/component/transPremium/' + transId, function() {
-                adjustWidth();
                 setThousandSeparator();
             });
         }).fail(function(message) {
@@ -792,7 +741,6 @@ $(document).ready(function() {
             if (response.status == '200') {
                 getActivePromo(false);
                 $('#table-container').load(window.location.origin + '/component/transPremium/' + transId, function() {
-                    adjustWidth();
                     setThousandSeparator();
                 });
             } else {
@@ -812,7 +760,6 @@ $(document).ready(function() {
             getActivePromo(false);
             $('#input-kode-diskon').val("");
             $('#table-container').load(window.location.origin + '/component/transPremium/' + transId, function() {
-                adjustWidth();
                 setThousandSeparator();
             });
         });
@@ -929,27 +876,27 @@ $(document).ready(function() {
 
     // intro.js
     // intro ketika init halaman
-    function setCookie(cname, cvalue, exdays) {
-        const d = new Date();
-        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        let expires = "expires="+d.toUTCString();
-        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    }
+    // function setCookie(cname, cvalue, exdays) {
+    //     const d = new Date();
+    //     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    //     let expires = "expires="+d.toUTCString();
+    //     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    // }
 
-    function getCookie(cname) {
-        let name = cname + "=";
-        let ca = document.cookie.split(';');
-        for(let i = 0; i < ca.length; i++) {
-            let c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
-    }
+    // function getCookie(cname) {
+    //     let name = cname + "=";
+    //     let ca = document.cookie.split(';');
+    //     for(let i = 0; i < ca.length; i++) {
+    //         let c = ca[i];
+    //         while (c.charAt(0) == ' ') {
+    //             c = c.substring(1);
+    //         }
+    //         if (c.indexOf(name) == 0) {
+    //             return c.substring(name.length, c.length);
+    //         }
+    //     }
+    //     return "";
+    // }
 
     /*
     if (getCookie('transaksi-intro_halaman') == '') {

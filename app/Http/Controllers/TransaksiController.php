@@ -40,8 +40,14 @@ class TransaksiController extends Controller
 
     public function tableBucket($id)
     {
+        $transaksi = Transaksi::detail()->with('pelanggan')->find($id);
+        $total_qty = 0;
+        foreach($transaksi->item_transaksi as $item) {
+            $total_qty += $item->qty;
+        }
         return view('components.tableItemTransBucket', [
-            'trans' => Transaksi::detail()->find($id),
+            'trans' => $transaksi,
+            'total_qty' => $total_qty,
             'multiplier_express' => SettingUmum::where('nama', 'multiplier express')->first(),
             'multiplier_setrika' => SettingUmum::where('nama', 'multiplier setrika only')->first(),
         ]);
@@ -49,8 +55,14 @@ class TransaksiController extends Controller
 
     public function tablePremium($id)
     {
+        $transaksi = Transaksi::detail()->with('pelanggan')->find($id);
+        $total_qty = 0;
+        foreach($transaksi->item_transaksi as $item) {
+            $total_qty += $item->qty;
+        }
         return view('components.tableItemTransPremium', [
-            'trans' => Transaksi::detail()->find($id),
+            'trans' => $transaksi,
+            'total_qty' => $total_qty,
             'multiplier_express' => SettingUmum::where('nama', 'multiplier express')->first(),
             'multiplier_setrika' => SettingUmum::where('nama', 'multiplier setrika only')->first(),
         ]);
