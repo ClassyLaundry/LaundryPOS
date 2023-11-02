@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\InsertPelangganRequest;
+use App\Models\Data\CatatanPelanggan;
 use App\Models\Data\Pelanggan;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -56,6 +57,16 @@ class PelangganController extends Controller
             $merged = $request->merge(['modified_by' => Auth::id()])->toArray();
             Pelanggan::find($id)->update($merged);
 
+            $catatan_pelanggan = CatatanPelanggan::where('pelanggan_id', $id)->first();
+            if ($catatan_pelanggan == null) {
+                CatatanPelanggan::create([
+                    'pelanggan_id' => $id,
+                    'catatan_khusus' => $request->catatan_khusus
+                ]);
+            } else {
+                $catatan_pelanggan->catatan_khusus = $request->catatan_khusus;
+                $catatan_pelanggan->save();
+            }
             return redirect()->back();
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
@@ -90,6 +101,7 @@ class PelangganController extends Controller
                 'pages.data.DetailPelanggan',
                 [
                     'pelanggan' => Pelanggan::where('id', $id_pelanggan)->first(),
+                    'catatan' => CatatanPelanggan::where('pelanggan_id', $id_pelanggan)->first(),
                 ]
             );
         } else {

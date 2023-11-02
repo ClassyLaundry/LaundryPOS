@@ -172,20 +172,20 @@
         <div style="position: relative; height: 90px;">
             <p style="position: absolute; left: 0px; top: 25px;">Tim Produksi</p>
 
-            <p class="text-center" style="position: absolute; left: 75px; top: 25px; width: 200px;">@isset($data->transaksi->tukang_cuci) {{ $data->transaksi->tukang_cuci->name }} @endif</p>
+            <p class="text-center" style="position: absolute; left: 75px; top: 25px; width: 200px;">@isset($data->transaksi->tukang_cuci) {{ $data->transaksi->tukang_cuci->name }} @endisset</p>
             <p class="text-center" style="position: absolute; left: 75px; top: 45px; width: 200px;">_______________</p>
             <p class="text-center" style="position: absolute; left: 75px; top: 60px; width: 200px;">cuci</p>
 
 
-            <p class="text-center" style="position: absolute; left: 225px; top: 25px; width: 200px;">@isset($data->transaksi->tukang_setrika) {{ $data->transaksi->tukang_setrika->name }} @endif</p>
+            <p class="text-center" style="position: absolute; left: 225px; top: 25px; width: 200px;">@isset($data->transaksi->tukang_setrika) {{ $data->transaksi->tukang_setrika->name }} @endisset</p>
             <p class="text-center" style="position: absolute; left: 225px; top: 45px; width: 200px;">_______________</p>
             <p class="text-center" style="position: absolute; left: 225px; top: 60px; width: 200px;">setrika</p>
 
-            <p class="text-center" style="position: absolute; left: 375px; top: 25px; width: 200px;">@isset($data->packing) {{ $data->packing->name }} @endif</p>
+            <p class="text-center" style="position: absolute; left: 375px; top: 25px; width: 200px;">@isset($data->packing) {{ $data->packing->name }} @endisset</p>
             <p class="text-center" style="position: absolute; left: 375px; top: 45px; width: 200px;">_______________</p>
             <p class="text-center" style="position: absolute; left: 375px; top: 60px; width: 200px;">packing</p>
 
-            <p class="text-center" style="position: absolute; left: 525px; top: 25px; width: 200px;">@isset($data->transaksi->pickup_delivery[count($data->transaksi->pickup_delivery) - 1]) {{ $data->transaksi->pickup_delivery[count($data->transaksi->pickup_delivery) - 1]->nama_driver }} @endif</p>
+            <p class="text-center" style="position: absolute; left: 525px; top: 25px; width: 200px;">@isset($data->transaksi->pickup_delivery[count($data->transaksi->pickup_delivery) - 1]) {{ $data->transaksi->pickup_delivery[count($data->transaksi->pickup_delivery) - 1]->nama_driver }} @endisset</p>
             <p class="text-center" style="position: absolute; left: 525px; top: 45px; width: 200px;">_______________</p>
             <p class="text-center" style="position: absolute; left: 525px; top: 60px; width: 200px;">delivery</p>
         </div>

@@ -26,6 +26,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DiskonController;
 use App\Http\Controllers\DiskonTransaksiController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\CatatanPelangganController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -135,6 +136,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/data/pelanggan/{id}', [PelangganController::class, 'update']);
     Route::get('/data/pelanggan/delete/{id}', [PelangganController::class, 'delete']);
     Route::get('/component/pelanggan', [PelangganController::class, 'search']);
+    Route::get('/data/pelanggan/{id_pelanggan}/detail', [PelangganController::class, 'detailPelanggan']);
+    Route::post('/data/pelanggan/catatan', [CatatanPelangganController::class, 'insert']);
+    Route::post('/data/pelanggan/catatan/{id}', [CatatanPelangganController::class, 'update']);
 
     //Rewash data
     Route::get('/data/rewash', [PageController::class, 'dataRewash'])->name('data-rewash');
@@ -216,7 +220,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/transaksi/diskon/autentikasi', [TransaksiController::class, 'authenticationDiskon']);
 
     //History
-    Route::get('/data/pelanggan/{id_pelanggan}/detail', [PelangganController::class, 'detailPelanggan']);
     Route::get('/pelanggan/{id_pelanggan}/history/transaksi', [TransaksiController::class, 'historyPelanggan']);
     Route::get('/pelanggan/{id_pelanggan}/history/saldo', [SaldoController::class, 'historyPelanggan']);
 
