@@ -28,12 +28,21 @@ class PackingController extends Controller
         });
         if ($permissionExist) {
             $transaksi = Transaksi::find($request->transaksi_id);
-            $count = PickupDelivery::where('action', "delivery")->count() + 1;
-            $paded = str_pad($count, 6, '0', STR_PAD_LEFT);
-            $kode = 'DV-' . $paded;
-
-            $pelanggan = Pelanggan::find($transaksi->pelanggan_id);
-            $alamat = $pelanggan->alamat;
+            if ($transaksi->need_delivery) {
+                $count = PickupDelivery::where('action', "delivery")->count() + 1;
+                $paded = str_pad($count, 6, '0', STR_PAD_LEFT);
+                $kode = 'DV-' . $paded;
+                $pelanggan = Pelanggan::find($transaksi->pelanggan_id);
+                $alamat = $pelanggan->alamat;
+                PickupDelivery::create([
+                    'kode' => $kode,
+                    'transaksi_id' => $request->transaksi_id,
+                    'pelanggan_id' => $transaksi->pelanggan_id,
+                    'action' => 'delivery',
+                    'alamat' => $alamat,
+                    'modified_by' => auth()->id()
+                ]);
+            }
 
             $packing = Packing::create([
                 'transaksi_id' => $request->transaksi_id,

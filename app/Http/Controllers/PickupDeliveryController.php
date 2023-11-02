@@ -9,6 +9,7 @@ use App\Models\Transaksi\PickupDelivery;
 use App\Models\Transaksi\Transaksi;
 use App\Models\Transaksi\TransaksiPickupDelivery;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -175,5 +176,60 @@ class PickupDeliveryController extends Controller
         return view('components.tableDiOutlet', [
             'diOutlets' => $diOutlet
         ]);
+    }
+
+    public function driver_today()
+    {
+        $today = Carbon::today();
+        $pickups = PickupDelivery::where('is_done', false)
+            ->where('driver_id', auth()->id())
+            ->whereDate('created_at', $today)->get();
+        $done_pickups = PickupDelivery::where('is_done', true)
+            ->where('driver_id', auth()->id())
+            ->whereDate('created_at', $today)->get();
+        return response()->json([
+            'unfinished' => $pickups,
+            'finished' => $done_pickups
+        ], 200);
+    }
+    public function admin_today()
+    {
+        $today = Carbon::today();
+        $pickups = PickupDelivery::where('is_done', false)
+            ->whereDate('created_at', $today)->get();
+        $done_pickups = PickupDelivery::where('is_done', true)
+            ->whereDate('created_at', $today)->get();
+        return response()->json([
+            'unfinished' => $pickups,
+            'finished' => $done_pickups
+        ], 200);
+    }
+
+    public function admin_weekly()
+    {
+        $startOfWeek = Carbon::now()->startOfWeek();
+        $endOfWeek = Carbon::now()->endOfWeek();
+        $pickups = PickupDelivery::where('is_done', false)
+            ->whereBetween('created_at', [$startOfWeek, $endOfWeek])->get();
+        $done_pickups = PickupDelivery::where('is_done', true)
+            ->whereBetween('created_at', [$startOfWeek, $endOfWeek])->get();
+        return response()->json([
+            'unfinished' => $pickups,
+            'finished' => $done_pickups
+        ], 200);
+    }
+
+    public function admin_monthly()
+    {
+        $startOfMonth = Carbon::now()->startOfMonth();
+        $endOfMonth = Carbon::now()->endOfMonth();
+        $pickups = PickupDelivery::where('is_done', false)
+            ->whereBetween('created_at', [$startOfMonth, $endOfMonth])->get();
+        $done_pickups = PickupDelivery::where('is_done', true)
+            ->whereBetween('created_at', [$startOfMonth, $endOfMonth])->get();
+        return response()->json([
+            'unfinished' => $pickups,
+            'finished' => $done_pickups
+        ], 200);
     }
 }
