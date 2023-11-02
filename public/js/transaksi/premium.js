@@ -681,26 +681,26 @@ $(document).ready(function() {
                 $('#diskon-1 .kode-diskon').data('id', response.data[0].id);
                 $('#diskon-1 .kode-diskon').text(response.data[0].diskon.code);
                 if (response.data[0].diskon.jenis_diskon == "exact") {
-                    $('#diskon-1 .info-diskon').text("Rp " + response.data[0].diskon.nominal);
+                    $('#diskon-1 .info-diskon').text("Rp " + response.data[0].diskon.nominal.toLocaleString(['ban', 'id']));
                 } else if (response.data[0].diskon.jenis_diskon == "percentage") {
                     if (response.data[0].diskon.maximal_diskon != 0) {
-                        $('#diskon-1 .info-diskon').text(response.data[0].diskon.nominal + " % - Max Rp " + response.data[0].diskon.maximal_diskon);
+                        $('#diskon-1 .info-diskon').text(response.data[0].diskon.nominal + " % - Max Rp " + response.data[0].diskon.maximal_diskon.toLocaleString(['ban', 'id']));
                     } else {
                         $('#diskon-1 .info-diskon').text(response.data[0].diskon.nominal + " %");
                     }
                 } else {
                     console.log('tipe diskon : ' + response.data[0].diskon.jenis_diskon)
                 }
+
                 $('#diskon-2').hide();
-                console.log($('#diskon-2'));
                 if (response.data.length == 2) {
                     $('#diskon-2 .kode-diskon').data('id', response.data[1].id);
                     $('#diskon-2 .kode-diskon').text(response.data[1].diskon.code);
                     if (response.data[1].diskon.jenis_diskon == "exact") {
-                        $('#diskon-2 .info-diskon').text("Rp " + response.data[1].diskon.nominal);
+                        $('#diskon-2 .info-diskon').text("Rp " + response.data[1].diskon.nominal.toLocaleString(['ban', 'id']));
                     } else if (response.data[1].diskon.jenis_diskon == "percentage") {
                         if (response.data[1].diskon.maximal_diskon != 0) {
-                            $('#diskon-2 .info-diskon').text(response.data[1].diskon.nominal + " % - Max Rp " + response.data[1].diskon.maximal_diskon);
+                            $('#diskon-2 .info-diskon').text(response.data[1].diskon.nominal + " % - Max Rp " + response.data[1].diskon.maximal_diskon.toLocaleString(['ban', 'id']));
                         } else {
                             $('#diskon-2 .info-diskon').text(response.data[1].diskon.nominal + " %");
                         }
@@ -743,6 +743,7 @@ $(document).ready(function() {
                 $('#table-container').load(window.location.origin + '/component/transPremium/' + transId, function() {
                     setThousandSeparator();
                 });
+                alert('Diskon berhasil ditambahkan');
             } else {
                 alert(response.message);
             }
@@ -756,12 +757,12 @@ $(document).ready(function() {
         $.ajax({
             url: "/diskon-transaksi/" + $(this).prev().find('.kode-diskon').data('id') + "/delete",
         }).done(function(response) {
-            console.log(response);
             getActivePromo(false);
             $('#input-kode-diskon').val("");
             $('#table-container').load(window.location.origin + '/component/transPremium/' + transId, function() {
                 setThousandSeparator();
             });
+            alert('Diskon berhasil dihapus');
         });
     });
 

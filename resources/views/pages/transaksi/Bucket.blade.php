@@ -225,7 +225,7 @@
                                                                 &nbsp;-&nbsp;
                                                                 <span class="info-diskon"></span>
                                                             </button>
-                                                            <button type="button" class="btn btn-primary cancel-diskon">
+                                                            <button type="button" class="btn btn-danger cancel-diskon">
                                                                 <i class="fa-solid fa-xmark"></i>
                                                             </button>
                                                           </div>
@@ -237,7 +237,7 @@
                                                                 &nbsp;-&nbsp;
                                                                 <span class="info-diskon"></span>
                                                             </button>
-                                                            <button type="button" class="btn btn-primary cancel-diskon">
+                                                            <button type="button" class="btn btn-danger cancel-diskon">
                                                                 <i class="fa-solid fa-xmark"></i>
                                                             </button>
                                                           </div>

@@ -204,7 +204,7 @@
                                         </div>
                                         <div class="modal-body">
                                             <div id="promo-biasa">
-                                                <h5>Kode Promo</h5>
+                                                <h5>Kode Diskon</h5>
                                                 <div class="d-flex">
                                                     <input id="input-kode-diskon" class="form-control me-3" type="text" name="diskon_code">
                                                     <button class="btn btn-primary" type="button" id="btn-apply-promo-basic">
@@ -215,7 +215,7 @@
                                             </div>
                                             <div id="active-promo" style="display: none;">
                                                 <hr>
-                                                <h5>Active Promo</h5>
+                                                <h5>Diskon Aktif</h5>
                                                 <div class="d-flex mt-2">
                                                     <div id="diskon-1">
                                                         <div class="btn-group" role="group">
@@ -224,7 +224,7 @@
                                                                 &nbsp;-&nbsp;
                                                                 <span class="info-diskon"></span>
                                                             </button>
-                                                            <button type="button" class="btn btn-primary cancel-diskon">
+                                                            <button type="button" class="btn btn-danger cancel-diskon">
                                                                 <i class="fa-solid fa-xmark"></i>
                                                             </button>
                                                           </div>
@@ -236,7 +236,7 @@
                                                                 &nbsp;-&nbsp;
                                                                 <span class="info-diskon"></span>
                                                             </button>
-                                                            <button type="button" class="btn btn-primary cancel-diskon">
+                                                            <button type="button" class="btn btn-danger cancel-diskon">
                                                                 <i class="fa-solid fa-xmark"></i>
                                                             </button>
                                                           </div>

@@ -43,13 +43,13 @@ class DiskonTransaksiController extends Controller
             } else {
                 return [
                     'status' => 400,
-                    'message' => 'Code Used',
+                    'message' => 'Kode diskon sudah digunakan',
                 ];
             }
         } else {
             return [
                 'status' => 400,
-                'message' => 'Code Not Found',
+                'message' => 'Kode diskon tidak ditemukan',
             ];
         }
     }
