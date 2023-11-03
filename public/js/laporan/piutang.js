@@ -1,16 +1,11 @@
 $(document).ready(function() {
     var btnIndex = -1, btnId = 0;
-    $('#data-piutang').on('click', '.btn-show-action', function() {
+    $('.btn-show-action').on('click', '', function() {
         btnIndex = $(this).index('.btn-show-action') + 1;
         btnId = $(this).attr('id').substring(4);
     });
 
-    // $('#table-piutang').load(window.location.origin + '/component/laporan/piutang');
-
-    // function search() {
-    //     $('#table-piutang').load(window.location.origin + '/component/jenis-item?key=' + encodeURIComponent($('#input-search').val()) +'&paginate=' + paginateCount, function() {
-    //         setThousandSeparator();
-    //     });
-    // }
-
+    $('#action-detail').on('click', function() {
+        window.location = window.location + '/' + btnId + '/detail';
+    });
 });

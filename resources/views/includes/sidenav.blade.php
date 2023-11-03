@@ -219,8 +219,7 @@
             </div>
         </div>
 
-        {{-- <i class="fa-solid fa-file-invoice"></i> --}}
-        {{-- <div id="nav-menu-laporan" class="nav-menu">
+        <div id="nav-menu-laporan" class="nav-menu">
             <div class="menu-header px-3 py-1 d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center">
                     <i class="fa-solid fa-file-lines"></i>
@@ -254,7 +253,7 @@
                     </a>
                 </div>
             </div>
-        </div> --}}
+        </div>
 
         <div id="nav-menu-setting" class="nav-menu">
             <div class="menu-header px-3 py-1 d-flex align-items-center justify-content-between">

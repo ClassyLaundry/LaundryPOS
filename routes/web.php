@@ -257,6 +257,7 @@ Route::middleware(['auth'])->group(function () {
 
     //Laporan
     Route::get('/laporan/piutang', [LaporanController::class, 'laporanPiutangPelanggan']);
+    Route::get('/laporan/piutang/{id}/detail', [LaporanController::class, 'laporanPiutangPelangganDetail']);
     // Route::get('/laporan/omset', [PageController::class, 'laporanOmset']);
     // Route::get('/laporan/kas_masuk', [PageController::class, 'laporanKasMasuk']);
     // Route::get('/laporan/mutasi_deposit', [PageController::class, 'laporanMutasiDepos']);

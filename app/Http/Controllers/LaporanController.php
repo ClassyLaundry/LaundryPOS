@@ -93,9 +93,19 @@ class LaporanController extends Controller
             array_push($data, $tempData);
         }
 
-        return view('pages.laporan.PiutangPelanggan',[
+        return view('pages.laporan.PiutangPelanggan', [
             'total_piutang' => $totalPiutang,
-            "pelanggans" => $data,
+            'pelanggans' => $data,
+        ]);
+    }
+
+    public function laporanPiutangPelangganDetail($id)
+    {
+        $transaksis = Transaksi::detail()->where('lunas', false)->where('pelanggan_id', $id)->latest()->get();
+        $totalPiutang = Transaksi::where('lunas', false)->where('pelanggan_id', $id)->sum(DB::raw('grand_total - total_terbayar'));
+        return view('pages.laporan.DetailPiutangPelanggan', [
+            'transaksis' => $transaksis,
+            'total_piutang' => $totalPiutang,
         ]);
     }
 
