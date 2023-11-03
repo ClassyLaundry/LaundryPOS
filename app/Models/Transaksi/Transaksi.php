@@ -91,7 +91,7 @@ class Transaksi extends Model
         $grand_total = 0;
 
         //find bucket dan premium
-        if($this->tipe_transaksi == "bucket"){
+        if ($this->tipe_transaksi == "bucket") {
             $sum_bobot = ItemTransaksi::where('transaksi_id', $this->id)->sum('total_bobot');
             $item_count = ItemTransaksi::where('transaksi_id', $this->id)->count();
             //kalkulasi bobot bucket
@@ -108,7 +108,7 @@ class Transaksi extends Model
             $this->total_bobot = $sum_bobot;
             $this->jumlah_bucket = $jumlah_bucket;
             $subtotal = $total_harga_bucket;
-        }else{
+        } else {
             $sum_harga_premium = ItemTransaksi::where('transaksi_id', $this->id)->sum('total_premium');
             $subtotal = $sum_harga_premium;
         }
@@ -122,15 +122,19 @@ class Transaksi extends Model
         //promo kode bertumpuk
         foreach ($diskon_transaksi as $related) {
             $promo = Diskon::find($related->diskon_id);
-            if ($promo->jenis_diskon == "percentage") {
+            if ($promo->jenis_diskon == "percentage" || $promo->jenis_diskon == "refferal_percentage") {
                 $temp = $subtotal * $promo->nominal;
                 $temp = floor($temp / 100);
                 if ($temp > $promo->maximal_diskon && $promo->maximal_diskon != 0) {
                     $temp = $promo->maximal_diskon;
                 }
                 $total_diskon_promo += $temp;
-            } else if ($promo->jenis_diskon == "exact") {
+                $related->nominal_diskon = $temp;
+                $related->save();
+            } else if ($promo->jenis_diskon == "exact" || $promo->jenis_diskon == "refferal_exact") {
                 $total_diskon_promo += $promo->nominal;
+                $related->nominal_diskon = $promo->nominal;
+                $related->save();
             } else {
                 $halfCount = floor($item_count / 2);
                 $items = ItemTransaksi::where('transaksi_id', $this->id)
@@ -152,7 +156,7 @@ class Transaksi extends Model
         $diskon_jenis_item = ItemTransaksi::where('transaksi_id', $this->id)->get()->map(function ($t) {
             return $t->diskon_jenis_item * $t->qty;
         })->sum();
-        if($this->tipe_transaksi == "bucket") {
+        if ($this->tipe_transaksi == "bucket") {
             $diskon_jenis_item = 0;
         }
         $this->diskon_jenis_item = $diskon_jenis_item;

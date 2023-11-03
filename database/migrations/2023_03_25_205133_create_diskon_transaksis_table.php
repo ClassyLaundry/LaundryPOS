@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignId('diskon_id')
                 ->constrained()
                 ->cascadeOnDelete();
+            $table->integer('nominal_diskon')->default(0);
             $table->timestamps();
         });
     }

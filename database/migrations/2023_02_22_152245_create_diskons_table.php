@@ -21,6 +21,9 @@ return new class extends Migration
             $table->integer('nominal');
             $table->integer('maximal_diskon')->default(0);
             $table->string('jenis_diskon');
+            $table->foreignId('refferal_pelanggan')
+                ->nullable()
+                ->constrained('pelanggans', 'id');
             $table->timestamps();
             $table->softDeletes();
         });

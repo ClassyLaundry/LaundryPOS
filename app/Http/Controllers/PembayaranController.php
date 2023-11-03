@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Data\Pelanggan;
+use App\Models\Diskon;
+use App\Models\DiskonTransaksi;
 use App\Models\Pembayaran;
 use App\Models\Saldo;
 use App\Models\Transaksi\Transaksi;
@@ -38,7 +40,7 @@ class PembayaranController extends Controller
                     ->latest('created_at')
                     ->first();
                 if ($latestSaldo->saldo_akhir > 0) {
-                    if($latestSaldo->saldo_akhir < $nominal){
+                    if ($latestSaldo->saldo_akhir < $nominal) {
                         $total_terbayar = $total_terbayar + $latestSaldo->saldo_akhir;
                         Saldo::create([
                             'pelanggan_id' => $transaksi->pelanggan_id,
@@ -48,7 +50,7 @@ class PembayaranController extends Controller
                             'saldo_akhir' => 0,
                             'modified_by' => Auth::id()
                         ]);
-                    }else{
+                    } else {
                         $total_terbayar = $total_terbayar + $nominal;
                         Saldo::create([
                             'pelanggan_id' => $transaksi->pelanggan_id,
@@ -59,15 +61,35 @@ class PembayaranController extends Controller
                             'modified_by' => Auth::id()
                         ]);
                     }
-                }else{
+                } else {
                     abort(400, 'SALDO IS 0');
                 }
-            }else{
+            } else {
                 $total_terbayar = $transaksi->total_terbayar + (int) $nominal;
             }
 
             //Mengubah Total Transaksi
             if ($total_terbayar >= $transaksi->grand_total) {
+                $diskon_transaksi = DiskonTransaksi::where('transaksi_id', $transaksi->id)->get();
+                foreach ($diskon_transaksi as $related) {
+                    $promo = Diskon::find($related->diskon_id);
+                    if ($promo->jenis_diskon == "refferal_exact" || $promo->jenis_diskon == "refferal_percentage") {
+                        $saldo_akhir = Saldo::where('pelanggan_id', $request->pelanggan_id)->latest()->first();
+                        if (empty($saldo_akhir)) {
+                            $saldo_akhir = $promo->nominal_diskon;
+                        } else {
+                            $saldo_akhir = $saldo_akhir->saldo_akhir + $promo->nominal_diskon;
+                        }
+                        Saldo::create([
+                            'pelanggan_id' => $promo->refferal_pelanggan,
+                            'outlet_id' => $user->outlet_id,
+                            'nominal' => $related->nominal_diskon,
+                            'jenis_input' => "refferal",
+                            'saldo_akhir' => $saldo_akhir,
+                            'modified_by' => Auth::id()
+                        ]);
+                    }
+                }
                 $transaksi->total_terbayar = $transaksi->grand_total;
                 $transaksi->lunas = true;
             } else {
