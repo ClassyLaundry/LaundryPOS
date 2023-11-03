@@ -18,12 +18,14 @@ class DiskonController extends Controller
             return $item->name === 'Menambah Data Diskon';
         });
         if ($permissionExist) {
+            $jenis_diskon = $request->referral != null ? 'refferal_' . $request->jenis_diskon : $request->jenis_diskon;
             Diskon::create([
                 'code' => $request->code,
                 'description' => $request->description,
-                'jenis_diskon' => $request->jenis_diskon,
+                'jenis_diskon' => $jenis_diskon,
                 'nominal' => $request->nominal,
                 'maximal_diskon' => ($request->jenis_diskon == 'percentage') ? $request->maximal_diskon : 0,
+                'refferal_pelanggan' => $request->referral,
                 'expired' => Date::createFromFormat('Y-m-d', $request->expired_date),
             ]);
             return redirect()->intended(route('data-diskon'));
@@ -40,12 +42,14 @@ class DiskonController extends Controller
             return $item->name === 'Mengubah Data Diskon';
         });
         if ($permissionExist) {
+            $jenis_diskon = $request->referral != null ? 'refferal_' . $request->jenis_diskon : $request->jenis_diskon;
             $diskon->update([
                 'code' => $request->code,
                 'description' => $request->description,
-                'jenis_diskon' => $request->jenis_diskon,
+                'jenis_diskon' => $jenis_diskon,
                 'nominal' => $request->nominal,
                 'maximal_diskon' => ($request->jenis_diskon == 'percentage') ? $request->maximal_diskon : 0,
+                'refferal_pelanggan' => $request->referral,
                 'expired' => Date::createFromFormat('Y-m-d', $request->expired_date),
             ]);
             return redirect()->intended(route('data-diskon'));

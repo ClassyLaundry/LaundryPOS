@@ -20,6 +20,7 @@
                                 <th>Deskripsi</th>
                                 <th>Besar Diskon</th>
                                 <th>Diskon Maksimal</th>
+                                <th>Pelanggan Referral</th>
                                 <th>Expired Date</th>
                                 <th>Status</th>
                                 <th></th>
@@ -30,14 +31,14 @@
                             <tr>
                                 <td>{{ $diskon->code }}</td>
                                 <td>{{ $diskon->description }}</td>
-                                @if ($diskon->jenis_diskon == "percentage")
+                                @if (str_contains($diskon->jenis_diskon, "percentage"))
                                 <td>
                                     <div class="d-flex justify-content-center">
                                         <span class="thousand-separator">{{ $diskon->nominal }}</span>
                                         <span>%</span>
                                     </div>
                                 </td>
-                                @elseif ($diskon->jenis_diskon == "exact")
+                                @elseif (str_contains($diskon->jenis_diskon, "exact"))
                                 <td>
                                     <div class="d-flex justify-content-between">
                                         <span>Rp</span>
@@ -51,6 +52,7 @@
                                         <span class="thousand-separator">{{ $diskon->maximal_diskon }}</span>
                                     </div>
                                 </td>
+                                <td class="text-center">@isset($diskon->pelanggan) {{ $diskon->pelanggan->nama }} @else - @endisset</td>
                                 <td class="text-center">{{ $diskon->expired }}</td>
                                 @if ($diskon->deleted_at != null)
                                     <td class="text-center">Deleted</td>
@@ -89,6 +91,7 @@
                 </ul>
             </div>
         </div>
+
         <div class="modal fade" role="dialog" tabindex="-1" id="modal-diskon">
             <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-lg-down" role="document">
                 <div class="modal-content">
@@ -130,21 +133,30 @@
                                         <input class="w-100 ms-2 input-thousand-separator" type="text" id="input-nominal-1" name="nominal" min=0 required>
                                     </div>
                                 </div>
-                                <div class="col-6 percentage" style="display: none;">
+                                <div class="col-6 mb-3 percentage" style="display: none;">
                                     <h5>Besar Diskon</h5>
                                     <div class="form-control d-flex">
                                         <input class="w-100 me-2 input-thousand-separator" type="text" id="input-nominal-2" name="nominal" min=0 max=100 required>
                                         <p>%</p>
                                     </div>
                                 </div>
-                                <div class="col-6 percentage" style="display: none;">
-                                    <h5>
-                                        Maksimal Diskon
-                                        <i class="bi bi-question-circle" data-toggle="tooltip" data-placement="top" title="Tooltip text"></i>
-                                    </h5>
+                                <div class="col-6 mb-3 percentage" style="display: none;">
+                                    <h5>Maksimal Diskon</h5>
                                     <div class="form-control d-flex">
                                         <p>Rp</p>
                                         <input class="w-100 ms-2 input-thousand-separator" type="text" id="input-max-nominal" name="maximal_diskon" required>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="form-check">
+                                            <input class="form-check-input me-2" type="checkbox" id="formCheck-referral" name="referral">
+                                            <h5 class="form-check-label" for="formCheck-referral">Referral</h5>
+                                        </div>
+                                        <div class="d-flex flex-fill ms-4 disabled">
+                                            <input class="form-control me-2 disabled" type="text" id="input-pelanggan_referral" name="pelanggan_referral" placeholder="Nama pelanggan" disabled>
+                                            <button class="btn btn-outline-primary" id="pilih-pelanggan" type="button"><i class="fas fa-search"></i></button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -156,6 +168,29 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" role="dialog" tabindex="-1" id="modal-data-pelanggan">
+            <div class="modal-dialog modal-xl modal-dialog-centered modal-fullscreen-sm-down" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Pelanggan</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex mb-3">
+                            <div class="intro-1 d-flex flex-fill">
+                                <input class="form-control" type="search" id="input-nama-pelanggan" placeholder="Cari nama pelanggan">
+                                <button class="btn btn-primary ms-3" id="search-pelanggan" type="button">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="table-pelanggan"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </section>
 </div>
 

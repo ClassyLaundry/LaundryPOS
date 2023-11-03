@@ -78,4 +78,52 @@ $(document).ready(function() {
         $('#btn-submit').addClass('disabled');
         e.currentTarget.submit();
     });
+
+    $('#formCheck-referral').on('change', function() {
+        if ($(this).is(':checked')) {
+            $(this).parent().next().removeClass('disabled');
+            $('#input-pelanggan_referral').prop('disabled', false);
+        } else {
+            if (!$(this).parent().next().hasClass('disabled')) {
+                $(this).parent().next().addClass('disabled');
+            }
+            $('#input-pelanggan_referral').prop('disabled', true);
+        }
+    });
+
+    $('#pilih-pelanggan').on('click', function() {
+        $('#modal-data-pelanggan').modal('show');
+    });
+
+    var pelangganId = 0;
+    $('#table-pelanggan').load(window.location.origin + '/component/pelanggan?paginate=5', function() {
+        $('#table-pelanggan th:last').hide();
+        $('#table-pelanggan .cell-action').hide();
+    });
+    $('#table-pelanggan').on('click', '.page-link', function(e) {
+        e.preventDefault();
+        $('#table-pelanggan').load($(this).attr('href'));
+    });
+
+    function search() {
+        $('#table-pelanggan').load(window.location.origin + '/component/pelanggan?key=' + encodeURIComponent($('#input-nama-pelanggan').val()) + '&filter=nama&paginate=5', function() {
+            $('#table-pelanggan th:last').hide();
+            $('#table-pelanggan .cell-action').hide();
+        });
+    }
+
+    $('#search-pelanggan').on('click', function() {
+        search();
+    });
+
+    $('#table-pelanggan').on('click', 'tr', function() {
+        pelangganId = $(this).attr('id').substr(10);
+
+        let tempNama = $(this).find('td').eq(1).html();
+
+        $('#formCheck-referral').val(pelangganId);
+        $('#input-pelanggan_referral').val(tempNama);
+        $('#modal-data-pelanggan').modal('hide');
+    });
+
 });
