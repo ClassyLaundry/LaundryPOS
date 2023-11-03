@@ -10,7 +10,7 @@ $(document).ready(function() {
         $('#modal-opsi-trans').modal('show');
     });
 
-    var transId;
+    var transId = 0;
     $('#container-list-trans').on('click', '#table-list-trans tbody tr', function() {
         let parent = $(this).parent();
         parent.addClass('disabled');
@@ -903,7 +903,11 @@ $(document).ready(function() {
     });
 
     $('#btn-print').on('click', function() {
-        window.location = window.location.origin + "/printNota/" + transId;
+        if (transId == 0) {
+            alert("Belum memilih transaksi, tidak bisa menampilkan nota");
+        } else {
+            window.location = window.location.origin + "/printNota/" + transId;
+        }
     });
 
     var calculateNow;
