@@ -30,7 +30,7 @@
                                     <div id="{{ $pickup->id }}" class="d-flex flex-column">
                                         <h4>
                                             <input class="pelanggan-id" type="hidden" value="{{ $pickup->pelanggan->id }}">
-                                            <span class="pelanggan-nama">{{ $pickup->pelanggan->nama }}</span>
+                                            <span class="pelanggan-nama">{{ strtolower($pickup->pelanggan->nama) }}</span>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 16 16" fill="currentColor" class="bi bi-dot">
                                                 <path fill-rule="evenodd" d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
                                             </svg>
@@ -60,7 +60,7 @@
                                     <div id="{{ $delivery->id }}" class="d-flex flex-column">
                                         <h4>
                                             <input class="pelanggan-id" type="hidden" value="{{ $delivery->pelanggan->id }}">
-                                            <span class="pelanggan-nama">{{ $delivery->pelanggan->nama }}</span>
+                                            <span class="pelanggan-nama">{{ strtolower($delivery->pelanggan->nama) }}</span>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 16 16" fill="currentColor" class="bi bi-dot">
                                                 <path fill-rule="evenodd" d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
                                             </svg>
@@ -86,7 +86,7 @@
                                 <div class="px-3 py-1 border-bottom rounded packing font-monospace">
                                     <h4>
                                         @foreach ($delivery->transaksi->packing->packing_inventories as $packing)
-                                            {{ $packing->inventory->nama . ': ' . $packing->qty }}
+                                            {{ strtolower($packing->inventory->nama) . ': ' . $packing->qty }}
                                         @endforeach
                                     </h4>
                                 </div>
@@ -127,7 +127,7 @@
                                     <div id="{{ $pickup->id }}" class="d-flex flex-column">
                                         <h4>
                                             <input class="pelanggan-id" type="hidden" value="{{ $pickup->pelanggan->id }}">
-                                            <span class="pelanggan-nama">{{ $pickup->pelanggan->nama }}</span>
+                                            <span class="pelanggan-nama">{{ strtolower($pickup->pelanggan->nama) }}</span>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 16 16" fill="currentColor" class="bi bi-dot">
                                                 <path fill-rule="evenodd" d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
                                             </svg>
