@@ -235,7 +235,7 @@
                         <p class="ms-3">Piutang</p>
                     </a>
                 </div>
-                <div id="nav-laporan-omset">
+                {{-- <div id="nav-laporan-omset">
                     <a href="/laporan/omset" class="menu-item menu-laporan pe-3 py-1 d-flex align-items-center" style="padding-left: 2rem;">
                         <i class="fa-solid fa-money-bill-transfer"></i>
                         <p class="ms-3">Omset</p>
@@ -252,7 +252,7 @@
                         <i class="fa-solid fa-sack-dollar"></i>
                         <p class="ms-3">Mutasi Deposit</p>
                     </a>
-                </div>
+                </div> --}}
             </div>
         </div>
         @endif
