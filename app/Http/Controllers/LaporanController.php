@@ -79,18 +79,20 @@ class LaporanController extends Controller
     public function laporanPiutangPelanggan(Request $request)
     {
         $totalPiutang = Transaksi::where('lunas', false)->sum(DB::raw('grand_total - total_terbayar'));
-        $pelanggans = Pelanggan::get();
+        $pelanggans = Pelanggan::orderBy('nama', 'asc')->get();
         $data = [];
 
         foreach($pelanggans as $pelanggan) {
-            $piutang = Transaksi::where('lunas', false)->where('pelanggan_id', $pelanggan->id)->sum(DB::raw('grand_total - total_terbayar'));
-            $last_transaction = Transaksi::where('pelanggan_id', $pelanggan->id)->latest()->first();
-            $tempData['id'] = $pelanggan->id;
-            $tempData['nama'] = $pelanggan->nama;
-            $tempData['jumlah_transaksi'] = Transaksi::where('pelanggan_id', $pelanggan->id)->count();
-            $tempData['piutang'] = $piutang;
-            $tempData['last_transaction'] = $last_transaction !== null ? $last_transaction->created_at : '';
-            array_push($data, $tempData);
+            if (Transaksi::where('pelanggan_id', $pelanggan->id)->count() > 0) {
+                $piutang = Transaksi::where('lunas', false)->where('pelanggan_id', $pelanggan->id)->sum(DB::raw('grand_total - total_terbayar'));
+                $last_transaction = Transaksi::where('pelanggan_id', $pelanggan->id)->latest()->first();
+                $tempData['id'] = $pelanggan->id;
+                $tempData['nama'] = $pelanggan->nama;
+                $tempData['jumlah_transaksi'] = Transaksi::where('pelanggan_id', $pelanggan->id)->count();
+                $tempData['piutang'] = $piutang;
+                $tempData['last_transaction'] = $last_transaction !== null ? $last_transaction->created_at : '';
+                array_push($data, $tempData);
+            }
         }
 
         return view('pages.laporan.PiutangPelanggan', [
@@ -109,22 +111,24 @@ class LaporanController extends Controller
         ]);
     }
 
-    public function piutangPelanggan(Request $request)
-    {
-        $pelanggan = Pelanggan::where('id', $request->pelanggan_id)
-            ->with(['transaksi' => function ($query) {
-                $query->where('lunas', false);
-            }])->first();
-        return $pelanggan;
-    }
-
     public function omsetBulanan(Request $request)
     {
-        $pembayaranThisMonth = Pembayaran::with('transaksi')->whereMonth('created_at', $request->bulan)
-            ->whereYear('created_at', $request->tahun)
-            ->get();
+        // $pembayaranThisMonth = Pembayaran::with('transaksi')->whereMonth('created_at', $request->bulan)
+        //     ->whereYear('created_at', $request->tahun)
+        //     ->get();
+        $pembayaranThisMonth = Pembayaran::with('transaksi')->get();
         $sumPembayaran = $pembayaranThisMonth->sum('nominal');
-        return response()->json([
+        return view('pages.laporan.Omset', [
+            'total_pembayaran' => $sumPembayaran,
+            'pembayaran_this_month' => $pembayaranThisMonth
+        ]);
+    }
+
+    public function laporanOmset()
+    {
+        $pembayaranThisMonth = Pembayaran::with('transaksi')->get();
+        $sumPembayaran = $pembayaranThisMonth->sum('nominal');
+        return view('pages.laporan.Omset', [
             'total_pembayaran' => $sumPembayaran,
             'pembayaran_this_month' => $pembayaranThisMonth
         ]);
