@@ -219,7 +219,7 @@
             </div>
         </div>
 
-        @if(in_array("Membuka Menu Diskon", Session::get('permissions')) || Session::get('role') == 'administrator')
+        @if(Session::get('role') == 'administrator')
         <div id="nav-menu-laporan" class="nav-menu">
             <div class="menu-header px-3 py-1 d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center">

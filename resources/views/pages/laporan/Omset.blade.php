@@ -37,6 +37,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($pembayaran_this_month as $pembayaran)
+                                @dd($pembayaran->transaksi)
                                 <tr>
                                     <td>{{ strtolower($pembayaran->transaksi->pelanggan->nama) }}</td>
                                     <td class="text-center">{{ $pembayaran->transaksi->kode }}</td>

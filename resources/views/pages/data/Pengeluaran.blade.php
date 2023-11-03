@@ -9,7 +9,10 @@
     <section id="data-pengeluaran">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Data Pengeluaran</h4>
+                <div class="d-flex jsutify-content-between align-items-center">
+                    <h4 class="card-title">Data Pengeluaran</h4>
+                    <h5 class="d-flex justify-content-between" style="width: 300px;"><span>Saldo Outlet:</span><span>Rp {{ number_format($saldo->saldo, 0, ',', '.') }}</span></h5>
+                </div>
                 <hr>
                 <div class="d-flex justify-content-end">
                     <form method="GET" action="/data/pengeluaran" class="d-flex align-items-center">
