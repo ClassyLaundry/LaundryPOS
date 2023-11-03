@@ -179,7 +179,7 @@ $(document).ready(function() {
         let total = removeDot($('#input-total').val());
 
         let nominal = removeDot($('#input-nominal').val());
-        let terbayar = removeDot($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(7)').html());
+        let terbayar = removeDot($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(9)').html());
         if (total > terbayar + nominal) {
             $('#input-terbayar').val((terbayar + nominal).toLocaleString(['ban', 'id']));
             $('#input-kembalian').val(0);

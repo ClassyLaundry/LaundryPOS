@@ -464,7 +464,7 @@
                                                 </div>
                                                 <div id="container-pickup" class="position-relative mb-2" style="display: none;">
                                                     <h6>Kode Pickup</h6>
-                                                    <select class="form-control" id="select-kode-pickup">
+                                                    <select class="form-control" id="select-kode-pickup" disabled>
                                                         <option value="" selected hidden>-</option>
                                                         @foreach ($data['pickup'] as $pickup)
                                                             <option value="{{ $pickup->id }}">{{ $pickup->kode }}</option>
@@ -475,9 +475,9 @@
                                                     <input class="form-check-input" type="checkbox" id="formCheck-delivery" />
                                                     <label class="form-check-label" for="formCheck-delivery">Delivery</label>
                                                 </div>
-                                                <div id="container-delivery" class="position-relative mb-2" style="display: none;">
+                                                <div id="container-delivery" class="position-relative mb-2 d-none">
                                                     <h6>Kode Delivery</h6>
-                                                    <select class="form-control" id="select-kode-delivery">
+                                                    <select class="form-control" id="select-kode-delivery" disabled>
                                                         <option value="" selected hidden>-</option>
                                                         @foreach ($data['delivery'] as $delivery)
                                                             <option value="{{ $delivery->id }}">{{ $delivery->kode }}</option>
@@ -565,6 +565,7 @@
                     </div>
                 </section>
             </div>
+
             <div role="tabpanel" class="tab-pane py-4" id="tab-pembayaran">
                 <div class="card">
                     <div class="card-body">
@@ -660,6 +661,7 @@
                     </div>
                 </div>
             </div>
+
             <div role="tabpanel" class="tab-pane py-4" id="tab-log">
                 <div class="card">
                     <div class="card-body">

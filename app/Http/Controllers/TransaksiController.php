@@ -242,6 +242,11 @@ class TransaksiController extends Controller
                 $setrika_only = true;
             }
 
+            $need_delivery = false;
+            if ($request->need_delivery == "1") {
+                $need_delivery = true;
+            }
+
             $status = 'draft';
             if (
                 User::getRole(Auth::id()) == "administrator"
@@ -261,6 +266,7 @@ class TransaksiController extends Controller
                 'status' => $status,
                 'express' => $express,
                 'setrika_only' => $setrika_only,
+                'need_delivery' => $need_delivery,
                 'done_date' => $done_date
             ])->toArray();
             $transaksi = Transaksi::find($id);
@@ -289,12 +295,16 @@ class TransaksiController extends Controller
             }
 
             $transaksi->save();
+
             LogTransaksi::create([
                 'transaksi_id' => $transaksi->id,
                 'penanggung_jawab' => Auth::id(),
                 'process' => strtoupper('update transaksi'),
             ]);
-            return redirect()->back();
+            return [
+                'code' => '200',
+                'message' => 'Pembaharuan data berhasil disimpan'
+            ];
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
         }

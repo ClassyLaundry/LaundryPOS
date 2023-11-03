@@ -83,7 +83,7 @@
             <p style="position: absolute; left: 350px; top: 120px;">: {{ $data->transaksi->setrika_only ? 'YA' : 'TIDAK' }}</p>
 
             <p style="position: absolute; left: 500px; top: 120px;">DELIVERY</p>
-            <p style="position: absolute; left: 600px; top: 120px;">: {{ $data->status_delivery }}</p>
+            <p style="position: absolute; left: 600px; top: 120px;">: {{ $data->transaksi->need_delivery ? 'YA' : 'TIDAK' }}</p>
         </div>
         <p class="hr-text" style="margin-bottom: 0px;">
             =========================================================================================================================

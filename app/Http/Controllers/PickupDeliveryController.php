@@ -45,12 +45,13 @@ class PickupDeliveryController extends Controller
                 return redirect()->intended(route('pickup-delivery'))->with('message', 'Success Created Pickup');
             } else {
                 $penerima = Penerima::where('transaksi_id', $request->transaksi_id)->first();
-                //Melakukan Pengecheckan apakah sudah diterima
                 if (empty($penerima)) {
                     $transaksi = Transaksi::find($request->transaksi_id);
                     $count = PickupDelivery::where('action', $action)->count() + 1;
                     $paded = str_pad($count, 6, '0', STR_PAD_LEFT);
                     $kode = 'DV-' . $paded;
+                    $transaksi->need_delivery = 1;
+                    $transaksi->save();
 
                     $merged = $request->merge([
                         'pelanggan_id' => $transaksi->pelanggan_id,
