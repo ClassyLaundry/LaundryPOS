@@ -73,7 +73,7 @@ class RewashController extends Controller
         }
     }
 
-    public function updateStatus(Request $request, Rewash $rewash)
+    public function updateStatus(Request $request, $id)
     {
         $user = User::find(auth()->id());
         $permissions = $user->getPermissionsViaRoles();
@@ -81,15 +81,16 @@ class RewashController extends Controller
             return $item->name === 'Menyatakan Selesai Proses Rewash';
         });
         if ($permissionExist) {
+            $rewash = Rewash::find($id);
             $item_transaksi = ItemTransaksi::find($rewash->item_transaksi_id);
             $rewash->update([
-                'status' => $request->status
+                'status' => 1
             ]);
 
             LogTransaksi::create([
                 'transaksi_id' => $item_transaksi->transaksi_id,
                 'penanggung_jawab' => Auth::id(),
-                'process' => strtoupper('update status rewash to ' . $request->status)
+                'process' => strtoupper('update status rewash to ' . 'done')
             ]);
             return redirect()->intended(route('menu-rewash'));
         } else {

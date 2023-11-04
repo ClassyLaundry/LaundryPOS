@@ -34,15 +34,16 @@
                                             <td>{{ $rewash->jenis_rewash }}</td>
                                             <td>{{ $rewash->keterangan }}</td>
                                             @if ($rewash->status)
-                                                <td class="text-center">is done</td>
+                                                <td class="text-center">sudah selesai</td>
+                                                <td></td>
                                             @else
-                                                <td class="text-center">in progress</td>
+                                                <td class="text-center">sedang di proses</td>
+                                                <td class="cell-action" style="width: 46.25px;">
+                                                    <button id="btn-{{ $rewash->id }}" class="btn btn-primary btn-sm btn-show-action" type="button">
+                                                        <i class="fas fa-bars"></i>
+                                                    </button>
+                                                </td>
                                             @endif
-                                            <td class="cell-action" style="width: 46.25px;">
-                                                <button id="btn-{{ $rewash->id }}" class="btn btn-primary btn-sm btn-show-action" type="button">
-                                                    <i class="fas fa-bars"></i>
-                                                </button>
-                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

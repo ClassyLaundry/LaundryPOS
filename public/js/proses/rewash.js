@@ -25,4 +25,12 @@ $(document).ready(function() {
 
         $('#modal-update').modal('show');
     });
+
+
+
+    $('#action-finish').on('click', function() {
+        if (confirm('Nyatakan rewash selesai ?')) {
+            window.location = "/proses/rewash/update-status/" + btnId;
+        }
+    });
 });
