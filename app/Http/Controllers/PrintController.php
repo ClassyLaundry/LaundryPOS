@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Data\CatatanPelanggan;
 use App\Models\Data\Pelanggan;
 use App\Models\Packing\Packing;
 use App\Models\SettingUmum;
@@ -51,6 +52,7 @@ class PrintController extends Controller
             $total_bobot += $item->total_bobot;
         }
         $status_delivery = PickupDelivery::where("transaksi_id", $transaksi_id)->where('action', 'delivery')->get()->count() != 0 ? 'YA' : 'TIDAK';
+        $catatan = CatatanPelanggan::where('pelanggan_id', $transaksi->pelanggan_id)->first();
 
         $data = collect();
         $data->header = $header;
@@ -59,6 +61,7 @@ class PrintController extends Controller
         $data->total_bobot = $total_bobot;
         $data->status_delivery = $status_delivery;
         $data->pelanggan = $pelanggan;
+        $data->catatan = $catatan->catatan_khusus;
 
         // return view('pages.print.Nota', ['data' => $data]);
 

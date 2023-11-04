@@ -171,7 +171,7 @@
             <p style="position: absolute; left: 500px; top: 0px;">: 0</p>
 
             <p style="position: absolute; left: 0px; top: 30px;">CATATAN</p>
-            <p style="position: absolute; left: 100px; top: 30px;">: {{ $data->transaksi->catatan }}</p>
+            <p style="position: absolute; left: 100px; top: 30px;">: {{ $data->catatan }} || {{ $data->transaksi->catatan }}</p>
         </div>
         <p class="hr-text" style="margin-bottom: 0px;">
             =========================================================================================================================
