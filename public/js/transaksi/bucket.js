@@ -145,7 +145,7 @@ $(document).ready(function() {
                 $('#cancel-trans').show();
             }
 
-            $('#form-transaksi').attr('action', '/transaksi/update/' + trans.id);
+            $('#form-transaksi').data('action', '/transaksi/update/' + trans.id);
 
             parent.removeClass('disabled');
             $('#modal-opsi-trans').modal('hide');
