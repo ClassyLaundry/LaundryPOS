@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        // Schema::table('users', function (Blueprint $table) {
-        //     $table->foreignId('outlet_id')
-        //         ->nullable()
-        //         ->constrained('outlets', 'id')
-        //         ->cascadeOnDelete()
-        //         ->after('status');
-        // });
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('outlet_id')
+                ->nullable()
+                ->constrained('outlets', 'id')
+                ->cascadeOnDelete()
+                ->after('status');
+        });
     }
 
     /**
@@ -29,8 +29,8 @@ return new class extends Migration
      */
     public function down()
     {
-        // Schema::table('users', function (Blueprint $table) {
-        //     $table->dropColumn('outlet_id');
-        // });
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('outlet_id');
+        });
     }
 };
