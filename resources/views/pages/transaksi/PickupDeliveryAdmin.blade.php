@@ -61,7 +61,7 @@
         <div role="tabpanel" class="tab-pane" id="tab-2">
             <div class="row">
                 @foreach ($drivers as $driver)
-                <div class="col-6">
+                <div class="col-6 mb-4">
                     <div class="border rounded p-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <h4>Hub {{ $driver->name }}</h4>

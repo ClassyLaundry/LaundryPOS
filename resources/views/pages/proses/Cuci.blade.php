@@ -142,7 +142,7 @@
                             </div>
                         </div>
                         @foreach ($pencucis as $pencuci)
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-6 mb-4">
                                 <div class="p-3 border rounded" style="border: 1px solid rgba(0,0,0,.125);">
                                     <h4>Hub {{ $pencuci->name }}</h4>
                                     <hr />

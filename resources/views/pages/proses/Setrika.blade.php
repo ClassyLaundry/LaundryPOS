@@ -1,4 +1,4 @@
-@extends('layouts.users')
+devan@extends('layouts.users')
 
 @section('content')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
@@ -154,7 +154,7 @@
                             </div>
                         </div>
                         @foreach ($penyetrikas as $penyetrika)
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-6 mb-4">
                                 <div class="p-3 border rounded" style="border: 1px solid rgba(0,0,0,.125);">
                                     <h4>Hub {{ $penyetrika->name }}</h4>
                                     <hr />
