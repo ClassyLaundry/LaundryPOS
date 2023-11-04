@@ -513,8 +513,9 @@ $(document).ready(function() {
             processData: false,
             data: formData,
         }).done(function(response) {
-            alert(response.message);
-            window.location = window.location.origin + window.location.pathname;
+            alert();
+            // alert(response.message);
+            // window.location = window.location.origin + window.location.pathname;
         }).fail(function(message) {
             alert('error');
             console.log(message);
