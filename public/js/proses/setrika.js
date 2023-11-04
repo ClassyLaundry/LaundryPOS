@@ -65,7 +65,7 @@ $(document).ready(function() {
 
     $('#action-add').on('click', function() {
         $('#trans-' + btnId).addClass('disabled');
-        let temp = $('#trans-' + btnId).parent().parent().detach();
+        let temp = $('#trans-' + btnId).parent().parent().parent().detach();
         $.ajax({
             url: "/transaksi/" + btnId + "/penyetrika",
         }).done(function() {
