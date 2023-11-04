@@ -1,4 +1,4 @@
-devan@extends('layouts.users')
+@extends('layouts.users')
 
 @section('content')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
