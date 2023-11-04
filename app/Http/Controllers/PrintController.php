@@ -61,7 +61,9 @@ class PrintController extends Controller
         $data->total_bobot = $total_bobot;
         $data->status_delivery = $status_delivery;
         $data->pelanggan = $pelanggan;
-        $data->catatan = $catatan->catatan_khusus;
+        if ($catatan != null) {
+            $data->catatan = $catatan->catatan_khusus;
+        }
 
         // return view('pages.print.Nota', ['data' => $data]);
 
