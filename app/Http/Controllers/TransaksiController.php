@@ -301,6 +301,7 @@ class TransaksiController extends Controller
                 'penanggung_jawab' => Auth::id(),
                 'process' => strtoupper('update transaksi'),
             ]);
+
             return [
                 'code' => '200',
                 'message' => 'Pembaharuan data berhasil disimpan'

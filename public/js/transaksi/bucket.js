@@ -506,15 +506,14 @@ $(document).ready(function() {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             },
-            url: $('#form-transaksi').attr('action'),
+            url: $('#form-transaksi').data('action'),
             method: "POST",
             contentType: false,
             processData: false,
             data: formData,
         }).done(function(response) {
-            alert();
-            // alert(response.message);
-            // window.location = window.location.origin + window.location.pathname;
+            alert(response.message);
+            window.location = window.location.origin + window.location.pathname;
         }).fail(function(message) {
             alert('error');
             console.log(message);
