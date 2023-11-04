@@ -232,7 +232,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/transaksi/pembayaran', [PageController::class, 'pembayaran'])->name('menu_pembayaran');
     Route::get('/transaksi/pembayaran/{pembayaran}', [PembayaranController::class, 'show']);
     Route::post('/transaksi/pembayaran', [PembayaranController::class, 'insert']);
-    Route::post('/transaksi/pembayaran-tagihan', [PembayaranController::class, 'bayarTagihan']);;
+    Route::post('/transaksi/pembayaran-tagihan', [PembayaranController::class, 'bayarTagihan']);
     Route::post('/transaksi/pembayaran/{pembayaran}', [PembayaranController::class, 'update']);
     Route::get('/transaksi/pembayaran/delete/{pembayaran}', [PembayaranController::class, 'delete']);
     Route::get('/component/pembayaran', [PembayaranController::class, 'tablePembayaran']);

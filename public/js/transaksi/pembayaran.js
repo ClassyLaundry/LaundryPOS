@@ -235,6 +235,14 @@ $(document).ready(function() {
         });
     }
 
+    $('#table-container').on('click', '.page-link', function(e) {
+        e.preventDefault();
+        let page = $(this).attr('href').substr(-1);
+        $('#table-container').load(window.location.origin + '/component/pembayaran?name=' + encodeURIComponent($('#input-search-by-name').val()) + '&date=' + $('#input-search-by-date').val() + '&page=' + page, function() {
+            setThousandSeparator();
+        });
+    });
+
     $('#btn-search').on('click', function() { search(); });
     $('#btn-reset').on('click', function() { $('#input-search-by-date').val(''); search(); $(this).addClass('d-none'); });
 
