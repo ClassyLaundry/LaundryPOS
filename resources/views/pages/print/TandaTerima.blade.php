@@ -41,7 +41,7 @@
 <body style="width: 150%; height: 100%; padding: 0px; margin: -30px;">
     <div id="data-header">
         <h4 style="margin-top: 0px;">{{ $data->header['nama_usaha'] }}</h4>
-        <h4>{{ $data->transaksi->outlet->alamat }}</h4>
+        <h4 style="white-space: nowrap; text-overflow: clip; overflow: hidden;">{{ $data->transaksi->outlet->alamat }}</h4>
         <h4>{{ $data->transaksi->outlet->telp_1 }}</h4>
     </div>
     <p class="hr-text">
