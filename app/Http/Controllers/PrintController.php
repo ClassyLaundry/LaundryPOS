@@ -128,4 +128,38 @@ class PrintController extends Controller
         ])->setPaper($paper_size, 'portrait');
         return $pdf->stream('invoice.pdf');
     }
+
+    public function tandaTerima($transaksi_id)
+    {
+        $transaksi = Transaksi::detail()->find($transaksi_id);
+
+        $header = [
+            'nama_usaha' => SettingUmum::where('nama', 'Print Header Nama Usaha')->first()->value,
+            'delivery_text' => SettingUmum::where('nama', 'Print Header Delivery Text')->first()->value
+        ];
+    $total_item = 0;
+        $total_jenis_item = 0;
+        foreach ($transaksi->item_transaksi as $item) {
+            $total_item += $item->qty;
+            $total_jenis_item++;
+        }
+        $pelanggan = Pelanggan::find($transaksi->pelanggan_id);
+        $driver = PickupDelivery::with('driver')->where('transaksi_id', $transaksi_id)->first();
+        if ($driver != null) {
+            $driver = $driver->driver;
+        }
+
+        $data = collect();
+        $data->header = $header;
+        $data->transaksi = $transaksi;
+        $data->total_item = $total_item;
+        $data->pelanggan = $pelanggan;
+        $data->driver = $driver;
+
+        $paper_size = [0, 0, 160, 159 + ($total_jenis_item * 22)];
+        $pdf = Pdf::loadView('pages.print.TandaTerima', [
+            'data' => $data,
+        ])->setPaper($paper_size, 'portrait');
+        return $pdf->stream('invoice.pdf');
+    }
 }

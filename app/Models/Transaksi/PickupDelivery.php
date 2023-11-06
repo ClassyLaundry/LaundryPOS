@@ -50,7 +50,7 @@ class PickupDelivery extends Model
 
     public function driver()
     {
-        return $this->belongsTo(User::class, 'id', 'driver_id');
+        return $this->belongsTo(User::class, 'driver_id', 'id');
     }
 
     public static function delivery_driver($id){
