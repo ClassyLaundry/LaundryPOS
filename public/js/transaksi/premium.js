@@ -37,7 +37,6 @@ $(document).ready(function() {
             $('#tanggal-selesai-proses').val(trans.done_date);
 
             let pelanggan = trans.pelanggan;
-            $('#info-pelanggan').data('id', pelanggan.id);
             $('#input-nama').val(pelanggan.nama);
             $('#input-telepon').val(pelanggan.telephone);
             $('#input-alamat').val(pelanggan.alamat);
@@ -707,7 +706,7 @@ $(document).ready(function() {
     });
 
     $('#print-tanda-terima').on('click', function() {
-        window.location = window.location.origin + '/printTandaTerima/' + $('#info-pelanggan').data('id');
+        window.location = window.location.origin + '/printTandaTerima/' + $('#id-trans').text();
     });
 
     function getActivePromo(showModal) {

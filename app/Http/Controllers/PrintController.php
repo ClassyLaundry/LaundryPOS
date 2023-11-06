@@ -137,7 +137,7 @@ class PrintController extends Controller
             'nama_usaha' => SettingUmum::where('nama', 'Print Header Nama Usaha')->first()->value,
             'delivery_text' => SettingUmum::where('nama', 'Print Header Delivery Text')->first()->value
         ];
-    $total_item = 0;
+        $total_item = 0;
         $total_jenis_item = 0;
         foreach ($transaksi->item_transaksi as $item) {
             $total_item += $item->qty;
