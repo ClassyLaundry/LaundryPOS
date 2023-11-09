@@ -155,22 +155,25 @@ $(document).ready(function() {
         });
     });
 
-    let key = '';
-    $('#container-list-trans').load(window.location.origin + '/transaksi/search?tipe=bucket&key=' + key, function() {
-        setThousandSeparator();
+    var searchTrans, key = '';
+    $('#input-key-trans').on('input', function() {
+        clearTimeout(searchTrans);
+        searchTrans = setTimeout(searchListTrans, 2000);
     });
 
-    $('#search-key-trans').on('click', function() {
+    searchListTrans();
+
+    function searchListTrans() {
         key = $('#input-key-trans').val();
-        $('#container-list-trans').load(window.location.origin + '/transaksi/search?tipe=bucket&key=' + key, function() {
+        $('#container-list-trans').load(window.location.origin + '/transaksi/search?tipe=bucket&key=' + encodeURIComponent(key), function() {
             setThousandSeparator();
         });
-    });
+    }
 
     $('#container-list-trans').on('click', '.page-link', function(e) {
         e.preventDefault();
         let page = $(this).attr('href').substr(-1);
-        $('#container-list-trans').load(window.location.origin + '/transaksi/search?tipe=bucket&key=' + key + '&page=' + page, function() {
+        $('#container-list-trans').load(window.location.origin + '/transaksi/search?tipe=bucket&key=' + encodeURIComponent(key) + '&page=' + page, function() {
             setThousandSeparator();
         });
     });

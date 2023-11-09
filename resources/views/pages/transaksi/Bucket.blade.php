@@ -23,12 +23,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="d-flex mb-3">
-                        <div class="intro-1 d-flex flex-fill">
-                            <input class="form-control" type="search" id="input-key-trans" placeholder="Kata kunci">
-                            <button class="btn btn-primary ms-3" data-bs-toggle="tooltip" data-bss-tooltip="" id="search-key-trans" type="button" title="Cari transaksi">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
+                        <input class="form-control" type="search" id="input-key-trans" placeholder="Kata kunci">
 
                         @if(in_array("Membuat Transaksi", Session::get('permissions')) || Session::get('role') == 'administrator')
                             <button class="btn btn-primary ms-3" data-bs-toggle="tooltip" data-bss-tooltip="" id="add-new-trans" type="button" title="Buat transaksi baru">

@@ -56,9 +56,15 @@ $(document).ready(function() {
         });
     }
 
-    $('#search-pelanggan').on('click', function() {
-        search();
+    var searchPelanggan;
+    $('#input-nama-pelanggan').on('input', function() {
+        clearTimeout(searchPelanggan);
+        searchPelanggan = setTimeout(searchListPelanggan, 2000);
     });
+
+    function searchListPelanggan() {
+        search();
+    }
 
     $('#table-pelanggan').on('click', 'tr', function() {
         pelangganId = $(this).attr('id').substr(10);

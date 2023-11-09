@@ -2,71 +2,29 @@
 
 @section('content')
 <div class="container">
-    <header class="d-flex align-items-center my-3" style="color: var(--bs-gray);"><a>Proses</a><i class="fas fa-angle-right mx-2"></i><a>Packing</a></header>
-    <section id="data-kategori">
+    <header class="d-flex align-items-center my-3" style="color: var(--bs-gray);">
+        <a>Proses</a>
+        <i class="fas fa-angle-right mx-2"></i>
+        <a>Packing</a>
+    </header>
+    <section id="data-packing">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Packing</h4>
                 <hr>
-                <div class="d-flex justify-content-end">
-                    <form method="GET" action="/proses/packing" class="d-flex align-items-center">
-                        Search :
-                        <input class="form-control mx-1" type="search" name="search" style="max-width: 200px;">
-                    </form>
+                <div class="d-flex justify-content-end align-items-center mb-3">
+                    Search :
+                    <input class="form-control ms-1" id="input-nama-pelanggan" type="search" name="search" style="max-width: 200px;">
                 </div>
-                <div class="table-responsive mb-2">
-                    <table class="table table-striped" id="table-list-trans">
-                        <thead class="text-center">
-                            <tr>
-                                <th>Kode</th>
-                                <th>Tipe</th>
-                                <th>Outlet</th>
-                                <th class="d-none d-lg-table-cell">Tanggal Transaksi</th>
-                                <th>Nama Pelanggan</th>
-                                @if(Session::get('role') == 'administrator')
-                                    <th colspan="2">Harga Total</th>
-                                    <th>Lunas</th>
-                                @endif
-                                <th style="width: 46.25px;"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($last_transaksi as $trans)
-                                @if ($trans->packing == null)
-                                <tr id="{{ $trans->id }}" data-bs-toggle="tooltip" data-bss-tooltip="" title="Double klik untuk memilih">
-                                    <td class="text-center">{{ $trans->kode }}</td>
-                                    <td class="text-center">{{ ucwords($trans->tipe_transaksi) }}</td>
-                                    <td class="text-center">{{ $trans->outlet->nama }}</td>
-                                    <td class="d-none d-lg-table-cell text-center">{{ $trans->created_at }}</td>
-                                    <td>{{ $trans->pelanggan->nama }}</td>
-                                    @if(Session::get('role') == 'administrator')
-                                        <td>Rp</td>
-                                        <td class="text-end thousand-separator">{{ $trans->grand_total }}</td>
-                                        <td class="text-center" style="white-space: nowrap">
-                                        @if($trans->lunas)
-                                            Lunas
-                                        @else
-                                            Belum Lunas
-                                        @endif
-                                    @endif
-                                    </td>
-                                    <td class="cell-action">
-                                        <button id="btn-{{ $trans->id }}" class="btn btn-primary btn-sm btn-show-action" type="button"><i class="fas fa-bars"></i></button>
-                                    </td>
-                                </tr>
-                                @endif
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                {{ $last_transaksi->links() }}
+
+                <div id="container-list-trans"></div>
+
                 <ul class="list-unstyled form-control" id="list-action">
                     <li id="action-detail">Lihat Detail</li>
                     <li id="action-kemas">Kemas</li>
                 </ul>
             </div>
         </div>
-
 
         <div class="modal fade" role="dialog" tabindex="-1" id="modal-detail">
             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">

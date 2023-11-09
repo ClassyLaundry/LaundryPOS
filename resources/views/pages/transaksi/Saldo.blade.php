@@ -75,14 +75,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="d-flex mb-3">
-                        <div class="intro-1 d-flex flex-fill">
-                            <input class="form-control" type="search" id="input-nama-pelanggan" placeholder="Cari nama pelanggan">
-                            <button class="btn btn-primary ms-3" id="search-pelanggan" type="button">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
+                    <input class="form-control mb-3" type="search" id="input-nama-pelanggan" placeholder="Cari nama pelanggan">
                     <div id="table-pelanggan"></div>
                 </div>
             </div>

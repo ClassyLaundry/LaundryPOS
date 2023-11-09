@@ -26,8 +26,8 @@
                         </ul>
                     </div>
                     <div class="d-flex align-items-center">
-                        Search :
-                        <input class="form-control mx-1" id="input-search" type="search" name="search" style="max-width: 200px;">
+                        Search:
+                        <input class="form-control ms-1" id="input-search" type="search" name="search" style="max-width: 200px;">
                     </div>
                 </div>
 

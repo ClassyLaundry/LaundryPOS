@@ -22,7 +22,7 @@ $(document).ready(function() {
     var searchData, paginateCount = 5;
     $('#input-search').on('input', function() {
         clearTimeout(searchData);
-        searchData = setTimeout(search, 500);
+        searchData = setTimeout(search, 2000);
     });
 
     function search() {

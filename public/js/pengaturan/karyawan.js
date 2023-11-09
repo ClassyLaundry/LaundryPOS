@@ -1,20 +1,27 @@
 $(document).ready(function() {
-    // base
     if($('#list-action').children().length == 0) {
         $('#list-action').detach();
     }
+
     var btnIndex = -1, btnId = 0;
     $('#list-karyawan').on('click', '.btn-show-action', function() {
         btnIndex = $(this).index('.btn-show-action') + 1;
         btnId = $(this).attr('id').substring(4);
     });
 
-    // data karyawan
+    var searchKey;
+    $('#input-search').on('input', function() {
+        clearTimeout(searchKey);
+        searchKey = setTimeout(reloadList, 2000);
+    });
+
+    reloadList();
+
     function reloadList() {
         let role = $('#dropdown-filter-role .dropdown-menu .dropdown-item.active').data('value');
-        $('#list-karyawan').load(window.location.origin + '/component/karyawan?key=' + $('#input-search').val() + (role != '' ? '&role=' + role : ''));
+        $('#list-karyawan').load(window.location.origin + '/component/karyawan?key=' + encodeURIComponent($('#input-search').val()) + (role != '' ? '&role=' + role : ''));
     }
-    reloadList();
+
     $('#dropdown-filter-role .dropdown-menu .dropdown-item').on('click', function() {
         $('#dropdown-filter-role .dropdown-menu .dropdown-item.active').removeClass('active');
         $(this).addClass('active');

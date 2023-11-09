@@ -531,4 +531,19 @@ class TransaksiController extends Controller
             "logs" => LogTransaksi::where('transaksi_id', $id)->get(),
         ];
     }
+
+    public function tableCancelled(Request $request) {
+        $transaksi = Transaksi::detail()
+            ->where(function ($query) use ($request) {
+                $query->where('id', 'like', '%' . $request->key . '%')
+                    ->orWhereHas('pelanggan', function ($q) use ($request) {
+                        $q->where('nama', 'like', '%' . $request->key . '%');
+                    });
+            })
+            ->latest()->onlyTrashed()->paginate(15);
+
+        return view('components.tableCancelled', [
+            'transaksis' => $transaksi,
+        ]);
+    }
 }

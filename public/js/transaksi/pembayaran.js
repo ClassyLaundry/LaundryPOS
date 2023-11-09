@@ -243,8 +243,15 @@ $(document).ready(function() {
         });
     });
 
-    $('#btn-search').on('click', function() { search(); });
-    $('#btn-reset').on('click', function() { $('#input-search-by-date').val(''); search(); $(this).addClass('d-none'); });
+    var searchPelanggan;
+    $('#input-search-by-name').on('input', function() {
+        clearTimeout(searchPelanggan);
+        searchPelanggan = setTimeout(searchListPelanggan, 2000);
+    });
 
-    $('#input-search-by-date').on('change', function() { search(); $('#btn-reset').removeClass('d-none');});
+    function searchListPelanggan() {
+        search();
+    }
+
+    $('#input-search-by-date').on('change', function() { search(); });
 });

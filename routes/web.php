@@ -198,6 +198,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/component/shortTrans/{id}', [TransaksiController::class, 'shortTable']);
     Route::get('/component/shortTrans/{id}/process', [TransaksiController::class, 'shortTableProcess']);
     Route::get('/component/shortTrans/{id}/delivery', [TransaksiController::class, 'shortTableDelivery']);
+    Route::get('/component/cancelled', [TransaksiController::class, 'tableCancelled']);
 
     // Bucket
     Route::get('/transaksi/bucket', [PageController::class, 'bucket'])->name('transaksi');
@@ -253,6 +254,7 @@ Route::middleware(['auth'])->group(function () {
     //Packing
     Route::get('/proses/packing', [PageController::class, 'packing']);
     Route::post('/proses/packing', [PackingController::class, 'create']);
+    Route::get('/component/packing', [PackingController::class, 'tablePacking']);
     Route::get('/component/packing/{id}/bucket', [PackingController::class, 'tablePackingBucket']);
     Route::get('/component/packing/{id}/premium', [PackingController::class, 'tablePackingPremium']);
 

@@ -24,10 +24,7 @@
                     </div>
                     <div class="d-flex align-items-center">
                         Search:
-                        <input class="form-control ms-1" id="input-search-by-name" type="search" style="max-width: 200px; border-top-right-radius: 0; border-bottom-right-radius: 0;">
-                        <button class="btn btn-primary" data-bs-toggle="tooltip" data-bss-tooltip="" id="btn-search" type="button" title="Cari transaksi" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">
-                            <i class="fas fa-search" aria-hidden="true"></i>
-                        </button>
+                        <input class="form-control ms-1" id="input-search-by-name" type="search" style="max-width: 200px;">
                     </div>
                 </div>
 
@@ -40,7 +37,6 @@
                     <li id="action-print-nota">Print nota</li>
                     <li id="action-print-memo">Print memo</li>
                     <li id="action-print-kitir">Print kitir</li>
-                    {{-- <li id="action-delete">Hapus data</li> --}}
                 </ul>
             </div>
         </div>

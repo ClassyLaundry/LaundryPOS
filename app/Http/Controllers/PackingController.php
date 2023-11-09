@@ -76,6 +76,19 @@ class PackingController extends Controller
         }
     }
 
+    public function tablePacking(Request $request)
+    {
+        return view('components.tablePacking', [
+            'transaksis' => Transaksi::with('packing')
+            ->where(function ($query) use ($request) {
+                $query->where('id', 'like', '%' . $request->key . '%')
+                    ->orWhereHas('pelanggan', function ($q) use ($request) {
+                        $q->where('nama', 'like', '%' . $request->key . '%');
+                    });
+            })->latest()->paginate(15),
+        ]);
+    }
+
     public function tablePackingBucket($id)
     {
         return view('components.tablePackingBucket', [

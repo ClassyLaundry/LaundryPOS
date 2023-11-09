@@ -224,8 +224,8 @@ class PageController extends Controller
     {
         $query = User::query();
 
-        if ($request->has('search')) {
-            $query->where('name', 'like', '%' . $request->get('search') . '%');
+        if ($request->has('key')) {
+            $query->where('name', 'like', '%' . $request->get('key') . '%');
         }
 
         if ($request->has('role')) {
@@ -465,7 +465,6 @@ class PageController extends Controller
             return view(
                 'pages.proses.Packing',
                 [
-                    'last_transaksi' => Transaksi::with('packing')->latest()->paginate(15),
                     'inventories' => Inventory::where('kategori', 'packing')->get(),
                 ]
             );
@@ -548,15 +547,8 @@ class PageController extends Controller
         }
     }
 
-    public function cancel(Request $request)
+    public function cancel()
     {
-        return view(
-            'pages.transaksi.Cancelled',
-            [
-                'last_transaksi' => Transaksi::when($request->has("search"), function ($q) use ($request) {
-                    return $q->Where("kode", "like", "%" . $request->get("search") . "%");
-                })->orderBy("id", "desc")->onlyTrashed()->paginate(10),
-            ]
-        );
+        return view('pages.transaksi.Cancelled');
     }
 }
