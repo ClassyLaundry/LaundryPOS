@@ -112,8 +112,9 @@
                                 <select class="form-select" name="metode_pembayaran" required>
                                     <option value hidden selected>-</option>
                                     <option value="tunai">Tunai</option>
-                                    <option value="kredit">Kredit</option>
+                                    <option value="qris">Qris</option>
                                     <option value="debit">Debit</option>
+                                    <option value="transfer">Transfer</option>
                                 </select>
                             </div>
                             <div class="col-3 mb-2">
