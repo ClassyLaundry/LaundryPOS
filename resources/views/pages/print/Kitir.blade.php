@@ -10,9 +10,9 @@
         }
     </style>
 </head>
-<body style="width: 100%; height: 100%;">
+<body>
     @for($i = 0; $i < $cetak; $i++)
-        <p style="position: absolute; left: 0px; top: {{ $i * 70 - 30 }}px; width: 100%; font-size: 1.35rem; font-weight: bold;">{{ $data->kitir_code }}</p>
+        <p style="position: absolute; left: -15px; top: {{ $i * 80 - 50 }}px; width: 150%; font-size: 1.5rem; font-weight: bold;">{{ $data->kitir_code }}</p>
     @endfor
 </body>
 
