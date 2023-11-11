@@ -37,7 +37,7 @@
         }
     </style>
 </head>
-{{-- @dd($data->pelanggan) --}}
+
 <body style="width: 150%; height: 100%; padding: 0px; margin: -30px;">
     <div id="data-header">
         <h4 style="margin-top: 0px;">{{ $data->header['nama_usaha'] }}</h4>
@@ -69,8 +69,10 @@
         =========================================================================================================================
     </p>
     <div style="margin-top: 4px;">
-        <p>Delivery: @isset($data->driver) {{ $data->driver->name }} @endisset </p>
+        @isset($data->pickup) <p>Delivery: {{ $data->pickup->driver->name }}</p>@endisset
         <p>Pelanggan: {{ $data->pelanggan->nama }}</p>
+        @isset($data->pickup) <p style="word-wrap: break-word; text-overflow: ellipsis; overflow: hidden; max-height: 28px;">Alamat: {{ substr($data->pickup->alamat, 0, 60) }}</p>@endisset
+        @isset($data->pickup) <p style="word-wrap: break-word; text-overflow: ellipsis; overflow: hidden; max-height: 41px;">Catatan: {{ substr($data->pickup->request, 0, 90) }}</p>@endisset
     </div>
 </body>
 

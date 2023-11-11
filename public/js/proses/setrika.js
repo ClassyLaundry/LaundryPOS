@@ -2,12 +2,12 @@ $(document).ready(function() {
     function karyawanHubCheck() {
         $('.hub-list').each(function() {
             if ($(this).children().length == 0) {
-                if ($(this).hasClass('hub-setrika')) {
+                if ($(this).hasClass('hub-staging')) {
                     $(this).append('<div class="alert alert-success" role="alert">Tidak ada pekerjaan</div>');
                 } else {
-                    $(this).append('<div class="alert alert-warning" role="alert">Tidak ada pekerjaan</div>');
+                    $(this).append('<div class="alert alert-warning" role="alert">Belum ada pekerjaan</div>');
                 }
-            } else {
+            } else if ($(this).children().length > 1 && $(this).find('.alert').length == 1){
                 $(this).find('.alert').detach();
             }
         });
@@ -15,7 +15,7 @@ $(document).ready(function() {
     karyawanHubCheck();
 
     var currentlySelectedItemId = 0;
-    $(".hub-setrika, .hub-karyawan").sortable({
+    $(".hub-staging, .hub-karyawan").sortable({
         connectWith: ".hub-list",
         placeholder: "sortable-placeholder",
         items: ".item",
@@ -31,7 +31,7 @@ $(document).ready(function() {
                 }).done(function() {
                     ui.item.removeClass('disabled');
                 });
-            } else if (ui.item.parent().hasClass('hub-setrika')) {
+            } else if (ui.item.parent().hasClass('hub-staging')) {
                 $.ajax({
                     url: "/transaksi/" + currentlySelectedItemId + "/penyetrika/delete",
                 }).done(function() {
@@ -46,7 +46,7 @@ $(document).ready(function() {
         btnIndex = $(this).index('.btn-show-action') + 1;
         btnId = $(this).attr('id').substring(6);
 
-        if ($(this).closest('.hub-setrika').length != 0) {
+        if ($(this).closest('.hub-staging').length != 0) {
             $('#action-add').show();
             $('#action-remove').hide();
             $('#action-done').hide();
@@ -90,7 +90,7 @@ $(document).ready(function() {
                 console.log(message);
                 $('#trans-' + btnId).removeClass('disabled');
             } else {
-                $('.hub-setrika').append(temp);
+                $('.hub-staging').append(temp);
                 $('#trans-' + btnId).removeClass('disabled');
                 karyawanHubCheck();
             }

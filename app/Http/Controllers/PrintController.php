@@ -144,22 +144,37 @@ class PrintController extends Controller
             $total_jenis_item++;
         }
         $pelanggan = Pelanggan::find($transaksi->pelanggan_id);
-        $driver = PickupDelivery::with('driver')->where('transaksi_id', $transaksi_id)->first();
-        if ($driver != null) {
-            $driver = $driver->driver;
-        }
+        $pickup = PickupDelivery::with('driver')->where('transaksi_id', $transaksi_id)->where('action', 'pickup')->first();
 
         $data = collect();
         $data->header = $header;
         $data->transaksi = $transaksi;
         $data->total_item = $total_item;
         $data->pelanggan = $pelanggan;
-        $data->driver = $driver;
+        $data->pickup = $pickup;
 
-        $paper_size = [0, 0, 160, 159 + ($total_jenis_item * 22)];
+        $paper_size = [0, 0, 160, 207 + ($total_jenis_item * 22)];//159 + ($total_jenis_item * 22)];
         $pdf = Pdf::loadView('pages.print.TandaTerima', [
             'data' => $data,
         ])->setPaper($paper_size, 'portrait');
+
+        // $html = View::make('pages.print.TandaTerima', ['data' => $data])->render();
+
+        // // Create a temporary PDF file to measure its size
+        // $temporaryPdfPath = storage_path('app/temporary.pdf');
+        // $temporaryPdf = PDF::loadHTML($html);
+        // $temporaryPdf->save($temporaryPdfPath);
+
+        // // Get the width and height of the temporary PDF
+        // $pdfSize = getimagesize($temporaryPdfPath);
+        // // unlink($temporaryPdfPath);
+
+        // // Set the paper size dynamically based on the temporary PDF size
+        // $pdf = PDF::loadHTML($html);
+        // $pdf->setPaper([
+        //     'width' => $pdfSize[0] / 72,
+        //     'height' => $pdfSize[1] / 72
+        // ]);
         return $pdf->stream('invoice.pdf');
     }
 }

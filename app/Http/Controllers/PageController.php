@@ -424,13 +424,36 @@ class PageController extends Controller
             return $item->name === 'Membuka Menu Hub Cuci';
         });
         if ($permissionExist) {
-            $role = User::getRole(Auth::id());
-            $data['transaksis'] = Transaksi::with('tukang_cuci')->detail()->latest()->get();
-            $data['rewashes'] = Rewash::with('itemTransaksi')->where('pencuci', Auth::id())->get();
-            if ($role != 'produksi_cuci') {
-                $data['pencucis'] = User::role('produksi_cuci')->with('cucian')->get();
+            if (Auth::user()->role == 'produksi_cuci') {
+                return view(
+                    'pages.proses.CuciProses',
+                    [
+                        'transaksi_staging' => Transaksi::with('tukang_cuci')->detail()
+                            ->where('status', 'confirmed')
+                            ->where('setrika_only', 0)
+                            ->whereNull('pencuci')
+                            ->latest()->get(),
+                        'transaksi_pencuci' => Transaksi::with('tukang_cuci')->detail()
+                            ->where('pencuci', Auth::user()->id)
+                            ->where('setrika_only', 0)
+                            ->where('is_done_cuci', 0)
+                            ->latest()->get(),
+                        'transaksi_done_cuci' => Transaksi::with('tukang_cuci')->detail()
+                            ->where('pencuci', Auth::user()->id)
+                            ->where('setrika_only', 0)
+                            ->where('is_done_cuci', 1)
+                            ->latest()->get(),
+                    ]
+                );
+            } else {
+                return view(
+                    'pages.proses.CuciAdmin',
+                    [
+                        'transaksis' => Transaksi::with('tukang_cuci')->detail()->latest()->get(),
+                        'pencucis' => User::role('produksi_cuci')->with('cucian')->get(),
+                    ]
+                );
             }
-            return view('pages.proses.Cuci', $data);
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
         }
@@ -444,11 +467,42 @@ class PageController extends Controller
             return $item->name === 'Membuka Menu Hub Setrika';
         });
         if ($permissionExist) {
+            if (Auth::user()->role == 'produksi_setrika') {
+                return view(
+                    'pages.proses.SetrikaProses',
+                    [
+                        'transaksi_staging' => Transaksi::with('tukang_setrika')->detail()
+                            ->where('status', 'confirmed')
+                            ->whereNull('penyetrika')
+                            ->where('is_done_cuci', 1)
+                            ->orWhere(function($query) {
+                                $query->where('is_done_cuci', 0)
+                                    ->where('setrika_only', 1);
+                            })
+                            ->latest()->get(),
+                        'transaksi_penyetrika' => Transaksi::with('tukang_setrika')->detail()
+                            ->where('penyetrika', Auth::user()->id)
+                            ->where('is_done_setrika', 0)
+                            ->latest()->get(),
+                        'transaksi_done_setrika' => Transaksi::with('tukang_setrika')->detail()
+                            ->where('penyetrika', Auth::user()->id)
+                            ->where('is_done_setrika', 1)
+                            ->latest()->get(),
+                        'jenis_rewashes' => JenisRewash::get(),
+                    ]
+                );
+            } else {
+                return view(
+                    'pages.proses.SetrikaAdmin',
+                    [
+
+                    ]
+                );
+            }
             $data['transaksis'] = Transaksi::with('tukang_setrika')->detail()->latest()->get();
             $data['jenis_rewashes'] = JenisRewash::get();
             $data['rewash'] = Rewash::get();
             $data['penyetrikas'] = User::role('produksi_setrika')->with('setrikaan')->get();
-            return view('pages.proses.Setrika', $data);
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
         }
