@@ -107,6 +107,10 @@ class PrintController extends Controller
         $data->pelanggan = $pelanggan;
         $data->packing = $packing;
 
+        return view('pages.print.MemoProduksi', [
+            'data' => $data
+        ]);
+
         //8.5x 11 inch = 612x792 point
         // $paper_size = [0, 0, 792, 612];
         $pdf = Pdf::loadView('pages.print.MemoProduksi', [
@@ -121,7 +125,7 @@ class PrintController extends Controller
         $transaksi = Transaksi::detail()->find($transaksi_id);
         $cetak = $request->cetak;
 
-        $paper_size = [0, 0, 120, 80 * $cetak - intval(($cetak - 1) * 27.5)];
+        $paper_size = [0, 0, 120, 61 * $cetak - intval(($cetak - 1))];
         $pdf = Pdf::loadView('pages.print.Kitir', [
             'data' => $transaksi,
             'cetak' => $cetak,

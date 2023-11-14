@@ -2,12 +2,14 @@
 <html>
 
 <head>
+    @include('includes.head')
+    <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
     <title>Delivery Note</title>
     <style>
         /* Add any styles you want to use for the PDF here */
         body {
-            font-family: sans-serif;
-            font-size: 10pt
+            font-family: 'Roboto Mono';
+            font-size: 1.25rem;
         }
 
         table {
@@ -16,21 +18,12 @@
 
         th,
         td {
-            padding: 8px;
+            padding: 0;
             text-align: left;
         }
-        h4 {
-            margin: 4px 0px;
-        }
 
-        .hr-text {
-            color: #333;
-            text-align: center;
-            width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: "";
-            margin: 8px 0px;
+        hr {
+            margin: .25rem 0;
         }
 
         td {
@@ -44,53 +37,59 @@
         .text-end {
             text-align: right;
         }
+
+        p {
+            margin: 0;
+        }
     </style>
 </head>
-<body style="width: 100%; height: 100%;">
+<body style="width: 750px; height: 500px;">
     <div id="data-header">
-        <h4> {{ $data->header['nama_usaha'] }}</h4>
-        <h4> {{ $data->transaksi->outlet->alamat }}</h4>
-        <h4> {{ $data->header['delivery_text'] }}</h4>
+        <p style="font-weight: 600;">
+            {{ $data->header['nama_usaha'] }} <br>
+            {{ $data->transaksi->outlet->alamat }} <br>
+            {{ $data->header['delivery_text'] }}
+        </p>
     </div>
+    {{-- <hr> --}}
     <div id=data-transaksi>
-        <p class="hr-text" style="margin-bottom: 0px;">
-            =========================================================================================================================
-        </p>
-        <div style="position: relative; height: 150px;">
-            <h1 style="position: absolute; left: 0px; top: -15px;">MEMO PRODUKSI</h1>
-            <h1 style="position: absolute; left: 450px; top: -15px;">{{ $data->transaksi->memo_code }}</h1>
+        {{-- <div style="position: relative; height: 75px;">
+            <p class="w-75 d-flex">
+                <span class=""></span>
+                <span></span>
+            </p>
+            <p style="position: absolute; left: 0px; top: -5%; font-weight: 600; font-size: 1rem;">MEMO PRODUKSI</p>
+            <p style="position: absolute; left: 400px; top: -5px; font-weight: 600; font-size: 1rem;">{{ $data->transaksi->memo_code }}</p>
 
-            <p style="position: absolute; left: 0px; top: 30px;">NO. ORDER</p>
-            <p style="position: absolute; left: 100px; top: 30px;">: {{ $data->transaksi->kode }} / {{ strtoupper($data->transaksi->tipe_transaksi) }}</p>
+            <p style="position: absolute; left: 0px; top: 15px;">NO. ORDER</p>
+            <p style="position: absolute; left: 100px; top: 15px;">: {{ $data->transaksi->kode }} / {{ strtoupper($data->transaksi->tipe_transaksi) }}</p>
 
-            <p style="position: absolute; left: 350px; top: 30px;">PENCETAKAN</p>
-            <p style="position: absolute; left: 450px; top: 30px;">: {{ date('d-M-Y h:i:s') }}</p>
+            <p style="position: absolute; left: 400px; top: 15px;">PENCETAKAN</p>
+            <p style="position: absolute; left: 500px; top: 15px;">: {{ date('d-M-Y h:i:s') }}</p>
 
-            <p style="position: absolute; left: 0px; top: 60px;">PELANGGAN</p>
-            <p style="position: absolute; left: 100px; top: 60px;">: {{ $data->transaksi->pelanggan->no_id }} / {{ $data->transaksi->pelanggan->nama }}</p>
+            <p style="position: absolute; left: 0px; top: 30px;">PELANGGAN</p>
+            <p style="position: absolute; left: 100px; top: 30px;">: {{ $data->transaksi->pelanggan->no_id }} / {{ $data->transaksi->pelanggan->nama }}</p>
 
-            <p style="position: absolute; left: 350px; top: 60px;">TGL CUCI</p>
-            <p style="position: absolute; left: 450px; top: 60px;">: {{ date('d-M-Y', strtotime($data->transaksi->created_at)) }} s.d {{ date('d-M-Y', strtotime($data->transaksi->done_date)) }}</p>
+            <p style="position: absolute; left: 400px; top: 30px;">TGL CUCI</p>
+            <p style="position: absolute; left: 500px; top: 30px;">: {{ date('d-M-Y', strtotime($data->transaksi->created_at)) }} s.d {{ date('d-M-Y', strtotime($data->transaksi->done_date)) }}</p>
 
-            <p style="position: absolute; left: 0px; top: 90px;">ALAMAT/TELP</p>
-            <p style="position: absolute; left: 100px; top: 90px;">: {{ $data->transaksi->pelanggan->alamat }} / {{ $data->transaksi->pelanggan->telephone }}</p>
+            <p style="position: absolute; left: 0px; top: 45px;">ALAMAT/TELP</p>
+            <p style="position: absolute; left: 100px; top: 45px;">: {{ $data->transaksi->pelanggan->alamat }} / {{ $data->transaksi->pelanggan->telephone }}</p>
 
-            <p style="position: absolute; left: 0px; top: 120px;">EXPRESS</p>
-            <p style="position: absolute; left: 100px; top: 120px;">: {{ $data->transaksi->express ? 'YA' : 'TIDAK' }}</p>
+            <p style="position: absolute; left: 0px; top: 60px;">EXPRESS</p>
+            <p style="position: absolute; left: 100px; top: 60px;">: {{ $data->transaksi->express ? 'YA' : 'TIDAK' }}</p>
 
-            <p style="position: absolute; left: 250px; top: 120px;">SETRIKA SAJA</p>
-            <p style="position: absolute; left: 350px; top: 120px;">: {{ $data->transaksi->setrika_only ? 'YA' : 'TIDAK' }}</p>
+            <p style="position: absolute; left: 275px; top: 60px;">SETRIKA SAJA</p>
+            <p style="position: absolute; left: 375px; top: 60px;">: {{ $data->transaksi->setrika_only ? 'YA' : 'TIDAK' }}</p>
 
-            <p style="position: absolute; left: 500px; top: 120px;">DELIVERY</p>
-            <p style="position: absolute; left: 600px; top: 120px;">: {{ $data->transaksi->need_delivery ? 'YA' : 'TIDAK' }}</p>
-        </div>
-        <p class="hr-text" style="margin-bottom: 0px;">
-            =========================================================================================================================
-        </p>
+            <p style="position: absolute; left: 550px; top: 60px;">DELIVERY</p>
+            <p style="position: absolute; left: 650px; top: 60px;">: {{ $data->transaksi->need_delivery ? 'YA' : 'TIDAK' }}</p>
+        </div> --}}
     </div>
+    <hr>
     <div id="detail-transaksi">
         @if ($data->transaksi->tipe_transaksi == 'bucket')
-        <table style="font-size: 10pt">
+        <table>
             <thead style="border-bottom: 1px solid black;">
                 <tr>
                     <th class="text-center">NAMA ITEM</th>
@@ -121,7 +120,7 @@
             </tbody>
         </table>
         @elseif ($data->transaksi->tipe_transaksi == 'premium')
-        <table style="font-size: 10pt">
+        <table>
             <thead style="border-bottom: 1px solid black;">
                 <tr>
                     <th class="text-center">NAMA ITEM</th>
@@ -150,25 +149,17 @@
             </tbody>
         </table>
         @endif
-        <p class="hr-text" style="margin: 0px;">
-            =========================================================================================================================
-        </p>
-        <div style="position: relative; height: 60px;">
-            <p style="position: absolute; left: 0px; top: 0px;">Jml Pcs</p>
-            <p style="position: absolute; left: 100px; top: 0px;">: {{ $data->total_qty }}</p>
-
-            <p style="position: absolute; left: 200px; top: 0px;">Jml Bobot</p>
-            <p style="position: absolute; left: 300px; top: 0px;">: {{ $data->total_bobot }}</p>
-
-            <p style="position: absolute; left: 400px; top: 0px;">Jml M2</p>
-            <p style="position: absolute; left: 500px; top: 0px;">: 0</p>
-
-            <p style="position: absolute; left: 0px; top: 30px;">CATATAN</p>
-            <p style="position: absolute; left: 100px; top: 30px;">: @isset($data->catatan) {{ $data->catatan }} || @endisset {{ $data->transaksi->catatan }}</p>
+        <hr>
+        <div class="w-75 d-flex justify-content-between alingn-items-center">
+            <p>Jml Pcs: {{ $data->total_qty }}</p>
+            <p>Jml Bobot: {{ $data->total_bobot }}</p>
+            <p>Jml M<sup>2</sup>: 0</p>
         </div>
-        <p class="hr-text" style="margin-bottom: 0px;">
-            =========================================================================================================================
-        </p>
+        <div>
+            <p>CATATAN:</p>
+            <p>@isset($data->catatan) {{ $data->catatan }} || @endisset {{ $data->transaksi->catatan }}</p>
+        </div>
+        <hr>
         <div style="position: relative; height: 90px;">
             <p style="position: absolute; left: 0px; top: 25px;">Tim Produksi</p>
 
@@ -189,11 +180,8 @@
             <p class="text-center" style="position: absolute; left: 525px; top: 45px; width: 200px;">_______________</p>
             <p class="text-center" style="position: absolute; left: 525px; top: 60px; width: 200px;">delivery</p>
         </div>
-        <p class="hr-text" style="margin-top: 0px;">
-            =========================================================================================================================
-        </p>
     </div>
-
+    <hr>
 </body>
 
 </html>
