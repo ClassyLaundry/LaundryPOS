@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\InsertTransaksiRequest;
 use App\Http\Requests\UpdateTransaksiRequest;
 use App\Http\Requests\UserLoginRequest;
+use App\Models\Data\JenisItem;
 use App\Models\Data\Pelanggan;
 use App\Models\LogTransaksi;
 use App\Models\Outlet;
@@ -544,6 +545,21 @@ class TransaksiController extends Controller
 
         return view('components.tableCancelled', [
             'transaksis' => $transaksi,
+        ]);
+    }
+
+    public function searchItem(Request $request) {
+        $tipe = 'status_' . $request->tipe;
+        return view('components.tableSearchItemTransaksi' , [
+            'jenis_items' => JenisItem::where($tipe, 1)
+                ->where(function ($query) use ($request) {
+                    $query->where('nama', 'like', "%{$request->key}%")
+                        ->orWhereHas('kategori', function ($q) use ($request) {
+                            $q->where('nama', 'like', "%{$request->key}%");
+                        });
+                })
+                ->take(10)->get(),
+            'tipe_transaksi' => $request->tipe,
         ]);
     }
 }

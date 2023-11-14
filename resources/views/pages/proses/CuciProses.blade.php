@@ -22,7 +22,13 @@
                                 <div class="p-3 border-bottom rounded d-flex justify-content-between align-items-center">
                                     <div class="d-flex flex-column">
                                         <h4>{{ $staging->kode }}</h4>
-                                        <h6 class="text-muted">{{ $staging->created_at }}</h6>
+                                        <h6>
+                                            <span class="text-muted">{{ date('d-M-Y', strtotime($staging->created_at)) }}</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 16 16" fill="currentColor" class="bi bi-dot">
+                                                <path fill-rule="evenodd" d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
+                                            </svg>
+                                            <span class="fw-bold">{{ date('d-M-Y', strtotime($staging->done_date)) }}</span>
+                                        </h6>
                                     </div>
                                     <div class="position-relative">
                                         <h4 class="fw-bold me-4" style="font-style: italic;">Process</h4>
@@ -54,7 +60,13 @@
                                 <div class="p-3 border-bottom rounded d-flex justify-content-between align-items-center">
                                     <div class="d-flex flex-column">
                                         <h4>{{ $hub_pencuci->kode }}</h4>
-                                        <h6 class="text-muted">{{ $hub_pencuci->created_at }}</h6>
+                                        <h6>
+                                            <span class="text-muted">{{ date('d-M-Y', strtotime($staging->created_at)) }}</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 16 16" fill="currentColor" class="bi bi-dot">
+                                                <path fill-rule="evenodd" d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
+                                            </svg>
+                                            <span class="fw-bold">{{ date('d-M-Y', strtotime($staging->done_date)) }}</span>
+                                        </h6>
                                     </div>
                                     <div class="position-relative">
                                         <h4 class="fw-bold me-4" style="font-style: italic;">Process</h4>
@@ -86,7 +98,13 @@
                                 <div class="p-3 border-bottom rounded d-flex justify-content-between align-items-center">
                                     <div class="d-flex flex-column">
                                         <h4>{{ $done_cuci->kode }}</h4>
-                                        <h6 class="text-muted">{{ $done_cuci->created_at }}</h6>
+                                        <h6>
+                                            <span class="text-muted">{{ date('d-M-Y', strtotime($staging->created_at)) }}</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 16 16" fill="currentColor" class="bi bi-dot">
+                                                <path fill-rule="evenodd" d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
+                                            </svg>
+                                            <span class="fw-bold">{{ date('d-M-Y', strtotime($staging->done_date)) }}</span>
+                                        </h6>
                                     </div>
                                     <div class="position-relative">
                                         <h4 class="fw-bold me-4" style="font-style: italic;">Done</h4>

@@ -43,7 +43,7 @@ class Transaksi extends Model
         $formattedDate = $today->format('m') . ' ' . $today->format('d');
 
         $count = Transaksi::where('kitir_code', 'LIKE', '%' . $formattedDate . '%')->count() + 1;
-        $code = ($transaksi->tipe_transaksi == "bucket" ? "B/" : "P/") . $kode_outlet . $formattedDate . str_pad($count, 2, '0', STR_PAD_LEFT);
+        $code = ($transaksi->tipe_transaksi == "bucket" ? "B / " : "P / ") . $kode_outlet . $formattedDate . str_pad($count, 2, '0', STR_PAD_LEFT);
         return $code;
     }
 

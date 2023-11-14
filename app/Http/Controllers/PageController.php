@@ -332,7 +332,22 @@ class PageController extends Controller
                     [
                         'pickups' => PickupDelivery::where('action', 'pickup')->get(),
                         'deliveries' => PickupDelivery::where('action', 'delivery')->get(),
-                        'transaksis' => Transaksi::detail()->get(),
+                        'transaksis' => Transaksi::detail()
+                            ->where('status', 'confirmed')
+                            ->where(function($query) {
+                                $query->where('is_done_cuci', 1)
+                                    ->where('is_done_setrika', 1);
+                            })
+                            ->orWhere(function($query) {
+                                $query->where('setrika_only', 1)
+                                    ->where('is_done_setrika', 1);
+                            })
+                            ->whereNotIn('id', function($subquery) {
+                                $subquery->select('transaksi_id')
+                                    ->from('pickup_deliveries')
+                                    ->whereNotNull('transaksi_id');
+                            })
+                            ->get(),
                         'drivers' => User::role('delivery')->get(),
                     ]
                 );
@@ -474,10 +489,12 @@ class PageController extends Controller
                         'transaksi_staging' => Transaksi::with('tukang_setrika')->detail()
                             ->where('status', 'confirmed')
                             ->whereNull('penyetrika')
-                            ->where('is_done_cuci', 1)
-                            ->orWhere(function($query) {
-                                $query->where('is_done_cuci', 0)
-                                    ->where('setrika_only', 1);
+                            ->where(function($query) {
+                                $query->where('is_done_cuci', 1)
+                                ->orWhere(function($query1) {
+                                    $query1->where('is_done_cuci', 0)
+                                        ->where('setrika_only', 1);
+                                });
                             })
                             ->latest()->get(),
                         'transaksi_penyetrika' => Transaksi::with('tukang_setrika')->detail()

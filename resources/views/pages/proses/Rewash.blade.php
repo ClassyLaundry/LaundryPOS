@@ -53,7 +53,7 @@
                             @if(in_array("Menyatakan Selesai Proses Rewash", Session::get('permissions')) || Session::get('role') == 'administrator')
                             <li id="action-finish">Rewash Selesai</li>
                             @endif
-                            @if(in_array("Menghapus Data Proses Rewash", Session::get('permissions')) || Session::get('role') == 'administrator')
+                            @if(in_array("Menghapus Data Proses Rewash", Session::get('permissions')) || Session::get('role') == 'administrator')
                             <li id="action-delete">Hapus data</li>
                             @endif
                         </ul>
@@ -65,7 +65,8 @@
                         @endif
                     </div>
                 </div>
-                <div class="modal fade" role="dialog" tabindex="-1" id="modal-update">
+
+                <div class="modal fade" role="dialog" tabindex="-1" id="modal-create-rewash">
                     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">

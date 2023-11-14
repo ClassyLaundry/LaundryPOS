@@ -102,6 +102,20 @@ $(document).ready(function() {
         $('#table-delivery').load($(this).attr('href'));
     });
 
+    $('#modal-create-delivery #input-delivery-transaksi-id').on('change', function() {
+        $.ajax({
+            url: "/transaksi/detail/" + $('#modal-create-delivery #input-delivery-transaksi-id').val(),
+        }).done(function(response) {
+            let pelanggan = response.pelanggan;
+            $('#input-delivery-nama').val(pelanggan.nama);
+            $('#input-delivery-alamat').val(pelanggan.alamat);
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+        });
+    });
+
     // Ambil di outlet
     $('#table-di-outlet').load(window.location.origin + '/component/ambil_di_outlet');
     $('#section-ambil-outlet').on('click', '.page-link', function(e) {

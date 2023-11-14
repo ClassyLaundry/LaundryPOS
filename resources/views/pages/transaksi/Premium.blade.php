@@ -101,14 +101,13 @@
     </div>
 
     <div>
-        <ul role="tablist" class="nav nav-tabs">
+        <ul role="tablist" class="nav nav-tabs border-bottom-0">
             <li role="presentation" id="nav-trans" class="nav-item"><a role="tab" data-bs-toggle="tab" class="nav-link active" href="#tab-transaksi">Transaksi</a></li>
-            <li role="presentation" id="nav-info" class="nav-item"><a role="tab" data-bs-toggle="tab" class="nav-link" href="#tab-info">Informasi</a></li>
             <li role="presentation" id="nav-pembayaran" class="nav-item"><a role="tab" data-bs-toggle="tab" class="nav-link" href="#tab-pembayaran">Pembayaran</a></li>
             <li role="presentation" id="nav-log" class="nav-item"><a role="tab" data-bs-toggle="tab" class="nav-link" href="#tab-log">Log</a></li>
         </ul>
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active py-4" id="tab-transaksi">
+            <div role="tabpanel" class="tab-pane active" id="tab-transaksi">
                 <section id="section-transaksi-premium" class="section-detail-transaksi">
                     <div class="card">
                         <div class="card-body">
@@ -261,19 +260,7 @@
                                                     <i class="fas fa-search"></i>
                                                 </button>
                                             </div>
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-hover" id="table-items">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Nama Item</th>
-                                                            <th>Kategori</th>
-                                                            <th colspan="2">Harga</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                            <div id="container-search-item"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -370,229 +357,224 @@
                         </div>
                     </div>
                 </section>
-            </div>
-
-            <div role="tabpanel" class="tab-pane py-4" id="tab-info">
-                <section id="section-info">
-                    <div class="row">
-                        <div class="col col-xl-3 col-md-6 col-12 position-relative mb-3">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <section id="section-info-pelanggan">
-                                        <header class="d-flex justify-content-between align-items-center">
-                                            <h5>Pelanggan</h5>
-                                            <button class="btn show-data" id="show-data-pelanggan" type="button">
-                                                <i class="fas fa-chevron-down large"></i>
-                                            </button>
-                                        </header>
-                                        <div id="info-pelanggan" class="mt-2" style="display: none;">
-                                            <div class="modal fade" role="dialog" tabindex="-1" id="modal-list-pelanggan">
-                                                <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title">Cari Pelanggan</h4>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <form class="mb-3">
-                                                                <div class="d-flex">
-                                                                    <input class="form-control" type="search" id="input-nama-pelanggan" placeholder="Nama Pelanggan">
-                                                                    <button class="btn btn-primary mx-3" data-bs-toggle="tooltip" data-bss-tooltip="" id="search-nama-pelanggan" type="button" title="Cari transaksi">
-                                                                        <i class="fas fa-search"></i>
-                                                                    </button>
-                                                                    <button class="btn btn-primary" data-bs-toggle="tooltip" data-bss-tooltip="" id="add-new-pelanggan" type="button" title="Buat transaksi baru">
-                                                                        <i class="fas fa-plus"></i>
-                                                                    </button>
+                <section id="section-info" class="mt-4">
+                    <div class="card">
+                        <div class="card-body pb-0">
+                            <h5 class="card-title">Informasi</h5>
+                            <hr class="mb-0">
+                            <div class="row">
+                                <div class="g-0 col col-xl-3 col-md-6 col-12 position-relative">
+                                    <div class="h-100 border-end" style="padding: 1rem .75rem;">
+                                        <section id="section-info-pelanggan">
+                                            <header class="d-flex justify-content-between align-items-center">
+                                                <h5>Pelanggan</h5>
+                                                <button class="btn show-data" id="show-data-pelanggan" type="button">
+                                                    <i class="fas fa-chevron-down large"></i>
+                                                </button>
+                                            </header>
+                                            <div id="info-pelanggan" class="mt-2" style="display: none;">
+                                                <div class="modal fade" role="dialog" tabindex="-1" id="modal-list-pelanggan">
+                                                    <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Cari Pelanggan</h4>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form class="mb-3">
+                                                                    <div class="d-flex">
+                                                                        <input class="form-control" type="search" id="input-nama-pelanggan" placeholder="Nama Pelanggan">
+                                                                        <button class="btn btn-primary mx-3" data-bs-toggle="tooltip" data-bss-tooltip="" id="search-nama-pelanggan" type="button" title="Cari transaksi">
+                                                                            <i class="fas fa-search"></i>
+                                                                        </button>
+                                                                        <button class="btn btn-primary" data-bs-toggle="tooltip" data-bss-tooltip="" id="add-new-pelanggan" type="button" title="Buat transaksi baru">
+                                                                            <i class="fas fa-plus"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-hover" id="table-list-pelanggan">
+                                                                        <thead class="text-center">
+                                                                            <tr>
+                                                                                <th>Nama</th>
+                                                                                <th>Tanggal Lahir</th>
+                                                                                <th>Alamat</th>
+                                                                                <th>Membership</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody style="cursor: pointer">
+                                                                            @foreach ($data['pelanggan'] as $pelanggan)
+                                                                            <tr id="row-{{ $pelanggan->id }}" data-bs-toggle="tooltip" data-bss-tooltip="" title="Double klik untuk memilih">
+                                                                                <td>{{ $pelanggan->nama }}</td>
+                                                                                <td class="text-center">{{ $pelanggan->tanggal_lahir }}</td>
+                                                                                <td>{{ $pelanggan->alamat }}</td>
+                                                                                <td class="text-center">
+                                                                                @if($pelanggan->member)
+                                                                                    Member
+                                                                                @else
+                                                                                    Bukan member
+                                                                                @endif
+                                                                                </td>
+                                                                            </tr>
+                                                                            @endforeach
+                                                                        </tbody>
+                                                                    </table>
                                                                 </div>
-                                                            </form>
-                                                            <div class="table-responsive">
-                                                                <table class="table table-striped table-hover" id="table-list-pelanggan">
-                                                                    <thead class="text-center">
-                                                                        <tr>
-                                                                            <th>Nama</th>
-                                                                            <th>Tanggal Lahir</th>
-                                                                            <th>Alamat</th>
-                                                                            <th>Membership</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody style="cursor: pointer">
-                                                                        @foreach ($data['pelanggan'] as $pelanggan)
-                                                                        <tr id="row-{{ $pelanggan->id }}" data-bs-toggle="tooltip" data-bss-tooltip="" title="Double klik untuk memilih">
-                                                                            <td>{{ $pelanggan->nama }}</td>
-                                                                            <td class="text-center">{{ $pelanggan->tanggal_lahir }}</td>
-                                                                            <td>{{ $pelanggan->alamat }}</td>
-                                                                            <td class="text-center">
-                                                                            @if($pelanggan->member)
-                                                                                Member
-                                                                            @else
-                                                                                Bukan member
-                                                                            @endif
-                                                                            </td>
-                                                                        </tr>
-                                                                        @endforeach
-                                                                    </tbody>
-                                                                </table>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <form id="data-pelanggan">
-                                                <div class="row">
-                                                    <div class="col-12 mb-2">
-                                                        <h6>Nama</h6>
-                                                        <input class="form-control disabled" type="text" id="input-nama" name="username">
-                                                    </div>
-                                                    <div class="col-12 mb-2">
-                                                        <h6>Alamat</h6>
-                                                        <input class="form-control disabled" type="text" id="input-alamat">
-                                                    </div>
-                                                    <div class="col-12 mb-2">
-                                                        <h6>Telepon</h6>
-                                                        <input class="form-control disabled" type="text" id="input-telepon">
-                                                    </div>
-                                                    <div class="col-12 mb-2">
-                                                        <h6>Status Membership</h6>
-                                                        <input class="form-control disabled" type="text" id="input-member">
-                                                    </div>
-                                                    <div class="col-12 mb-2">
-                                                        <h6>Saldo</h6>
-                                                        <div class="form-control disabled d-flex justify-content-between">
-                                                            <p>Rp</p>
-                                                            <input class="text-end input-thousand-separator" type="text" id="input-saldo">
+                                                <form id="data-pelanggan">
+                                                    <div class="row">
+                                                        <div class="col-12 mb-2">
+                                                            <h6>Nama</h6>
+                                                            <input class="form-control disabled" type="text" id="input-nama" name="username">
+                                                        </div>
+                                                        <div class="col-12 mb-2">
+                                                            <h6>Alamat</h6>
+                                                            <input class="form-control disabled" type="text" id="input-alamat">
+                                                        </div>
+                                                        <div class="col-12 mb-2">
+                                                            <h6>Telepon</h6>
+                                                            <input class="form-control disabled" type="text" id="input-telepon">
+                                                        </div>
+                                                        <div class="col-12 mb-2">
+                                                            <h6>Status Membership</h6>
+                                                            <input class="form-control disabled" type="text" id="input-member">
+                                                        </div>
+                                                        <div class="col-12 mb-2">
+                                                            <h6>Saldo</h6>
+                                                            <div class="form-control disabled d-flex justify-content-between">
+                                                                <p>Rp</p>
+                                                                <input class="text-end input-thousand-separator" type="text" id="input-saldo">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <h6>Catatan Pelanggan</h6>
+                                                            <textarea class="form-control disabled" style="resize: none;" id="input-catatan-pelanggan"></textarea>
                                                         </div>
                                                     </div>
-                                                    <div class="col-12">
-                                                        <h6>Catatan Pelanggan</h6>
-                                                        <textarea class="form-control disabled" style="resize: none;" id="input-catatan-pelanggan"></textarea>
+                                                </form>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                                <div class="g-0 col col-xl-3 col-md-6 col-12 position-relative">
+                                    <div class="h-100 border-end" style="padding: 1rem .75rem;">
+                                        <section id="section-info-pickup-delivery" class="h-100">
+                                            <header class="d-flex justify-content-between align-items-center">
+                                                <h5 class="d-flex justify-content-between align-items-center">Pickup &amp; Delivery</h5>
+                                                <button class="btn show-data" id="show-data-pickup-delivery" type="button">
+                                                    <i class="fas fa-chevron-down large"></i>
+                                                </button>
+                                            </header>
+                                            <div id="info-pickup-delivery" class="mt-2" style="display: none;">
+                                                <div class="mb-5">
+                                                    <div class="form-check" id="check-pickup" style="margin-bottom: .5rem;">
+                                                        <input class="form-check-input" type="checkbox" id="formCheck-pickup">
+                                                        <label class="form-check-label" for="formCheck-pickup">Pickup</label>
+                                                    </div>
+                                                    <div id="container-pickup" class="position-relative mb-2" style="display: none;">
+                                                        <h6>Kode Pickup</h6>
+                                                        <select class="form-control" id="select-kode-pickup" disabled>
+                                                            <option value="" selected hidden>-</option>
+                                                            @foreach ($data['pickup'] as $pickup)
+                                                                <option value="{{ $pickup->id }}">{{ $pickup->kode }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-check" id="check-delivery" style="margin-bottom: .5rem;">
+                                                        <input class="form-check-input" type="checkbox" id="formCheck-delivery" />
+                                                        <label class="form-check-label" for="formCheck-delivery">Delivery</label>
+                                                    </div>
+                                                    <div id="container-delivery" class="position-relative mb-2 d-none">
+                                                        <h6>Kode Delivery</h6>
+                                                        <select class="form-control" id="select-kode-delivery" disabled>
+                                                            <option value="" selected hidden>-</option>
+                                                            @foreach ($data['delivery'] as $delivery)
+                                                                <option value="{{ $delivery->id }}">{{ $delivery->kode }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
-                                            </form>
-                                        </div>
-                                    </section>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col col-xl-3 col-md-6 col-12 position-relative mb-3">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <section id="section-info-pickup-delivery" class="h-100">
-                                        <header class="d-flex justify-content-between align-items-center">
-                                            <h5 class="d-flex justify-content-between align-items-center">Pickup &amp; Delivery</h5>
-                                            <button class="btn show-data" id="show-data-pickup-delivery" type="button">
-                                                <i class="fas fa-chevron-down large"></i>
-                                            </button>
-                                        </header>
-                                        <div id="info-pickup-delivery" class="mt-2" style="display: none;">
-                                            <div class="mb-5">
-                                                <div class="form-check" id="check-pickup" style="margin-bottom: .5rem;">
-                                                    <input class="form-check-input" type="checkbox" id="formCheck-pickup">
-                                                    <label class="form-check-label" for="formCheck-pickup">Pickup</label>
-                                                </div>
-                                                <div id="container-pickup" class="position-relative mb-2" style="display: none;">
-                                                    <h6>Kode Pickup</h6>
-                                                    <select class="form-control" id="select-kode-pickup" disabled>
-                                                        <option value="" selected hidden>-</option>
-                                                        @foreach ($data['pickup'] as $pickup)
-                                                            <option value="{{ $pickup->id }}">{{ $pickup->kode }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="form-check" id="check-delivery" style="margin-bottom: .5rem;">
-                                                    <input class="form-check-input" type="checkbox" id="formCheck-delivery" />
-                                                    <label class="form-check-label" for="formCheck-delivery">Delivery</label>
-                                                </div>
-                                                <div id="container-delivery" class="position-relative mb-2 d-none">
-                                                    <h6>Kode Delivery</h6>
-                                                    <select class="form-control" id="select-kode-delivery" disabled>
-                                                        <option value="" selected hidden>-</option>
-                                                        @foreach ($data['delivery'] as $delivery)
-                                                            <option value="{{ $delivery->id }}">{{ $delivery->kode }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="position-absolute" style="right: 1rem; bottom: 1rem;">
-                                                <button class="btn btn-primary d-flex full-when-small" id="to-pickup-delivery">Edit<span class="d-lg-block d-none">&nbsp;Pickup & Delivery</span></button>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col col-xl-3 col-md-6 col-12 position-relative mb-3">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <section id="section-info-outlet">
-                                        <header>
-                                            <h5 class="d-flex justify-content-between align-items-center">
-                                                Outlet
-                                                <button class="btn show-data" id="show-data-outlet" type="button">
-                                                    <i class="fas fa-chevron-down large"></i>
-                                                </button>
-                                            </h5>
-                                        </header>
-                                        <div id="info-outlet" class="position-relative mt-2" style="display: none;">
-                                            <h6>Outlet input</h6>
-                                            <select class="form-control disabled" id="select-outlet">
-                                                <option value="" selected hidden>-</option>
-                                                @foreach ($data['outlet'] as $outlet)
-                                                    <option value="{{ $outlet->id }}">{{ $outlet->nama }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </section>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col col-xl-3 col-md-6 col-12 position-relative mb-3">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <section id="section-info-penerimaan" class="h-100">
-                                        <header>
-                                            <h5 class="d-flex justify-content-between align-items-center">
-                                                Penerimaan
-                                                <button class="btn show-data" id="show-data-penerimaan" type="button">
-                                                    <i class="fas fa-chevron-down large"></i>
-                                                </button>
-                                            </h5>
-                                        </header>
-                                        <div id="info-penerimaan" class="mt-2" style="display: none;">
-                                            <form id="form-penerimaan">
-                                                @if(in_array("Menambahkan Penerima Ke Transaksi", Session::get('permissions')) || Session::get('role') == 'administrator')
-                                                    <div class="mb-5">
-                                                @else
-                                                    <div class="mb-5 disabled">
-                                                @endif
-                                                    <h6 class="mt-2">Outlet Ambil</h6>
-                                                    <select class="form-control" id="select-outlet-ambil" required>
-                                                        <option value="">-</option>
-                                                        @foreach ($data['outlet'] as $outlet)
-                                                            <option value="{{ $outlet->id }}">{{ $outlet->nama }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <h6 class="mt-2">Nama Penerima</h6>
-                                                    <input type="text" class="form-control" id="input-nama-penerima" name="penerima" required>
-                                                    <h6 class="mt-2">Tanggal Penerimaan</h6>
-                                                    <input type="date" class="form-control" id="input-date-penerimaan" name=tanggal_penerimaan required>
-                                                    <h6 class="mt-2">Foto Penerima</h6>
-                                                    <input type="file" class="form-control" id="input-foto-penerima" name="image" accept="image/*" required>
-                                                </div>
-                                                @if(in_array("Menambahkan Penerima Ke Transaksi", Session::get('permissions')) || Session::get('role') == 'administrator')
                                                 <div class="position-absolute" style="right: 1rem; bottom: 1rem;">
-                                                    <button class="btn btn-primary full-when-small" id="simpan-info-penerimaan" type="submit">Simpan Penerimaan</button>
+                                                    <button class="btn btn-primary d-flex full-when-small" id="to-pickup-delivery">Edit<span class="d-lg-block d-none">&nbsp;Pickup & Delivery</span></button>
                                                 </div>
-                                                @endif
-                                            </form>
-                                        </div>
-                                    </section>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                                <div class="g-0 col col-xl-3 col-md-6 col-12 position-relative">
+                                    <div class="h-100 border-end" style="padding: 1rem .75rem;">
+                                        <section id="section-info-outlet">
+                                            <header>
+                                                <h5 class="d-flex justify-content-between align-items-center">
+                                                    Outlet
+                                                    <button class="btn show-data" id="show-data-outlet" type="button">
+                                                        <i class="fas fa-chevron-down large"></i>
+                                                    </button>
+                                                </h5>
+                                            </header>
+                                            <div id="info-outlet" class="position-relative mt-2" style="display: none;">
+                                                <h6>Outlet input</h6>
+                                                <select class="form-control disabled" id="select-outlet">
+                                                    <option value="" selected hidden>-</option>
+                                                    @foreach ($data['outlet'] as $outlet)
+                                                        <option value="{{ $outlet->id }}">{{ $outlet->nama }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                                <div class="g-0 col col-xl-3 col-md-6 col-12 position-relative">
+                                    <div class="h-100" style="padding: 1rem .75rem;">
+                                        <section id="section-info-penerimaan" class="h-100">
+                                            <header>
+                                                <h5 class="d-flex justify-content-between align-items-center">
+                                                    Penerimaan
+                                                    <button class="btn show-data" id="show-data-penerimaan" type="button">
+                                                        <i class="fas fa-chevron-down large"></i>
+                                                    </button>
+                                                </h5>
+                                            </header>
+                                            <div id="info-penerimaan" class="mt-2" style="display: none;">
+                                                <form id="form-penerimaan">
+                                                    @if(in_array("Menambahkan Penerima Ke Transaksi", Session::get('permissions')) || Session::get('role') == 'administrator')
+                                                        <div class="mb-5">
+                                                    @else
+                                                        <div class="mb-5 disabled">
+                                                    @endif
+                                                        <h6 class="mt-2">Outlet Ambil</h6>
+                                                        <select class="form-control" id="select-outlet-ambil" required>
+                                                            <option value="">-</option>
+                                                            @foreach ($data['outlet'] as $outlet)
+                                                                <option value="{{ $outlet->id }}">{{ $outlet->nama }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <h6 class="mt-2">Nama Penerima</h6>
+                                                        <input type="text" class="form-control" id="input-nama-penerima" name="penerima" required>
+                                                        <h6 class="mt-2">Tanggal Penerimaan</h6>
+                                                        <input type="date" class="form-control" id="input-date-penerimaan" name=tanggal_penerimaan required>
+                                                        <h6 class="mt-2">Foto Penerima</h6>
+                                                        <input type="file" class="form-control" id="input-foto-penerima" name="image" accept="image/*" required>
+                                                    </div>
+                                                    @if(in_array("Menambahkan Penerima Ke Transaksi", Session::get('permissions')) || Session::get('role') == 'administrator')
+                                                    <div class="position-absolute" style="right: 1rem; bottom: 1rem;">
+                                                        <button class="btn btn-primary full-when-small" id="simpan-info-penerimaan" type="submit">Simpan Penerimaan</button>
+                                                    </div>
+                                                    @endif
+                                                </form>
+                                            </div>
+                                        </section>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
             </div>
-            <div role="tabpanel" class="tab-pane py-4" id="tab-pembayaran">
+            <div role="tabpanel" class="tab-pane" id="tab-pembayaran">
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
@@ -687,7 +669,7 @@
                     </div>
                 </div>
             </div>
-            <div role="tabpanel" class="tab-pane py-4" id="tab-log">
+            <div role="tabpanel" class="tab-pane" id="tab-log">
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">

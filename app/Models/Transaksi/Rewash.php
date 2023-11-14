@@ -3,6 +3,9 @@
 namespace App\Models\Transaksi;
 
 use App\Models\Data\JenisRewash;
+use App\Models\User;
+use App\Models\Transaksi\ItemTransaksi;
+use App\Models\Transaksi\Transaksi;
 use App\Observers\UserActionObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +31,11 @@ class Rewash extends Model
 
     public function itemTransaksi()
     {
-        return $this->belongsTo(ItemTransaksi::class);
+        return $this->belongsTo(ItemTransaksi::class, 'item_transaksi_id', 'id');
+    }
+
+    public function tukang_cuci()
+    {
+        return $this->belongsTo(User::class, 'pencuci', 'id');
     }
 }

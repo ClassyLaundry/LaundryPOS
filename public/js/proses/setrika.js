@@ -3,9 +3,9 @@ $(document).ready(function() {
         $('.hub-list').each(function() {
             if ($(this).children().length == 0) {
                 if ($(this).hasClass('hub-staging')) {
-                    $(this).append('<div class="alert alert-success" role="alert">Tidak ada pekerjaan</div>');
+                    $(this).append('<div class="alert alert-success mb-0" role="alert">Tidak ada pekerjaan</div>');
                 } else {
-                    $(this).append('<div class="alert alert-warning" role="alert">Belum ada pekerjaan</div>');
+                    $(this).append('<div class="alert alert-warning mb-0" role="alert">Belum ada pekerjaan</div>');
                 }
             } else if ($(this).children().length > 1 && $(this).find('.alert').length == 1){
                 $(this).find('.alert').detach();
@@ -148,12 +148,16 @@ $(document).ready(function() {
         });
     });
 
+    // $('#action-rewash').on('click', function() {
+    //     $('#input-nama').val($('#btn-' + btnItemTransId).closest('tr').children().eq(0).html());
+    //     $('#input-jenis').val("");
+    //     $('#input-keterangan').val("");
+    //     $('#input-hidden-id').val(btnItemTransId);
+    //     $('#modal-rewash').modal('show');
+    // });
+
     $('#action-rewash').on('click', function() {
-        $('#input-nama').val($('#btn-' + btnItemTransId).closest('tr').children().eq(0).html());
-        $('#input-jenis').val("");
-        $('#input-keterangan').val("");
-        $('#input-hidden-id').val(btnItemTransId);
-        $('#modal-rewash').modal('show');
+        window.location = window.location.origin + '/proses/rewash' + '?trans_id=' + btnId + '&trans_item=' + btnItemTransId;
     });
 
     var btnItemNoteId = 0;

@@ -58,7 +58,6 @@ $(document).ready(function() {
             $.ajax({
                 url: "/transaksi/detail/" + btnId,
             }).done(function(data) {
-                console.log(data);
                 if (data.lunas) {
                     $('#status-transaksi').text('Lunas');
                     $('#tagihan-transaksi').parent().addClass('invisible');

@@ -199,6 +199,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/component/shortTrans/{id}/process', [TransaksiController::class, 'shortTableProcess']);
     Route::get('/component/shortTrans/{id}/delivery', [TransaksiController::class, 'shortTableDelivery']);
     Route::get('/component/cancelled', [TransaksiController::class, 'tableCancelled']);
+    Route::get('/component/searchItemTrans', [TransaksiController::class, 'searchItem']);
 
     // Bucket
     Route::get('/transaksi/bucket', [PageController::class, 'bucket'])->name('transaksi');

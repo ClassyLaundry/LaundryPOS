@@ -91,9 +91,14 @@
                                     </h4>
                                 </div>
                                 @endif
-                                <div class="px-3 py-1 pesan-pelanggan font-monospace" style="display: none;">
+                                <div class="px-3 py-1 pesan-pelanggan border-bottom rounded font-monospace" style="display: none;">
                                     <h4>{{ $delivery->request }}</h4>
                                 </div>
+                                @if (!$delivery->transaksi->lunas)
+                                <div class="px-3 py-1 besar-tagihan font-monospace">
+                                    <h4>Tagihan: Rp {{ number_format($delivery->transaksi->grand_total - $delivery->transaksi->total_terbayar, 0, ',', '.') }}</h4>
+                                </div>
+                                @endif
                             </div>
                         @endforeach
                     </div>

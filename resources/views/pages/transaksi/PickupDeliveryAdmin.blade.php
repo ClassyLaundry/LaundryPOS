@@ -1,7 +1,6 @@
 @extends('layouts.users')
 
 @section('content')
-
 <div class="container">
     <header class="my-3" style="color: var(--bs-gray);">
         <a>Transaksi</a>
@@ -199,10 +198,10 @@
                     <div class="row">
                         <div class="col-6 mb-2" id="col-transaksi">
                             <h5>Pilih Transaksi</h5>
-                            <select class="form-control" name="transaksi_id" required >
+                            <select id="input-delivery-transaksi-id" class="form-control" name="transaksi_id" required >
                                 <option value="" selected hidden>-</option>
                                 @foreach ($transaksis as $trans)
-                                    @if($trans->kode != '')
+                                    @if($trans->status == 'confirmed' && ($trans->is_done_cuci && $trans->is_done_setrike) || ($trans->is_done_setrika && $trans->setrika_only))
                                         <option value="{{ $trans->id }}">{{ $trans->kode }}</option>
                                     @endif
                                 @endforeach
@@ -218,8 +217,12 @@
                             </select>
                         </div>
                         <div class="col-12 mb-2">
+                            <h5>Nama Pelanggan</h5>
+                            <input id="input-delivery-nama" type="text" class="form-control" required />
+                        </div>
+                        <div class="col-12 mb-2">
                             <h5>Alamat</h5>
-                            <input type="text" class="form-control" name="alamat" required />
+                            <input id="input-delivery-alamat" type="text" class="form-control" name="alamat" required />
                         </div>
                         <div class="col-12 mb-2">
                             <h5>Pesan Pelanggan</h5>

@@ -5,8 +5,32 @@ $(document).ready(function() {
         btnId = $(this).attr('id').substring(4);
     });
 
+    let params = (new URL(document.location)).searchParams;
+    let trans_id = params.get("trans_id");
+    let trans_item = params.get("trans_item");
+    if (trans_id !== null && trans_item !== null) {
+        $('#kode-trans').val(trans_id);
+        $.ajax({
+            url: "/transaksi/detail/" + $('#kode-trans').val(),
+        }).done(function(data) {
+            let item_transaksis = data.item_transaksi;
+            $('#item-trans').empty();
+            item_transaksis.forEach(item_transaksi => {
+                $('#item-trans').append("<option value='" + item_transaksi.id + "'>" + item_transaksi.nama + "</option>");
+            });
+            $('#item-trans').val(trans_item);
+        });
+        $('#modal-create-rewash').modal('show');
+    }
+
+    if($('#list-action').children().length == 0) {
+        $('.cell-action').each(function() {
+            $(this).empty();
+        });
+    }
+
     $('.btn-tambah').on('click', function() {
-        $('#modal-update').modal('show');
+        $('#modal-create-rewash').modal('show');
     });
 
     $('#kode-trans').on('change', function() {
@@ -14,19 +38,12 @@ $(document).ready(function() {
             url: "/transaksi/detail/" + $('#kode-trans').val(),
         }).done(function(data) {
             let item_transaksis = data.item_transaksi;
+            $('#item-trans').empty();
             item_transaksis.forEach(item_transaksi => {
                 $('#item-trans').append("<option value='" + item_transaksi.id + "'>" + item_transaksi.nama +"</option>");
             });
         });
     });
-
-    $('#action-update').on('click', function() {
-        // get data
-
-        $('#modal-update').modal('show');
-    });
-
-
 
     $('#action-finish').on('click', function() {
         if (confirm('Nyatakan rewash selesai ?')) {

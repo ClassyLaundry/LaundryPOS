@@ -46,11 +46,9 @@ $(document).ready(function() {
                 $('#input-member').val('Bukan member');
             }
             $('#input-saldo').val(pelanggan.saldo_akhir.toLocaleString(['ban', 'id']));
+
             if (pelanggan.catatan_pelanggan != null) {
-                $('#input-catatan-pelanggan').val(pelanggan.catatan_pelanggan.catatan_cuci);
-            }
-            if (pelanggan.catatan_pelanggan != null) {
-                $('#input-catatan-pelanggan').val(pelanggan.catatan_pelanggan.catatan_cuci);
+                $('#input-catatan-pelanggan').val(pelanggan.catatan_pelanggan.catatan_khusus);
             }
 
             $('#search-pelanggan').hide();
@@ -343,37 +341,22 @@ $(document).ready(function() {
         window.location = "/transaksi/pickup-delivery/";
     });
 
-    $('#table-container').on('click', '#add-item',function() {
-        $('#table-items tbody').empty();
-
-        $.ajax({
-            url: "/data/jenis-item/find?tipe=bucket",
-        }).done(function(data) {
-            let items = data[0];
-
-            items.forEach(item => {
-                $('#table-items tbody').append("<tr id='item-" + item.id + "'><td>" + item.nama + "</td><td class='text-center'>" + item.nama_kategori + "</td><td class='text-center'>" + parseFloat(item.bobot_bucket) + "</td></tr>");
-            });
-            $('#modal-add-item').modal('show');
-        });
+    $('#table-container').on('click', '#add-item', function() {
+        searchListItem();
+        $('#modal-add-item').modal('show');
     });
 
-    $('#search-item').on('click', function() {
-        $('#table-items tbody').empty();
-        let key = $('#input-nama-item').val();
-
-        $.ajax({
-            url: "/data/jenis-item/find?tipe=bucket&key=" + key,
-        }).done(function(data) {
-            let items = data[0];
-
-            items.forEach(item => {
-                $('#table-items tbody').append("<tr id='item-" + item.id + "'><td>" + item.nama + "</td><td class='text-center'>" + item.nama_kategori + "</td><td class='text-center'>" + parseFloat(item.bobot_bucket) + "</td></tr>");
-            });
-        });
+    var searchItem;
+    $('#input-nama-item').on('input', function() {
+        clearTimeout(searchTrans);
+        searchItem = setTimeout(searchListItem, 2000);
     });
 
-    $('#table-items tbody').on('click', 'tr', function() {
+    function searchListItem() {
+        $('#container-search-item').load(window.location.origin + '/component/searchItemTrans?tipe=bucket&key=' + encodeURIComponent($('#input-nama-item').val()));
+    }
+
+    $('#container-search-item').on('click', '#table-items tbody tr', function() {
         let parent = $(this).parent();
         parent.addClass('disabled');
         let id = $(this).attr('id');
@@ -407,7 +390,6 @@ $(document).ready(function() {
         $(this).append("<div class='d-flex align-items-center justify-content-center' style='height: 39.5px;'>" + input.val() + "</div>");
 
         let id = $(this).closest('tr').attr('id');
-        // console.log(id);
         let formData = new FormData();
         formData.append('qty', input.val());
 

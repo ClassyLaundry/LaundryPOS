@@ -5,7 +5,8 @@
                 <th>Kode</th>
                 <th>Tipe</th>
                 <th>Pelanggan</th>
-                <th>Tanggal</th>
+                <th>Tanggal Transaksi</th>
+                <th>Tanggal Selesai</th>
                 <th colspan="2">Total</th>
                 <th>Lunas</th>
                 <th colspan="2">Terbayar</th>
@@ -20,6 +21,7 @@
                 <td class="text-center">{{ $transaksi->tipe_transaksi }}</td>
                 <td class="text-center">{{ $transaksi->pelanggan->nama }}</td>
                 <td class="text-center">{{ date('d/m/Y', strtotime($transaksi->created_at)) }}</td>
+                <td class="text-center">@isset($transaksi->done_date) {{ date('d/m/Y', strtotime($transaksi->done_date)) }} @endisset</td>
                 <td style="width: 35px;">Rp</td>
                 <td class="thousand-separator text-end">{{ number_format($transaksi->grand_total, 0, ',', '.') }}</td>
                 @if ($transaksi->lunas)
