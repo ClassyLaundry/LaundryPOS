@@ -13,6 +13,7 @@ class MutasiPettyCashController extends Controller
      * outlet_id
      * jenis (deposit - withdrawal)
      * value
+     * catatan
      */
     public function insert(Request $request)
     {
@@ -29,7 +30,8 @@ class MutasiPettyCashController extends Controller
                     'jenis' => $request->jenis,
                     'value' => $request->value,
                     'saldo_sebelum' => $outlet->sald,
-                    'saldo_sesudah' => $updated_saldo
+                    'saldo_sesudah' => $updated_saldo,
+                    'catatan' => $request->catatan,
                 ]);
                 $outlet->saldo = $updated_saldo;
                 $outlet->save();
@@ -44,7 +46,8 @@ class MutasiPettyCashController extends Controller
                 'jenis' => $request->jenis,
                 'value' => $request->value,
                 'saldo_sebelum' => $outlet->sald,
-                'saldo_sesudah' => $updated_saldo
+                'saldo_sesudah' => $updated_saldo,
+                'catatan' => $request->catatan,
             ]);
             $outlet->saldo = $updated_saldo;
             $outlet->save();

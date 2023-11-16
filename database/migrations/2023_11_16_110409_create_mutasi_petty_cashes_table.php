@@ -21,7 +21,8 @@ return new class extends Migration
             $table->string('jenis');
             $table->bigInteger('value');
             $table->bigInteger('saldo_sebelum');
-            $table->bigInteger('saldo_sesudah'); 
+            $table->bigInteger('saldo_sesudah');
+            $table->text('catatan')->nullable();
             $table->timestamps();
         });
     }
