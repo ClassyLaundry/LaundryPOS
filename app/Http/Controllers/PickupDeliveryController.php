@@ -155,6 +155,27 @@ class PickupDeliveryController extends Controller
         }
     }
 
+    public function hapusPickupDelivery($transaksi_id)
+    {
+        $user = User::find(auth()->id());
+        $permissions = $user->getPermissionsViaRoles();
+        $permissionExist = collect($permissions)->first(function ($item) {
+            return $item->name === 'Menghapus Pickup Delivery';
+        });
+        if ($permissionExist) {
+            $transaksi = Transaksi::find($transaksi_id);
+            $transaksi->need_delivery = false;
+            $transaksi->save();
+            PickupDelivery::where('transaksi_id', $transaksi_id)->delete();
+            return response()->json([
+                "message" => "Success Delete Pickup Delivery"
+            ], 200);
+            //return redirect()->intended(route(''));
+        } else {
+            abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
+        }
+    }
+
     public function pickup()
     {
         $pickup = PickupDelivery::where('action', 'pickup')->paginate(5);

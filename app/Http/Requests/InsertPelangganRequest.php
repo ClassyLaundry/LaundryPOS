@@ -31,7 +31,7 @@ class InsertPelangganRequest extends FormRequest
             'gender' => 'required|string',
             'no_id' => 'nullable|string',
             'jenis_id' => 'nullable|string',
-            'telephone' => 'nullable|string',
+            'telephone' => 'nullable|string|unique:pelanggans,telephone',
             'email' => 'nullable|string',
         ];
     }
