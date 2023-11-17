@@ -78,6 +78,21 @@ class PackingController extends Controller
 
     public function tablePacking(Request $request)
     {
+        // 'transaksis' => Transaksi::with('packing')
+        //     ->where(function ($query) use ($request) {
+        //         $query->where('id', 'like', '%' . $request->key . '%')
+        //             ->orWhereHas('pelanggan', function ($q) use ($request) {
+        //                 $q->where('nama', 'like', '%' . $request->key . '%');
+        //             });
+        //         })
+        //     ->where('status', 'confirmed')
+        //     ->where('is_done_cuci', 1)
+        //     ->where('is_done_setrika', 1)
+        //     ->orWhere(function($query) {
+        //         $query->where('is_done_cuci', 0)
+        //             ->where('setrika_only', 1);
+        //     })
+        //     ->latest()->paginate(15),
         return view('components.tablePacking', [
             'transaksis' => Transaksi::with('packing')
             ->where(function ($query) use ($request) {

@@ -229,6 +229,12 @@
                 <i class="fas fa-angle-down"></i>
             </div>
             <div class="nav-items">
+                <div id="nav-laporan-deposit">
+                    <a href="/laporan/deposit" class="menu-item menu-laporan pe-3 py-1 d-flex align-items-center" style="padding-left: 2rem;">
+                        <i class="fa-solid fa-sack-dollar"></i>
+                        <p class="ms-3">Mutasi Deposit</p>
+                    </a>
+                </div>
                 <div id="nav-laporan-piutang">
                     <a href="/laporan/piutang" class="menu-item menu-laporan pe-3 py-1 d-flex align-items-center" style="padding-left: 2rem;">
                         <i class="fa-solid fa-credit-card"></i>
@@ -240,17 +246,11 @@
                         <i class="fa-solid fa-money-bill-transfer"></i>
                         <p class="ms-3">Omset</p>
                     </a>
-                </div>
-                <div id="nav-laporan-kas">
+                </div> --}}
+                {{-- <div id="nav-laporan-kas">
                     <a href="/laporan/kas" class="menu-item menu-laporan pe-3 py-1 d-flex align-items-center" style="padding-left: 2rem;">
                         <i class="fa-solid fa-piggy-bank"></i>
                         <p class="ms-3">Kas Masuk</p>
-                    </a>
-                </div>
-                <div id="nav-laporan-deposit">
-                    <a href="/laporan/deposit" class="menu-item menu-laporan pe-3 py-1 d-flex align-items-center" style="padding-left: 2rem;">
-                        <i class="fa-solid fa-sack-dollar"></i>
-                        <p class="ms-3">Mutasi Deposit</p>
                     </a>
                 </div> --}}
             </div>

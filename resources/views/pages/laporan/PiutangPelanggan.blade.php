@@ -31,25 +31,27 @@
                                 <tr>
                                     <th>Nama Pelanggan</th>
                                     <th>Jumlah Transaksi</th>
-                                    <th colspan="2">Besar Piutang</th>
                                     <th>Transaksi Trakhir</th>
+                                    <th colspan="2">Besar Piutang</th>
                                     <th class="column-action" style="width: 38.25px;"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($pelanggans as $pelanggan)
                                 <tr>
-                                    <td>{{ strtolower($pelanggan['nama']) }}</td>
-                                    <td class="text-center">{{ $pelanggan['jumlah_transaksi'] }}</td>
+                                    <td>{{ strtolower($pelanggan->nama) }}</td>
+                                    <td class="text-center">{{ $pelanggan->jumlah_transaksi }}</td>
+                                    <td class="text-center">@isset($pelanggan->transaksi_terakhir) {{ date('d-M-Y', strtotime($pelanggan->transaksi_terakhir->created_at)) }} @else - @endisset</td>
                                     <td class="text-start">Rp</td>
-                                    <td class="text-end">{{ number_format($pelanggan['piutang'], 0, ',', '.') }}</td>
-                                    <td class="text-center">{{ $pelanggan['last_transaction'] }}</td>
+                                    <td class="text-end">{{ number_format($pelanggan->piutang, 0, ',', '.') }}</td>
                                     <td class="cell-action">
-                                        <div class="d-flex h-100 align-items-center justify-content-end">
-                                            <button id="btn-{{ $pelanggan['id'] }}" class="btn btn-primary btn-sm btn-show-action" type="button">
-                                                <i class="fas fa-bars"></i>
-                                            </button>
-                                        </div>
+                                        @isset($pelanggan->transaksi_terakhir)
+                                            <div class="d-flex h-100 align-items-center justify-content-end">
+                                                <button id="btn-{{ $pelanggan->id }}" class="btn btn-primary btn-sm btn-show-action" type="button">
+                                                    <i class="fas fa-bars"></i>
+                                                </button>
+                                            </div>
+                                        @endisset
                                     </td>
                                 </tr>
                                 @endforeach

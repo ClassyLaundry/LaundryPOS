@@ -61,7 +61,7 @@ class SaldoController extends Controller
         ];
     }
 
-    public function historyPelanggan($id_pelanggan)
+    public function historyPelanggan(Request $request, $id_pelanggan)
     {
         $user = User::find(auth()->id());
         $permissions = $user->getPermissionsViaRoles();
@@ -69,9 +69,22 @@ class SaldoController extends Controller
             return $item->name === 'Melihat Detail History Saldo Pelanggan';
         });
         if ($permissionExist) {
+            $paginate = 5;
+            $saldo = Saldo::where(function ($query) use ($request) {
+                if (isset($request->month)) {
+                    $paginate = 20;
+                    $query->whereMonth('created_at', $request->month);
+                }
+                if (isset($request->year)) {
+                    $paginate = 20;
+                    $query->whereYear('created_at', $request->year);
+                }
+            })
+            ->where('pelanggan_id', $id_pelanggan)
+            ->latest()->paginate($paginate);
             return view('components.tableHistorySaldo',  [
                 'status' => 200,
-                'saldos' => Saldo::where('pelanggan_id', $id_pelanggan)->latest()->paginate(5),
+                'saldos' => $saldo,
             ]);
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');

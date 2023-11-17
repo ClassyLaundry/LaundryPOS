@@ -48,6 +48,21 @@ class Pelanggan extends Model
         return $saldo->saldo_akhir;
     }
 
+    public function getTransaksiTerakhirAttribute()
+    {
+        return $this->transaksi->last();
+    }
+
+    public function getJumlahTransaksiAttribute()
+    {
+        return $this->transaksi->count();
+    }
+
+    public function getPiutangAttribute()
+    {
+        return $this->transaksi()->where('lunas', false)->sum(DB::raw('grand_total - total_terbayar'));
+    }
+
     public function catatan_pelanggan()
     {
         return $this->hasOne(CatatanPelanggan::class);

@@ -1,4 +1,4 @@
-<div class="table-responsive mb-2">
+<div class="table-responsive">
     <table class="table table-striped">
         <thead>
             <tr>
@@ -11,12 +11,12 @@
         <tbody>
             @foreach ($saldos as $saldo)
             <tr>
-                <td>{{ $saldo->created_at }}</td>
+                <td>{{ date('d-M-Y', strtotime($saldo->created_at)) }}</td>
                 <td class="text-center">{{ $saldo->jenis_input }}</td>
                 <td>Rp</td>
-                <td class="text-end thousand-separator">{{ $saldo->nominal }}</td>
+                <td class="text-end">{{ number_format($saldo->nominal, 0, ',', '.') }}</td>
                 <td>Rp</td>
-                <td class="text-end thousand-separator">{{ $saldo->saldo_akhir }}</td>
+                <td class="text-end">{{ number_format($saldo->saldo_akhir, 0, ',', '.') }}</td>
             </tr>
             @endforeach
         </tbody>

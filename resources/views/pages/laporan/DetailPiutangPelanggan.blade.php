@@ -1,9 +1,9 @@
 @extends('layouts.users')
 
 @section('content')
-
 <div class="container">
-    <header class="d-flex align-items-center my-3" style="color: var(--bs-gray);"><a>Laporan</a>
+    <header class="d-flex align-items-center my-3" style="color: var(--bs-gray);">
+        <a>Laporan</a>
         <i class="fas fa-angle-right mx-2"></i>
         <a>Piutang</a>
         <i class="fas fa-angle-right mx-2"></i>
@@ -23,11 +23,11 @@
                         <table class="table table-striped mb-0" id="table-table-laporan">
                             <thead>
                                 <tr>
-                                    <th>Kode</th>
+                                    <th>Kode Transaksi</th>
                                     <th>Outlet</th>
-                                    <th>Tanggal</th>
-                                    <th colspan="2">Nominal</th>
-                                    <th colspan="2">Piutang</th>
+                                    <th>Tanggal Transaksi</th>
+                                    <th colspan="2">Nominal Transaksi</th>
+                                    <th colspan="2">Besar Piutang</th>
                                 </tr>
                             </thead>
                             <tbody>
