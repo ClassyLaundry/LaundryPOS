@@ -53,12 +53,11 @@
                         </header>
                         <div id="info-pelanggan-2" class="mt-2">
                             <div class="mb-2 position-relative">
-                                <button class="btn btn-primary" id="search-pelanggan-2" type="button"><i class="fas fa-search"></i> Cari Pelanggan</button>
+                                <button class="btn btn-primary" id="search-pelanggan-2" type="button"><i class="fas fa-search"></i> Cari Pelanggan</button>
                                 <div class="position-absolute card card-body w-100 mt-2" style="background-color: white;height: 342px; display: none;">
                                     <form class="mb-3">
                                         <div class="d-flex">
                                             <input type="search" class="form-control" id="input-nama-pelanggan-2" placeholder="Nama pelanggan" />
-                                            <button class="btn btn-primary ms-3" data-bs-toggle="tooltip" id="search-nama-pelanggan-2" type="button" title="Cari pelanggan"><i class="fas fa-search"></i></button>
                                             <a href="/data/pelanggan" class="ms-3"><button class="btn btn-primary" data-bs-toggle="tooltip" id="new-pelanggan-2" type="button" title="Pelanggan baru"><i class="fas fa-plus"></i></button></a>
                                         </div>
                                     </form>

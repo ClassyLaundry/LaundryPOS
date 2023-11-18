@@ -58,7 +58,6 @@
                                     <form class="mb-3">
                                         <div class="d-flex">
                                             <input type="search" class="form-control" id="input-nama-pelanggan-2" placeholder="Nama pelanggan" />
-                                            <button class="btn btn-primary ms-3" data-bs-toggle="tooltip" id="search-nama-pelanggan-2" type="button" title="Cari pelanggan"><i class="fas fa-search"></i></button>
                                             <a href="/data/pelanggan" class="ms-3"><button class="btn btn-primary" data-bs-toggle="tooltip" id="new-pelanggan-2" type="button" title="Pelanggan baru"><i class="fas fa-plus"></i></button></a>
                                         </div>
                                     </form>
@@ -256,9 +255,6 @@
                                         <div class="modal-body">
                                             <div class="d-flex mb-3">
                                                 <input class="form-control" type="search" id="input-nama-item" placeholder="Nama Item">
-                                                <button class="btn btn-primary ms-3" data-bs-toggle="tooltip" data-bss-tooltip="" id="search-item" type="button" title="Cari Item">
-                                                    <i class="fas fa-search"></i>
-                                                </button>
                                             </div>
                                             <div id="container-search-item"></div>
                                         </div>
