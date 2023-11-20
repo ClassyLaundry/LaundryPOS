@@ -264,8 +264,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/laporan/piutang/{id}/detail', [LaporanController::class, 'laporanPiutangPelangganDetail']);
     Route::get('/laporan/deposit', [LaporanController::class, 'laporanMutasiDeposit']);
     Route::get('/laporan/deposit/{id}/detail', [LaporanController::class, 'laporanMutasiDepositDetail']);
-    Route::get('/laporan/omset', [LaporanController::class, 'laporanOmset']);
+    Route::get('/laporan/omset', [LaporanController::class, 'laporanOmsetTahunan']);
+    Route::get('/laporan/omset/{year}', [LaporanController::class, 'laporanOmsetBulanan']);
     // Route::get('/laporan/kas_masuk', [PageController::class, 'laporanKasMasuk']);
-    // Route::post('/proses/packing', [PackingController::class, 'create']);
 
 });

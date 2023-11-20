@@ -1,70 +1,67 @@
 @extends('layouts.users')
 
 @section('content')
-
+<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
 <div class="container">
-    <header class="d-flex align-items-center my-3" style="color: var(--bs-gray);"><a>Laporan</a>
+    <header class="d-flex align-items-center my-3" style="color: var(--bs-gray);">
+        <a>Laporan</a>
         <i class="fas fa-angle-right mx-2"></i>
         <a>Omset</a>
     </header>
-    <section id="data-laporan">
+    <section id="laporan-omset">
         <div class="card">
             <div class="card-body">
                 <h4>Laporan Omset</h4>
                 <hr>
 
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex">
-                        <input class="form-control" type="month" name="month" id="input-month" style="max-width: 200px; border-top-right-radius: 0; border-bottom-right-radius: 0;">
-                        <button class="btn btn-primary" data-bs-toggle="tooltip" data-bss-tooltip="" id="btn-search" type="button" title="Cari transaksi" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">
-                            <i class="fas fa-search" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <h5 class="d-flex justify-content-between" style="width: 300px;"><span>Total Omset:</span><span>Rp {{ number_format($total_pembayaran, 0, ',', '.') }}</span></h5>
+                <div class="row">
+                    @foreach ($laporan as $data)
+                        <div class="col-xl-4 col-lg-6 col-12 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="w-100 chartContainer" style="height: 300px;"></div>
+                                    <button class="btn btn-outline-primary w-100 text-center btn-sm mt-2 btn-detail" type="button" data-year="{{ $data->tahun }}">Detail</button>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-
-                <div class="mt-4" id="table-laporan-piutang">
-                    <div class="table-responsive my-2 tbody-wrap">
-                        <table class="table table-striped mb-0" id="table-table-laporan">
-                            <thead>
-                                <tr>
-                                    <th>Pelanggan</th>
-                                    <th>Kode Transaksi</th>
-                                    <th colspan="2">Besar Piutang</th>
-                                    <th>Transaksi Trakhir</th>
-                                    <th class="column-action" style="width: 38.25px;"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($pembayaran_this_month as $pembayaran)
-                                @dd($pembayaran->transaksi)
-                                <tr>
-                                    <td>{{ strtolower($pembayaran->transaksi->pelanggan->nama) }}</td>
-                                    <td class="text-center">{{ $pembayaran->transaksi->kode }}</td>
-                                    <td class="text-start">Rp</td>
-                                    <td class="text-end">{{ number_format($pelanggan['piutang'], 0, ',', '.') }}</td>
-                                    <td class="text-center">{{ $pelanggan['last_transaction'] }}</td>
-                                    <td class="cell-action">
-                                        <div class="d-flex h-100 align-items-center justify-content-end">
-                                            <button id="btn-{{ $pelanggan['id'] }}" class="btn btn-primary btn-sm btn-show-action" type="button">
-                                                <i class="fas fa-bars"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <ul class="list-unstyled form-control" id="list-action">
-                    <li id="action-detail">Detail Laporan</li>
-                </ul>
             </div>
         </div>
     </section>
 </div>
 
-<script src="{{ asset('js/laporan/piutang.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        var laporan = @json($laporan);
+        $('.chartContainer').each(function(index, element) {
+            let options = {
+                animationEnabled: true,
+                title: {
+                    text: laporan[index].tahun
+                },
+                data: [{
+                    type: "doughnut",
+                    innerRadius: "50%",
+                    showInLegend: true,
+                    legendText: "{label}",
+                    indexLabel: "{label}: #percent%",
+                    dataPoints: [
+                        { label: "Deposit", y: laporan[index].deposit != null ? parseInt(laporan[index].deposit) : 0 },
+                        { label: "Tunai", y: laporan[index].tunai != null ? parseInt(laporan[index].tunai) : 0 },
+                        { label: "Qris", y: laporan[index].qris != null ? parseInt(laporan[index].qris) : 0 },
+                        { label: "Debit", y: laporan[index].debit != null ? parseInt(laporan[index].debit) : 0 },
+                        { label: "Transfer", y: laporan[index].transfer != null ? parseInt(laporan[index].transfer) : 0 }
+                    ]
+                }]
+            };
+            $(element).CanvasJSChart(options);
+        });
+
+        $('.btn-detail').on('click', function() {
+            window.location = window.location + '/' + $(this).data('year');
+        });
+    });
+</script>
 @endsection

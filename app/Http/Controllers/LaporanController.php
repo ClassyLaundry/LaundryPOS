@@ -11,6 +11,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function PHPSTORM_META\type;
+
 class LaporanController extends Controller
 {
     public function laporanPiutangPelanggan(Request $request)
@@ -48,6 +50,59 @@ class LaporanController extends Controller
 
         return view('pages.laporan.DetailMutasiDeposit', [
             'pelanggan' => $pelanggan,
+        ]);
+    }
+
+    public function laporanOmsetTahunan(Request $request)
+    {
+        $dataLaporan = DB::table('saldos')
+            ->join('pembayarans', function ($join) {
+                $join->on(DB::raw('YEAR(saldos.created_at)'), '=', DB::raw('YEAR(pembayarans.created_at)'));
+            })
+            ->select(
+                DB::raw('YEAR(saldos.created_at) as tahun'),
+                DB::raw('(SELECT SUM(nominal) FROM saldos WHERE jenis_input = "deposit") as deposit'),
+                DB::raw('(SELECT SUM(nominal) FROM pembayarans WHERE metode_pembayaran != "deposit") as pembayaran'),
+                DB::raw('(SELECT SUM(nominal) FROM pembayarans WHERE metode_pembayaran = "tunai") as tunai'),
+                DB::raw('(SELECT SUM(nominal) FROM pembayarans WHERE metode_pembayaran = "qris") as qris'),
+                DB::raw('(SELECT SUM(nominal) FROM pembayarans WHERE metode_pembayaran = "debit") as debit'),
+                DB::raw('(SELECT SUM(nominal) FROM pembayarans WHERE metode_pembayaran = "transfer") as transfer'),
+            )
+            ->groupBy('tahun')
+            ->get();
+
+        return view('pages.laporan.Omset', [
+            'laporan' => $dataLaporan,
+        ]);
+    }
+
+    public function laporanOmsetBulanan(Request $request)
+    {
+        $dataLaporan = [];
+        for ($i=1; $i <= 12; $i++) {
+            $temp = DB::table('saldos')
+            ->join('pembayarans', function ($join) {
+                $join->on(DB::raw('MONTH(saldos.created_at)'), '=', DB::raw('MONTH(pembayarans.created_at)'));
+            })
+            ->whereYear('saldos.created_at', '=', $request->year)
+            ->whereMonth('saldos.created_at', '=', $i)
+            ->select(
+                DB::raw('DATE_FORMAT(saldos.created_at, "%M") bulan'),
+                DB::raw('(SELECT SUM(nominal) FROM saldos WHERE jenis_input = "deposit") as deposit'),
+                DB::raw('(SELECT SUM(nominal) FROM pembayarans WHERE metode_pembayaran != "deposit") as pembayaran'),
+                DB::raw('(SELECT SUM(nominal) FROM pembayarans WHERE metode_pembayaran = "tunai") as tunai'),
+                DB::raw('(SELECT SUM(nominal) FROM pembayarans WHERE metode_pembayaran = "qris") as qris'),
+                DB::raw('(SELECT SUM(nominal) FROM pembayarans WHERE metode_pembayaran = "debit") as debit'),
+                DB::raw('(SELECT SUM(nominal) FROM pembayarans WHERE metode_pembayaran = "transfer") as transfer'),
+            )
+            ->groupBy('bulan')
+            ->get();
+            array_push($dataLaporan, $temp);
+        }
+
+        return view('pages.laporan.OmsetBulanan', [
+            'laporan' => $dataLaporan,
+            'tahun' => $request->year,
         ]);
     }
 
@@ -93,28 +148,5 @@ class LaporanController extends Controller
             'total_top_up' => $sumTopUp,
             'total_pembayaran' => $sumPembayaran,
         ];
-    }
-
-    public function omsetBulanan(Request $request)
-    {
-        // $pembayaranThisMonth = Pembayaran::with('transaksi')->whereMonth('created_at', $request->bulan)
-        //     ->whereYear('created_at', $request->tahun)
-        //     ->get();
-        $pembayaranThisMonth = Pembayaran::with('transaksi')->get();
-        $sumPembayaran = $pembayaranThisMonth->sum('nominal');
-        return view('pages.laporan.Omset', [
-            'total_pembayaran' => $sumPembayaran,
-            'pembayaran_this_month' => $pembayaranThisMonth
-        ]);
-    }
-
-    public function laporanOmset()
-    {
-        $pembayaranThisMonth = Pembayaran::with('transaksi')->get();
-        $sumPembayaran = $pembayaranThisMonth->sum('nominal');
-        return view('pages.laporan.Omset', [
-            'total_pembayaran' => $sumPembayaran,
-            'pembayaran_this_month' => $pembayaranThisMonth
-        ]);
     }
 }

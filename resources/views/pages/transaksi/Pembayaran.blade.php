@@ -121,8 +121,9 @@
                                     <option value hidden selected>-</option>
                                     <option value="deposit">Deposit</option>
                                     <option value="tunai">Tunai</option>
-                                    <option value="kredit">Kredit</option>
+                                    <option value="qris">Qris</option>
                                     <option value="debit">Debit</option>
+                                    <option value="transfer">Transfer</option>
                                 </select>
                             </div>
                             <input type="hidden" id="input-saldo-pelanggan">
