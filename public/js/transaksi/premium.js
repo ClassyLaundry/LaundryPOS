@@ -588,11 +588,35 @@ $(document).ready(function() {
 
         $('#penulis-catatan-item').val('');
         $('#catatan-item').val('');
-        $('#container-image-item').prop('src', '');
+        let temp = $('#container-image-item').find('.carousel-item').eq(0).detach();
+        $('#container-image-item').find('.carousel-inner').empty();
+        if (!temp.hasClass('active')) {
+            temp.addClass('active');
+        }
+        temp.find('img').removeAttr("src");
+        temp.appendTo('#container-image-item .carousel-inner');
         $('#input-foto-item').val('');
 
         $('#modal-catatan-item .modal-footer').show();
         $('#modal-catatan-item').modal('show');
+    });
+
+    $('#input-foto-item').on('change', function() {
+        for (let index = 0; index < this.files.length; index++) {
+            if (index == 0) {
+                $('#container-image-item').find('.carousel-item').eq(index).find('img').attr('src', window.URL.createObjectURL(this.files[index]));
+            } else {
+                $('#container-image-item').find('.carousel-item').eq(index - 1).clone().appendTo("#container-image-item .carousel-inner");
+                $('#container-image-item').find('.carousel-item').eq(index).removeClass('active').find('img').attr('src', window.URL.createObjectURL(this.files[index]));
+            }
+        }
+        if (this.files.length == 1) {
+            $('#container-image-item .carousel-control-prev').hide();
+            $('#container-image-item .carousel-control-next').hide();
+        } else {
+            $('#container-image-item .carousel-control-prev').show();
+            $('#container-image-item .carousel-control-next').show();
+        }
     });
 
     $('#simpan-catatan-item').on('click', function() {

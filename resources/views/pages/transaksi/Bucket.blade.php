@@ -300,17 +300,27 @@
                                                 </div>
 
                                                 <div class="col col-lg-8">
-                                                    <div class="position-relative">
-                                                        <div class="position-absolute top-0 start-0 px-2" style="color: white; background-color: #6c757d;">
-                                                            <p>x: <span id="location-x"></span>&nbsp;y: <span id="location-y"></span></p>
-                                                        </div>
-                                                        <img id="container-image-item" class="w-100 mb-2" style="object-fit: contain;max-height: 450px;height: 450px;" />
+                                                    <div class="position-relative border rounded mb-2">
+                                                        <div id="container-image-item" class="carousel carousel-dark slide" data-bs-interval="false">
+                                                            <div class="carousel-inner">
+                                                                <div class="carousel-item active">
+                                                                    <img class="d-block w-100" style="object-fit: scale-down; max-height: 450px; height: 450px;">
+                                                                </div>
+                                                            </div>
+                                                            <button class="carousel-control-prev" type="button" data-bs-target="#container-image-item" data-bs-slide="prev">
+                                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                                <span class="visually-hidden">Previous</span>
+                                                            </button>
+                                                            <button class="carousel-control-next" type="button" data-bs-target="#container-image-item" data-bs-slide="next">
+                                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                                <span class="visually-hidden">Next</span>
+                                                            </button>
+                                                          </div>
                                                     </div>
                                                     <div class="text-end">
-                                                        <input type="file" class="form-control" id="input-foto-item" accept="image/*" onchange="document.getElementById('container-image-item').src = window.URL.createObjectURL(this.files[0])" required />
+                                                        <input type="file" class="form-control" id="input-foto-item" accept="image/*" multiple required />
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                         <div class="modal-footer">

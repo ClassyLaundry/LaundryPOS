@@ -289,7 +289,7 @@
                                         <form id="form-catatan">
                                             <div class="modal-body">
                                                 <div class="row">
-                                                    <div class="col-4">
+                                                    <div class="col col-lg-4">
                                                         <div class="mb-2">
                                                             <h5>Noted by</h5>
                                                             <input type="text" class="form-control" id="penulis-catatan-item" />
@@ -299,46 +299,26 @@
                                                             <textarea class="form-control" id="catatan-item" required style="max-height: 531px;"></textarea>
                                                         </div>
                                                     </div>
-                                                    <div class="col-8">
-                                                        <ul role="tablist" class="nav nav-tabs">
-                                                            <li role="presentation" class="nav-item"><a role="tab" data-bs-toggle="tab" class="nav-link active" href="#tab-foto">Foto</a></li>
-                                                            <li role="presentation" class="nav-item"><a role="tab" data-bs-toggle="tab" class="nav-link" href="#tab-noda">Tandai Noda</a></li>
-                                                        </ul>
-                                                        <div class="tab-content card" style="border-top: none;border-radius: 0;height: 513px;">
-                                                            <div role="tabpanel" class="tab-pane active p-2" id="tab-foto">
-                                                                <img id="container-image-item" class="w-100 mb-2" style="object-fit: contain;max-height: 450px;height: 450px;" />
-                                                                <div class="text-end">
-                                                                    <input type="file" class="form-control" id="input-foto-item" accept="image/*" onchange="document.getElementById('container-image-item').src = window.URL.createObjectURL(this.files[0])" required />
-                                                                </div>
-                                                            </div>
-                                                            <div role="tabpanel" class="tab-pane p-2" id="tab-noda">
-                                                                <div class="row">
-                                                                    <div class="col">
-                                                                        <h5>Tampak Depan</h5>
-                                                                        <div id="tampak-depan" class="position-relative">
-                                                                            <div class="card p-2" style="height: 230px;">
-                                                                                <div class="w-100 h-100" style="background-image: url({{asset('image/tshirt-front.jpg')}});background-size: cover;"></div>
-                                                                            </div>
-                                                                            <div id="td-kiri-atas" class="position-absolute w-50 h-50 card stain-selection" style="top: 0;left: 0;"></div>
-                                                                            <div id="td-kanan-atas" class="position-absolute w-50 h-50 card stain-selection" style="top: 0;left: 50%;"></div>
-                                                                            <div id="td-kiri-bawah" class="position-absolute w-50 h-50 card stain-selection" style="top: 50%;left: 0;"></div>
-                                                                            <div id="td-kanan-bawah" class="position-absolute w-50 h-50 card stain-selection" style="top: 50%;left: 50%;"></div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col">
-                                                                        <h5>Tampak Belakang</h5>
-                                                                        <div id="tampak-belakang" class="position-relative">
-                                                                            <div class="card p-2" style="height: 230px;">
-                                                                                <div class="w-100 h-100" style="background-image: url({{asset('image/tshirt-back.jpg')}});background-size: cover;"></div>
-                                                                            </div>
-                                                                            <div id="tb-kiri-atas" class="position-absolute w-50 h-50 card stain-selection" style="top: 0;left: 0;"></div>
-                                                                            <div id="tb-kanan-atas" class="position-absolute w-50 h-50 card stain-selection" style="top: 0;left: 50%;"></div>
-                                                                            <div id="tb-kiri-bawah" class="position-absolute w-50 h-50 card stain-selection" style="top: 50%;left: 0;"></div>
-                                                                            <div id="tb-kanan-bawah" class="position-absolute w-50 h-50 card stain-selection" style="top: 50%;left: 50%;"></div>
-                                                                        </div>
+                                                    <div class="col col-lg-8">
+                                                        <div class="position-relative border rounded mb-2">
+                                                            <div id="container-image-item" class="carousel carousel-dark slide" data-bs-interval="false">
+                                                                <div class="carousel-inner">
+                                                                    <div class="carousel-item active">
+                                                                        <img class="d-block w-100" style="object-fit: scale-down; max-height: 450px; height: 450px;">
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                                <button class="carousel-control-prev" type="button" data-bs-target="#container-image-item" data-bs-slide="prev">
+                                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                                    <span class="visually-hidden">Previous</span>
+                                                                </button>
+                                                                <button class="carousel-control-next" type="button" data-bs-target="#container-image-item" data-bs-slide="next">
+                                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                                    <span class="visually-hidden">Next</span>
+                                                                </button>
+                                                              </div>
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <input type="file" class="form-control" id="input-foto-item" accept="image/*" multiple required />
                                                         </div>
                                                     </div>
                                                 </div>
