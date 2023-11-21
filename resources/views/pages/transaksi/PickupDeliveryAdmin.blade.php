@@ -54,6 +54,9 @@
                         <div id="table-di-outlet"></div>
                     </section>
                 </div>
+                <ul class="list-unstyled form-control" id="list-action">
+                    <li id="action-delete">Cancel</li>
+                </ul>
             </div>
         </div>
 

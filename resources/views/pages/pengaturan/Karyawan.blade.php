@@ -551,10 +551,10 @@
                                         <input class="form-check-input" type="checkbox" id="check-transaksi-pickup-delivery-4" value="Mengubah Data Pickup Delivery">
                                         <label class="form-check-label" for="check-transaksi-pickup-delivery-4">Mengubah data pickup delivery</label>
                                     </div> --}}
-                                    {{-- <div class="form-check">
+                                    <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="check-transaksi-pickup-delivery-5" value="Menghapus Pickup Delivery">
                                         <label class="form-check-label" for="check-transaksi-pickup-delivery-5">Menghapus pickup delivery</label>
-                                    </div> --}}
+                                    </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="check-transaksi-pickup-delivery-6" value="Mengganti Status Selesai Pickup Delivery">
                                         <label class="form-check-label" for="check-transaksi-pickup-delivery-6">Mengganti status pickup delivery</label>

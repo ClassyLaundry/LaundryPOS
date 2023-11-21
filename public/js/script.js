@@ -108,7 +108,7 @@ $(document).ready(function() {
         flag = true;
     });
 
-    $('#data-pelanggan #table-pelanggan, #data-item #table-item, .section-detail-transaksi #table-trans-item tbody, #table-container, #list-karyawan, #container-list-trans').on('click', '.btn-show-action', function() {
+    $('#data-pelanggan #table-pelanggan, #data-item #table-item, .section-detail-transaksi #table-trans-item tbody, #table-container, #list-karyawan, #container-list-trans, #table-pickup, #table-delivery').on('click', '.btn-show-action', function() {
         let lebarList = 150;
         let lebarBtn = $(this).css('width');
         let lebarTambahan = 2;

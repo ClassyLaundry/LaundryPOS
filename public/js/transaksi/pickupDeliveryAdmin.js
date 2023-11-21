@@ -30,6 +30,27 @@ $(document).ready(function() {
         return (day < 10 ? '0' + day : day) + '/' + (month < 10 ? '0' + month : month) + '/' + year;
     }
 
+    var btnIndex = -1, btnId = 0;
+    $('#table-pickup, #table-delivery').on('click', '.btn-show-action', function() {
+        btnIndex = $(this).index('.btn-show-action') + 1;
+        btnId = $(this).attr('id').substring(4);
+    });
+
+    $('#action-delete').on('click', function() {
+        if (confirm('Cancel pickup delivery ?')) {
+            $.ajax({
+                url: "/transaksi/pickup-delivery/delete/" + btnId,
+            }).done(function(data) {
+                window.location.reload();
+
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown);
+            });
+        }
+    });
+
     // Pick Up
     $('#create-pickup').on('click', function() {
         $('#modal-create-pickup').modal('show');
