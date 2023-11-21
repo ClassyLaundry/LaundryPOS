@@ -7,7 +7,7 @@
         /* Add any styles you want to use for the PDF here */
         body {
             font-family: sans-serif;
-            font-size: 8pt;
+            font-size: 12pt;
         }
 
         h4 {
@@ -38,7 +38,7 @@
     </style>
 </head>
 
-<body style="width: 150%; height: 100%; padding: 0px; margin: -30px;">
+<body style="width: 480px; height: 100%; padding: 0px;">
     <div id="data-header">
         <h4 style="margin-top: 0px;">{{ $data->header['nama_usaha'] }}</h4>
         <h4 style="white-space: nowrap; text-overflow: clip; overflow: hidden;">{{ $data->transaksi->outlet->alamat }}</h4>

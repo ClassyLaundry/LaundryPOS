@@ -113,10 +113,10 @@ class PrintController extends Controller
 
         //8.5x 11 inch = 612x792 point
         // $paper_size = [0, 0, 792, 612];
-        $pdf = Pdf::loadView('pages.print.MemoProduksi', [
-            'data' => $data
-        ])->setPaper('A4', 'portrait');
-        return $pdf->stream('invoice.pdf');
+        // $pdf = Pdf::loadView('pages.print.MemoProduksi', [
+        //     'data' => $data
+        // ])->setPaper('A4', 'portrait');
+        // return $pdf->stream('invoice.pdf');
         //stream kalau preview, download kalau lsg download
     }
 
@@ -157,28 +157,15 @@ class PrintController extends Controller
         $data->pelanggan = $pelanggan;
         $data->pickup = $pickup;
 
-        $paper_size = [0, 0, 160, 207 + ($total_jenis_item * 22)];//159 + ($total_jenis_item * 22)];
-        $pdf = Pdf::loadView('pages.print.TandaTerima', [
-            'data' => $data,
-        ])->setPaper($paper_size, 'portrait');
+        $paper_size = [0, 0, 408, 207 + ($total_jenis_item * 22)];
+        return view('pages.print.TandaTerima', [
+            'data' => $data
+        ]);
 
-        // $html = View::make('pages.print.TandaTerima', ['data' => $data])->render();
+        // $pdf = Pdf::loadView('pages.print.TandaTerima', [
+        //     'data' => $data,
+        // ])->setPaper($paper_size, 'portrait');
 
-        // // Create a temporary PDF file to measure its size
-        // $temporaryPdfPath = storage_path('app/temporary.pdf');
-        // $temporaryPdf = PDF::loadHTML($html);
-        // $temporaryPdf->save($temporaryPdfPath);
-
-        // // Get the width and height of the temporary PDF
-        // $pdfSize = getimagesize($temporaryPdfPath);
-        // // unlink($temporaryPdfPath);
-
-        // // Set the paper size dynamically based on the temporary PDF size
-        // $pdf = PDF::loadHTML($html);
-        // $pdf->setPaper([
-        //     'width' => $pdfSize[0] / 72,
-        //     'height' => $pdfSize[1] / 72
-        // ]);
-        return $pdf->stream('invoice.pdf');
+        // return $pdf->stream('invoice.pdf');
     }
 }
