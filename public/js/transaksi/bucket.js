@@ -463,10 +463,11 @@ $(document).ready(function() {
                 $('#diskon-pelanggan_spesial').html(trans.diskon_pelanggan_spesial);
                 $('#grand-total').html(trans.grand_total);
 
-                $('#table-trans-item tbody tr:nth-child(' + btnIndex + ')').detach();
                 currentlySelectedItemTransactionID = 0;
                 currentlySelectedItemName = '';
-                setThousandSeparator();
+                $('#table-container').load(window.location.origin + '/component/transPremium/' + transId, function() {
+                    setThousandSeparator();
+                });
 
             }).fail(function(jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR);
