@@ -365,7 +365,7 @@ $(document).ready(function() {
         });
     }
 
-    $('#container-search-item').on('click', ' #container-search-item tbodytr', function() {
+    $('#container-search-item').on('click', '#table-items tbody tr', function() {
         let parent = $(this).parent();
         parent.addClass('disabled');
         let id = $(this).attr('id');
