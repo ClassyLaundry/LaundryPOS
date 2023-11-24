@@ -453,16 +453,19 @@ class PageController extends Controller
                     'pages.proses.CuciProses',
                     [
                         'transaksi_staging' => Transaksi::with('tukang_cuci')->detail()
+                            ->where('outlet_id', Auth::user()->outlet->id)
                             ->where('status', 'confirmed')
                             ->where('setrika_only', 0)
                             ->whereNull('pencuci')
                             ->latest()->get(),
                         'transaksi_pencuci' => Transaksi::with('tukang_cuci')->detail()
+                            ->where('outlet_id', Auth::user()->outlet->id)
                             ->where('pencuci', Auth::user()->id)
                             ->where('setrika_only', 0)
                             ->where('is_done_cuci', 0)
                             ->latest()->get(),
                         'transaksi_done_cuci' => Transaksi::with('tukang_cuci')->detail()
+                            ->where('outlet_id', Auth::user()->outlet->id)
                             ->where('pencuci', Auth::user()->id)
                             ->where('setrika_only', 0)
                             ->where('is_done_cuci', 1)
@@ -506,6 +509,7 @@ class PageController extends Controller
                     'pages.proses.SetrikaProses',
                     [
                         'transaksi_staging' => Transaksi::with('tukang_setrika')->detail()
+                            ->where('outlet_id', Auth::user()->outlet->id)
                             ->where('status', 'confirmed')
                             ->whereNull('penyetrika')
                             ->where(function($query) {
@@ -517,10 +521,12 @@ class PageController extends Controller
                             })
                             ->latest()->get(),
                         'transaksi_penyetrika' => Transaksi::with('tukang_setrika')->detail()
+                            ->where('outlet_id', Auth::user()->outlet->id)
                             ->where('penyetrika', Auth::user()->id)
                             ->where('is_done_setrika', 0)
                             ->latest()->get(),
                         'transaksi_done_setrika' => Transaksi::with('tukang_setrika')->detail()
+                            ->where('outlet_id', Auth::user()->outlet->id)
                             ->where('penyetrika', Auth::user()->id)
                             ->where('is_done_setrika', 1)
                             ->latest()->get(),
