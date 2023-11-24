@@ -469,6 +469,7 @@ class PageController extends Controller
                             ->where('pencuci', Auth::user()->id)
                             ->where('setrika_only', 0)
                             ->where('is_done_cuci', 1)
+                            ->where('done_date', '>=', Carbon::today())
                             ->latest()->get(),
                     ]
                 );
@@ -529,6 +530,7 @@ class PageController extends Controller
                             ->where('outlet_id', Auth::user()->outlet->id)
                             ->where('penyetrika', Auth::user()->id)
                             ->where('is_done_setrika', 1)
+                            ->where('done_date', '>=', Carbon::today())
                             ->latest()->get(),
                         'jenis_rewashes' => JenisRewash::get(),
                     ]
