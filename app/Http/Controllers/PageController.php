@@ -20,6 +20,7 @@ use App\Models\Transaksi\PickupDelivery;
 use App\Models\Transaksi\Rewash;
 use App\Models\Transaksi\Transaksi;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -431,7 +432,7 @@ class PageController extends Controller
         }
     }
 
-    public function hubCuci()
+    public function hubCuci(Request $request)
     {
         $user = User::find(auth()->id());
         $permissions = $user->getPermissionsViaRoles();
@@ -439,6 +440,14 @@ class PageController extends Controller
             return $item->name === 'Membuka Menu Hub Cuci';
         });
         if ($permissionExist) {
+            $startDate = null;
+            $endDate = null;
+            if ($request->has('start')) {
+                $startDate = Carbon::createFromFormat('d/m/Y', $request->start)->format('Y-m-d');
+            }
+            if ($request->has('end')) {
+                $endDate = Carbon::createFromFormat('d/m/Y', $request->end)->format('Y-m-d');
+            }
             if (Auth::user()->role == 'produksi_cuci') {
                 return view(
                     'pages.proses.CuciProses',
@@ -461,20 +470,22 @@ class PageController extends Controller
                     ]
                 );
             } else {
-                return view(
-                    'pages.proses.CuciAdmin',
-                    [
-                        'transaksis' => Transaksi::with('tukang_cuci')->detail()->latest()->get(),
-                        'pencucis' => User::role('produksi_cuci')->with('cucian')->get(),
-                    ]
-                );
+                return view('pages.proses.CuciAdmin', [
+                    'transaksis' => Transaksi::with('tukang_cuci')->detail()
+                        ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
+                            return $query->whereBetween('created_at', [$startDate, $endDate]);
+                        })
+                        ->latest()->get(),
+                    'pencucis' => User::role('produksi_cuci')->with('cucian')->get(),
+                    'dateRange' => isset($request->start) ? $request->start . ' - ' . $request->end : null,
+                ]);
             }
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
         }
     }
 
-    public function hubSetrika()
+    public function hubSetrika(Request $request)
     {
         $user = User::find(auth()->id());
         $permissions = $user->getPermissionsViaRoles();
@@ -482,6 +493,14 @@ class PageController extends Controller
             return $item->name === 'Membuka Menu Hub Setrika';
         });
         if ($permissionExist) {
+            $startDate = null;
+            $endDate = null;
+            if ($request->has('start')) {
+                $startDate = Carbon::createFromFormat('d/m/Y', $request->start)->format('Y-m-d');
+            }
+            if ($request->has('end')) {
+                $endDate = Carbon::createFromFormat('d/m/Y', $request->end)->format('Y-m-d');
+            }
             if (Auth::user()->role == 'produksi_setrika') {
                 return view(
                     'pages.proses.SetrikaProses',
@@ -512,8 +531,12 @@ class PageController extends Controller
                 return view(
                     'pages.proses.SetrikaAdmin',
                     [
-                        'transaksis' => Transaksi::with('tukang_setrika')->detail()->latest()->get(),
+                        'transaksis' => Transaksi::with('tukang_setrika')->detail()
+                            ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
+                                return $query->whereBetween('created_at', [$startDate, $endDate]);
+                            })->latest()->get(),
                         'penyetrikas' => User::role('produksi_setrika')->with('setrikaan')->get(),
+                        'dateRange' => isset($request->start) ? $request->start . ' - ' . $request->end : null,
                     ]
                 );
             }

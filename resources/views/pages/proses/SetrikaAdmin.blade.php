@@ -20,6 +20,14 @@
             <section id="section-data-setrika">
                 <div class="card">
                     <div class="card-body">
+                        <div id="fitler-tanggal" class="d-flex align-items-center position-absolute" style="top: -38px; right: -1px; height: 38px;">
+                            <h6 class="me-2">Tanggal</h6>
+                            <input type="week" name="week" class="form-control" id="input-week" style="display: none;">
+                            <span id="selected-date-range" style="display: none">@isset($dateRange){{ $dateRange }}@endisset</span>
+                            <button class="btn btn-outline-primary btn-sm ms-2" id="btn-reset" style="display: none;">
+                                <i class="fa-solid fa-arrows-rotate"></i>
+                            </button>
+                        </div>
                         <section id="section-staging" class="mb-4">
                             <h4>Staging</h4>
                             <hr />
@@ -219,6 +227,45 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        if ($('#selected-date-range').text() != '') {
+            $('#input-week').hide();
+            $('#btn-reset').show();
+            $('#selected-date-range').show();
+        } else {
+            $('#input-week').show();
+            $('#btn-reset').hide();
+            $('#selected-date-range').hide();
+        }
 
+        $('#input-week').change(function() {
+            $(this).hide();
+            let selectedWeek = $(this).val();
+            let year = selectedWeek.substring(0, 4);
+            let weekNumber = selectedWeek.substring(6);
+
+            let startDate = new Date(year, 0, 1 + (weekNumber - 1) * 7 + 1);
+            let endDate = new Date(year, 0, 1 + (weekNumber - 1) * 7 + 6 + 1);
+
+            let startDateString = formatDate(startDate);
+            let endDateString = formatDate(endDate);
+
+            window.location = window.location.pathname + '?start=' + startDateString + '&end=' + endDateString;
+        });
+
+        $('#btn-reset').on('click', function() {
+            window.location = window.location.pathname;
+        });
+
+        function formatDate(date) {
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+
+            return (day < 10 ? '0' + day : day) + '/' + (month < 10 ? '0' + month : month) + '/' + year;
+        }
+    });
+</script>
 @endsection
 
