@@ -512,7 +512,8 @@ class PageController extends Controller
                 return view(
                     'pages.proses.SetrikaAdmin',
                     [
-
+                        'transaksis' => Transaksi::with('tukang_setrika')->detail()->latest()->get(),
+                        'penyetrikas' => User::role('produksi_setrika')->with('setrikaan')->get(),
                     ]
                 );
             }
