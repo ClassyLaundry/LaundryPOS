@@ -10,7 +10,7 @@
             font-size: 12pt;
         }
 
-        h4 {
+        h3 {
             margin: 4px 0px;
         }
 
@@ -38,18 +38,22 @@
     </style>
 </head>
 
-<body style="width: 480px; height: 100%; padding: 0px;">
+<body style="width: 480px; height: 100%; padding: 1.5rem 1rem;">
     <div id="data-header">
-        <h4 style="margin-top: 0px;">{{ $data->header['nama_usaha'] }}</h4>
-        <h4 style="white-space: nowrap; text-overflow: clip; overflow: hidden;">{{ $data->transaksi->outlet->alamat }}</h4>
-        <h4>{{ $data->transaksi->outlet->telp_1 }}</h4>
+        <h3 style="margin-top: 0px;">{{ $data->header['nama_usaha'] }}</h3>
+        <h3 style="white-space: nowrap; text-overflow: clip; overflow: hidden;">{{ $data->transaksi->outlet->alamat }}</h3>
+        <h3>{{ $data->transaksi->outlet->telp_1 }}</h3>
     </div>
     <p class="hr-text">
         =========================================================================================================================
     </p>
-    <p style="margin: 4px auto;">{{ Str::upper($data->transaksi->tipe_transaksi) }}</p>
+    <p style="margin: 4px auto;">Tipe: {{ Str::upper($data->transaksi->tipe_transaksi) }}</p>
     <p class="hr-text" style="margin-bottom: 4px;">
         =========================================================================================================================
+    </p>
+    <p style="margin: 0px;">Item</p>
+    <p class="hr-text" style="margin:0;">
+        -------------------------------------------------------------------------------------------------------------------------
     </p>
     <div id="detail-transaksi">
         @foreach ($data->transaksi->item_transaksi as $item)

@@ -135,6 +135,7 @@ class TransaksiController extends Controller
     {
         $transaksi = Transaksi::detail()
             ->where('tipe_transaksi', $request->tipe)
+            ->orWhere('tipe_transaksi', null)
             ->where(function ($query) use ($request) {
                 $query->where('id', 'like', '%' . $request->key . '%')
                     ->orWhereHas('pelanggan', function ($q) use ($request) {
