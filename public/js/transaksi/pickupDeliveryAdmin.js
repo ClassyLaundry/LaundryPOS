@@ -30,10 +30,21 @@ $(document).ready(function() {
         return (day < 10 ? '0' + day : day) + '/' + (month < 10 ? '0' + month : month) + '/' + year;
     }
 
-    var btnIndex = -1, btnId = 0;
-    $('#table-pickup, #table-delivery').on('click', '.btn-show-action', function() {
+    var btnIndex = -1, btnId = 0, selectedTable = "";
+    $('#table-pickup, #table-delivery').on('click', '.btn-show-action', function(e) {
         btnIndex = $(this).index('.btn-show-action') + 1;
         btnId = $(this).attr('id').substring(4);
+        selectedTable = $(this).closest('.table-container').data('table');
+        if (selectedTable == 'pickup') {
+            $('#action-update').hide();
+        } else {
+            $('#action-update').show();
+        }
+    });
+
+    $('#action-update').on('click', function() {
+        // $ajax disini
+        $('#modal-create-delivery').modal('show');
     });
 
     $('#action-delete').on('click', function() {

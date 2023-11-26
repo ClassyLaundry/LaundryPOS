@@ -109,6 +109,9 @@
                         @endif
                         <li id="action-print-memo">Print Memo</li>
                         <li id="action-pesan">Toggle Pesan</li>
+                        @if(in_array("Membuka Halaman Detail Pelanggan", Session::get('permissions')) || Session::get('role') == 'administrator')
+                            <li id="action-pelanggan">Detail Pelanggan</li>
+                        @endif
                         @if(in_array("Mengganti Status Selesai Pickup Delivery", Session::get('permissions')))
                             <li id="action-change-status">Selesai</li>
                         @endif

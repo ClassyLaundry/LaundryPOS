@@ -29,7 +29,7 @@
                     <section id="section-pickup" class="mb-3">
                         <h4>Pickup</h4>
                         <hr />
-                        <div id="table-pickup"></div>
+                        <div id="table-pickup" class="table-container" data-table="pickup"></div>
                         @if(in_array("Membuat Pickup Delivery", Session::get('permissions')) || Session::get('role') == 'administrator')
                         <div class="text-end mt-3">
                             <button id="create-pickup" class="btn btn-primary">Pickup Baru</button>
@@ -40,7 +40,7 @@
                     <section id="section-delivery" class="mb-3">
                         <h4>Delivery</h4>
                         <hr />
-                        <div id="table-delivery"></div>
+                        <div id="table-delivery" class="table-container" data-table="delivery"></div>
                         @if(in_array("Membuat Pickup Delivery", Session::get('permissions')) || Session::get('role') == 'administrator')
                         <div class="text-end mt-3">
                             <button id="create-delivery" class="btn btn-primary">Delivery Baru</button>
@@ -51,10 +51,13 @@
                     <section id="section-ambil-outlet" class="mb-3">
                         <h4>Ambil di outlet</h4>
                         <hr />
-                        <div id="table-di-outlet"></div>
+                        <div id="table-di-outlet" class="table-container"></div>
                     </section>
                 </div>
                 <ul class="list-unstyled form-control" id="list-action">
+                    @if(in_array("Mengubah Data Pickup Delivery", Session::get('permissions')) || Session::get('role') == 'administrator')
+                        <li id="action-update">Update</li>
+                    @endif
                     <li id="action-delete">Cancel</li>
                 </ul>
             </div>

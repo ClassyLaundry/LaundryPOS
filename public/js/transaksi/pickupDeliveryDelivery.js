@@ -12,7 +12,7 @@ $(document).ready(function() {
         }
     });
 
-    var btnIndex = -1, btnId = 0, currentlySelectedType = '', pelangganId = 0, orderId = 0;;
+    var btnIndex = -1, btnId = 0, currentlySelectedType = '', pelangganId = 0, orderId = 0;
     $('.btn-show-action').on('click', function() {
         btnIndex = $(this).index('.btn-show-action') + 1;
         btnId = $(this).closest('.border.rounded').data('transaksi');
@@ -36,6 +36,10 @@ $(document).ready(function() {
 
     $('#action-pesan').on('click', function() {
         $('.btn-show-action').eq(btnIndex - 1).closest('.rounded').siblings('.pesan-pelanggan').toggle();
+    });
+
+    $('#action-pelanggan').on('click', function() {
+        window.location = window.location.origin + "/data/pelanggan/" + pelangganId + '/detail';
     });
 
     $('#action-change-status').on('click', function() {
