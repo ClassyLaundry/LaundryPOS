@@ -7,11 +7,11 @@
                 <th>Pelanggan</th>
                 <th>Tanggal Transaksi</th>
                 <th>Tanggal Selesai</th>
-                <th colspan="2">Total</th>
+                <th>Total</th>
                 <th>Lunas</th>
-                <th colspan="2">Terbayar</th>
+                <th>Terbayar</th>
                 <th>Status</th>
-                <th style="width: 50px;"></th>
+                <th style="width: 26px;"></th>
             </tr>
         </thead>
         <tbody>
@@ -22,15 +22,23 @@
                 <td class="text-center">{{ $transaksi->pelanggan->nama }}</td>
                 <td class="text-center">{{ date('d/m/Y', strtotime($transaksi->created_at)) }}</td>
                 <td class="text-center">@isset($transaksi->done_date) {{ date('d/m/Y', strtotime($transaksi->done_date)) }} @endisset</td>
-                <td style="width: 35px;">Rp</td>
-                <td class="thousand-separator text-end">{{ number_format($transaksi->grand_total, 0, ',', '.') }}</td>
+                <td>
+                    <div class="d-flex justify-content-between">
+                        <span>Rp</span>
+                        <span class="thousand-separator">{{ number_format($transaksi->grand_total, 0, ',', '.') }}</span>
+                    </div>
+                </td>
                 @if ($transaksi->lunas)
                     <td class="text-center">Lunas</td>
                 @else
                     <td class="text-center">Belum lunas</td>
                 @endif
-                <td style="width: 35px;">Rp</td>
-                <td class="thousand-separator text-end">{{ number_format($transaksi->total_terbayar, 0, ',', '.') }}</td>
+                <td>
+                    <div class="d-flex justify-content-between">
+                        <span>Rp</span>
+                        <span class="thousand-separator">{{ number_format($transaksi->total_terbayar, 0, ',', '.') }}</span>
+                    </div>
+                </td>
                 <td class="text-center">{{ $transaksi->status }}</td>
                 <td class="cell-action">
                     <button id="btn-{{ $transaksi->id }}" class="btn btn-primary btn-sm btn-show-action" type="button">

@@ -1,6 +1,8 @@
 @extends('layouts.users')
 
 @section('content')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+
 <div class="container">
     <header class="my-3" style="color: var(--bs-gray);">
         <a>Transaksi</a>
@@ -12,21 +14,6 @@
             <div class="card-body">
                 <h4>List Transaksi</h4>
                 <hr />
-
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center">
-                        Tanggal:
-                        <input class="form-control mx-1" id="input-search-by-date" type="date">
-
-                        <button class="btn btn-outline-primary d-none" id="btn-reset">
-                            <i class="fa-solid fa-arrows-rotate"></i>
-                        </button>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        Search:
-                        <input class="form-control ms-1" id="input-search-by-name" type="search" style="max-width: 200px;">
-                    </div>
-                </div>
 
                 <div id="table-container" class="mt-3"></div>
 
@@ -178,4 +165,5 @@
 </div>
 
 <script src="{{ asset('js/transaksi/pembayaran.js') }}"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 @endsection

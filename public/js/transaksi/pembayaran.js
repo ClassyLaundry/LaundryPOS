@@ -179,7 +179,7 @@ $(document).ready(function() {
         let total = removeDot($('#input-total').val());
 
         let nominal = removeDot($('#input-nominal').val());
-        let terbayar = removeDot($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(10)').html());
+        let terbayar = removeDot($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(8)').find('.thousand-separator').text());
         if (total > terbayar + nominal) {
             $('#input-kembalian').val('0');
         } else {
@@ -223,33 +223,21 @@ $(document).ready(function() {
         });
     });
 
-    $('#table-container').load(window.location.origin + '/component/pembayaran');
-
-    function search() {
-        $('#table-container').load(window.location.origin + '/component/pembayaran?name=' + encodeURIComponent($('#input-search-by-name').val()) + '&date=' + $('#input-search-by-date').val(), function (){
-            if ($('#table-container tbody').children().length == 0) {
-                alert('Transaksi tidak ditemukan');
-            }
-        });
-    }
-
-    $('#table-container').on('click', '.page-link', function(e) {
-        e.preventDefault();
-        let page = $(this).attr('href').substr(-1);
-        $('#table-container').load(window.location.origin + '/component/pembayaran?name=' + encodeURIComponent($('#input-search-by-name').val()) + '&date=' + $('#input-search-by-date').val() + '&page=' + page, function() {
-            setThousandSeparator();
+    $('#table-container').load(window.location.origin + '/component/pembayaran', function() {
+        $("#table-pembayaran").dataTable({
+            order: [[0, 'desc']],
+            columns: [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                { orderable: false }
+            ]
         });
     });
-
-    var searchPelanggan;
-    $('#input-search-by-name').on('input', function() {
-        clearTimeout(searchPelanggan);
-        searchPelanggan = setTimeout(searchListPelanggan, 2000);
-    });
-
-    function searchListPelanggan() {
-        search();
-    }
-
-    $('#input-search-by-date').on('change', function() { search(); });
 });
