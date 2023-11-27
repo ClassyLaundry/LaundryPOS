@@ -41,51 +41,79 @@
         p {
             margin: 0;
         }
+
+        .w-15 {
+            width: 15%!important;
+        }
+
+        .w-30 {
+            width: 30%!important;
+        }
+
+        .w-70 {
+            width: 70%!important;
+        }
     </style>
 </head>
-<body style="width: 750px; height: 500px;">
+<body style="width: 1000px;">
     <div id="data-header">
         <p style="font-weight: 600;">
-            {{ $data->header['nama_usaha'] }} <br>
+            {{ Str::upper($data->transaksi->outlet->nama) }}<br>
             {{ $data->transaksi->outlet->alamat }} <br>
             {{ $data->header['delivery_text'] }}
         </p>
     </div>
-    {{-- <hr> --}}
-    <div id=data-transaksi>
-        {{-- <div style="position: relative; height: 75px;">
-            <p class="w-75 d-flex">
-                <span class=""></span>
-                <span></span>
-            </p>
-            <p style="position: absolute; left: 0px; top: -5%; font-weight: 600; font-size: 1rem;">MEMO PRODUKSI</p>
-            <p style="position: absolute; left: 400px; top: -5px; font-weight: 600; font-size: 1rem;">{{ $data->transaksi->memo_code }}</p>
+    <hr>
+    <div id="data-transaksi">
+        <div class="d-flex fs-2">
+            <p>MEMO PRODUKSI</p>
+            <p class="fw-bold ms-4">{{ $data->transaksi->memo_code }}</p>
+        </div>
 
-            <p style="position: absolute; left: 0px; top: 15px;">NO. ORDER</p>
-            <p style="position: absolute; left: 100px; top: 15px;">: {{ $data->transaksi->kode }} / {{ strtoupper($data->transaksi->tipe_transaksi) }}</p>
+        <div class="d-flex">
+            <div class="d-flex w-50">
+                <p class="w-30">NO. ORDER</p>
+                <p class="w-70">: {{ $data->transaksi->kode }} / {{ strtoupper($data->transaksi->tipe_transaksi) }}</p>
+            </div>
+            <div class="d-flex w-50">
+                <p class="w-30">PENCETAKAN</p>
+                <p class="w-70">: {{ date('d-M-Y h:i:s') }}</p>
+            </div>
+        </div>
 
-            <p style="position: absolute; left: 400px; top: 15px;">PENCETAKAN</p>
-            <p style="position: absolute; left: 500px; top: 15px;">: {{ date('d-M-Y h:i:s') }}</p>
+        <div class="d-flex">
+            <div class="d-flex w-50">
+                <p class="w-30">PELANGGAN</p>
+                <p class="w-70">: {{ $data->transaksi->pelanggan->no_id }} / {{ $data->transaksi->pelanggan->nama }}</p>
+            </div>
+            <div class="d-flex w-50">
+                <p class="w-30">TGL CUCI</p>
+                <p class="w-70">: {{ date('d-M-Y', strtotime($data->transaksi->created_at)) }} / {{ date('d-M-Y', strtotime($data->transaksi->done_date)) }}</p>
+            </div>
+        </div>
 
-            <p style="position: absolute; left: 0px; top: 30px;">PELANGGAN</p>
-            <p style="position: absolute; left: 100px; top: 30px;">: {{ $data->transaksi->pelanggan->no_id }} / {{ $data->transaksi->pelanggan->nama }}</p>
+        <div class="d-flex w-50">
+            <p class="w-30">ALAMAT/TELP</p>
+            <p class="w-70">: {{ $data->transaksi->pelanggan->alamat }} / {{ $data->transaksi->pelanggan->telephone }}</p>
+        </div>
 
-            <p style="position: absolute; left: 400px; top: 30px;">TGL CUCI</p>
-            <p style="position: absolute; left: 500px; top: 30px;">: {{ date('d-M-Y', strtotime($data->transaksi->created_at)) }} s.d {{ date('d-M-Y', strtotime($data->transaksi->done_date)) }}</p>
+        <div class="d-flex justify-content-around">
+            <div class="d-flex">
+                <p>EXPRESS</p>
+                <p>: {{ $data->transaksi->express ? 'YA' : 'TIDAK' }}</p>
+            </div>
 
-            <p style="position: absolute; left: 0px; top: 45px;">ALAMAT/TELP</p>
-            <p style="position: absolute; left: 100px; top: 45px;">: {{ $data->transaksi->pelanggan->alamat }} / {{ $data->transaksi->pelanggan->telephone }}</p>
+            <div class="d-flex">
+                <p>SETRIKA SAJA</p>
+                <p>: {{ $data->transaksi->setrika_only ? 'YA' : 'TIDAK' }}</p>
+            </div>
 
-            <p style="position: absolute; left: 0px; top: 60px;">EXPRESS</p>
-            <p style="position: absolute; left: 100px; top: 60px;">: {{ $data->transaksi->express ? 'YA' : 'TIDAK' }}</p>
+            <div class="d-flex">
+                <p>DELIVERY</p>
+                <p>: {{ $data->transaksi->need_delivery ? 'YA' : 'TIDAK' }}</p>
+            </div>
 
-            <p style="position: absolute; left: 275px; top: 60px;">SETRIKA SAJA</p>
-            <p style="position: absolute; left: 375px; top: 60px;">: {{ $data->transaksi->setrika_only ? 'YA' : 'TIDAK' }}</p>
-
-            <p style="position: absolute; left: 550px; top: 60px;">DELIVERY</p>
-            <p style="position: absolute; left: 650px; top: 60px;">: {{ $data->transaksi->need_delivery ? 'YA' : 'TIDAK' }}</p>
-        </div> --}}
-    </div>
+        </div>
     <hr>
     <div id="detail-transaksi">
         @if ($data->transaksi->tipe_transaksi == 'bucket')
@@ -159,26 +187,29 @@
             <p>CATATAN:</p>
             <p>@isset($data->catatan) {{ $data->catatan }} || @endisset {{ $data->transaksi->catatan }}</p>
         </div>
-        <hr>
-        <div style="position: relative; height: 90px;">
-            <p style="position: absolute; left: 0px; top: 25px;">Tim Produksi</p>
-
-            <p class="text-center" style="position: absolute; left: 75px; top: 25px; width: 200px;">@isset($data->transaksi->tukang_cuci) {{ $data->transaksi->tukang_cuci->name }} @endisset</p>
-            <p class="text-center" style="position: absolute; left: 75px; top: 45px; width: 200px;">_______________</p>
-            <p class="text-center" style="position: absolute; left: 75px; top: 60px; width: 200px;">cuci</p>
-
-
-            <p class="text-center" style="position: absolute; left: 225px; top: 25px; width: 200px;">@isset($data->transaksi->tukang_setrika) {{ $data->transaksi->tukang_setrika->name }} @endisset</p>
-            <p class="text-center" style="position: absolute; left: 225px; top: 45px; width: 200px;">_______________</p>
-            <p class="text-center" style="position: absolute; left: 225px; top: 60px; width: 200px;">setrika</p>
-
-            <p class="text-center" style="position: absolute; left: 375px; top: 25px; width: 200px;">@isset($data->packing) {{ $data->packing->name }} @endisset</p>
-            <p class="text-center" style="position: absolute; left: 375px; top: 45px; width: 200px;">_______________</p>
-            <p class="text-center" style="position: absolute; left: 375px; top: 60px; width: 200px;">packing</p>
-
-            <p class="text-center" style="position: absolute; left: 525px; top: 25px; width: 200px;">@isset($data->transaksi->pickup_delivery[count($data->transaksi->pickup_delivery) - 1]) {{ $data->transaksi->pickup_delivery[count($data->transaksi->pickup_delivery) - 1]->nama_driver }} @endisset</p>
-            <p class="text-center" style="position: absolute; left: 525px; top: 45px; width: 200px;">_______________</p>
-            <p class="text-center" style="position: absolute; left: 525px; top: 60px; width: 200px;">delivery</p>
+    </div>
+    <hr>
+    <div id="data-tim-produksi">
+        <div class="d-flex align-items-center">
+            <p class="w-15">Tim Produksi</p>
+            <div class="d-flex" style="width: 85%;">
+                <div class="w-25 text-center px-5">
+                    @isset($data->transaksi->tukang_cuci) <p class="lh-lg">{{ $data->transaksi->tukang_cuci->name }}</p> @else <p class="invisible lh-lg">cuci</p> @endisset
+                    <p class="border-1 border-top">cuci</p>
+                </div>
+                <div class="w-25 text-center px-5">
+                    @isset($data->transaksi->tukang_setrika) <p class="lh-lg">{{ $data->transaksi->tukang_setrika->name }}</p> @else <p class="invisible lh-lg">setrika</p> @endisset
+                    <p class="border-1 border-top">setrika</p>
+                </div>
+                <div class="w-25 text-center px-5">
+                    @isset($data->packing) <p class="lh-lg">{{ $data->packing->name }}</p> @else <p class="invisible lh-lg">packing</p> @endisset
+                    <p class="border-1 border-top">packing</p>
+                </div>
+                <div class="w-25 text-center px-5">
+                    @isset($data->transaksi->pickup_delivery[count($data->transaksi->pickup_delivery) - 1]) <p class="lh-lg">{{ $data->transaksi->pickup_delivery[count($data->transaksi->pickup_delivery) - 1]->nama_driver }}</p> @else <p class="invisible lh-lg">delivery</p> @endisset
+                    <p class="border-1 border-top">delivery</p>
+                </div>
+            </div>
         </div>
     </div>
     <hr>

@@ -280,20 +280,22 @@ class TransaksiController extends Controller
             $formattedDate = $today->format('ymd');
             $kode = $outlet->kode . $formattedDate;
 
-            if (empty($transaksi->kode) && $transaksi->status != "draft") {
-                $count = Transaksi::where('status', '!=', 'draft')->where('kode', 'like', $kode . '%')->count() + 1;
-                $paded = str_pad($count, 5, '0', STR_PAD_LEFT);
+            if ($transaksi->status != "draft") {
+                if (empty($transaksi->kode)) {
+                    $count = Transaksi::where('status', '!=', 'draft')->where('kode', 'like', $kode . '%')->count() + 1;
+                    $paded = str_pad($count, 5, '0', STR_PAD_LEFT);
 
-                $transaksi->kode = $kode . $paded;
-                $transaksi->save();
-            }
+                    $transaksi->kode = $kode . $paded;
+                    $transaksi->save();
+                }
 
-            if (empty($transaksi->memo_code)) {
-                $transaksi->memo_code = Transaksi::getMemoCode($transaksi->id);
-            }
+                if (empty($transaksi->memo_code)) {
+                    $transaksi->memo_code = Transaksi::getMemoCode($transaksi->id);
+                }
 
-            if (empty($transaksi->kitir_code)) {
-                $transaksi->kitir_code = Transaksi::getKitirCode($transaksi->id);
+                if (empty($transaksi->kitir_code)) {
+                    $transaksi->kitir_code = Transaksi::getKitirCode($transaksi->id);
+                }
             }
 
             $transaksi->save();
