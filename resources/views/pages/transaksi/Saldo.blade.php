@@ -91,9 +91,6 @@
                 <form id="form-pembayaran">
                     @csrf
                     <div class="modal-body">
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alert-saldo">
-                            Saldo kurang dari 100.000
-                        </div>
                         <div class="alert alert-info alert-dismissible fade show" role="alert" id="alert-member">
                             Pelanggan belum menjadi member
                         </div>

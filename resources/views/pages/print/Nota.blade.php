@@ -197,7 +197,7 @@
             </div>
             <div class="d-flex w-30">
                 <p class="w-50">Telah Bayar</p>
-                <p class="w-50">: {{ isset($data->transaksi->terbayar) ? number_format($data->transaksi->terbayar, 0, ',', '.') : '0' }}</p>
+                <p class="w-50">: {{ isset($data->transaksi->total_terbayar) ? number_format($data->transaksi->total_terbayar, 0, ',', '.') : '0' }}</p>
             </div>
         </div>
         <div class="d-flex">

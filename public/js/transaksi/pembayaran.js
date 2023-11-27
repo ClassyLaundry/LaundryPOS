@@ -179,12 +179,10 @@ $(document).ready(function() {
         let total = removeDot($('#input-total').val());
 
         let nominal = removeDot($('#input-nominal').val());
-        let terbayar = removeDot($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(9)').html());
+        let terbayar = removeDot($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(10)').html());
         if (total > terbayar + nominal) {
-            $('#input-terbayar').val((terbayar + nominal).toLocaleString(['ban', 'id']));
-            $('#input-kembalian').val(0);
+            $('#input-kembalian').val('0');
         } else {
-            $('#input-terbayar').val((total).toLocaleString(['ban', 'id']));
             $('#input-kembalian').val((terbayar + nominal - total).toLocaleString(['ban', 'id']));
         }
         $('#btn-save').removeClass('disabled');
