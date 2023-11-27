@@ -11,7 +11,7 @@
         }
 
         h3 {
-            margin: 4px 0px;
+            margin-bottom: 0px!important;
         }
 
         .hr-text {
@@ -25,7 +25,7 @@
         }
 
         p {
-            margin: 0px;
+            margin: 0px!important;
         }
 
         .text-center {
@@ -36,43 +36,48 @@
             text-align: right;
         }
     </style>
+    <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
 </head>
 
-<body style="width: 480px; height: 100%; padding: 1.5rem 1rem;">
+<body class="h-100 py-3 px-2" style="width: 480px;">
     <div id="data-header">
-        <h3 style="margin-top: 0px;">{{ $data->header['nama_usaha'] }}</h3>
+        <h3 class="mt-0">{{ $data->header['nama_usaha'] }}</h3>
         <h3 style="white-space: nowrap; text-overflow: clip; overflow: hidden;">{{ $data->transaksi->outlet->alamat }}</h3>
         <h3>{{ $data->transaksi->outlet->telp_1 }}</h3>
     </div>
     <p class="hr-text">
         =========================================================================================================================
     </p>
-    <p style="margin: 4px auto;">Tipe: {{ Str::upper($data->transaksi->tipe_transaksi) }}</p>
+    <p>Tipe: {{ Str::ucfirst($data->transaksi->tipe_transaksi) }}</p>
+    <div class="d-flex">
+        <p class="w-50">Tanggal Masuk: {{ date('d-M-Y', strtotime($data->transaksi->created_at)) }}</p>
+        <p class="w-50">Tanggal Selesai: {{ date('d-M-Y', strtotime($data->transaksi->done_date)) }}</p>
+    </div>
     <p class="hr-text" style="margin-bottom: 4px;">
         =========================================================================================================================
     </p>
-    <p style="margin: 0px;">Item</p>
-    <p class="hr-text" style="margin:0;">
+    <p class="m-0">Item</p>
+    <p class="hr-text m-0">
         -------------------------------------------------------------------------------------------------------------------------
     </p>
     <div id="detail-transaksi">
         @foreach ($data->transaksi->item_transaksi as $item)
-        <div style="margin-bottom: 4px;">
-            <p style="white-space: nowrap; text-overflow: clip; overflow: hidden;">{{ $item->nama }}</p>
-            <p>{{ $item->qty }} {{ $item->satuan_unit }}</p>
+        <div class="mb-1 d-flex justify-content-between">
+            <p style="white-space: nowrap; text-overflow: clip; overflow: hidden;">{{ Str::ucfirst(Str::lower($item->nama)) }}</p>
+            <p>{{ $item->qty }} {{ Str::lower($item->satuan_unit) }}</p>
         </div>
         @endforeach
     </div>
     <p class="hr-text">
         =========================================================================================================================
     </p>
-    <div style="margin: 4px auto;">
+    <div>
         <p>Jumlah Item: {{ $data->total_item }}</p>
     </div>
     <p class="hr-text">
         =========================================================================================================================
     </p>
-    <div style="margin-top: 4px;">
+    <div>
         @isset($data->pickup) <p>Delivery: {{ $data->pickup->driver->name }}</p>@endisset
         <p>Pelanggan: {{ $data->pelanggan->nama }}</p>
         @isset($data->pickup) <p style="word-wrap: break-word; text-overflow: ellipsis; overflow: hidden; max-height: 28px;">Alamat: {{ substr($data->pickup->alamat, 0, 60) }}</p>@endisset
