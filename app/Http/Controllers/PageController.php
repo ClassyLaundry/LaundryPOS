@@ -457,20 +457,20 @@ class PageController extends Controller
                             ->where('status', 'confirmed')
                             ->where('setrika_only', 0)
                             ->whereNull('pencuci')
-                            ->latest()->get(),
+                            ->orderBy('done_date', 'asc')->get(),
                         'transaksi_pencuci' => Transaksi::with('tukang_cuci')->detail()
                             ->where('outlet_id', Auth::user()->outlet->id)
                             ->where('pencuci', Auth::user()->id)
                             ->where('setrika_only', 0)
                             ->where('is_done_cuci', 0)
-                            ->latest()->get(),
+                            ->orderBy('done_date', 'asc')->get(),
                         'transaksi_done_cuci' => Transaksi::with('tukang_cuci')->detail()
                             ->where('outlet_id', Auth::user()->outlet->id)
                             ->where('pencuci', Auth::user()->id)
                             ->where('setrika_only', 0)
                             ->where('is_done_cuci', 1)
                             ->where('done_date', '>=', Carbon::today())
-                            ->latest()->get(),
+                            ->orderBy('done_date', 'asc')->get(),
                     ]
                 );
             } else {
@@ -520,18 +520,18 @@ class PageController extends Controller
                                         ->where('setrika_only', 1);
                                 });
                             })
-                            ->latest()->get(),
+                            ->orderBy('done_date', 'asc')->get(),
                         'transaksi_penyetrika' => Transaksi::with('tukang_setrika')->detail()
                             ->where('outlet_id', Auth::user()->outlet->id)
                             ->where('penyetrika', Auth::user()->id)
                             ->where('is_done_setrika', 0)
-                            ->latest()->get(),
+                            ->orderBy('done_date', 'asc')->get(),
                         'transaksi_done_setrika' => Transaksi::with('tukang_setrika')->detail()
                             ->where('outlet_id', Auth::user()->outlet->id)
                             ->where('penyetrika', Auth::user()->id)
                             ->where('is_done_setrika', 1)
                             ->where('done_date', '>=', Carbon::today())
-                            ->latest()->get(),
+                            ->orderBy('done_date', 'asc')->get(),
                         'jenis_rewashes' => JenisRewash::get(),
                     ]
                 );
