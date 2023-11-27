@@ -2,93 +2,105 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
+    <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
     <title>Transaction Receipt</title>
     <style>
-        /* Add any styles you want to use for the PDF here */
         body {
-            font-family: sans-serif;
-            font-size: 10pt
+            font-family: 'Roboto Mono';
+            font-size: 1rem;
         }
 
         table {
             width: 100%;
         }
 
-        th,
-        td {
-            padding: 8px;
-            text-align: left;
-        }
-        h4 {
-            margin: 4px 0px;
-        }
-
-        .hr-text {
-            color: #333;
-            text-align: center;
-            width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: "";
-            margin: 8px 0px;
-        }
-
         td {
             border: none!important;
         }
 
-        .text-center {
-            text-align: center;
+        .w-15 {
+            width: 15%!important;
         }
 
-        .text-end {
-            text-align: right;
+        .w-30 {
+            width: 30%!important;
+        }
+
+        .w-70 {
+            width: 70%!important;
+        }
+
+        p {
+            margin: 0!important;
+        }
+
+        hr {
+            margin: .5rem 0;
         }
     </style>
 </head>
-{{-- @dd($data->pelanggan) --}}
-<body style="width: 100%; height: 100%;">
+<body style="width: 1000px;">
     <div id="data-header">
-        <h4> {{ $data->header['nama_usaha'] }}</h4>
-        <h4> {{ $data->transaksi->outlet->alamat }}</h4>
-        <h4> {{ $data->header['delivery_text'] }}</h4>
+        <p class="fw-bold fs-4">
+            {{ Str::upper($data->transaksi->outlet->nama) }}<br>
+            {{ $data->transaksi->outlet->alamat }}<br>
+            {{ $data->header['delivery_text'] }}
+        </p>
     </div>
+    <hr>
     <div id=data-transaksi>
-        <p class="hr-text" style="margin-bottom: 0px;">
-            =========================================================================================================================
-        </p>
-        <div style="position: relative; height: 150px;">
-            <p style="position: absolute; left: 0px; top: 0px;">NO. ORDER</p>
-            <p style="position: absolute; left: 100px; top: 0px;">: {{ $data->transaksi->kode }} / {{ strtoupper($data->transaksi->tipe_transaksi) }}</p>
-
-            <p style="position: absolute; left: 350px; top: 0px;">PENCETAKAN</p>
-            <p style="position: absolute; left: 450px; top: 0px;">: {{ date('d-M-Y h:i:s') }}</p>
-
-            <p style="position: absolute; left: 0px; top: 30px;">PELANGGAN</p>
-            <p style="position: absolute; left: 100px; top: 30px;">: {{ $data->transaksi->pelanggan->no_id }} / {{ $data->transaksi->pelanggan->nama }}</p>
-
-            <p style="position: absolute; left: 350px; top: 30px;">TGL CUCI</p>
-            <p style="position: absolute; left: 450px; top: 30px;">: {{ date('d-M-Y', strtotime($data->transaksi->created_at)) }} s.d {{ date('d-M-Y', strtotime($data->transaksi->done_date)) }}</p>
-
-            <p style="position: absolute; left: 0px; top: 60px;">ALAMAT/TELP</p>
-            <p style="position: absolute; left: 100px; top: 60px;">: {{ $data->transaksi->pelanggan->alamat }} / {{ $data->transaksi->pelanggan->telephone }}</p>
-
-            <p style="position: absolute; left: 0px; top: 90px;">SISA DEPOSIT</p>
-            <p style="position: absolute; left: 100px; top: 90px;">: {{ $data->transaksi->pelanggan->saldo_akhir }}</p>
-
-            <p style="position: absolute; left: 0px; top: 120px;">EXPRESS</p>
-            <p style="position: absolute; left: 100px; top: 120px;">: {{ $data->transaksi->express ? 'YA' : 'TIDAK' }}</p>
-
-            <p style="position: absolute; left: 250px; top: 120px;">SETRIKA SAJA</p>
-            <p style="position: absolute; left: 350px; top: 120px;">: {{ $data->transaksi->setrika_only ? 'YA' : 'TIDAK' }}</p>
-
-            <p style="position: absolute; left: 500px; top: 120px;">DELIVERY</p>
-            <p style="position: absolute; left: 600px; top: 120px;">: {{ $data->transaksi->need_delivery ? 'YA' : 'TIDAK' }}</p>
+        <div class="d-flex">
+            <div class="d-flex w-50">
+                <p class="w-30">NO. ORDER</p>
+                <p class="w-70">: {{ $data->transaksi->kode }} / {{ strtoupper($data->transaksi->tipe_transaksi) }}</p>
+            </div>
+            <div class="d-flex w-50">
+                <p class="w-30">PENCETAKAN</p>
+                <p class="w-70">: {{ date('d-M-Y h:i:s') }}</p>
+            </div>
         </div>
-        <p class="hr-text" style="margin-bottom: 0px;">
-            =========================================================================================================================
-        </p>
+
+        <div class="d-flex">
+            <div class="d-flex w-50">
+                <p class="w-30">PELANGGAN</p>
+                <p class="w-70">: {{ $data->transaksi->pelanggan->no_id }} / {{ $data->transaksi->pelanggan->nama }}</p>
+            </div>
+            <div class="d-flex w-50">
+                <p class="w-30">TGL CUCI</p>
+                <p class="w-70">: {{ date('d-M-Y', strtotime($data->transaksi->created_at)) }} / {{ date('d-M-Y', strtotime($data->transaksi->done_date)) }}</p>
+            </div>
+        </div>
+
+        <div class="d-flex">
+            <div class="d-flex w-50">
+                <p class="w-30">ALAMAT/TELP</p>
+                <p class="w-70">: {{ $data->transaksi->pelanggan->alamat }} / {{ $data->transaksi->pelanggan->telephone }}</p>
+            </div>
+            <div class="d-flex w-50">
+                <p class="w-30">SISA DEPOSIT</p>
+                <p class="w-70">: {{ $data->transaksi->pelanggan->saldo_akhir }}</p>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-around">
+            <div class="d-flex">
+                <p>EXPRESS</p>
+                <p>: {{ $data->transaksi->express ? 'YA' : 'TIDAK' }}</p>
+            </div>
+
+            <div class="d-flex">
+                <p>SETRIKA SAJA</p>
+                <p>: {{ $data->transaksi->setrika_only ? 'YA' : 'TIDAK' }}</p>
+            </div>
+
+            <div class="d-flex">
+                <p>DELIVERY</p>
+                <p>: {{ $data->transaksi->need_delivery ? 'YA' : 'TIDAK' }}</p>
+            </div>
+        </div>
     </div>
+    <hr>
     <div id="detail-transaksi">
         @if ($data->transaksi->tipe_transaksi == 'bucket')
         <table style="font-size: 10pt">
@@ -157,66 +169,63 @@
             </tbody>
         </table>
         @endif
-        <p class="hr-text" style="margin: 0px;">
-            =========================================================================================================================
-        </p>
-        <div style="position: relative; height: 60px;">
-            <p style="position: absolute; left: 0px; top: 0px;">Jml Pcs</p>
-            <p style="position: absolute; left: 100px; top: 0px;">: {{ $data->total_qty }}</p>
-
-            <p style="position: absolute; left: 200px; top: 0px;">Jml Bobot</p>
-            <p style="position: absolute; left: 300px; top: 0px;">: {{ $data->total_bobot }}</p>
-
-            <p style="position: absolute; left: 400px; top: 0px;">Jml M2</p>
-            <p style="position: absolute; left: 500px; top: 0px;">: 0</p>
-
-            <p style="position: absolute; left: 0px; top: 30px;">CATATAN</p>
-            <p style="position: absolute; left: 100px; top: 30px;">: @isset($data->catatan) {{ $data->catatan }} || @endisset {{ $data->transaksi->catatan }}</p>
+        <hr>
+        <div class="w-75 d-flex justify-content-between alingn-items-center">
+            <p>Jml Pcs: {{ $data->total_qty }}</p>
+            <p>Jml Bobot: {{ $data->total_bobot }}</p>
+            <p>Jml M<sup>2</sup>: 0</p>
         </div>
-        <p class="hr-text" style="margin-bottom: 0px;">
-            =========================================================================================================================
-        </p>
-        <div style="position: relative; height: 90px;">
-            <p style="position: absolute; left: 0px; top: 0px;">Subtotal</p>
-            <p style="position: absolute; left: 100px; top: 0px;">:</p>
-            <p style="position: absolute; left: 100px; top: 0px; width: 75px;" class="text-end">{{ number_format($data->transaksi->subtotal, 0, ',', '.') }}</p>
-
-            <p style="position: absolute; left: 300px; top: 0px;">Grand Total</p>
-            <p style="position: absolute; left: 400px; top: 0px;">:</p>
-            <p style="position: absolute; left: 400px; top: 0px; width: 75px;" class="text-end">{{ number_format($data->transaksi->grand_total, 0, ',', '.') }}</p>
-
-            <p style="position: absolute; left: 0px; top: 30px;">Diskon</p>
-            <p style="position: absolute; left: 100px; top: 30px;">:</p>
-            <p style="position: absolute; left: 100px; top: 30px; width: 75px;" class="text-end">{{ number_format($data->transaksi->subtotal - $data->transaksi->grand_total, 0, ',', '.') }}</p>
-
-            <p style="position: absolute; left: 300px; top: 30px;">Telah Bayar</p>
-            <p style="position: absolute; left: 400px; top: 30px;">:</p>
-            <p style="position: absolute; left: 400px; top: 30px; width: 75px;" class="text-end">{{ isset($data->transaksi->terbayar) ? number_format($data->transaksi->terbayar, 0, ',', '.') : '0' }}</p>
-
-            <p style="position: absolute; left: 0px; top: 60px;">Delivery</p>
-            <p style="position: absolute; left: 100px; top: 60px;">:</p>
-            <p style="position: absolute; left: 100px; top: 60px; width: 75px;" class="text-end">0</p>
-
-            <p style="position: absolute; left: 300px; top: 60px;">Sisa</p>
-            <p style="position: absolute; left: 400px; top: 60px;">:</p>
-            <p style="position: absolute; left: 400px; top: 60px; width: 75px;" class="text-end">{{ number_format($data->transaksi->grand_total - $data->transaksi->terbayar, 0, ',', '.') }}</p>
-            @if (!$data->transaksi->lunas)
-            <p style="position: absolute; left: 500px; top: 60px;">BELUM LUNAS</p>
-            @endif
+        <div class="d-flex">
+            <p>CATATAN:&nbsp;</p>
+            <p>@isset($data->catatan) {{ $data->catatan }} || @endisset {{ $data->transaksi->catatan }}</p>
         </div>
-        <p class="hr-text">
-            =========================================================================================================================
-        </p>
-        <div style="position: relative; height: 30px;">
-            <div style="position: absolute; left: 0px; top: 0px;">KASIR</div>
-            <div style="position: absolute; left: 100px; top: 0px;">: {{ Auth::user()->name }}</div>
-            <div style="position: absolute; left: 300px; top: 0px;">Tagihan belum terbayar</div>
-            <div style="position: absolute; left: 500px; top: 0px;">: {{ number_format($data->transaksi->pelanggan->tagihan, 0, ',', '.') }}</div>
+        <hr>
+        <div class="d-flex">
+            <div class="d-flex w-30">
+                <p class="w-50">Subtotal</p>
+                <p class="w-50">: {{ number_format($data->transaksi->subtotal, 0, ',', '.') }}</p>
+            </div>
+            <div class="d-flex w-30">
+                <p class="w-50">Grand Total</p>
+                <p class="w-50">: {{ number_format($data->transaksi->grand_total, 0, ',', '.') }}</p>
+            </div>
         </div>
-        <p class="hr-text" style="margin-top: 0px;">
-            =========================================================================================================================
-        </p>
+        <div class="d-flex">
+            <div class="d-flex w-30">
+                <p class="w-50">Diskon</p>
+                <p class="w-50">: {{ number_format($data->transaksi->subtotal - $data->transaksi->grand_total, 0, ',', '.') }}</p>
+            </div>
+            <div class="d-flex w-30">
+                <p class="w-50">Telah Bayar</p>
+                <p class="w-50">: {{ isset($data->transaksi->terbayar) ? number_format($data->transaksi->terbayar, 0, ',', '.') : '0' }}</p>
+            </div>
+        </div>
+        <div class="d-flex">
+            <div class="d-flex w-30">
+                <p class="w-50">Delivery</p>
+                <p class="w-50">: 0</p>
+            </div>
+            <div class="d-flex w-30">
+                <p class="w-50">Sisa</p>
+                <p class="w-50">: {{ number_format($data->transaksi->grand_total - $data->transaksi->terbayar, 0, ',', '.') }}</p>
+            </div>
+            <p class="w-30">@if ($data->transaksi->lunas) LUNAS @else BELUM LUNAS @endif</p>
+        </div>
     </div>
+    <hr>
+    <div id="data-tambahan">
+        <div class="d-flex">
+            <div class="d-flex w-50">
+                <p class="w-25">KASIR</p>
+                <p class="w-75">: {{ Auth::user()->name }}</p>
+            </div>
+            <div class="d-flex w-50">
+                <p class="w-50">Tagihan belum terbayar</p>
+                <p class="w-50">: {{ number_format($data->transaksi->pelanggan->tagihan, 0, ',', '.') }}</p>
+            </div>
+        </div>
+    </div>
+    <hr>
 </body>
 
 </html>

@@ -65,14 +65,16 @@ class PrintController extends Controller
             $data->catatan = $catatan->catatan_khusus;
         }
 
-        // return view('pages.print.Nota', ['data' => $data]);
+        return view('pages.print.Nota', [
+            'data' => $data
+        ]);
 
         //8.5x 11 inch = 612x792 point
         // $paper_size = [0, 0, 792, 612];
-        $pdf = Pdf::loadView('pages.print.Nota', [
-            'data' => $data
-        ])->setPaper('A4', 'portrait');
-        return $pdf->stream('invoice.pdf');
+        // $pdf = Pdf::loadView('pages.print.Nota', [
+        //     'data' => $data
+        // ])->setPaper('A4', 'portrait');
+        // return $pdf->stream('invoice.pdf');
         // stream kalau preview, download kalau lsg download
     }
 

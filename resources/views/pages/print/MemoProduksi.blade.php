@@ -2,11 +2,10 @@
 <html>
 
 <head>
-    @include('includes.head')
+    <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
     <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
     <title>Delivery Note</title>
     <style>
-        /* Add any styles you want to use for the PDF here */
         body {
             font-family: 'Roboto Mono';
             font-size: 1.25rem;
@@ -57,9 +56,9 @@
 </head>
 <body style="width: 1000px;">
     <div id="data-header">
-        <p style="font-weight: 600;">
+        <p class="fw-bold fs-4">
             {{ Str::upper($data->transaksi->outlet->nama) }}<br>
-            {{ $data->transaksi->outlet->alamat }} <br>
+            {{ $data->transaksi->outlet->alamat }}<br>
             {{ $data->header['delivery_text'] }}
         </p>
     </div>
@@ -112,7 +111,6 @@
                 <p>DELIVERY</p>
                 <p>: {{ $data->transaksi->need_delivery ? 'YA' : 'TIDAK' }}</p>
             </div>
-
         </div>
     <hr>
     <div id="detail-transaksi">
@@ -183,7 +181,7 @@
             <p>Jml Bobot: {{ $data->total_bobot }}</p>
             <p>Jml M<sup>2</sup>: 0</p>
         </div>
-        <div>
+        <div class="d-flex">
             <p>CATATAN:</p>
             <p>@isset($data->catatan) {{ $data->catatan }} || @endisset {{ $data->transaksi->catatan }}</p>
         </div>
