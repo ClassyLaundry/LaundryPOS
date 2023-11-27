@@ -1,6 +1,7 @@
 @extends('layouts.users')
 
 @section('content')
+@include('includes.library.datatables')
 <div class="container">
     <header class="d-flex align-items-center my-3" style="color: var(--bs-gray);">
         <a>Proses</a>
@@ -12,10 +13,6 @@
             <div class="card-body">
                 <h4 class="card-title">Packing</h4>
                 <hr>
-                <div class="d-flex justify-content-end align-items-center mb-3">
-                    Search :
-                    <input class="form-control ms-1" id="input-nama-pelanggan" type="search" name="search" style="max-width: 200px;">
-                </div>
 
                 <div id="container-list-trans"></div>
 

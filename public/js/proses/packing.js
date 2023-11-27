@@ -46,18 +46,19 @@ $(document).ready(function() {
         });
     });
 
-    searchListTrans();
-    var searchTrans;
-    $('#input-nama-pelanggan').on('input', function() {
-        clearTimeout(searchTrans);
-        searchTrans = setTimeout(searchListTrans, 2000);
-    });
-
-    function searchListTrans() {
-        $('#container-list-trans').load(window.location.origin + '/component/packing?key=' + encodeURIComponent($('#input-nama-pelanggan').val()), function() {
-            setThousandSeparator();
+    $('#container-list-trans').load(window.location.origin + '/component/packing', function() {
+        $("#table-list-trans").dataTable({
+            order: [[0, 'desc']],
+            columns: [
+                null,
+                null,
+                null,
+                null,
+                null,
+                { orderable: false }
+            ]
         });
-    }
+    });
 
     $('#form-packing-bucket').on('submit', function(e) {
         e.preventDefault();

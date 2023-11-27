@@ -1,8 +1,7 @@
 @extends('layouts.users')
 
 @section('content')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
-
+@include('includes.library.datatables')
 <div class="container">
     <header class="my-3" style="color: var(--bs-gray);">
         <a>Transaksi</a>
@@ -165,5 +164,4 @@
 </div>
 
 <script src="{{ asset('js/transaksi/pembayaran.js') }}"></script>
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 @endsection
