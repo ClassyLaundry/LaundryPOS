@@ -24,11 +24,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('/ping', [TestingController::class, 'test']);
+Route::post('/multi-image', [TestingController::class, 'testMultiImage']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/test', [TestingController::class, 'test']);
 /**
  * Laporan
  */

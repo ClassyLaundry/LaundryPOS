@@ -202,10 +202,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/component/searchItemTrans', [TransaksiController::class, 'searchItem']);
 
     // Bucket
-    Route::get('/transaksi/bucket', [PageController::class, 'bucket'])->name('transaksi');
+    Route::get('/transaksi/bucket', [PageController::class, 'bucket'])->name('transaksiBucket');
     Route::get('/component/transBucket/{id}', [TransaksiController::class, 'tableBucket']);
     // Premium
-    Route::get('/transaksi/premium', [PageController::class, 'premium'])->name('transaksi');
+    Route::get('/transaksi/premium', [PageController::class, 'premium'])->name('transaksiPremium');
     Route::get('/component/transPremium/{id}', [TransaksiController::class, 'tablePremium']);
 
     // proses cuci & seterika

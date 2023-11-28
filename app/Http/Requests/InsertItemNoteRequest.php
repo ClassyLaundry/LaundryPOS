@@ -34,7 +34,7 @@ class InsertItemNoteRequest extends FormRequest
             'back_top_right' => 'required|boolean',
             'back_bottom_left' => 'required|boolean',
             'back_bottom_right' => 'required|boolean',
-            'image' => 'image',
+            'image[]' => 'image',
         ];
     }
 }

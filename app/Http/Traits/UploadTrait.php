@@ -34,4 +34,22 @@ trait UploadTrait
         }
         return null;
     }
+
+    public function multiPicture(Request $request, $path)
+    {
+        $default_path = 'image/' . $path;
+        $combined_path = null;
+        $files = $request->file('image');
+        foreach ($files as $file) {
+            $test = Storage::disk('digitalocean')->put($default_path, $file, 'public');
+            if ($combined_path == "") {
+                $url = Storage::disk('digitalocean')->url($test);
+                $combined_path = $url;
+            } else {
+                $url = Storage::disk('digitalocean')->url($test);
+                $combined_path = $combined_path . ";" . $url;
+            }
+        }
+        return $combined_path;
+    }
 }

@@ -41,6 +41,8 @@ class ItemNoteController extends Controller
         });
         if ($permissionExist) {
             $item_notes = ItemNote::find($id);
+            $exploded = explode(';', $item_notes->image_path);
+            $item_notes->image = $exploded;
             return [
                 'status' => 200,
                 $item_notes
@@ -59,7 +61,15 @@ class ItemNoteController extends Controller
             return $item->name === 'Membuat Catatan Item';
         });
         if ($permissionExist) {
-            $path = $this->upload($request, 'item_notes');
+            $path = null;
+            if (is_array($request->file('image'))) {
+                $path = $this->multiPicture($request, 'item_notes');
+            } else {
+                $path = $this->upload($request, 'item_notes');
+            }
+            if ($path == null) {
+                abort(500, 'INTERNAL SERVER ERROR');
+            }
             $merged = $request->merge([
                 'modified_by' => Auth::id(),
                 'image_path' => $path,
