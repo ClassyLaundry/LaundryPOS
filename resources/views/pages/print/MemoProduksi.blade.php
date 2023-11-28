@@ -3,12 +3,12 @@
 
 <head>
     <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
-    <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet'>
     <title>Delivery Note</title>
     <style>
         body {
-            font-family: 'Roboto Mono';
-            font-size: 1.25rem;
+            font-family: 'Inconsolata';
+            font-size: .875rem;
         }
 
         table {
@@ -54,9 +54,9 @@
         }
     </style>
 </head>
-<body style="width: 1000px;">
+<body class="lh-1" style="width: 900px;">
     <div id="data-header">
-        <p class="fw-bold fs-4">
+        <p class="fw-bold fs-5">
             {{ Str::upper($data->transaksi->outlet->nama) }}<br>
             {{ $data->transaksi->outlet->alamat }}<br>
             {{ $data->header['delivery_text'] }}
