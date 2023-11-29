@@ -295,7 +295,7 @@
                                                     </div>
                                                     <div class="h-100">
                                                         <h5>Notes</h5>
-                                                        <textarea class="form-control" id="catatan-item" required style="max-height: 531px;"></textarea>
+                                                        <textarea class="form-control" id="catatan-item" required style="max-height: 474px;"></textarea>
                                                     </div>
                                                 </div>
 
@@ -318,7 +318,7 @@
                                                           </div>
                                                     </div>
                                                     <div class="text-end">
-                                                        <input type="file" class="form-control" id="input-foto-item" accept="image/*" multiple required />
+                                                        <input type="file" class="form-control" id="input-foto-item" accept="image/*" name="files[]" multiple required />
                                                     </div>
                                                 </div>
                                             </div>
@@ -453,7 +453,7 @@
                                                 </div>
                                                 <div id="container-pickup" class="position-relative mb-2" style="display: none;">
                                                     <h6>Kode Pickup</h6>
-                                                    <select class="form-control" id="select-kode-pickup" disabled>
+                                                    <select class="form-control" id="select-kode-pickup">
                                                         <option value="" selected hidden>-</option>
                                                         @foreach ($data['pickup'] as $pickup)
                                                             <option value="{{ $pickup->id }}">{{ $pickup->kode }}</option>

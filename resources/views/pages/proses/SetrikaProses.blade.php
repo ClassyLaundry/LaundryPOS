@@ -163,29 +163,46 @@
         </div>
 
         <div role="dialog" tabindex="-1" class="modal fade" id="modal-catatan-item">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Catatan Item <span id="catatan-item-name">nama item</span></h4>
+                        <h4 class="modal-title">Catatan Item <span id="catatan-item-name">nama item</span></h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form id="form-catatan">
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col col-lg-4">
                                     <div class="mb-2">
                                         <h5>Noted by</h5>
                                         <input type="text" class="form-control" id="penulis-catatan-item" />
                                     </div>
                                     <div class="h-100">
                                         <h5>Notes</h5>
-                                        <textarea class="form-control" id="catatan-item" required style="max-height: 496px;"></textarea>
+                                        <textarea class="form-control" id="catatan-item" required style="max-height: 531px;"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-8">
-                                    <h5>Foto</h5>
-                                    <img id="container-image-item" class="w-100 mb-2" style="object-fit: contain;max-height: 450px;height: 450px;" />
-                                    <input type="file" class="form-control" id="input-foto-item" accept="image/*" onchange="document.getElementById('container-image-item').src = window.URL.createObjectURL(this.files[0])" required />
+                                <div class="col col-lg-8">
+                                    <div class="position-relative border rounded mb-2">
+                                        <div id="container-image-item" class="carousel carousel-dark slide" data-bs-interval="false">
+                                            <div class="carousel-inner">
+                                                <div class="carousel-item active">
+                                                    <img class="d-block w-100" style="object-fit: scale-down; max-height: 450px; height: 450px;">
+                                                </div>
+                                            </div>
+                                            <button class="carousel-control-prev" type="button" data-bs-target="#container-image-item" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </button>
+                                            <button class="carousel-control-next" type="button" data-bs-target="#container-image-item" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </button>
+                                          </div>
+                                    </div>
+                                    <div class="text-end">
+                                        <input type="file" class="form-control" id="input-foto-item" accept="image/*" name="files[]" multiple required />
+                                    </div>
                                 </div>
                             </div>
                         </div>

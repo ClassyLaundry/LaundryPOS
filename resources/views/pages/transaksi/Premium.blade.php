@@ -318,7 +318,7 @@
                                                               </div>
                                                         </div>
                                                         <div class="text-end">
-                                                            <input type="file" class="form-control" id="input-foto-item" accept="image/*" multiple required />
+                                                            <input type="file" class="form-control" id="input-foto-item" accept="image/*" name="files[]" multiple required />
                                                         </div>
                                                     </div>
                                                 </div>

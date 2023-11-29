@@ -209,7 +209,10 @@ $(document).ready(function() {
             formData.append('item_transaksi_id', btnItemTransId);
             formData.append('modified_by', $('#penulis-catatan-item').val());
             formData.append('catatan', $('#catatan-item').val());
-            formData.append('image', $('#input-foto-item').prop("files")[0]);
+            for (let index = 0; index < $('#input-foto-item').prop('files').length; index++) {
+                const element = $('#input-foto-item').prop('files')[index];
+                formData.append('image[]', element);
+            }
 
             formData.append('front_top_left', $('#td-kiri-atas').hasClass('selected') ? 1 : 0);
             formData.append('front_top_right', $('#td-kanan-atas').hasClass('selected') ? 1 : 0);
