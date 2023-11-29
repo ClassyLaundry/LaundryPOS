@@ -194,7 +194,7 @@
             </div>
             <div class="col-4 d-flex">
                 <p class="w-30">Sisa</p>
-                <p class="w-70">: {{ number_format($data->transaksi->grand_total - $data->transaksi->terbayar, 0, ',', '.') }}</p>
+                <p class="w-70">: {{ number_format($data->transaksi->grand_total - $data->transaksi->total_terbayar, 0, ',', '.') }}</p>
             </div>
             <div class="col-4 d-flex">
                 <p>@if ($data->transaksi->lunas) LUNAS @else BELUM LUNAS @endif</p>
