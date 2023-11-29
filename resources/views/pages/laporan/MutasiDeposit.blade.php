@@ -1,7 +1,7 @@
 @extends('layouts.users')
 
 @section('content')
-
+@include('includes.library.datatables')
 <div class="container">
     <header class="d-flex align-items-center my-3" style="color: var(--bs-gray);">
         <a>Laporan</a>
@@ -22,7 +22,7 @@
                                     <th>Nama Pelanggan</th>
                                     <th>Bergabung Sejak</th>
                                     <th>Transaksi Trakhir</th>
-                                    <th colspan="2">Saldo Pelanggan</th>
+                                    <th>Saldo Pelanggan</th>
                                     <th class="column-action" style="width: 38.25px;"></th>
                                 </tr>
                             </thead>
@@ -32,8 +32,7 @@
                                     <td>{{ strtolower($pelanggan->nama) }}</td>
                                     <td class="text-center">{{ date('d-M-Y', strtotime($pelanggan->created_at)) }}</td>
                                     <td class="text-center">@isset($pelanggan->transaksi_terakhir) {{ date('d-M-Y', strtotime($pelanggan->transaksi_terakhir->created_at)) }} @else - @endisset</td>
-                                    <td class="text-start">Rp</td>
-                                    <td class="text-end">{{ number_format($pelanggan->saldo_akhir, 0, ',', '.') }}</td>
+                                    <td><div class="d-flex justify-content-between"><span>Rp</span><span>{{ number_format($pelanggan->saldo_akhir, 0, ',', '.') }}</span></div></td>
                                     <td class="cell-action">
                                         <div class="d-flex h-100 align-items-center justify-content-end">
                                             <button id="btn-{{ $pelanggan->id }}" class="btn btn-primary btn-sm btn-show-action" type="button">

@@ -9,5 +9,14 @@ $(document).ready(function() {
         window.location = window.location + '/' + btnId + '/detail';
     });
 
-    $('#')
+    $('#table-table-laporan').dataTable({
+        order: [[0, 'asc']],
+        columns: [
+            null,
+            null,
+            null,
+            null,
+            { orderable: false }
+        ]
+    });
 });
