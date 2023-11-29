@@ -174,5 +174,12 @@ class PermissionSeeder extends Seeder
         // Permission::create(['name' => 'Menambah Catatan Pelanggan']);
         // Permission::create(['name' => 'Melihat Catatan Pelanggan']);
         // Permission::create(['name' => 'Mengupdate Catatan Pelanggan']);
+
+        // Laporan
+        Permission::create(['name' => 'Melihat Laporan Mutasi Deposit']);
+        Permission::create(['name' => 'Melihat Laporan Piutang']);
+        Permission::create(['name' => 'Melihat Laporan Omset']);
+        Permission::create(['name' => 'Melihat Laporan Kas Masuk']);
+        Permission::create(['name' => 'Membuat Laporan Custom']);
     }
 }
