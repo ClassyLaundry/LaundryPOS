@@ -258,9 +258,14 @@ class TransaksiController extends Controller
                 $status = "confirmed";
             }
 
+            $express = isset($request->express) ? $request->express : false;
             $done_date = $request->done_date;
             if ($done_date === null) {
-                $done_date = Carbon::now()->addDays(3);
+                if ($express) {
+                    $done_date = Carbon::now()->addDays(1);
+                } else {
+                    $done_date = Carbon::now()->addDays(3);
+                }
             }
 
             $merged = $request->merge([
