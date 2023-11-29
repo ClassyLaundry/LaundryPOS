@@ -166,8 +166,7 @@ class PembayaranController extends Controller
                 $query->where('pelanggans.nama', 'like', "%{$request->name}%")
                     ->where('transaksis.created_at', 'like', "{$request->date}%");
             })
-            ->orderBy("transaksis.created_at", "desc")
-            ->paginate(15);
+            ->get();
         return view('components.tablePembayaran', [
             'transaksis' => $transaksis,
         ]);
