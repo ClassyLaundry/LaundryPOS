@@ -42,7 +42,7 @@
 </head>
 <body class="lh-1" style="width: 900px;">
     <div id="data-header">
-        <p class="fw-bold fs-5">
+        <p class="fw-bold fs-6">
             {{ Str::upper($data->transaksi->outlet->nama) }}<br>
             {{ $data->transaksi->outlet->alamat }}<br>
             {{ $data->header['delivery_text'] }}
@@ -61,7 +61,7 @@
             </div>
             <div class="col-6 d-flex">
                 <p class="w-30">PELANGGAN</p>
-                <p class="w-70">: {{ $data->transaksi->pelanggan->no_id }} / {{ $data->transaksi->pelanggan->nama }}</p>
+                <p class="w-70">: {{ $data->transaksi->pelanggan->no_id }} / {{ Str::upper($data->transaksi->pelanggan->nama) }}</p>
             </div>
             <div class="col-6 d-flex">
                 <p class="w-30">TGL CUCI</p>
@@ -69,7 +69,7 @@
             </div>
             <div class="col-6 d-flex">
                 <p class="w-30">ALAMAT/TELP</p>
-                <p class="w-70">: {{ $data->transaksi->pelanggan->alamat }} / {{ $data->transaksi->pelanggan->telephone }}</p>
+                <p class="w-70">: {{ Str::upper($data->transaksi->pelanggan->alamat) }} / {{ $data->transaksi->pelanggan->telephone }}</p>
             </div>
             <div class="col-6 d-flex">
                 <p class="w-30">SISA DEPOSIT</p>
@@ -160,9 +160,9 @@
         @endif
         <hr>
         <div class="w-75 d-flex justify-content-between alingn-items-center">
-            <p>Jml Pcs: {{ $data->total_qty }}</p>
-            <p>Jml Bobot: {{ $data->total_bobot }}</p>
-            <p>Jml M<sup>2</sup>: 0</p>
+            <p>JML PCS: {{ $data->total_qty }}</p>
+            <p>JML BOBOT: {{ $data->total_bobot }}</p>
+            <p>JML M<sup>2</sup>: 0</p>
         </div>
         <div class="d-flex">
             <p>CATATAN:&nbsp;</p>
@@ -171,29 +171,29 @@
         <hr>
         <div class="row">
             <div class="col-4 d-flex">
-                <p class="w-30">Subtotal</p>
+                <p class="w-30">SUBTOTAL</p>
                 <p class="w-70">: {{ number_format($data->transaksi->subtotal, 0, ',', '.') }}</p>
             </div>
             <div class="col-4 d-flex">
-                <p class="w-30">Grand Total</p>
+                <p class="w-30">GRAND TOTAL</p>
                 <p class="w-70">: {{ number_format($data->transaksi->grand_total, 0, ',', '.') }}</p>
             </div>
             <div class="col-4"></div>
             <div class="col-4 d-flex">
-                <p class="w-30">Diskon</p>
+                <p class="w-30">DISKON</p>
                 <p class="w-70">: {{ number_format($data->transaksi->subtotal - $data->transaksi->grand_total, 0, ',', '.') }}</p>
             </div>
             <div class="col-4 d-flex">
-                <p class="w-30">Telah Bayar</p>
+                <p class="w-30">TELAH BAYAR</p>
                 <p class="w-70">: {{ isset($data->transaksi->total_terbayar) ? number_format($data->transaksi->total_terbayar, 0, ',', '.') : '0' }}</p>
             </div>
             <div class="col-4"></div>
             <div class="col-4 d-flex">
-                <p class="w-30">Delivery</p>
+                <p class="w-30">DELIVERY</p>
                 <p class="w-70">: 0</p>
             </div>
             <div class="col-4 d-flex">
-                <p class="w-30">Sisa</p>
+                <p class="w-30">SISA</p>
                 <p class="w-70">: {{ number_format($data->transaksi->grand_total - $data->transaksi->total_terbayar, 0, ',', '.') }}</p>
             </div>
             <div class="col-4 d-flex">
@@ -206,10 +206,10 @@
         <div class="row">
             <div class="col-6 d-flex">
                 <p class="w-30">KASIR</p>
-                <p class="w-70">: {{ Auth::user()->name }}</p>
+                <p class="w-70">: {{ Str::upper(Auth::user()->name) }}</p>
             </div>
             <div class="col-6 d-flex">
-                <p class="w-50">Tagihan belum terbayar</p>
+                <p class="w-50">TAGIHAN BELUM TERBAYAR</p>
                 <p class="w-50">: {{ number_format($data->transaksi->pelanggan->tagihan, 0, ',', '.') }}</p>
             </div>
         </div>

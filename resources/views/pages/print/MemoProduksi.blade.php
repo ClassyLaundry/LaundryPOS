@@ -15,7 +15,6 @@
             width: 100%;
         }
 
-        th,
         td {
             padding: 0;
             text-align: left;
@@ -27,14 +26,6 @@
 
         td {
             border: none!important;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .text-end {
-            text-align: right;
         }
 
         p {
@@ -56,7 +47,7 @@
 </head>
 <body class="lh-1" style="width: 900px;">
     <div id="data-header">
-        <p class="fw-bold fs-5">
+        <p class="fw-bold fs-6">
             {{ Str::upper($data->transaksi->outlet->nama) }}<br>
             {{ $data->transaksi->outlet->alamat }}<br>
             {{ $data->header['delivery_text'] }}
@@ -64,7 +55,7 @@
     </div>
     <hr>
     <div id="data-transaksi">
-        <div class="d-flex fs-2">
+        <div class="d-flex fs-3">
             <p>MEMO PRODUKSI</p>
             <p class="fw-bold ms-4">{{ $data->transaksi->memo_code }}</p>
         </div>
@@ -177,8 +168,8 @@
         @endif
         <hr>
         <div class="w-75 d-flex justify-content-between alingn-items-center">
-            <p>Jml Pcs: {{ $data->total_qty }}</p>
-            <p>Jml Bobot: {{ $data->total_bobot }}</p>
+            <p>Jml PCS: {{ $data->total_qty }}</p>
+            <p>Jml BOBOT: {{ $data->total_bobot }}</p>
             <p>Jml M<sup>2</sup>: 0</p>
         </div>
         <div class="d-flex">
@@ -189,7 +180,7 @@
     <hr>
     <div id="data-tim-produksi">
         <div class="d-flex align-items-center">
-            <p class="w-15">Tim Produksi</p>
+            <p class="w-15">TIM PRODUKSI</p>
             <div class="d-flex" style="width: 85%;">
                 <div class="w-25 text-center px-5">
                     @isset($data->transaksi->tukang_cuci) <p class="lh-lg">{{ $data->transaksi->tukang_cuci->name }}</p> @else <p class="invisible lh-lg">cuci</p> @endisset
