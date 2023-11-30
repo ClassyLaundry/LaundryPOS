@@ -204,6 +204,10 @@ $(document).ready(function() {
             $('#penulis-catatan-item').parent().show();
             $('#penulis-catatan-item').val(transNote.nama_user);
             $('#catatan-item').val(transNote.catatan);
+            let imageContainer = $('#container-image-item').find('.carousel-item').eq(0).detach();
+            if (!imageContainer.hasClass('active')) imageContainer.addClass('active');
+            $('#container-image-item .carousel-inner').empty();
+            $('#container-image-item .carousel-inner').append(imageContainer);
             let images = transNote.image_path.split(';');
             for (let index = 0; index < images.length; index++) {
                 if (index == 0) {
