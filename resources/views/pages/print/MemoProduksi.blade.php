@@ -74,7 +74,7 @@
         <div class="d-flex">
             <div class="d-flex w-50">
                 <p class="w-30">PELANGGAN</p>
-                <p class="w-70">: {{ $data->transaksi->pelanggan->no_id }} / {{ $data->transaksi->pelanggan->nama }}</p>
+                <p class="w-70">: {{ $data->transaksi->pelanggan->no_id }} / {{ Str::upper($data->transaksi->pelanggan->nama) }}</p>
             </div>
             <div class="d-flex w-50">
                 <p class="w-30">TGL CUCI</p>
@@ -84,7 +84,7 @@
 
         <div class="d-flex w-50">
             <p class="w-30">ALAMAT/TELP</p>
-            <p class="w-70">: {{ $data->transaksi->pelanggan->alamat }} / {{ $data->transaksi->pelanggan->telephone }}</p>
+            <p class="w-70">: {{ Str::upper($data->transaksi->pelanggan->alamat) }} / {{ $data->transaksi->pelanggan->telephone }}</p>
         </div>
 
         <div class="d-flex justify-content-around">
