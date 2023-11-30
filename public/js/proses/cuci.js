@@ -189,7 +189,24 @@ $(document).ready(function() {
             $('#penulis-catatan-item').parent().show();
             $('#penulis-catatan-item').val(transNote.nama_user);
             $('#catatan-item').val(transNote.catatan);
-            $('#container-image-item').attr('src', transNote.image_path);
+            let images = transNote.image_path.split(';');
+            for (let index = 0; index < images.length; index++) {
+                if (index == 0) {
+                    $('#container-image-item').find('.carousel-item').eq(index).find('img').attr('src', images[index]);
+                } else {
+                    $('#container-image-item').find('.carousel-item').eq(index - 1).clone().appendTo("#container-image-item .carousel-inner");
+                    $('#container-image-item').find('.carousel-item').eq(index).removeClass('active').find('img').attr('src', images[index]);
+                }
+            }
+
+            transNote.front_top_left == 1 ? $('#td-kiri-atas').addClass('selected') : $('#td-kiri-atas').removeClass('selected');
+            transNote.front_top_right == 1 ? $('#td-kanan-atas').addClass('selected') : $('#td-kanan-atas').removeClass('selected');
+            transNote.front_bottom_left == 1 ? $('#td-kiri-bawah').addClass('selected') : $('#td-kiri-bawah').removeClass('selected');
+            transNote.front_bottom_right == 1 ? $('#td-kanan-bawah').addClass('selected') : $('#td-kanan-bawah').removeClass('selected');
+            transNote.back_top_left == 1 ? $('#tb-kiri-atas').addClass('selected') : $('#tb-kiri-atas').removeClass('selected');
+            transNote.back_top_right == 1 ? $('#tb-kanan-atas').addClass('selected') : $('#tb-kanan-atas').removeClass('selected');
+            transNote.back_bottom_left == 1 ? $('#tb-kiri-bawah').addClass('selected') : $('#tb-kiri-bawah').removeClass('selected');
+            transNote.back_bottom_right == 1 ? $('#tb-kanan-bawah').addClass('selected') : $('#tb-kanan-bawah').removeClass('selected');
 
             $('#penulis-catatan-item').addClass('disabled');
             $('#catatan-item').addClass('disabled');
