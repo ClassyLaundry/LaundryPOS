@@ -254,4 +254,39 @@ class PickupDeliveryController extends Controller
             'finished' => $done_pickups
         ], 200);
     }
+
+    public function transaksiDelivery(Request $request)
+    {
+        $transaksi = Transaksi::detail()
+            ->where('status', 'confirmed')
+            ->where(function($query) {
+                $query->where('is_done_cuci', 1)
+                    ->where('is_done_setrika', 1);
+            })
+            ->orWhere(function($query) {
+                $query->where('setrika_only', 1)
+                    ->where('is_done_setrika', 1);
+            })
+            ->whereIn('id', function($subquery) {
+                $subquery->select('transaksi_id')
+                    ->from('packings');
+            })
+            ->whereNotIn('id', function($subquery) {
+                $subquery->select('transaksi_id')
+                    ->from('pickup_deliveries')
+                    ->whereNotNull('transaksi_id');
+            })
+            ->where(function ($query) use ($request) {
+                $query->where('id', 'like', '%' . $request->key . '%')
+                    ->orWhereHas('pelanggan', function ($q) use ($request) {
+                        $q->where('nama', 'like', '%' . $request->key . '%');
+                    });
+            })
+            ->latest()->paginate(15);
+
+        return view('components.tableTransDelivery', [
+            'status' => 200,
+            'transaksis' => $transaksi
+        ]);
+    }
 }

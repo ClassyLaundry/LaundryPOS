@@ -317,7 +317,7 @@ class PageController extends Controller
         if ($permissionExist) {
             if (Auth::user()->role == 'delivery') {
                 return view(
-                    'pages.transaksi.PickupDeliveryDelivery',
+                    'pages.transaksi.PickupDeliveryDriver',
                     [
                         'on_going_pickups' => PickupDelivery::with('transaksi')->where('action', 'pickup')->where('driver_id', $user->id)->where('is_done', 0)->get(),
                         'is_done_pickups' => PickupDelivery::with('transaksi')->where('action', 'pickup')->where('driver_id', $user->id)->where('is_done', 1)->get(),
@@ -333,22 +333,6 @@ class PageController extends Controller
                     [
                         'pickups' => PickupDelivery::where('action', 'pickup')->get(),
                         'deliveries' => PickupDelivery::where('action', 'delivery')->get(),
-                        'transaksis' => Transaksi::detail()
-                            ->where('status', 'confirmed')
-                            ->where(function($query) {
-                                $query->where('is_done_cuci', 1)
-                                    ->where('is_done_setrika', 1);
-                            })
-                            ->orWhere(function($query) {
-                                $query->where('setrika_only', 1)
-                                    ->where('is_done_setrika', 1);
-                            })
-                            ->whereNotIn('id', function($subquery) {
-                                $subquery->select('transaksi_id')
-                                    ->from('pickup_deliveries')
-                                    ->whereNotNull('transaksi_id');
-                            })
-                            ->get(),
                         'drivers' => User::role('delivery')->get(),
                     ]
                 );

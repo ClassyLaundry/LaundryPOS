@@ -191,6 +191,21 @@
     </div>
 </div>
 
+<div class="modal fade" role="dialog" tabindex="-1" id="modal-data-pelanggan">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-fullscreen-sm-down" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Pelanggan</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input class="form-control mb-3" type="search" id="input-nama-pelanggan" placeholder="Cari nama pelanggan">
+                <div id="table-pelanggan"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div role="dialog" tabindex="-1" class="modal fade" id="modal-create-delivery">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -204,14 +219,7 @@
                     <div class="row">
                         <div class="col-6 mb-2" id="col-transaksi">
                             <h5>Pilih Transaksi</h5>
-                            <select id="input-delivery-transaksi-id" class="form-control" name="transaksi_id" required >
-                                <option value="" selected hidden>-</option>
-                                @foreach ($transaksis as $trans)
-                                    @if($trans->status == 'confirmed' && ($trans->is_done_cuci && $trans->is_done_setrike) || ($trans->is_done_setrika && $trans->setrika_only))
-                                        <option value="{{ $trans->id }}">{{ $trans->kode }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
+                            <input type="text" id="input-delivery-kode" class="form-control">
                         </div>
                         <div class="col-6 mb-2">
                             <h5>Pilih Driver</h5>
@@ -237,6 +245,7 @@
                     </div>
                 </div>
                 <input type="hidden" name="action" value="delivery">
+                <input type="hidden" name="transaksi_id" id="input-delivery-transaksi-id">
                 <div class="modal-footer">
                     <button class="btn btn-primary" type="submit">Save</button>
                 </div>
@@ -245,16 +254,18 @@
     </div>
 </div>
 
-<div class="modal fade" role="dialog" tabindex="-1" id="modal-data-pelanggan">
+<div class="modal fade" role="dialog" tabindex="-1" id="modal-opsi-trans">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-fullscreen-sm-down" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Pelanggan</h4>
+                <h4 class="modal-title">Opsi Transaksi</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <input class="form-control mb-3" type="search" id="input-nama-pelanggan" placeholder="Cari nama pelanggan">
-                <div id="table-pelanggan"></div>
+            <div class="modal-body" style="min-height: 450px;">
+                <input class="form-control" type="search" id="input-key-trans" placeholder="Kata kunci">
+                @if(in_array("Melihat Detail Transaksi", Session::get('permissions')) || Session::get('role') == 'administrator')
+                    <div id="container-list-trans"></div>
+                @endif
             </div>
         </div>
     </div>

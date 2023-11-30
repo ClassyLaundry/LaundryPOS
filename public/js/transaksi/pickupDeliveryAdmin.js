@@ -134,13 +134,36 @@ $(document).ready(function() {
         $('#table-delivery').load($(this).attr('href'));
     });
 
-    $('#modal-create-delivery #input-delivery-transaksi-id').on('change', function() {
+    $('#input-delivery-kode').on('click', function() {
+        searchListTrans();
+        $('#modal-opsi-trans').modal('show');
+    });
+
+    var searchTrans, key = '';
+    $('#input-key-trans').on('input', function() {
+        clearTimeout(searchTrans);
+        searchTrans = setTimeout(searchListTrans, 2000);
+    });
+
+    function searchListTrans() {
+        key = $('#input-key-trans').val();
+        $('#container-list-trans').load(window.location.origin + '/component/transDelivery?key=' + encodeURIComponent(key), function() {
+            setThousandSeparator();
+        });
+    }
+
+    $('#container-list-trans').on('click', '#table-list-trans tbody tr', function() {
+        let transId = $(this).attr('id');
+
         $.ajax({
-            url: "/transaksi/detail/" + $('#modal-create-delivery #input-delivery-transaksi-id').val(),
+            url: "/transaksi/detail/" + transId,
         }).done(function(response) {
-            let pelanggan = response.pelanggan;
-            $('#input-delivery-nama').val(pelanggan.nama);
-            $('#input-delivery-alamat').val(pelanggan.alamat);
+            $('#input-delivery-kode').val(response.kode);
+            $('#input-delivery-transaksi-id').val(response.id);
+            $('#input-delivery-nama').val(response.pelanggan.nama);
+            $('#input-delivery-alamat').val(response.pelanggan.alamat);
+
+            $('#modal-opsi-trans').modal('hide');
         }).fail(function(jqXHR, textStatus, errorThrown) {
             console.log(jqXHR);
             console.log(textStatus);

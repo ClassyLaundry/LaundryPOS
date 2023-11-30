@@ -22,9 +22,11 @@
                     <td class="text-center">{{ ($pickup->is_done) ? 'Selesai' : 'Proses' }}</td>
                     @if(in_array("Menghapus Pickup Delivery", Session::get('permissions')) || Session::get('role') == 'administrator')
                     <td class='text-end p-1'>
+                        @if ($pickup->is_done == 0)
                         <button id='btn-{{ $pickup->id }}' class='btn btn-primary btn-sm btn-show-action' type='button'>
                             <i class='fas fa-bars' aria-hidden='true'></i>
                         </button>
+                        @endif
                     </td>
                     @endif
                 </tr>

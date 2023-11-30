@@ -215,5 +215,5 @@
     </div>
 </div>
 
-<script src="{{ asset('js/transaksi/pickupDeliveryDelivery.js') }}"></script>
+<script src="{{ asset('js/transaksi/pickupDeliveryDriver.js') }}"></script>
 @endsection

@@ -163,6 +163,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/component/ambil_di_outlet', [PickupDeliveryController::class, 'ambil_di_outlet']);
     Route::get('/transaksi/pickup-delivery/task-hub', [PickupDeliveryController::class, 'showTaskHub']);
     Route::get('/transaksi/pickup-delivery/{pickup_delivery}/is-done', [PickupDeliveryController::class, 'changeDoneStatus']);
+    Route::get('/component/transDelivery', [PickupDeliveryController::class, 'transaksiDelivery']);
 
     //Catatan Item Transaksi //ItemTransaksi
     Route::get('/transaksi/item-transaksi/{id}', [ItemTransaksiController::class, 'show']);
@@ -266,6 +267,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/laporan/deposit/{id}/detail', [LaporanController::class, 'laporanMutasiDepositDetail']);
     Route::get('/laporan/omset', [LaporanController::class, 'laporanOmsetTahunan']);
     Route::get('/laporan/omset/{year}', [LaporanController::class, 'laporanOmsetBulanan']);
-    // Route::get('/laporan/kas_masuk', [PageController::class, 'laporanKasMasuk']);
+    Route::get('/laporan/kas', [LaporanController::class, 'laporanKas']);
 
 });
