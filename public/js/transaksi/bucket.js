@@ -915,7 +915,7 @@ $(document).ready(function() {
             $('#modal-detail-trans').modal('show');
 
             $('#input-trans-id').val(trans.id);
-            $('#input-total').val(trans.grand_total.toLocaleString(['ban', 'id']));
+            $('#input-total').val((trans.grand_total - trans.total_terbayar).toLocaleString(['ban', 'id']));
             $('#input-terbayar').val(trans.total_terbayar.toLocaleString(['ban', 'id']));
             $('#input-kembalian').val('0');
         });
@@ -946,14 +946,12 @@ $(document).ready(function() {
     function calculate() {
         let total = removeDot($('#input-total').val());
 
-        let nominal = removeDot($('#input-nominal').val());
-        let terbayar = removeDot($('#terbayar').val());
+        let nominal = $('#input-nominal').val() === '' ? 0 : removeDot($('#input-nominal').val());
+        let terbayar = removeDot($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(8)').find('.thousand-separator').text());
         if (total > terbayar + nominal) {
-            $('#input-terbayar').val((terbayar + nominal).toLocaleString(['ban', 'id']));
-            $('#input-kembalian').val(0);
+            $('#input-kembalian').val('0');
         } else {
-            $('#input-terbayar').val((total).toLocaleString(['ban', 'id']));
-            $('#input-kembalian').val((terbayar + nominal - total).toLocaleString(['ban', 'id']));
+            $('#input-kembalian').val((nominal - total).toLocaleString(['ban', 'id']));
         }
         $('#btn-save').removeClass('disabled');
     }
