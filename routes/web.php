@@ -262,6 +262,7 @@ Route::middleware(['auth'])->group(function () {
 
     //Laporan
     Route::get('/laporan/piutang', [LaporanController::class, 'laporanPiutangPelanggan']);
+    Route::get('/component/piutang', [LaporanController::class, 'tablePiutang']);
     Route::get('/laporan/piutang/{id}/detail', [LaporanController::class, 'laporanPiutangPelangganDetail']);
     Route::get('/laporan/deposit', [LaporanController::class, 'laporanMutasiDeposit']);
     Route::get('/laporan/deposit/{id}/detail', [LaporanController::class, 'laporanMutasiDepositDetail']);
