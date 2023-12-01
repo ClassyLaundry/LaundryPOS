@@ -19,6 +19,7 @@ class Pelanggan extends Model
         'saldo_akhir',
         'tagihan',
     ];
+    protected $dates = ['created_at'];
 
     public static function boot()
     {
@@ -56,6 +57,14 @@ class Pelanggan extends Model
     public function getJumlahTransaksiAttribute()
     {
         return $this->transaksi->count();
+    }
+
+    public function jumlahTransaksiBetweenDate($start, $end)
+    {
+        return $this->transaksi()
+            ->whereDate('created_at', '>=', $start)
+            ->whereDate('created_at', '<=', $end)
+            ->count();
     }
 
     public function getPiutangAttribute()

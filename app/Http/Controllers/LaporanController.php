@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Data\Pelanggan;
+use App\Models\Outlet;
 use App\Models\Pembayaran;
 use App\Models\Saldo;
 use App\Models\Transaksi\Transaksi;
@@ -15,25 +16,38 @@ use function PHPSTORM_META\type;
 
 class LaporanController extends Controller
 {
-    public function laporanPiutangPelanggan(Request $request)
+    public function tablePiutang(Request $request)
     {
-        $totalPiutang = Transaksi::where('lunas', false)->sum(DB::raw('grand_total - total_terbayar'));
-        $pelanggans = Pelanggan::orderBy('nama', 'asc')->get();
+        $start = $request->start . ' 00:00:00';
+        $end = $request->end . ' 23:59:59';
+        $pelanggans = Pelanggan::get();
 
-        return view('pages.laporan.PiutangPelanggan', [
-            'total_piutang' => $totalPiutang,
+        return view('components.tableLaporanPiutang', [
             'pelanggans' => $pelanggans,
+            'start' => $start,
+            'end' => $end,
         ]);
     }
 
-    public function laporanPiutangPelangganDetail($id)
+    public function laporanPiutangPelanggan()
     {
-        $transaksis = Transaksi::detail()->where('lunas', false)->where('pelanggan_id', $id)->latest()->get();
-        $totalPiutang = Transaksi::where('lunas', false)->where('pelanggan_id', $id)->sum(DB::raw('grand_total - total_terbayar'));
+        return view('pages.laporan.PiutangPelanggan', [
+            'total_piutang' => Transaksi::where('lunas', false)->sum(DB::raw('grand_total - total_terbayar')),
+        ]);
+    }
+
+    public function laporanPiutangPelangganDetail($id, Request $request)
+    {
+        $start = $request->start . ' 00:00:00';
+        $end = $request->end . ' 23:59:59';
+        $transaksis = Transaksi::detail()->where('lunas', false)->where('pelanggan_id', $id)->whereBetween('created_at', [$start, $end])->get();
+        $totalPiutang = Transaksi::where('lunas', false)->where('pelanggan_id', $id)->whereBetween('created_at', [$start, $end])->sum(DB::raw('grand_total - total_terbayar'));
 
         return view('pages.laporan.DetailPiutangPelanggan', [
             'transaksis' => $transaksis,
             'total_piutang' => $totalPiutang,
+            'start' => $request->start,
+            'end' => $request->end,
         ]);
     }
 
@@ -106,47 +120,56 @@ class LaporanController extends Controller
         ]);
     }
 
-    public function kasMasuk(Request $request)
+    // public function laporanKasMasuk(Request $request)
+    // {
+    //     $logs = UserAction::where('action_model', 'outlets')
+    //         ->where('action', 'updated')
+    //         ->where('action_id', $request->outlet_id)
+    //         ->whereMonth('created_at', $request->bulan)
+    //         ->whereYear('created_at', $request->tahun)
+    //         ->latest()->get();
+
+    //     $outlets = [];
+    //     foreach ($logs as $log) {
+    //         $outlets[] = $log->getModelInstanceFromAction($log, "App\\Models\\Outlet");
+    //     }
+    //     $sumDiff = 0;
+    //     $currentSaldo = null;
+    //     if (count($outlets) == 1) {
+    //         $sumDiff = $outlets[0]->saldo;
+    //     } else if (count($outlets) > 1) {
+    //         foreach ($outlets as $outlet) {
+    //             if ($currentSaldo == null) {
+    //                 $currentSaldo = $outlet->saldo;
+    //             } else {
+    //                 $sumDiff = $currentSaldo - $outlet->saldo;
+    //                 $currentSaldo = $outlet->saldo;
+    //             }
+    //         }
+    //     }
+    //     $topupThisMonth = Saldo::where('outlet_id', $request->outlet_id)
+    //         ->whereMonth('created_at', $request->bulan)
+    //         ->whereYear('created_at', $request->tahun)
+    //         ->get();
+    //     $sumTopUp = $topupThisMonth->sum('nominal');
+
+    //     $pembayaranThisMonth = Pembayaran::where('outlet_id', $request->outlet_id)
+    //         ->whereMonth('created_at', $request->bulan)
+    //         ->whereYear('created_at', $request->tahun)
+    //         ->get();
+    //     $sumPembayaran = $pembayaranThisMonth->sum('nominal');
+
+    //     dd($sumDiff, $sumTopUp, $sumPembayaran);
+    //     return view('pages.laporan.KasMasuk',[
+    //         'penambahan_saldo' => $sumDiff,
+    //         'total_top_up' => $sumTopUp,
+    //         'total_pembayaran' => $sumPembayaran,
+    //     ]);
+    // }
+
+    public function laporanKas(Request $request)
     {
-        $logs = UserAction::where('action_model', 'outlets')
-            ->where('action', 'updated')
-            ->where('action_id', $request->outlet_id)
-            ->whereMonth('created_at', $request->bulan)
-            ->whereYear('created_at', $request->tahun)
-            ->latest()->get();
-
-        $outlets = [];
-        foreach ($logs as $log) {
-            $outlets[] = $log->getModelInstanceFromAction($log, "App\\Models\\Outlet");
-        }
-        $sumDiff = 0;
-        $currentSaldo = null;
-        if (count($outlets) == 1) {
-            $sumDiff = $outlets[0]->saldo;
-        } else if (count($outlets) > 1) {
-            foreach ($outlets as $outlet) {
-                if ($currentSaldo == null) {
-                    $currentSaldo = $outlet->saldo;
-                } else {
-                    $sumDiff = $currentSaldo - $outlet->saldo;
-                    $currentSaldo = $outlet->saldo;
-                }
-            }
-        }
-        $topupThisMonth = Saldo::where('outlet_id', $request->outlet_id)
-            ->whereMonth('created_at', $request->bulan)
-            ->whereYear('created_at', $request->tahun)
-            ->get();
-        $sumTopUp = $topupThisMonth->sum('nominal');
-
-        $pembayaranThisMonth = Pembayaran::where('outlet_id', $request->outlet_id)->whereMonth('created_at', $request->bulan)
-            ->whereYear('created_at', $request->tahun)
-            ->get();
-        $sumPembayaran = $pembayaranThisMonth->sum('nominal');
-        return [
-            'penambahan_saldo' => $sumDiff,
-            'total_top_up' => $sumTopUp,
-            'total_pembayaran' => $sumPembayaran,
-        ];
+        $outlets = Outlet::with('saldo', 'transaksi')->get();
+        dd($outlets);
     }
 }

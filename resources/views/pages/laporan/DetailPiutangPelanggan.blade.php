@@ -18,16 +18,19 @@
                 </div>
                 <hr>
 
+                <p>Periode: <span class="fw-bold">{{ date('d-M-Y', strtotime($start)) }}</span> hingga <span class="fw-bold">{{ date('d-M-Y', strtotime($end)) }}</span></p>
+                <hr>
+
                 <div id="table-laporan-piutang">
                     <div class="table-responsive my-2 tbody-wrap">
-                        <table class="table table-striped mb-0" id="table-table-laporan">
+                        <table class="table table-striped mb-0" id="table-laporan">
                             <thead>
                                 <tr>
                                     <th>Kode Transaksi</th>
                                     <th>Outlet</th>
                                     <th>Tanggal Transaksi</th>
-                                    <th colspan="2">Nominal Transaksi</th>
-                                    <th colspan="2">Besar Piutang</th>
+                                    <th colspan="2">Total Tagihan</th>
+                                    <th colspan="2">Kurang Bayar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,7 +42,7 @@
                                     <td class="text-start">Rp</td>
                                     <td class="text-end">{{ number_format($transaksi->grand_total, 0, ',', '.') }}</td>
                                     <td class="text-start">Rp</td>
-                                    <td class="text-end">{{ number_format($transaksi->grand_total - $transaksi->terbayar, 0, ',', '.') }}</td>
+                                    <td class="text-end">{{ number_format($transaksi->grand_total - $transaksi->total_terbayar, 0, ',', '.') }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
