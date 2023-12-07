@@ -36,6 +36,7 @@ class SaldoController extends Controller
                 'paket_deposit_id' => $request->paket_deposit_id,
                 'nominal' => $request->nominal,
                 'jenis_input' => $request->jenis_input,
+                'via' => $request->via,
                 'saldo_akhir' => $saldo_akhir,
                 'modified_by' => Auth::id()
             ]);
@@ -80,8 +81,8 @@ class SaldoController extends Controller
                     $query->whereYear('created_at', $request->year);
                 }
             })
-            ->where('pelanggan_id', $id_pelanggan)
-            ->latest()->paginate($paginate);
+                ->where('pelanggan_id', $id_pelanggan)
+                ->latest()->paginate($paginate);
             return view('components.tableHistorySaldo',  [
                 'status' => 200,
                 'saldos' => $saldo,
