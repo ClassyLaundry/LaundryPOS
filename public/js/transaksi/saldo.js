@@ -122,6 +122,7 @@ $(document).ready(function() {
         if (selectedPaketId == 1) {
             nominal = $('#input-manual').val();
         }
+        let metode_pembayaran = $('#input-metode_pembayaran').val();
         let saldoAkhir = nominal + removeDot($('#data-saldo-akhir').val());
 
         let formData = new FormData();
@@ -129,6 +130,7 @@ $(document).ready(function() {
         formData.append('paket_deposit_id', selectedPaketId);
         formData.append('nominal', nominal);
         formData.append('jenis_input', 'deposit');
+        formData.append('via', metode_pembayaran);
         formData.append('saldo_akhir', saldoAkhir);
 
         $.ajax({
