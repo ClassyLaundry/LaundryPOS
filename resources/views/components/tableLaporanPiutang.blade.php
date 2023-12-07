@@ -1,6 +1,6 @@
 <div id="table-laporan-piutang">
     <div class="table-responsive my-2 tbody-wrap">
-        <table class="table mb-0" id="table-laporan">
+        <table class="table mb-0" id="table-laporan" data-total="{{ number_format($total_piutang, 0, ',', '.') }}">
             <thead>
                 <tr class="text-start">
                     <th>Kode Pelanggan</th>
@@ -36,7 +36,7 @@
                         @if($index2 > 0)
                             <tr>
                         @endif
-                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $index }}</td>
                         <td>{{ $trans->kode }}</td>
                         <td>{{ date('d-M-Y h:i:s', strtotime($trans->created_at)) }}</td>
                         <td>

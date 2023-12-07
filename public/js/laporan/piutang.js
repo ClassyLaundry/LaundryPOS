@@ -12,6 +12,8 @@ $(document).ready(function() {
     // $('#table-container').load(window.location.origin + '/component/piutang');
 
     $('#btn-apply-filter').on('click', function() {
-        $('#table-container').load(window.location.origin + '/component/piutang?start=' + $('#input-tanggal-awal').val() + '&end=' + $('#input-tanggal-akhir').val());
+        $('#table-container').load(window.location.origin + '/component/piutang?start=' + $('#input-tanggal-awal').val() + '&end=' + $('#input-tanggal-akhir').val(), function () {
+            $('#total-piutang').text('Rp ' + $('#table-container #table-laporan').data('total'));
+        });
     });
 });

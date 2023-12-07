@@ -269,5 +269,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/laporan/omset', [LaporanController::class, 'laporanOmsetTahunan']);
     Route::get('/laporan/omset/{year}', [LaporanController::class, 'laporanOmsetBulanan']);
     Route::get('/laporan/kas', [LaporanController::class, 'laporanKas']);
-
+    Route::get('/component/kasMasuk', [LaporanController::class, 'tableKasMasuk']);
 });

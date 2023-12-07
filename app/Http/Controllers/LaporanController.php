@@ -21,19 +21,19 @@ class LaporanController extends Controller
         $start = $request->start . ' 00:00:00';
         $end = $request->end . ' 23:59:59';
         $pelanggans = Pelanggan::get();
+        $total_piutang = Transaksi::where('lunas', false)->whereBetween('created_at', [$start, $end])->sum(DB::raw('grand_total - total_terbayar'));
 
         return view('components.tableLaporanPiutang', [
             'pelanggans' => $pelanggans,
             'start' => $start,
             'end' => $end,
+            'total_piutang' => $total_piutang,
         ]);
     }
 
     public function laporanPiutangPelanggan()
     {
-        return view('pages.laporan.PiutangPelanggan', [
-            'total_piutang' => Transaksi::where('lunas', false)->sum(DB::raw('grand_total - total_terbayar')),
-        ]);
+        return view('pages.laporan.PiutangPelanggan');
     }
 
     public function laporanPiutangPelangganDetail($id, Request $request)
@@ -167,9 +167,77 @@ class LaporanController extends Controller
     //     ]);
     // }
 
-    public function laporanKas(Request $request)
+    public function tableKasMasuk(Request $request)
     {
-        $outlets = Outlet::with('saldo', 'transaksi')->get();
-        dd($outlets);
+        $start = $request->start . ' 00:00:00';
+        $end = $request->end . ' 23:59:59';
+        $jenis = str_split($request->jenis);
+        $tipe = ['tunai', 'qris', 'debit', 'transfer'];
+
+        $paymentQuery = Pembayaran::select(
+                'pembayarans.id as id',
+                'pelanggans.id as id_pelanggan',
+                'pelanggans.nama as nama_pelanggan',
+                'pembayarans.metode_pembayaran as metode_pembayaran',
+                'pembayarans.nominal as nominal',
+                DB::raw("'pembayaran' as source"),
+                'pembayarans.created_at as created_at'
+            )
+            ->join('transaksis', 'transaksis.id', '=', 'pembayarans.transaksi_id')
+            ->join('pelanggans', 'pelanggans.id', '=', 'transaksis.pelanggan_id')
+            ->whereBetween('pembayarans.created_at', [$start, $end]);
+
+        foreach ($jenis as $key => $value) {
+            if ($key === 0) {
+                $paymentQuery->where('pembayarans.metode_pembayaran', $tipe[intval($value) - 1]);
+            } else {
+                $paymentQuery->orWhere('pembayarans.metode_pembayaran', $tipe[intval($value) - 1]);
+            }
+        }
+
+        $saldoQuery = Saldo::select(
+            'saldos.id as id',
+            'pelanggans.id as id_pelanggan',
+            'pelanggans.nama as nama_pelanggan',
+            'saldos.via as metode_pembayaran',
+            'saldos.nominal as nominal',
+            DB::raw("'deposit' as source"),
+            'saldos.created_at as created_at'
+        )
+            ->join('pelanggans', 'pelanggans.id', '=', 'saldos.pelanggan_id')
+            ->whereBetween('saldos.created_at', [$start, $end])
+            ->where('saldos.jenis_input', '=', 'deposit');
+
+        foreach ($jenis as $key => $value) {
+            if ($key === 0) {
+                $saldoQuery->where('saldos.via', $tipe[intval($value) - 1]);
+            } else {
+                $saldoQuery->orWhere('saldos.via', $tipe[intval($value) - 1]);
+            }
+        }
+
+        $kas = $paymentQuery->union($saldoQuery)
+            ->orderByRaw("FIELD(metode_pembayaran, 'tunai', 'qris', 'debit', 'transfer')")
+            ->get(['id' ,'id_pelanggan', 'nama_pelanggan', 'metode_pembayaran', 'nominal', 'source', 'created_at']);
+        $total_kas = $kas->sum('nominal');
+
+        $rowHeight = $kas->groupBy('metode_pembayaran')->map->count();
+        $sumOfEachPaymentMethod = $kas->groupBy('metode_pembayaran')
+            ->map(function ($group) {
+                return $group->sum('nominal');
+            });
+        return view('components.tableLaporanKas', [
+            'kas' => $kas,
+            'total_kas' => $total_kas,
+            'rowHeight' => $rowHeight,
+            'sumOfEachPaymentMethod' => $sumOfEachPaymentMethod,
+            'start' => $start,
+            'end' => $end,
+        ]);
+    }
+
+    public function laporanKas()
+    {
+        return view('pages.laporan.KasMasuk');
     }
 }

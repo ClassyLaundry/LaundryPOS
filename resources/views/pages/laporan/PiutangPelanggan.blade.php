@@ -12,7 +12,7 @@
             <div class="card-body">
                 <div class="card-title d-flex justify-content-between align-items-center">
                     <h4>Laporan Piutang</h4>
-                    <h5 class="d-flex justify-content-between" style="width: 300px;"><span>Total Piutang:</span><span>Rp {{ number_format($total_piutang, 0, ',', '.') }}</span></h5>
+                    <h5 class="d-flex justify-content-between" style="width: 300px;"><span>Total Piutang:</span><span id="total-piutang"></span></h5>
                 </div>
                 <hr>
 
@@ -29,7 +29,7 @@
                             <input type="date" class="form-control" name="end" id="input-tanggal-akhir">
                         </div>
                     </div>
-                    <div class="col-xl-3 col-md-6 col-12">
+                    <div class="col-xl-3 col-12 text-end offset-3">
                         <button type="button" class="btn btn-primary" id="btn-apply-filter">Apply</button>
                     </div>
                 </div>
