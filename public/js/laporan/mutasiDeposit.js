@@ -9,7 +9,7 @@ $(document).ready(function() {
         window.location = window.location + '/' + btnId + '/detail';
     });
 
-    $('#table-table-laporan').dataTable({
+    $('#table-laporan').dataTable({
         order: [[0, 'asc']],
         columns: [
             null,
