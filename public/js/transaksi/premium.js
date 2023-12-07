@@ -227,7 +227,6 @@ $(document).ready(function() {
             $('#input-alamat-2').val(pelanggan.alamat);
             $('#input-email-2').val(pelanggan.email);
             $('#input-tanggal-lahir-2').val(pelanggan.tanggal_lahir);
-
         });
 
         $('#search-pelanggan-2').text('Ganti pelanggan');
@@ -412,7 +411,6 @@ $(document).ready(function() {
             processData: false,
             data: formData,
         }).done(function(data) {
-            // console.log(data)
             $('#table-container').load(window.location.origin + '/component/transPremium/' + transId, function() {
                 setThousandSeparator();
             });
@@ -903,7 +901,7 @@ $(document).ready(function() {
         let total = removeDot($('#input-total').val());
 
         let nominal = $('#input-nominal').val() === '' ? 0 : removeDot($('#input-nominal').val());
-        let terbayar = removeDot($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(8)').find('.thousand-separator').text());
+        let terbayar = removeDot($('#terbayar').val());
         if (total > terbayar + nominal) {
             $('#input-kembalian').val('0');
         } else {
@@ -923,9 +921,28 @@ $(document).ready(function() {
     }
 
     $('#form-pembayaran').on('submit', function(e) {
-        e.preventDefault;
-        $('#input-nominal').val(removeDot($('#input-nominal').val()));
-        $(this).submit();
+        e.preventDefault();
+
+        let formData = new FormData();
+        formData.append('transaksi_id', $('#input-trans-id').val());
+        formData.append('metode_pembayaran', $('#input-metode-pembayaran').val());
+        formData.append('nominal', removeDot($('#input-nominal').val()) - removeDot($('#input-kembalian').val()));
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            url: "/transaksi/pembayaran",
+            method: "POST",
+            contentType: false,
+            processData: false,
+            data: formData,
+        }).done(function(response) {
+            alert("Pembayaran berhasil");
+            window.location = window.location;
+        }).fail(function(message) {
+            console.log(message);
+        });
     });
 
     $('#nav-log').on('click', function() {

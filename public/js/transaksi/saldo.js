@@ -118,9 +118,11 @@ $(document).ready(function() {
         e.preventDefault();
         $('#btn-save').addClass('disabled');
 
-        let nominal = removeDot($('#paket-container .card.selected .nominal-paket .thousand-separator').text());
+        let nominal;
         if (selectedPaketId == 1) {
             nominal = $('#input-manual').val();
+        } else {
+            nominal = removeDot($('#paket-container .card.selected .nominal-paket .thousand-separator').text());
         }
         let metode_pembayaran = $('#input-metode_pembayaran').val();
         let saldoAkhir = nominal + removeDot($('#data-saldo-akhir').val());

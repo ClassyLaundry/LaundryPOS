@@ -611,7 +611,7 @@
                                             <p class="d-flex align-items-center justify-content-end" style="height: 38px;">Metode Pembayaran :</p>
                                         </div>
                                         <div class="col-9 mb-2">
-                                            <select class="form-select" name="metode_pembayaran" required>
+                                            <select class="form-select" name="metode_pembayaran" id="input-metode-pembayaran" required>
                                                 <option value hidden selected>-</option>
                                                 <option value="tunai">Tunai</option>
                                                 <option value="qris">Qris</option>
