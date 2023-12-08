@@ -8,11 +8,16 @@
     <style>
         body {
             font-family: 'Inconsolata';
-            font-size: .875rem;
+            font-size: 1rem;
+            font-weight: 600;
         }
 
         table {
             width: 100%;
+        }
+
+        hr {
+            opacity: 1;
         }
 
         td {
@@ -42,7 +47,7 @@
 </head>
 <body class="lh-1" style="width: 900px;">
     <div id="data-header">
-        <p class="fw-bold fs-6">
+        <p class="fw-bold fs-5">
             {{ Str::upper($data->transaksi->outlet->nama) }}<br>
             {{ $data->transaksi->outlet->alamat }}<br>
             {{ $data->header['delivery_text'] }}
