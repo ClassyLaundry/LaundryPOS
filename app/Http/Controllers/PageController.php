@@ -428,9 +428,13 @@ class PageController extends Controller
             $endDate = null;
             if ($request->has('start')) {
                 $startDate = Carbon::createFromFormat('d/m/Y', $request->start)->format('Y-m-d');
+            } else {
+                $startDate = Carbon::now()->startOfWeek()->format('Y-m-d');
             }
             if ($request->has('end')) {
                 $endDate = Carbon::createFromFormat('d/m/Y', $request->end)->format('Y-m-d');
+            } else {
+                $endDate = Carbon::now()->endOfWeek()->format('Y-m-d');
             }
             if (Auth::user()->role == 'produksi_cuci') {
                 return view(
@@ -462,8 +466,7 @@ class PageController extends Controller
                     'transaksis' => Transaksi::with('tukang_cuci')->detail()
                         ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
                             return $query->whereBetween('created_at', [$startDate, $endDate]);
-                        })
-                        ->latest()->get(),
+                        })->latest()->get(),
                     'pencucis' => User::role('produksi_cuci')->with('cucian')->get(),
                     'dateRange' => isset($request->start) ? $request->start . ' - ' . $request->end : null,
                 ]);

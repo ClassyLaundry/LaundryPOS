@@ -3,13 +3,33 @@
 @section('content')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 <div class="container">
-    <header class="my-3" style="color: var(--bs-gray);"><a>Proses</a><i class="fas fa-angle-right mx-2"></i><a>Cuci</a></header>
+    <header class="my-3" style="color: var(--bs-gray);">
+        <a>Proses</a>
+        <i class="fas fa-angle-right mx-2"></i>
+        <a>Cuci</a>
+    </header>
+
+    <?php
+      $currentDate = new DateTime();
+
+      function getISOWeek($date) {
+        $d = new DateTime($date);
+        $d->setTime(0, 0, 0, 0);
+        $d->setDate($d->format('Y'), 1, 1);
+        $week = floor(($d->format('U') - strtotime($d->format('Y-m-d'))) / (7 * 24 * 3600)) + 1;
+        return $week;
+      }
+
+      $defaultWeek = $currentDate->format('Y-\WW');
+    ?>
 
     <ul role="tablist" class="nav nav-tabs position-relative border-bottom-0">
         <li role="presentation" class="nav-item"><a role="tab" data-bs-toggle="tab" class="nav-link active" href="#tab-1">Data</a></li>
         <li role="presentation" class="nav-item"><a role="tab" data-bs-toggle="tab" class="nav-link" href="#tab-2">Task Hub</a></li>
     </ul>
+
     <div class="tab-content">
+        
         <div role="tabpanel" class="tab-pane active" id="tab-1">
             <section id="section-data-cuci">
                 <div class="card">
@@ -225,10 +245,6 @@
             $('#input-week').hide();
             $('#btn-reset').show();
             $('#selected-date-range').show();
-        } else {
-            $('#input-week').show();
-            $('#btn-reset').hide();
-            $('#selected-date-range').hide();
         }
 
         $('#input-week').change(function() {
@@ -247,7 +263,9 @@
         });
 
         $('#btn-reset').on('click', function() {
-            window.location = window.location.pathname;
+            $('#input-week').show();
+            $('#btn-reset').hide();
+            $('#selected-date-range').hide();
         });
 
         function formatDate(date) {
