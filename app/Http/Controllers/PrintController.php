@@ -70,11 +70,11 @@ class PrintController extends Controller
         ]);
 
         //8.5x 11 inch = 612x792 point
-        // $paper_size = [0, 0, 792, 612];
-        // $pdf = Pdf::loadView('pages.print.Nota', [
-        //     'data' => $data
-        // ])->setPaper('A4', 'portrait');
-        // return $pdf->stream('invoice.pdf');
+        $paper_size = [0, 0, 210, 148];
+        $pdf = Pdf::loadView('pages.print.Nota', [
+            'data' => $data
+        ])->setPaper($paper_size, 'portrait');
+        return $pdf->stream('invoice.pdf');
         // stream kalau preview, download kalau lsg download
     }
 
