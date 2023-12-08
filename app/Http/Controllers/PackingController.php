@@ -85,7 +85,7 @@ class PackingController extends Controller
                     ->orWhereHas('pelanggan', function ($q) use ($request) {
                         $q->where('nama', 'like', '%' . $request->key . '%');
                     });
-            })->latest(),
+            })->latest()->get(),
         ]);
     }
 
