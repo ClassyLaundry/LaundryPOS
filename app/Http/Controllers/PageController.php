@@ -485,9 +485,13 @@ class PageController extends Controller
             $endDate = null;
             if ($request->has('start')) {
                 $startDate = Carbon::createFromFormat('d/m/Y', $request->start)->format('Y-m-d');
+            } else {
+                $startDate = Carbon::now()->startOfWeek()->format('Y-m-d');
             }
             if ($request->has('end')) {
                 $endDate = Carbon::createFromFormat('d/m/Y', $request->end)->format('Y-m-d');
+            } else {
+                $endDate = Carbon::now()->endOfWeek()->format('Y-m-d');
             }
             if (Auth::user()->role == 'produksi_setrika') {
                 return view(
@@ -528,7 +532,7 @@ class PageController extends Controller
                                 return $query->whereBetween('created_at', [$startDate, $endDate]);
                             })->latest()->get(),
                         'penyetrikas' => User::role('produksi_setrika')->with('setrikaan')->get(),
-                        'dateRange' => isset($request->start) ? $request->start . ' - ' . $request->end : null,
+                        'dateRange' => isset($request->start) ? $request->start . ' - ' . $request->end : Carbon::now()->startOfWeek()->format('d-m-Y') . ' - ' . Carbon::now()->endOfWeek()->format('d-m-Y'),
                     ]
                 );
             }
