@@ -60,8 +60,33 @@ $(document).ready(function() {
     $('#form-paket-deposit').on('submit', function(e) {
         e.preventDefault();
 
+        let url = $('#form-paket-deposit').attr('action');
         $('#input-nominal').val(removeDot($('#input-nominal').val()));
         $('#input-harga-paket').val(removeDot($('#input-harga-paket').val()));
+
+        let formData = new FormData();
+        formData.append('nama', $('#input-nama-paket').val());
+        formData.append('nominal', $('#input-nominal').val());
+        formData.append('harga', $('#input-harga-paket').val());
+        formData.append('deskripsi', $('#input-deskripsi').val());
+        formData.append('status', $('#radio-status-aktif').prop('checked', true) ? 1 : 0);
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            url: url,
+            method: "POST",
+            contentType: false,
+            processData: false,
+            data: formData,
+        }).done(function(data) {
+            alert('Data paket berhasil disimpan');
+            window.location = window.location.origin + window.location.pathname;
+        }).fail(function(message) {
+            alert('error');
+            console.log(message);
+        });
 
         $(this).submit();
     });
