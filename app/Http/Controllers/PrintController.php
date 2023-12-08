@@ -65,9 +65,9 @@ class PrintController extends Controller
             $data->catatan = $catatan->catatan_khusus;
         }
 
-        return view('pages.print.Nota', [
-            'data' => $data
-        ]);
+        // return view('pages.print.Nota', [
+        //     'data' => $data
+        // ]);
 
         //8.5x 11 inch = 612x792 point
         $paper_size = [0, 0, 210, 148];
