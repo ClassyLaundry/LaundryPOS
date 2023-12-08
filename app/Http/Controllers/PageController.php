@@ -468,7 +468,7 @@ class PageController extends Controller
                             return $query->whereBetween('created_at', [$startDate, $endDate]);
                         })->latest()->get(),
                     'pencucis' => User::role('produksi_cuci')->with('cucian')->get(),
-                    'dateRange' => isset($request->start) ? $request->start . ' - ' . $request->end : null,
+                    'dateRange' => isset($request->start) ? $request->start . ' - ' . $request->end : Carbon::now()->startOfWeek()->format('d-m-Y') . ' - ' . Carbon::now()->endOfWeek()->format('d-m-Y'),
                 ]);
             }
         } else {
