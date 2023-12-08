@@ -56,7 +56,9 @@ class PaketDepositController extends Controller
             $merged = $request->merge(['modified_by' => Auth::id()])->toArray();
             PaketDeposit::find($id)->update($merged);
 
-            return redirect()->intended(route('menu-paket-deposit'));
+            return [
+                'status' => 200,
+            ];
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
         }

@@ -69,7 +69,7 @@ $(document).ready(function() {
         formData.append('nominal', $('#input-nominal').val());
         formData.append('harga', $('#input-harga-paket').val());
         formData.append('deskripsi', $('#input-deskripsi').val());
-        formData.append('status', $('#radio-status-aktif').prop('checked', true) ? 1 : 0);
+        formData.append('status', $('#radio-status-aktif').prop('checked') ? 1 : 0);
 
         $.ajax({
             headers: {
@@ -83,12 +83,11 @@ $(document).ready(function() {
         }).done(function(data) {
             alert('Data paket berhasil disimpan');
             window.location = window.location.origin + window.location.pathname;
-        }).fail(function(message) {
-            alert('error');
-            console.log(message);
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
         });
-
-        $(this).submit();
     });
 
     function removeDot(val) {
