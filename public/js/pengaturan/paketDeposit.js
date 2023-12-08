@@ -57,8 +57,22 @@ $(document).ready(function() {
     });
 
     // untuk menghilangkan thousand separator dari input
-    $('#form-paket-deposit').on('submit', function() {
-        $('#input-nominal').val($('#input-nominal').val().replace('.', ''));
-        $('#input-harga-paket').val($('#input-harga-paket').val().replace('.', ''));
+    $('#form-paket-deposit').on('submit', function(e) {
+        e.preventDefault();
+
+        $('#input-nominal').val(removeDot($('#input-nominal').val()));
+        $('#input-harga-paket').val(removeDot($('#input-harga-paket').val()));
+
+        $(this).submit();
     });
+
+    function removeDot(val) {
+        if (val != '') {
+            while(val.indexOf('.') != -1) {
+                val = val.replace('.', '');
+            }
+            let number = parseInt(val);
+            return number;
+        }
+    }
 });
