@@ -43,6 +43,13 @@
         hr {
             margin: .5rem 0;
         }
+
+        @media print {
+            @page {
+                size: A5;
+                orientation: landscape;
+            }
+        }
     </style>
 </head>
 <body class="lh-1" style="width: 900px;">
