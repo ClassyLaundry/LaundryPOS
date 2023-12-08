@@ -3,11 +3,11 @@
 
 <head>
     <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
-    <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <title>Transaction Receipt</title>
     <style>
         body {
-            font-family: 'Inconsolata';
+            font-family: 'Roboto';
             font-size: 1rem;
             font-weight: 600;
         }
