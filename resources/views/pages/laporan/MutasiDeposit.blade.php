@@ -16,7 +16,7 @@
 
                 <div class="mt-4" id="table-laporan-mutasi_deposit">
                     <div class="table-responsive my-2 tbody-wrap">
-                        <table class="table table-striped mb-0" id="table-table-laporan">
+                        <table class="table table-striped mb-0" id="table-laporan">
                             <thead>
                                 <tr>
                                     <th>Nama Pelanggan</th>

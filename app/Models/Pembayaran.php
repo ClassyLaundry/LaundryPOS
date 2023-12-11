@@ -22,12 +22,12 @@ class Pembayaran extends Model
     }
 
     //Function untuk attribute yang ditambahkan
-    public function getTransaksiAttribute()
-    {
-        if (!empty($this->transaksi_id)) {
-            return $this->transaksi();
-        }
-    }
+    // public function getTransaksiAttribute()
+    // {
+    //     if (!empty($this->transaksi_id)) {
+    //         return $this->transaksi();
+    //     }
+    // }
 
     public function getSaldoAttribute()
     {

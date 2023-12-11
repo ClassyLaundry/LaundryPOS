@@ -25,7 +25,6 @@
                         $index++;
                     }
                 @endphp
-
                     @if ($index == 0)
                         <tr><td rowspan="{{ $rowHeight[$data->metode_pembayaran] == 1 ? $rowHeight[$data->metode_pembayaran] : $rowHeight[$data->metode_pembayaran] + 1 }}" class="table-primary">{{ Str::upper($data->metode_pembayaran) }}</td>
                     @else

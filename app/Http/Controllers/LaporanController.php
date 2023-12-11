@@ -67,105 +67,35 @@ class LaporanController extends Controller
         ]);
     }
 
-    public function laporanOmsetTahunan(Request $request)
+    public function laporanOmset()
     {
-        $dataLaporan = DB::table('saldos')
-            ->join('pembayarans', function ($join) {
-                $join->on(DB::raw('YEAR(saldos.created_at)'), '=', DB::raw('YEAR(pembayarans.created_at)'));
-            })
-            ->select(
-                DB::raw('YEAR(saldos.created_at) as tahun'),
-                DB::raw('(SELECT SUM(nominal) FROM saldos WHERE jenis_input = "deposit") as deposit'),
-                DB::raw('(SELECT SUM(nominal) FROM pembayarans WHERE metode_pembayaran != "deposit") as pembayaran'),
-                DB::raw('(SELECT SUM(nominal) FROM pembayarans WHERE metode_pembayaran = "tunai") as tunai'),
-                DB::raw('(SELECT SUM(nominal) FROM pembayarans WHERE metode_pembayaran = "qris") as qris'),
-                DB::raw('(SELECT SUM(nominal) FROM pembayarans WHERE metode_pembayaran = "debit") as debit'),
-                DB::raw('(SELECT SUM(nominal) FROM pembayarans WHERE metode_pembayaran = "transfer") as transfer'),
-            )
-            ->groupBy('tahun')
-            ->get();
-
-        return view('pages.laporan.Omset', [
-            'laporan' => $dataLaporan,
-        ]);
+        return view('pages.laporan.Omset');
     }
 
-    public function laporanOmsetBulanan(Request $request)
+    public function tableOmset(Request $request)
     {
-        $dataLaporan = [];
-        for ($i=1; $i <= 12; $i++) {
-            $temp = DB::table('saldos')
-            ->join('pembayarans', function ($join) {
-                $join->on(DB::raw('MONTH(saldos.created_at)'), '=', DB::raw('MONTH(pembayarans.created_at)'));
-            })
-            ->whereYear('saldos.created_at', '=', $request->year)
-            ->whereMonth('saldos.created_at', '=', $i)
-            ->select(
-                DB::raw('DATE_FORMAT(saldos.created_at, "%M") bulan'),
-                DB::raw('(SELECT SUM(nominal) FROM saldos WHERE jenis_input = "deposit") as deposit'),
-                DB::raw('(SELECT SUM(nominal) FROM pembayarans WHERE metode_pembayaran != "deposit") as pembayaran'),
-                DB::raw('(SELECT SUM(nominal) FROM pembayarans WHERE metode_pembayaran = "tunai") as tunai'),
-                DB::raw('(SELECT SUM(nominal) FROM pembayarans WHERE metode_pembayaran = "qris") as qris'),
-                DB::raw('(SELECT SUM(nominal) FROM pembayarans WHERE metode_pembayaran = "debit") as debit'),
-                DB::raw('(SELECT SUM(nominal) FROM pembayarans WHERE metode_pembayaran = "transfer") as transfer'),
-            )
-            ->groupBy('bulan')
-            ->get();
-            array_push($dataLaporan, $temp);
-        }
+        $start = $request->start . ' 00:00:00';
+        $end = $request->end . ' 23:59:59';
 
-        return view('pages.laporan.OmsetBulanan', [
-            'laporan' => $dataLaporan,
-            'tahun' => $request->year,
+        $pembayarans = Pembayaran::with('transaksi')->orderBy('created_at')->whereBetween('created_at', [$start, $end])->get();
+        $rowHeight = DB::table('pembayarans')
+            ->select(DB::raw('COUNT(DATE(created_at)) as count'), DB::raw('DATE(created_at) as tanggal'))
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->whereBetween('created_at', [$start, $end])
+            ->get();
+        $sumOfEachDate = $pembayarans->groupBy(function($date) {
+                return Carbon::parse($date->created_at)->format('d-M-Y');
+            })->map(function ($group) {
+                return $group->sum('nominal');
+            });
+        $total_omset = $pembayarans->sum('nominal');
+        return view('components.tableLaporanOmset', [
+            'pembayarans' => $pembayarans,
+            'rowHeight' => $rowHeight,
+            'sumOfEachDate' => $sumOfEachDate,
+            'total_omset' => $total_omset,
         ]);
     }
-
-    // public function laporanKasMasuk(Request $request)
-    // {
-    //     $logs = UserAction::where('action_model', 'outlets')
-    //         ->where('action', 'updated')
-    //         ->where('action_id', $request->outlet_id)
-    //         ->whereMonth('created_at', $request->bulan)
-    //         ->whereYear('created_at', $request->tahun)
-    //         ->latest()->get();
-
-    //     $outlets = [];
-    //     foreach ($logs as $log) {
-    //         $outlets[] = $log->getModelInstanceFromAction($log, "App\\Models\\Outlet");
-    //     }
-    //     $sumDiff = 0;
-    //     $currentSaldo = null;
-    //     if (count($outlets) == 1) {
-    //         $sumDiff = $outlets[0]->saldo;
-    //     } else if (count($outlets) > 1) {
-    //         foreach ($outlets as $outlet) {
-    //             if ($currentSaldo == null) {
-    //                 $currentSaldo = $outlet->saldo;
-    //             } else {
-    //                 $sumDiff = $currentSaldo - $outlet->saldo;
-    //                 $currentSaldo = $outlet->saldo;
-    //             }
-    //         }
-    //     }
-    //     $topupThisMonth = Saldo::where('outlet_id', $request->outlet_id)
-    //         ->whereMonth('created_at', $request->bulan)
-    //         ->whereYear('created_at', $request->tahun)
-    //         ->get();
-    //     $sumTopUp = $topupThisMonth->sum('nominal');
-
-    //     $pembayaranThisMonth = Pembayaran::where('outlet_id', $request->outlet_id)
-    //         ->whereMonth('created_at', $request->bulan)
-    //         ->whereYear('created_at', $request->tahun)
-    //         ->get();
-    //     $sumPembayaran = $pembayaranThisMonth->sum('nominal');
-
-    //     dd($sumDiff, $sumTopUp, $sumPembayaran);
-    //     return view('pages.laporan.KasMasuk',[
-    //         'penambahan_saldo' => $sumDiff,
-    //         'total_top_up' => $sumTopUp,
-    //         'total_pembayaran' => $sumPembayaran,
-    //     ]);
-    // }
 
     public function tableKasMasuk(Request $request)
     {
