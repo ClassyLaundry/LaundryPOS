@@ -21,13 +21,12 @@ class Pembayaran extends Model
         Pembayaran::observe(new UserActionObserver);
     }
 
-    //Function untuk attribute yang ditambahkan
-    // public function getTransaksiAttribute()
-    // {
-    //     if (!empty($this->transaksi_id)) {
-    //         return $this->transaksi();
-    //     }
-    // }
+    public function getTransaksiAttribute()
+    {
+        if (!empty($this->transaksi_id)) {
+            return $this->transaksi();
+        }
+    }
 
     public function getSaldoAttribute()
     {
