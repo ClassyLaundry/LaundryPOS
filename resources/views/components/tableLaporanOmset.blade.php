@@ -10,9 +10,8 @@
                     <th>Besar Omset</th>
                 </tr>
             </thead>
-            {{ $pembayarans }}
             <tbody>
-                {{-- @php
+                @php
                     $tanggal = '';
                     $index = 0;
                     $index2 = -1;
@@ -56,7 +55,7 @@
                             </td>
                         </tr>
                     @endif
-                @endforeach --}}
+                @endforeach
             </tbody>
         </table>
     </div>
