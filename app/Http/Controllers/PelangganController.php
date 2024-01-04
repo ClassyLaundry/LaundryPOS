@@ -46,7 +46,7 @@ class PelangganController extends Controller
         }
     }
 
-    public function update(InsertPelangganRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $user = User::find(auth()->id());
         $permissions = $user->getPermissionsViaRoles();
