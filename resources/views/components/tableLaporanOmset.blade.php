@@ -12,7 +12,7 @@
             </thead>
             {{ $pembayarans }}
             <tbody>
-                @php
+                {{-- @php
                     $tanggal = '';
                     $index = 0;
                     $index2 = -1;
@@ -35,7 +35,7 @@
                         @else
                         <tr>
                     @endif
-                    {{-- <td>{{ $pembayaran->transaksi->kode }}</td> --}}
+                    <td>{{ $pembayaran->transaksi->kode }}</td>
                     <td>{{ 'PL' . str_pad($pembayaran->transaksi->pelanggan->id, 6, '0', STR_PAD_LEFT) }}</td>
                     <td>{{ $pembayaran->transaksi->pelanggan->nama }}</td>
                     <td>
@@ -56,7 +56,7 @@
                             </td>
                         </tr>
                     @endif
-                @endforeach
+                @endforeach --}}
             </tbody>
         </table>
     </div>
