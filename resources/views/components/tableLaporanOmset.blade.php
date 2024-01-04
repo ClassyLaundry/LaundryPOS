@@ -10,7 +10,7 @@
                     <th>Besar Omset</th>
                 </tr>
             </thead>
-            @dd($pembayarans)
+            {{ $pembayarans }}
             <tbody>
                 @php
                     $tanggal = '';
