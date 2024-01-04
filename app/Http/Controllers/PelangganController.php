@@ -67,7 +67,7 @@ class PelangganController extends Controller
                 $catatan_pelanggan->catatan_khusus = $request->catatan_khusus;
                 $catatan_pelanggan->save();
             }
-            return response()->json(["message" => "success"], 200);
+            return redirect()->back();
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
         }
