@@ -31,7 +31,8 @@ class PembayaranController extends Controller
                 'outlet_id' => $user->outlet_id,
                 'transaksi_id' => $request->transaksi_id,
                 'saldo_id' => $request->saldo_id,
-                'metode_pembayaran' => $request->metode_pembayaran
+                'metode_pembayaran' => $request->metode_pembayaran,
+                'operator' => $user->id
             ]);
 
             if ($request->metode_pembayaran == 'deposit') {
@@ -133,14 +134,17 @@ class PembayaranController extends Controller
                             'outlet_id' => $user->outlet_id,
                             'nominal' => $transaksi->total_terbayar,
                             'transaksi_id' => $transaksi->id,
-                            'metode_pembayaran' => 'cash'
+                            'metode_pembayaran' => 'cash',
+                            'operator' => $user->id
+
                         ]);
                     } else {
                         $transaksi->total_terbayar = $transaksi->total_terbayar + $nominal;
                         Pembayaran::create([
                             'nominal' => $nominal,
                             'transaksi_id' => $transaksi->id,
-                            'metode_pembayaran' => 'cash'
+                            'metode_pembayaran' => 'cash',
+                            'operator' => $user->id
                         ]);
                         $nominal = 0;
                     }
@@ -207,7 +211,8 @@ class PembayaranController extends Controller
                 'outlet_id' => $user->outlet_id,
                 'transaksi_id' => $request->transaksi_id,
                 'saldo_id' => $request->saldo_id,
-                'metode_pembayaran' => $request->metode_pembayaran
+                'metode_pembayaran' => $request->metode_pembayaran,
+                'operator' => $user->id,
             ]);
 
             return redirect()->intended(route('menu_pembayaran'));
