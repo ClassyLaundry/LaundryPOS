@@ -20,7 +20,10 @@ class LaporanController extends Controller
     {
         $start = $request->start . ' 00:00:00';
         $end = $request->end . ' 23:59:59';
-        $pelanggans = Pelanggan::get();
+
+        $pelanggans = Pelanggan::when($request->filled('orderBy'), function($query) use ($request) {
+                $query->orderBy($request->filled('orderBy'), $request->filled('order'));
+            })->get();
         $total_piutang = Transaksi::where('lunas', false)->whereBetween('created_at', [$start, $end])->sum(DB::raw('grand_total - total_terbayar'));
 
         return view('components.tableLaporanPiutang', [
@@ -67,34 +70,39 @@ class LaporanController extends Controller
         ]);
     }
 
-    public function laporanOmset()
+    public function laporanOmset(Request $request)
     {
-        return view('pages.laporan.Omset');
+        if ($request->has('start') && $request->has('end')) {
+            $start = $request->start . ' 00:00:00';
+            $end = $request->end . ' 23:59:59';
+
+            $pembayarans = Pembayaran::with('transaksi')->orderBy('created_at')->whereBetween('created_at', [$start, $end])->get();
+            $rowHeight = DB::table('pembayarans')
+                ->select(DB::raw('COUNT(DATE(created_at)) as count'), DB::raw('DATE(created_at) as tanggal'))
+                ->groupBy(DB::raw('DATE(created_at)'))
+                ->whereBetween('created_at', [$start, $end])
+                ->get();
+            $sumOfEachDate = $pembayarans->groupBy(function ($date) {
+                return Carbon::parse($date->created_at)->format('d-M-Y');
+            })->map(function ($group) {
+                return $group->sum('nominal');
+            });
+            $totalOmset = $pembayarans->sum('nominal');
+            return view('pages.laporan.Omset', [
+                'pembayarans' => $pembayarans,
+                'rowHeight' => $rowHeight,
+                'sumOfEachDate' => $sumOfEachDate,
+                'totalOmset' => $totalOmset,
+                'startDate' => $start,
+                'endDate' => $end,
+            ]);
+        } else {
+            return view('pages.laporan.Omset');
+        }
     }
 
     public function tableOmset(Request $request)
     {
-        $start = $request->start . ' 00:00:00';
-        $end = $request->end . ' 23:59:59';
-
-        $pembayarans = Pembayaran::with('transaksi')->orderBy('created_at')->whereBetween('created_at', [$start, $end])->get();
-        $rowHeight = DB::table('pembayarans')
-            ->select(DB::raw('COUNT(DATE(created_at)) as count'), DB::raw('DATE(created_at) as tanggal'))
-            ->groupBy(DB::raw('DATE(created_at)'))
-            ->whereBetween('created_at', [$start, $end])
-            ->get();
-        $sumOfEachDate = $pembayarans->groupBy(function ($date) {
-            return Carbon::parse($date->created_at)->format('d-M-Y');
-        })->map(function ($group) {
-            return $group->sum('nominal');
-        });
-        $total_omset = $pembayarans->sum('nominal');
-        return view('components.tableLaporanOmset', [
-            'pembayarans' => $pembayarans,
-            'rowHeight' => $rowHeight,
-            'sumOfEachDate' => $sumOfEachDate,
-            'total_omset' => $total_omset,
-        ]);
     }
 
     public function apiTableOmset(Request $request)
