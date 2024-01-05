@@ -83,14 +83,39 @@ class LaporanController extends Controller
             ->groupBy(DB::raw('DATE(created_at)'))
             ->whereBetween('created_at', [$start, $end])
             ->get();
-        $sumOfEachDate = $pembayarans->groupBy(function($date) {
-                return Carbon::parse($date->created_at)->format('d-M-Y');
-            })->map(function ($group) {
-                return $group->sum('nominal');
-            });
+        $sumOfEachDate = $pembayarans->groupBy(function ($date) {
+            return Carbon::parse($date->created_at)->format('d-M-Y');
+        })->map(function ($group) {
+            return $group->sum('nominal');
+        });
         $total_omset = $pembayarans->sum('nominal');
         return view('components.tableLaporanOmset', [
             'pembayarans' => $pembayarans,
+            'rowHeight' => $rowHeight,
+            'sumOfEachDate' => $sumOfEachDate,
+            'total_omset' => $total_omset,
+        ]);
+    }
+
+    public function apiTableOmset(Request $request)
+    {
+        $start = $request->start . ' 00:00:00';
+        $end = $request->end . ' 23:59:59';
+
+        $pembayarans = Pembayaran::with('transaksi')->orderBy('created_at')->whereBetween('created_at', [$start, $end])->get();
+        $rowHeight = DB::table('pembayarans')
+            ->select(DB::raw('COUNT(DATE(created_at)) as count'), DB::raw('DATE(created_at) as tanggal'))
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->whereBetween('created_at', [$start, $end])
+            ->get();
+        $sumOfEachDate = $pembayarans->groupBy(function ($date) {
+            return Carbon::parse($date->created_at)->format('d-M-Y');
+        })->map(function ($group) {
+            return $group->sum('nominal');
+        });
+        $total_omset = $pembayarans->sum('nominal');
+        return response()->json([
+            'pembayarans'  => $pembayarans,
             'rowHeight' => $rowHeight,
             'sumOfEachDate' => $sumOfEachDate,
             'total_omset' => $total_omset,
@@ -105,14 +130,14 @@ class LaporanController extends Controller
         $tipe = ['tunai', 'qris', 'debit', 'transfer'];
 
         $paymentQuery = Pembayaran::select(
-                'pembayarans.id as id',
-                'pelanggans.id as id_pelanggan',
-                'pelanggans.nama as nama_pelanggan',
-                'pembayarans.metode_pembayaran as metode_pembayaran',
-                'pembayarans.nominal as nominal',
-                DB::raw("'pembayaran' as source"),
-                'pembayarans.created_at as created_at'
-            )
+            'pembayarans.id as id',
+            'pelanggans.id as id_pelanggan',
+            'pelanggans.nama as nama_pelanggan',
+            'pembayarans.metode_pembayaran as metode_pembayaran',
+            'pembayarans.nominal as nominal',
+            DB::raw("'pembayaran' as source"),
+            'pembayarans.created_at as created_at'
+        )
             ->join('transaksis', 'transaksis.id', '=', 'pembayarans.transaksi_id')
             ->join('pelanggans', 'pelanggans.id', '=', 'transaksis.pelanggan_id')
             ->whereBetween('pembayarans.created_at', [$start, $end]);
@@ -148,7 +173,7 @@ class LaporanController extends Controller
 
         $kas = $paymentQuery->union($saldoQuery)
             ->orderByRaw("FIELD(metode_pembayaran, 'tunai', 'qris', 'debit', 'transfer')")
-            ->get(['id' ,'id_pelanggan', 'nama_pelanggan', 'metode_pembayaran', 'nominal', 'source', 'created_at']);
+            ->get(['id', 'id_pelanggan', 'nama_pelanggan', 'metode_pembayaran', 'nominal', 'source', 'created_at']);
         $total_kas = $kas->sum('nominal');
 
         $rowHeight = $kas->groupBy('metode_pembayaran')->map->count();

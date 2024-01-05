@@ -39,7 +39,7 @@ Route::get('/mutasi-deposit-pelanggan', [LaporanController::class, 'mutasiDeposi
 Route::get('/kas-masuk', [LaporanController::class, 'kasMasuk']); // /kas-masuk?outlet_id=1&bulan=1&tahun=2023
 Route::get('/semua-piutang', [LaporanController::class, 'semuaPiutang']); //
 Route::get('/piutang-pelanggan', [LaporanController::class, 'piutangPelanggan']); // /piutang-pelanggan?pelanggan_id=1
-Route::get('/omset-bulanan', [LaporanController::class, 'omsetBulanan']); // /omset-bulanan?bulan=1&tahun=2023
+Route::get('/omset-bulanan', [LaporanController::class, 'apiTableOmset']); // /omset-bulanan?bulan=1&tahun=2023
 
 /**
  * Catatan Pelanggan
