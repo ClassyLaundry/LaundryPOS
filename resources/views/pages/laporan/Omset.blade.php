@@ -63,7 +63,8 @@
                                         $index2 = -1;
                                     @endphp
                                     @foreach ($pembayarans as $pembayaran)
-                                        @php
+                                        @dump($pembayaran->transaksi)
+                                        {{-- @php
                                             if ($tanggal != date('d-M-Y', strtotime($pembayaran->created_at))) {
                                                 $tanggal = date('d-M-Y', strtotime($pembayaran->created_at));
                                                 $index = 0;
@@ -100,7 +101,7 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                        @endif
+                                        @endif --}}
                                     @endforeach
                                 </tbody>
                             </table>
