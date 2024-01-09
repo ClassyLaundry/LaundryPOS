@@ -63,7 +63,12 @@
                                         $index2 = -1;
                                     @endphp
                                     @foreach ($pembayarans as $pembayaran)
-                                        @dump($pembayaran->transaksi->get())
+                                        @dump($pembayaran->transaksi->get()['0'])
+
+                                        {{-- @php
+                                            $transaksi = $pembayaran->transaksi->get()[0];
+                                        @endphp
+                                        @dump($transaksi->kode) --}}
                                         {{-- @php
                                             if ($tanggal != date('d-M-Y', strtotime($pembayaran->created_at))) {
                                                 $tanggal = date('d-M-Y', strtotime($pembayaran->created_at));
