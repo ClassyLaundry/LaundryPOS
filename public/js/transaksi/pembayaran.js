@@ -225,7 +225,7 @@ $(document).ready(function() {
 
     $('#table-container').load(window.location.origin + '/component/pembayaran', function() {
         $("#table-pembayaran").dataTable({
-            order: [[0, 'desc']],
+            columnDefs : [{targets:3, type:"date-eu"}],
             columns: [
                 null,
                 null,

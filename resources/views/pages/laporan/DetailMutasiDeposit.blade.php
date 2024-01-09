@@ -32,6 +32,7 @@
     </section>
 </div>
 
+<script src="https://cdn.datatables.net/plug-ins/1.10.11/sorting/date-eu.js"></script>
 <script>
     $(document).ready(function() {
         var searchData;
@@ -57,25 +58,7 @@
             $('#container-history-saldo').load(window.location.origin + '/pelanggan/' + $('#pelanggan-id').val() + '/history/saldo?month=' + month + '&year=' + year + '&order=asc', function() {
                 $('#loading-icon').hide();
                 $("#table-history-saldo").dataTable({
-                    columnDefs: [
-                        {
-                            targets: [0],
-                            type: 'date-custom'
-                        }
-                    ]
-                });
-
-                jQuery.extend(jQuery.fn.dataTableExt.oSort, {
-                    'date-custom-pre': function (a) {
-                        var dateParts = a.split('-');
-                        return Date.UTC(parseInt(dateParts[2], 10), parseInt(dateParts[1], 10) - 1, parseInt(dateParts[0], 10));
-                    },
-                    'date-custom-asc': function (a, b) {
-                        return a - b;
-                    },
-                    'date-custom-desc': function (a, b) {
-                        return b - a;
-                    }
+                    columnDefs : [{targets:0, type:"date-eu"}],
                 });
             });
         };
@@ -85,28 +68,11 @@
 
             $('#container-history-saldo').load(window.location.origin + '/pelanggan/' + $('#pelanggan-id').val() + '/history/saldo?year=' + year + '&order=asc', function() {
                 $('#loading-icon').hide();
-                $("#table-history-saldo").dataTable({
-                    columnDefs: [
-                        {
-                            targets: [0],
-                            type: 'date-custom'
-                        }
-                    ]
-                });
-
-                jQuery.extend(jQuery.fn.dataTableExt.oSort, {
-                    'date-custom-pre': function (a) {
-                        var dateParts = a.split('-');
-                        return Date.UTC(parseInt(dateParts[2], 10), parseInt(dateParts[1], 10) - 1, parseInt(dateParts[0], 10));
-                    },
-                    'date-custom-asc': function (a, b) {
-                        return a - b;
-                    },
-                    'date-custom-desc': function (a, b) {
-                        return b - a;
-                    }
+                $('#table-history-saldo').DataTable({
+                    columnDefs : [{targets:0, type:"date-eu"}],
                 });
             });
+
         };
     });
 </script>
