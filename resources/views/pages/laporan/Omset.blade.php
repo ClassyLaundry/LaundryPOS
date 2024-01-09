@@ -63,13 +63,11 @@
                                         $index2 = -1;
                                     @endphp
                                     @foreach ($pembayarans as $pembayaran)
-                                        @dump($pembayaran->transaksi->first()['kode'] ?? 'null')
-
-                                        {{-- @php
-                                            $transaksi = $pembayaran->transaksi->get()[0];
+                                        {{-- @dump($pembayaran->transaksi->first()['kode'] ?? 'null') --}}
+                                        @php
+                                            $transaksi = $pembayaran->transaksi->first();
                                         @endphp
-                                        @dump($transaksi->kode) --}}
-                                        {{-- @php
+                                        @php
                                             if ($tanggal != date('d-M-Y', strtotime($pembayaran->created_at))) {
                                                 $tanggal = date('d-M-Y', strtotime($pembayaran->created_at));
                                                 $index = 0;
@@ -86,9 +84,9 @@
                                             @else
                                             <tr>
                                         @endif
-                                        <td>{{ $pembayaran->transaksi->get()[0]->kode }}</td>
-                                        <td>{{ 'PL' . str_pad($pembayaran->transaksi->get()[0]->pelanggan->id, 6, '0', STR_PAD_LEFT) }}</td>
-                                        <td>{{ $pembayaran->transaksi->get()[0]->pelanggan->nama }}</td>
+                                        <td>{{ $transaksi->kode ?? 'null' }}</td>
+                                        <td>{{ 'PL' . str_pad($transaksi->pelanggan->id, 6, '0', STR_PAD_LEFT) }}</td>
+                                        <td>{{ $transaksi->pelanggan->nama }}</td>
                                         <td>
                                             <div class="d-flex justify-content-between">
                                                 <span>Rp</span><span>{{ number_format($pembayaran->nominal, 0, ',', '.') }}</span>
@@ -106,7 +104,7 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                        @endif --}}
+                                        @endif
                                     @endforeach
                                 </tbody>
                             </table>
