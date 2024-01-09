@@ -68,7 +68,7 @@
                 jQuery.extend(jQuery.fn.dataTableExt.oSort, {
                     'date-custom-pre': function (a) {
                         var dateParts = a.split('-');
-                        return Date.UTC(parseInt(dateParts[0], 10), parseInt(dateParts[1], 10) - 1, parseInt(dateParts[2], 10));
+                        return Date.UTC(parseInt(dateParts[2], 10), parseInt(dateParts[1], 10) - 1, parseInt(dateParts[0], 10));
                     },
                     'date-custom-asc': function (a, b) {
                         return a - b;
@@ -97,7 +97,7 @@
                 jQuery.extend(jQuery.fn.dataTableExt.oSort, {
                     'date-custom-pre': function (a) {
                         var dateParts = a.split('-');
-                        return Date.UTC(parseInt(dateParts[0], 10), parseInt(dateParts[1], 10) - 1, parseInt(dateParts[2], 10));
+                        return Date.UTC(parseInt(dateParts[2], 10), parseInt(dateParts[1], 10) - 1, parseInt(dateParts[0], 10));
                     },
                     'date-custom-asc': function (a, b) {
                         return a - b;
