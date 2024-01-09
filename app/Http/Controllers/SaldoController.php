@@ -70,19 +70,15 @@ class SaldoController extends Controller
             return $item->name === 'Melihat Detail History Saldo Pelanggan';
         });
         if ($permissionExist) {
-            $paginate = 5;
             $saldo = Saldo::where(function ($query) use ($request) {
                 if (isset($request->month)) {
-                    $paginate = 20;
                     $query->whereMonth('created_at', $request->month);
                 }
                 if (isset($request->year)) {
-                    $paginate = 20;
                     $query->whereYear('created_at', $request->year);
                 }
             })
-                ->where('pelanggan_id', $id_pelanggan)
-                ->latest()->paginate($paginate);
+                ->where('pelanggan_id', $id_pelanggan)->get();
             return view('components.tableHistorySaldo',  [
                 'status' => 200,
                 'saldos' => $saldo,
