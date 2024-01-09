@@ -67,7 +67,8 @@
                                         {{-- @dump($pembayaran->transaksi->first()['kode'] ?? 'null') --}}
                                         @php
                                             $transaksi = $pembayaran->transaksi->first();
-                                            $pelanggan = $pelanggans->where('id', $transaksi->pelanggan_id)->first();
+                                            // $pelanggan = $pelanggans->find($transaksi->pelanggan_id);
+                                            $pelanggan = $transaksi->pelanggan;
                                         @endphp
                                         @dump($pelanggan)
                                         {{-- @php
