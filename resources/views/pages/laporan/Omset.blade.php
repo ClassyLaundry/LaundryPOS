@@ -61,14 +61,15 @@
                                         $tanggal = '';
                                         $index = 0;
                                         $index2 = -1;
+                                        $pelanggans = $pembayarans->first()->transaksi->first()->pelanggan->get();
                                     @endphp
                                     @foreach ($pembayarans as $pembayaran)
                                         {{-- @dump($pembayaran->transaksi->first()['kode'] ?? 'null') --}}
                                         @php
                                             $transaksi = $pembayaran->transaksi->first();
-                                            // $pelanggan = $transaksi->pelanggan;
+                                            $pelanggan = $pelanggans->where('id', $transaksi->pelanggan_id)->first();
                                         @endphp
-                                        @dump($transaksi)
+                                        @dump($pelanggan)
                                         {{-- @php
                                             if ($tanggal != date('d-M-Y', strtotime($pembayaran->created_at))) {
                                                 $tanggal = date('d-M-Y', strtotime($pembayaran->created_at));
