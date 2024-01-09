@@ -61,14 +61,13 @@
                                         $tanggal = '';
                                         $index = 0;
                                         $index2 = -1;
-                                        $pelanggans = $pembayarans->first()->transaksi->first()->pelanggan->get();
                                     @endphp
                                     @foreach ($pembayarans as $pembayaran)
                                         {{-- @dump($pembayaran->transaksi->first()['kode'] ?? 'null') --}}
                                         @php
                                             $transaksi = $pembayaran->transaksi->first();
                                             // $pelanggan = $pelanggans->find($transaksi->pelanggan_id);
-                                            $pelanggan = $transaksi->pelanggan;
+                                            $pelanggan = $pelanggans->find($transaksi->pelanggan_id ?? 'null');
                                         @endphp
                                         @dump($pelanggan)
                                         {{-- @php

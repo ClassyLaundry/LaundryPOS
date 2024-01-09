@@ -76,7 +76,8 @@ class LaporanController extends Controller
             $start = $request->start . ' 00:00:00';
             $end = $request->end . ' 23:59:59';
 
-            $pembayarans = Pembayaran::with('transaksi.pelanggan')->orderBy('created_at')->whereBetween('created_at', [$start, $end])->get();
+            $pembayarans = Pembayaran::with('transaksi')->orderBy('created_at')->whereBetween('created_at', [$start, $end])->get();
+            $pelanggans = Pelanggan::get();
             $rowHeight = DB::table('pembayarans')
                 ->select(DB::raw('COUNT(DATE(created_at)) as count'), DB::raw('DATE(created_at) as tanggal'))
                 ->groupBy(DB::raw('DATE(created_at)'))
@@ -90,6 +91,7 @@ class LaporanController extends Controller
             $totalOmset = $pembayarans->sum('nominal');
             return view('pages.laporan.Omset', [
                 'pembayarans' => $pembayarans,
+                'pelanggans' => $pelanggans,
                 'rowHeight' => $rowHeight,
                 'sumOfEachDate' => $sumOfEachDate,
                 'totalOmset' => $totalOmset,
