@@ -63,7 +63,7 @@
                                         $index2 = -1;
                                     @endphp
                                     @foreach ($pembayarans as $pembayaran)
-                                        @dump($pembayaran->transaksi->first())
+                                        @dump($pembayaran->transaksi->first()->kode)
 
                                         {{-- @php
                                             $transaksi = $pembayaran->transaksi->get()[0];
