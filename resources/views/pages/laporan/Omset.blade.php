@@ -68,10 +68,7 @@
                                             $transaksi = $pembayaran->transaksi->first();
                                             $pelanggan = $pelanggans->find($transaksi->pelanggan_id ?? 'null');
                                         @endphp
-                                        @if ($pelanggan == 'null')
-                                            @dump($transaksi->kode)
-                                        @endif
-                                        {{-- @php
+                                        @php
                                             if ($tanggal != date('d-M-Y', strtotime($pembayaran->created_at))) {
                                                 $tanggal = date('d-M-Y', strtotime($pembayaran->created_at));
                                                 $index = 0;
@@ -89,8 +86,8 @@
                                             <tr>
                                         @endif
                                         <td>{{ $transaksi->kode ?? 'null' }}</td>
-                                        <td>{{ 'PL' . str_pad($transaksi->pelanggan->id, 6, '0', STR_PAD_LEFT) }}</td>
-                                        <td>{{ $transaksi->pelanggan->nama }}</td>
+                                        <td>{{ 'PL' . str_pad($pelanggan->id ?? '0', 6, '0', STR_PAD_LEFT) }}</td>
+                                        <td>{{ $pelanggan->nama ?? 'null' }}</td>
                                         <td>
                                             <div class="d-flex justify-content-between">
                                                 <span>Rp</span><span>{{ number_format($pembayaran->nominal, 0, ',', '.') }}</span>
@@ -108,7 +105,7 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                        @endif --}}
+                                        @endif
                                     @endforeach
                                 </tbody>
                             </table>
