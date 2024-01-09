@@ -66,9 +66,9 @@
                                         {{-- @dump($pembayaran->transaksi->first()['kode'] ?? 'null') --}}
                                         @php
                                             $transaksi = $pembayaran->transaksi->first();
-                                            $pelanggan = $transaksi->pelanggan;
+                                            // $pelanggan = $transaksi->pelanggan;
                                         @endphp
-                                        @dump($pelanggan)
+                                        @dump($transaksi)
                                         {{-- @php
                                             if ($tanggal != date('d-M-Y', strtotime($pembayaran->created_at))) {
                                                 $tanggal = date('d-M-Y', strtotime($pembayaran->created_at));
