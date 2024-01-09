@@ -1,7 +1,7 @@
 @extends('layouts.users')
 
 @section('content')
-
+@include('includes.library.datatables')
 <div class="container">
     <header class="d-flex align-items-center my-3" style="color: var(--bs-gray);">
         <a>Laporan</a>
@@ -34,40 +34,80 @@
 
 <script>
     $(document).ready(function() {
-        $('#container-history-saldo').load(window.location.origin + '/pelanggan/' + $('#pelanggan-id').val() + '/history/saldo');
-    });
-
-    var searchData;
-    $('#filter-bulan').on('change', function() {
-        clearTimeout(searchData);
-        $('#loading-icon').show();
-        $('#filter-tahun').val('');
-        searchData = setTimeout(searchByMonth, 2000);
-    });
-
-    $('#filter-tahun').on('change', function() {
-        clearTimeout(searchData);
-        $('#loading-icon').show();
-        $('#filter-bulan').val('');
-        searchData = setTimeout(searchByYear, 2000);
-    });
-
-    function searchByMonth() {
-        let date = $('#filter-bulan').val().split('-');
-        let year = date[0];
-        let month = date[1];
-
-        $('#container-history-saldo').load(window.location.origin + '/pelanggan/' + $('#pelanggan-id').val() + '/history/saldo?month=' + month + '&year=' + year, function() {
-            $('#loading-icon').hide();
+        var searchData;
+        $('#filter-bulan').on('change', function() {
+            clearTimeout(searchData);
+            $('#loading-icon').show();
+            $('#filter-tahun').val('');
+            searchData = setTimeout(searchByMonth, 2000);
         });
-    };
 
-    function searchByYear() {
-        let year = $('#filter-tahun').val();
-
-        $('#container-history-saldo').load(window.location.origin + '/pelanggan/' + $('#pelanggan-id').val() + '/history/saldo?year=' + year, function() {
-            $('#loading-icon').hide();
+        $('#filter-tahun').on('change', function() {
+            clearTimeout(searchData);
+            $('#loading-icon').show();
+            $('#filter-bulan').val('');
+            searchData = setTimeout(searchByYear, 2000);
         });
-    };
+
+        function searchByMonth() {
+            let date = $('#filter-bulan').val().split('-');
+            let year = date[0];
+            let month = date[1];
+
+            $('#container-history-saldo').load(window.location.origin + '/pelanggan/' + $('#pelanggan-id').val() + '/history/saldo?month=' + month + '&year=' + year + '&order=asc', function() {
+                $('#loading-icon').hide();
+                $("#table-history-saldo").dataTable({
+                    columnDefs: [
+                        {
+                            targets: [0],
+                            type: 'date-custom'
+                        }
+                    ]
+                });
+
+                jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+                    'date-custom-pre': function (a) {
+                        var dateParts = a.split('-');
+                        return Date.UTC(parseInt(dateParts[0], 10), parseInt(dateParts[1], 10) - 1, parseInt(dateParts[2], 10));
+                    },
+                    'date-custom-asc': function (a, b) {
+                        return a - b;
+                    },
+                    'date-custom-desc': function (a, b) {
+                        return b - a;
+                    }
+                });
+            });
+        };
+
+        function searchByYear() {
+            let year = $('#filter-tahun').val();
+
+            $('#container-history-saldo').load(window.location.origin + '/pelanggan/' + $('#pelanggan-id').val() + '/history/saldo?year=' + year + '&order=asc', function() {
+                $('#loading-icon').hide();
+                $("#table-history-saldo").dataTable({
+                    columnDefs: [
+                        {
+                            targets: [0],
+                            type: 'date-custom'
+                        }
+                    ]
+                });
+
+                jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+                    'date-custom-pre': function (a) {
+                        var dateParts = a.split('-');
+                        return Date.UTC(parseInt(dateParts[0], 10), parseInt(dateParts[1], 10) - 1, parseInt(dateParts[2], 10));
+                    },
+                    'date-custom-asc': function (a, b) {
+                        return a - b;
+                    },
+                    'date-custom-desc': function (a, b) {
+                        return b - a;
+                    }
+                });
+            });
+        };
+    });
 </script>
 @endsection
