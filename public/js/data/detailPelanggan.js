@@ -3,7 +3,7 @@ $(document).ready(function() {
     $('#table-history-transaksi').load(window.location.origin + '/pelanggan/' + id + '/history/transaksi', function() {
         setThousandSeparator();
     });
-    $('#table-history-saldo').load(window.location.origin + '/pelanggan/' + id + '/history/saldo', function() {
+    $('#table-history-saldo').load(window.location.origin + '/pelanggan/' + id + '/history/saldo?order=desc', function() {
         setThousandSeparator();
     });
 

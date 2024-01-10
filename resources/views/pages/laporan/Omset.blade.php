@@ -15,7 +15,7 @@
                     <h5 class="d-flex justify-content-between" style="width: 300px;">
                         <span>Total Omset:</span>
                         <span id="total-omset">
-                        @isset($total_omset)
+                        @isset($totalOmset)
                             {{ 'Rp ' . number_format($totalOmset, 0, ',', '.') }}
                         @endisset
                         </span>
