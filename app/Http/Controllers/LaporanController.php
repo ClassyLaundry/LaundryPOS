@@ -89,7 +89,6 @@ class LaporanController extends Controller
                 return $group->sum('nominal');
             });
             $totalOmset = $pembayarans->sum('nominal');
-            dd($pembayarans);
             return view('pages.laporan.Omset', [
                 'pembayarans' => $pembayarans,
                 'pelanggans' => $pelanggans,
