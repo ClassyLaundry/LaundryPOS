@@ -1,4 +1,4 @@
-<div class="mt-4" id="table-laporan-piutang">
+<div class="mt-4" id="table-laporan-omset">
     <div class="table-responsive my-2 tbody-wrap">
         <table class="table mb-0" id="table-laporan" data-total="{{ number_format($total_omset, 0, ',', '.') }}">
             <thead>
