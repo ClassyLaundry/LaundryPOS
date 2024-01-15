@@ -109,7 +109,7 @@ class LaporanController extends Controller
                         $kode = $key2->transaksi->first()->kode ?? 'null';
                         // dd($temp1);
                         if ( array_search(substr($key->created_at, 0, 10), array_column($temp, 'tanggal')) === false) {
-                            if (array_search($pelanggans->find($key2->transaksi->first()->pelanggan_id ?? 0)->nama, array_column($temp, 'nama_pelanggan')) === false) {
+                            if (array_search($pelanggans->find($key2->transaksi->first()->pelanggan_id ?? 0)->nama ?? 'null', array_column($temp, 'nama_pelanggan')) === false) {
                             //ini if cadangan kalau tidak bisa di server
                             // if (array_search($key2->transaksi->first()->pelanggan->nama, array_column($temp, 'nama_pelanggan')) === false) {
                                 // Add the new data for a unique nama_pelanggan
