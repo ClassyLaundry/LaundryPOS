@@ -121,8 +121,8 @@ class LaporanController extends Controller
 
                                     //ini code cadangan klo di server gk bisa
                                     'kode_transaksi' => $kode,
-                                    'kode_pelanggan' => $pelanggans->find($key2->transaksi->first()->pelanggan_id)->id,
-                                    'nama_pelanggan' => $pelanggans->find($key2->transaksi->first()->pelanggan_id)->nama,
+                                    'kode_pelanggan' => $pelanggans->find($key2->transaksi->first()->pelanggan_id)->id ?? 0,
+                                    'nama_pelanggan' => $pelanggans->find($key2->transaksi->first()->pelanggan_id)->nama ?? 'null',
                                     'nominal' => $this->NominalPelanggans($temp1, substr($key2->created_at, 0, 10), $kode),
                                 ]);
                                 $ctr++;
