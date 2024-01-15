@@ -78,7 +78,7 @@
                                             @if ($loop->index > 0)
                                                 <tr>
                                             @endif
-                                            <td>{{ $transaksi['kode_transaksi'] ?? 'null' }}</td>
+                                            <td>{{ $transaksi['kode_transaksi'] != 'null' ? $transaksi['kode_transaksi'] : '' }}</td>
                                             <td>{{ 'PL' . str_pad($transaksi['kode_pelanggan'] ?? '0', 6, '0', STR_PAD_LEFT) }}</td>
                                             <td>{{ $transaksi['nama_pelanggan'] ?? 'null' }}</td>
                                             <td>
