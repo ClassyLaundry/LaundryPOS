@@ -109,6 +109,7 @@ class LaporanController extends Controller
                 if(array_search(substr($key->created_at, 0, 10), array_column($result, 'tanggal'))===false){
                     $temp1 = Pembayaran::with('transaksi')->whereBetween('created_at', [substr($key->created_at, 0, 10). ' 00:00:00', substr($key->created_at,0,10).' 23:59:59'])->get();
                     foreach ($temp1 as $key2) {
+                        $kode = $key2->transaksi->first()->kode ?? 'null';
                         // dd($temp1);
                         if ( array_search(substr($key->created_at, 0, 10), array_column($temp, 'tanggal')) === false) {
 
@@ -123,10 +124,10 @@ class LaporanController extends Controller
                                     // 'nominal' => $this->NominalPelanggans($temp1, substr($key2->created_at, 0, 10), $key2->transaksi->first()->kode)
 
                                     //ini code cadangan klo di server gk bisa
-                                    'kode_transaksi' => $key2->transaksi->first()->kode,
+                                    'kode_transaksi' => $kode,
                                     'kode_pelanggan' => $pelanggans->find($key2->transaksi->first()->pelanggan_id)->id,
                                     'nama_pelanggan' => $pelanggans->find($key2->transaksi->first()->pelanggan_id)->nama,
-                                    'nominal' => $this->NominalPelanggans($temp1, substr($key2->created_at, 0, 10), $key2->transaksi->first()->kode),
+                                    'nominal' => $this->NominalPelanggans($temp1, substr($key2->created_at, 0, 10), $kode),
                                 ]);
                                 $ctr++;
                             }
