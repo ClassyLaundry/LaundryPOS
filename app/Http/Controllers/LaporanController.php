@@ -80,10 +80,14 @@ class LaporanController extends Controller
         return $sum;
     }
 
-    function NominalPelanggans($data,$day,$trans) {
+    function NominalPelanggans($data, $day, $trans) {
         $sum = 0;
         foreach ($data as $value) {
-            if ($day == substr($value->created_at, 0, 10) && $trans == $value->transaksi->first()->kode) {
+            $kode = $value->transaksi->first()->kode ?? 'null';
+            if ($kode == 'null') {
+                dd($value->transaksi->first());
+            }
+            if ($day == substr($value->created_at, 0, 10) && $trans == $kode) {
                 $sum += $value->nominal;
             }
         }
@@ -116,13 +120,13 @@ class LaporanController extends Controller
                                     // 'kode_transaksi' => $key2->transaksi->first()->kode,
                                     // 'kode_pelanggan' => $key2->transaksi->first()->pelanggan->id,
                                     // 'nama_pelanggan' => $key2->transaksi->first()->pelanggan->nama,
-                                    // 'nominal' => $this->NominalPelanggans($temp1, substr($key2->created_at, 0, 10),$key2->transaksi->first()->kode)
+                                    // 'nominal' => $this->NominalPelanggans($temp1, substr($key2->created_at, 0, 10), $key2->transaksi->first()->kode)
 
                                     //ini code cadangan klo di server gk bisa
                                     'kode_transaksi' => $key2->transaksi->first()->kode,
                                     'kode_pelanggan' => $pelanggans->find($key2->transaksi->first()->pelanggan_id)->id,
                                     'nama_pelanggan' => $pelanggans->find($key2->transaksi->first()->pelanggan_id)->nama,
-                                    'nominal' => $this->NominalPelanggans($temp1, substr($key2->created_at, 0, 10),$key2->transaksi->first()->kode),
+                                    'nominal' => $this->NominalPelanggans($temp1, substr($key2->created_at, 0, 10), $key2->transaksi->first()->kode),
                                 ]);
                                 $ctr++;
                             }
