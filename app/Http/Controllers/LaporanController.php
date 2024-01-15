@@ -97,31 +97,32 @@ class LaporanController extends Controller
             $start = $request->start . ' 00:00:00';
             $end = $request->end . ' 23:59:59';
 
-            $pembayarans = Pembayaran::with(['transaksi','transaksi.Pembayaran'])->orderBy('created_at')->whereBetween('created_at', [$start, $end])->get();
+            $pembayarans = Pembayaran::with('transaksi')->orderBy('created_at')->whereBetween('created_at', [$start, $end])->get();
             $pelanggans = Pelanggan::get();
             foreach ($pembayarans as $key) {
                 $temp = [];
                 $ctr = 0;
                 if(array_search(substr($key->created_at, 0, 10), array_column($result, 'tanggal'))===false){
-                    $temp1 = Pembayaran::with(['transaksi','transaksi.pelanggan'])->whereBetween('created_at', [substr($key->created_at, 0, 10). ' 00:00:00', substr($key->created_at,0,10).' 23:59:59'])->get();
+                    $temp1 = Pembayaran::with('transaksi')->whereBetween('created_at', [substr($key->created_at, 0, 10). ' 00:00:00', substr($key->created_at,0,10).' 23:59:59'])->get();
                     foreach ($temp1 as $key2) {
                         // dd($temp1);
                         if ( array_search(substr($key->created_at, 0, 10), array_column($temp, 'tanggal')) === false) {
 
-                            // if (array_search($pelanggans->find($key2->transaksi->first()->pelanggan_id)->nama, array_column($temp, 'nama_pelanggan')) === false) {
+                            if (array_search($pelanggans->find($key2->transaksi->first()->pelanggan_id)->nama, array_column($temp, 'nama_pelanggan')) === false) {
                             //ini if cadangan kalau tidak bisa di server
-                            if (array_search($key2->transaksi->first()->pelanggan->nama, array_column($temp, 'nama_pelanggan')) === false) {
+                            // if (array_search($key2->transaksi->first()->pelanggan->nama, array_column($temp, 'nama_pelanggan')) === false) {
                                 // Add the new data for a unique nama_pelanggan
                                 array_push($temp, [
-                                    'kode_transaksi' => $key2->transaksi->first()->kode,
-                                    'kode_pelanggan' => $key2->transaksi->first()->pelanggan->id,
-                                    'nama_pelanggan' => $key2->transaksi->first()->pelanggan->nama,
-                                    'nominal' => $this->NominalPelanggans($temp1, substr($key2->created_at, 0, 10),$key2->transaksi->first()->kode)
+                                    // 'kode_transaksi' => $key2->transaksi->first()->kode,
+                                    // 'kode_pelanggan' => $key2->transaksi->first()->pelanggan->id,
+                                    // 'nama_pelanggan' => $key2->transaksi->first()->pelanggan->nama,
+                                    // 'nominal' => $this->NominalPelanggans($temp1, substr($key2->created_at, 0, 10),$key2->transaksi->first()->kode)
 
                                     //ini code cadangan klo di server gk bisa
-                                    // 'kode_pelanggan' => $pelanggans->find($key2->transaksi->first()->pelanggan_id)->id,
-                                    // 'nama_pelanggan' => $pelanggans->find($key2->transaksi->first()->pelanggan_id)->nama,
-                                    // 'nominal' => $this->NominalPelanggans($temp1, substr($key2->created_at, 0, 10),$key2->transaksi->first()->kode)
+                                    'kode_transaksi' => $key2->transaksi->first()->kode,
+                                    'kode_pelanggan' => $pelanggans->find($key2->transaksi->first()->pelanggan_id)->id,
+                                    'nama_pelanggan' => $pelanggans->find($key2->transaksi->first()->pelanggan_id)->nama,
+                                    'nominal' => $this->NominalPelanggans($temp1, substr($key2->created_at, 0, 10),$key2->transaksi->first()->kode),
                                 ]);
                                 $ctr++;
                             }
