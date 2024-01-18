@@ -86,7 +86,7 @@
                                 <div class="px-3 py-1 border-bottom rounded packing font-monospace">
                                     @php
                                         $packType = [];
-                                        for ($i = count($delivery->transaksi->packing->packing_inventories); $i < ; $i++) {
+                                        for ($i = 0; $i < count($delivery->transaksi->packing->packing_inventories); $i++) {
                                             $packing = $delivery->transaksi->packing->packing_inventories[$i];
                                             $new = true;
                                             foreach ($packType as $temp) {
