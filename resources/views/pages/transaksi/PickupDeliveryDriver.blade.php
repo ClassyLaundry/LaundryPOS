@@ -83,10 +83,13 @@
                                     </div>
                                 </div>
                                 @if (isset($delivery->transaksi->packing->packing_inventories))
+                                @php
+                                    $packType = [];
+                                @endphp
                                 <div class="px-3 py-1 border-bottom rounded packing font-monospace">
                                     @php
-                                        $packType = [];
-                                        for ($i = 0; $i < count($delivery->transaksi->packing->packing_inventories); $i++) {
+                                        $count = count($delivery->transaksi->packing->packing_inventories);
+                                        for ($i = 0; $i < $count; $i++) {
                                             $packing = $delivery->transaksi->packing->packing_inventories[$i];
                                             $new = true;
                                             foreach ($packType as $temp) {
