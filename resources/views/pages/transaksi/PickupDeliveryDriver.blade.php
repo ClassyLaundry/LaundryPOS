@@ -84,9 +84,26 @@
                                 </div>
                                 @if (isset($delivery->transaksi->packing->packing_inventories))
                                 <div class="px-3 py-1 border-bottom rounded packing font-monospace">
+                                    @php
+                                        $packType = [];
+                                        for ($i = count($delivery->transaksi->packing->packing_inventories); $i < ; $i++) {
+                                            $packing = $delivery->transaksi->packing->packing_inventories[$i];
+                                            $new = true;
+                                            foreach ($packType as $temp) {
+                                                if ($temp['nama'] == $packing->inventory->nama) {
+                                                    $new = false;
+                                                }
+                                            }
+                                            if ($new) {
+                                                $packType[$packing->inventory->nama] = 1;
+                                            } else {
+                                                $packType[$packing->inventory->nama] += $packing->qty;
+                                            }
+                                        }
+                                    @endphp
                                     <h4>
-                                        @foreach ($delivery->transaksi->packing->packing_inventories as $packing)
-                                            {{ strtolower($packing->inventory->nama) . ': ' . $packing->qty }}
+                                        @foreach ($packType as $key => $value)
+                                            {{ strtolower($key) . ': ' . $value }}
                                         @endforeach
                                     </h4>
                                 </div>
