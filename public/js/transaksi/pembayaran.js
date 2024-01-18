@@ -204,7 +204,7 @@ $(document).ready(function() {
         let formData = new FormData();
         formData.append('transaksi_id', $('#input-trans-id').val());
         formData.append('metode_pembayaran', $('#input-metode-pembayaran').val());
-        formData.append('nominal', removeDot($('#input-nominal').val()));
+        formData.append('nominal', removeDot($('#input-nominal').val()) - removeDot($('#input-kembalian').val()));
 
         $.ajax({
             headers: {
