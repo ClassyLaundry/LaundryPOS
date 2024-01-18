@@ -83,11 +83,9 @@
                                     </div>
                                 </div>
                                 @if (isset($delivery->transaksi->packing->packing_inventories))
-                                @php
-                                    $packType = [];
-                                @endphp
                                 <div class="px-3 py-1 border-bottom rounded packing font-monospace">
                                     @php
+                                    $packType = [];
                                         $count = count($delivery->transaksi->packing->packing_inventories);
                                         for ($i = 0; $i < $count; $i++) {
                                             $packing = $delivery->transaksi->packing->packing_inventories[$i];
@@ -102,6 +100,8 @@
                                             } else {
                                                 $packType[$packing->inventory->nama] += $packing->qty;
                                             }
+                                            var_dump($packType);
+                                            var_dump($packing);
                                         }
                                     @endphp
                                     <h4>
