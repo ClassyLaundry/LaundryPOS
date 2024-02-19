@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Data\CatatanPelanggan;
+use App\Models\Data\JenisItem;
 use App\Models\Data\Pelanggan;
 use App\Models\Packing\Packing;
 use App\Models\SettingUmum;
 use App\Models\Transaksi\PickupDelivery;
+use App\Models\Transaksi\Rewash;
 use App\Models\Transaksi\Transaksi;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -135,32 +137,36 @@ class PrintController extends Controller
         return $pdf->stream('invoice.pdf');
     }
 
-    public function tandaTerima($transaksi_id)
+    public function tandaTerima($rewash_id)
     {
-        $transaksi = Transaksi::detail()->find($transaksi_id);
-
+        $rewash = Rewash::with('jenis_rewash', 'item_transaksi.item_notes')->find($rewash_id);
+        $jenis_item = JenisItem::find($rewash->item_transaksi->jenis_item_id);
+        $transaksi = Transaksi::detail()->find($rewash->item_transaksi->transaksi_id);
+        $pelanggan = Pelanggan::with('catatan_pelanggan')->find($transaksi->pelanggan_id);
         $header = [
             'nama_usaha' => SettingUmum::where('nama', 'Print Header Nama Usaha')->first()->value,
             'delivery_text' => SettingUmum::where('nama', 'Print Header Delivery Text')->first()->value
         ];
-        $total_item = 0;
-        $total_jenis_item = 0;
-        foreach ($transaksi->item_transaksi as $item) {
-            $total_item += $item->qty;
-            $total_jenis_item++;
-        }
-        $pelanggan = Pelanggan::find($transaksi->pelanggan_id);
-        $pickup = PickupDelivery::with('driver')->where('transaksi_id', $transaksi_id)->where('action', 'pickup')->first();
+        $total_qty = $rewash->item_transaksi->qty;
+        $total_bobot = $rewash->item_transaksi->total_bobot;
+        $status_delivery = PickupDelivery::where("transaksi_id", $transaksi->id)->where('action', 'delivery')->get()->count() != 0 ? 'YA' : 'TIDAK';
+        $catatan = CatatanPelanggan::where('pelanggan_id', $transaksi->pelanggan_id)->first();
 
         $data = collect();
         $data->header = $header;
         $data->transaksi = $transaksi;
-        $data->total_item = $total_item;
+        $data->rewash = $rewash;
+        $data->item = $rewash->item_transaksi;
+        $data->jenis_item = $jenis_item;
+        $data->total_qty = $total_qty;
+        $data->total_bobot = $total_bobot;
+        $data->status_delivery = $status_delivery;
         $data->pelanggan = $pelanggan;
-        $data->pickup = $pickup;
+        if ($catatan != null) {
+            $data->catatan = $catatan->catatan_khusus;
+        }
 
-        $paper_size = [0, 0, 408, 207 + ($total_jenis_item * 22)];
-        return view('pages.print.TandaTerima', [
+        return view('pages.print.TandaTerimaRewash', [
             'data' => $data
         ]);
 
@@ -168,6 +174,6 @@ class PrintController extends Controller
         //     'data' => $data,
         // ])->setPaper($paper_size, 'portrait');
 
-        // return $pdf->stream('invoice.pdf');
+        // return $pdf->stream('tanda_terima.pdf');
     }
 }

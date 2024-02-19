@@ -53,6 +53,7 @@
                             @if(in_array("Menyatakan Selesai Proses Rewash", Session::get('permissions')) || Session::get('role') == 'administrator')
                             <li id="action-finish">Rewash Selesai</li>
                             @endif
+                            <li id="action-receipt">Tanda Terima</li>
                             @if(in_array("Menghapus Data Proses Rewash", Session::get('permissions')) || Session::get('role') == 'administrator')
                             <li id="action-delete">Hapus data</li>
                             @endif

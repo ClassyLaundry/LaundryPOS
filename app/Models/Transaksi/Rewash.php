@@ -16,7 +16,6 @@ class Rewash extends Model
     protected $guarded = ['id'];
     protected $appends = ['jenis_rewash'];
 
-
     public static function boot()
     {
         parent::boot();
@@ -29,7 +28,12 @@ class Rewash extends Model
         return $jenis_rewash->keterangan;
     }
 
-    public function itemTransaksi()
+    public function jenis_rewash()
+    {
+        return $this->belongsTo(JenisRewash::class, 'jenis_rewash_id', 'id');
+    }
+
+    public function item_transaksi()
     {
         return $this->belongsTo(ItemTransaksi::class, 'item_transaksi_id', 'id');
     }

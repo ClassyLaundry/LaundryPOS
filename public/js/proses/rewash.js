@@ -50,4 +50,8 @@ $(document).ready(function() {
             window.location = "/proses/rewash/update-status/" + btnId;
         }
     });
+
+    $('#action-receipt').on('click', function() {
+        window.location = "/printTandaTerima/" + btnId;
+    });
 });
