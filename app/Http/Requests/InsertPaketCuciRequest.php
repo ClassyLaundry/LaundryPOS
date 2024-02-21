@@ -27,6 +27,7 @@ class InsertPaketCuciRequest extends FormRequest
             'nama_paket' => 'required|string',
             'deskripsi' => 'nullable|string',
             'harga_paket' => 'numeric',
+            'harga_per_bobot' => 'numeric',
             'jumlah_bobot' => 'numeric',
             'status' => 'boolean',
         ];

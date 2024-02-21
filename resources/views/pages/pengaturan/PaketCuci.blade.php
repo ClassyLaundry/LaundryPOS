@@ -74,11 +74,18 @@
                                     <h5>Nama Paket</h5>
                                     <input type="text" class="form-control" id="input-nama-paket" name="nama_paket" required />
                                 </div>
-                                <div class="col-12 col-lg-6">
+                                <div class="col-12 col-lg-4">
                                     <h5>Bobot</h5>
                                     <input type="number" class="form-control" id="input-bobot-paket" min="1" name="jumlah_bobot" required />
                                 </div>
-                                <div class="col-12 col-lg-6">
+                                <div class="col-12 col-lg-4">
+                                    <h5>Harga Per Bobot</h5>
+                                    <div class="form-control d-flex">
+                                        <p>Rp</p>
+                                        <input class="w-100 ms-2 input-thousand-separator" type="text" id="input-harga_per_bobot" name="harga_per_bobot" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-4">
                                     <h5>Harga Paket</h5>
                                     <div class="form-control d-flex">
                                         <p>Rp</p>

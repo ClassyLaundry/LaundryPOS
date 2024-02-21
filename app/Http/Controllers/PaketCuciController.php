@@ -18,9 +18,7 @@ class PaketCuciController extends Controller
             return $item->name === 'Membuat Paket Cuci';
         });
         if ($permissionExist) {
-            $harga_per_bobot = floor($request->harga_paket / $request->jumlah_bobot);
             $merged = $request->merge([
-                'harga_per_bobot' => $harga_per_bobot,
                 'modified_by' => Auth::id(),
             ])->toArray();
             PaketCuci::create($merged);
@@ -57,9 +55,7 @@ class PaketCuciController extends Controller
             return $item->name === 'Mengubah Data Paket Cuci';
         });
         if ($permissionExist) {
-            $harga_per_bobot = floor($request->harga_paket / $request->jumlah_bobot);
             $merged = $request->merge([
-                'harga_per_bobot' => $harga_per_bobot,
                 'modified_by' => Auth::id(),
             ])->toArray();
             PaketCuci::find($id)->update($merged);
