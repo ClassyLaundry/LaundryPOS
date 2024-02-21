@@ -74,6 +74,12 @@ class User extends Authenticatable
         }
     }
 
+    public static function getOutletId($id)
+    {
+        $user = User::find($id);
+        return $user->outlet_id;
+    }
+
     public function changeRole($role)
     {
         $current_role = $this->getRole($this->id);

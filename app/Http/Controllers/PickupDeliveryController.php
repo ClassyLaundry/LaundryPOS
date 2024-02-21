@@ -186,7 +186,12 @@ class PickupDeliveryController extends Controller
 
     public function delivery()
     {
-        $delivery = PickupDelivery::where('action', 'delivery')->paginate(5);
+        $outlet_id = User::getOutletId(Auth::id());
+        $delivery = PickupDelivery::whereHas('transaksi', function ($query) use ($outlet_id) {
+            $query->where('outlet_id', $outlet_id);
+        })
+            ->where('action', 'delivery')
+            ->paginate(5);
         return view('components.tableDelivery', [
             'deliveries' => $delivery
         ]);
@@ -259,19 +264,19 @@ class PickupDeliveryController extends Controller
     {
         $transaksi = Transaksi::detail()
             ->where('status', 'confirmed')
-            ->where(function($query) {
+            ->where(function ($query) {
                 $query->where('is_done_cuci', 1)
                     ->where('is_done_setrika', 1);
             })
-            ->orWhere(function($query) {
+            ->orWhere(function ($query) {
                 $query->where('setrika_only', 1)
                     ->where('is_done_setrika', 1);
             })
-            ->whereIn('id', function($subquery) {
+            ->whereIn('id', function ($subquery) {
                 $subquery->select('transaksi_id')
                     ->from('packings');
             })
-            ->whereNotIn('id', function($subquery) {
+            ->whereNotIn('id', function ($subquery) {
                 $subquery->select('transaksi_id')
                     ->from('pickup_deliveries')
                     ->whereNotNull('transaksi_id');

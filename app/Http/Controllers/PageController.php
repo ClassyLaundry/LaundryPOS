@@ -328,12 +328,15 @@ class PageController extends Controller
                     ]
                 );
             } else {
+                $outlet_id = User::getOutletId(Auth::id());
                 return view(
                     'pages.transaksi.PickupDeliveryAdmin',
                     [
                         'pickups' => PickupDelivery::where('action', 'pickup')->get(),
-                        'deliveries' => PickupDelivery::where('action', 'delivery')->get(),
-                        'drivers' => User::role('delivery')->get(),
+                        'deliveries' => PickupDelivery::whereHas('transaksi', function ($query) use ($outlet_id) {
+                            $query->where('outlet_id', $outlet_id);
+                        })->where('action', 'delivery')->get(),
+                        'drivers' => User::role('delivery')->where('outlet_id', $outlet_id)->get(),
                     ]
                 );
             }
@@ -504,12 +507,12 @@ class PageController extends Controller
                             ->where('outlet_id', Auth::user()->outlet->id)
                             ->where('status', 'confirmed')
                             ->whereNull('penyetrika')
-                            ->where(function($query) {
+                            ->where(function ($query) {
                                 $query->where('is_done_cuci', 1)
-                                ->orWhere(function($query1) {
-                                    $query1->where('is_done_cuci', 0)
-                                        ->where('setrika_only', 1);
-                                });
+                                    ->orWhere(function ($query1) {
+                                        $query1->where('is_done_cuci', 0)
+                                            ->where('setrika_only', 1);
+                                    });
                             })
                             ->orderBy('done_date', 'asc')->get(),
                         'transaksi_penyetrika' => Transaksi::with('tukang_setrika')->detail()

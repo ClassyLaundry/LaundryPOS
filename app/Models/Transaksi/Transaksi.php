@@ -68,7 +68,7 @@ class Transaksi extends Model
         $setrikaMultiplier = (float)$setrikaMultiplier->value;
         $result = $subtotal;
         if ($express && $setrika_only) {
-            $result = $subtotal * $setrikaMultiplier * $expressMultiplier;
+            $result = $subtotal * ($setrikaMultiplier + $expressMultiplier);
         } else if ($express) {
             $result = $subtotal * $expressMultiplier;
         } else if ($setrika_only) {
@@ -94,10 +94,10 @@ class Transaksi extends Model
         if ($this->tipe_transaksi == "bucket") {
             $sum_bobot = ItemTransaksi::where('transaksi_id', $this->id)->sum('total_bobot');
             $item_count = ItemTransaksi::where('transaksi_id', $this->id)->count();
+            
             //kalkulasi bobot bucket
             $paket_bucket = PaketCuci::where('nama_paket', 'BUCKET')->first();
             $jumlah_bucket = ceil($sum_bobot / $paket_bucket->jumlah_bobot);
-            // $total_harga_bucket = $jumlah_bucket * $paket_bucket->harga_paket;
             $total_harga_bucket = $paket_bucket->harga_paket;
             if ($sum_bobot == 0) {
                 $total_harga_bucket = 0;

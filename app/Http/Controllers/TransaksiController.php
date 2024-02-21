@@ -33,7 +33,8 @@ class TransaksiController extends Controller
             return $item->name === 'Melihat Detail Transaksi';
         });
         if ($permissionExist) {
-            return Transaksi::detail()->find($id);
+            $outlet_id = User::getOutletId(Auth::id());
+            return Transaksi::detail()->where('outlet_id', $outlet_id)->find($id);
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
         }
@@ -41,9 +42,10 @@ class TransaksiController extends Controller
 
     public function tableBucket($id)
     {
-        $transaksi = Transaksi::detail()->with('pelanggan')->find($id);
+        $outlet_id = User::getOutletId(Auth::id());
+        $transaksi = Transaksi::detail()->where('outlet_id', $outlet_id)->find($id);
         $total_qty = 0;
-        foreach($transaksi->item_transaksi as $item) {
+        foreach ($transaksi->item_transaksi as $item) {
             $total_qty += $item->qty;
         }
         return view('components.tableItemTransBucket', [
@@ -56,9 +58,10 @@ class TransaksiController extends Controller
 
     public function tablePremium($id)
     {
-        $transaksi = Transaksi::detail()->with('pelanggan')->find($id);
+        $outlet_id = User::getOutletId(Auth::id());
+        $transaksi = Transaksi::detail()->where('outlet_id', $outlet_id)->find($id);
         $total_qty = 0;
-        foreach($transaksi->item_transaksi as $item) {
+        foreach ($transaksi->item_transaksi as $item) {
             $total_qty += $item->qty;
         }
         return view('components.tableItemTransPremium', [
@@ -133,9 +136,11 @@ class TransaksiController extends Controller
     //Mencari Transaksi dengan KEY id, Kode Transaksi, atau Nama Pelanggan
     public function search(Request $request)
     {
+        $outlet_id = User::getOutletId(Auth::id());
         $transaksi = Transaksi::detail()
             ->where('tipe_transaksi', $request->tipe)
             ->orWhere('tipe_transaksi', null)
+            ->where('outlet_id', $outlet_id)
             ->where(function ($query) use ($request) {
                 $query->where('id', 'like', '%' . $request->key . '%')
                     ->orWhereHas('pelanggan', function ($q) use ($request) {
@@ -541,7 +546,8 @@ class TransaksiController extends Controller
         ];
     }
 
-    public function tableCancelled(Request $request) {
+    public function tableCancelled(Request $request)
+    {
         $transaksi = Transaksi::detail()
             ->where(function ($query) use ($request) {
                 $query->where('id', 'like', '%' . $request->key . '%')
@@ -556,9 +562,10 @@ class TransaksiController extends Controller
         ]);
     }
 
-    public function searchItem(Request $request) {
+    public function searchItem(Request $request)
+    {
         $tipe = 'status_' . $request->tipe;
-        return view('components.tableSearchItemTransaksi' , [
+        return view('components.tableSearchItemTransaksi', [
             'jenis_items' => JenisItem::where($tipe, 1)
                 ->where(function ($query) use ($request) {
                     $query->where('nama', 'like', "%{$request->key}%")

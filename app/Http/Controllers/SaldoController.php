@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Paket\PaketDeposit;
 use App\Models\Saldo;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -30,6 +31,9 @@ class SaldoController extends Controller
                 $saldo_akhir -= $request->nominal;
             }
 
+            $paket_deposit = PaketDeposit::find($request->paket_deposit_id);
+            $kas_masuk = $paket_deposit->harga;
+
             Saldo::create([
                 'pelanggan_id' => $request->pelanggan_id,
                 'outlet_id' => $user->outlet_id,
@@ -38,6 +42,7 @@ class SaldoController extends Controller
                 'jenis_input' => $request->jenis_input,
                 'via' => $request->via,
                 'saldo_akhir' => $saldo_akhir,
+                'kas_masuk' => $kas_masuk,
                 'modified_by' => Auth::id()
             ]);
 
