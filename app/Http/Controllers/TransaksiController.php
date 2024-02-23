@@ -34,7 +34,7 @@ class TransaksiController extends Controller
         });
         if ($permissionExist) {
             $outlet_id = User::getOutletId(Auth::id());
-            dd(Transaksi::detail()->where('outlet_id', $outlet_id)->find($id));
+            return Transaksi::detail()->where('outlet_id', $outlet_id)->find($id);
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
         }
@@ -148,7 +148,7 @@ class TransaksiController extends Controller
                     });
             })
             ->latest()->paginate(15);
-
+        dd($transaksi);
         return view('components.tableListTrans', [
             'status' => 200,
             'transaksis' => $transaksi
