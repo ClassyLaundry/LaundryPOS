@@ -16,6 +16,7 @@ $(document).ready(function() {
         $('#input-nama-paket').val($('#table-paket-cuci tbody tr:nth-child(' + btnIndex + ') td:nth-child(1)').html());
         $('#input-deskripsi').val($('#table-paket-cuci tbody tr:nth-child(' + btnIndex + ') td:nth-child(2)').html());
         $('#input-bobot-paket').val($('#table-paket-cuci tbody tr:nth-child(' + btnIndex + ') td:nth-child(3)').html());
+        $('#input-harga_per_bobot').val($('#table-paket-cuci tbody tr:nth-child(' + btnIndex + ') td:nth-child(5)').html());
         $('#input-harga-paket').val($('#table-paket-cuci tbody tr:nth-child(' + btnIndex + ') td:nth-child(7)').html());
         if ($('#table-paket-cuci tbody tr:nth-child(' + btnIndex + ') td:nth-child(8)').html() == 'Aktif') {
             $('#radio-status-tidakAktif').attr('checked', false);
@@ -37,6 +38,7 @@ $(document).ready(function() {
         $('#input-nama-paket').val('');
         $('#input-deskripsi').val('');
         $('#input-bobot-paket').val('');
+        $('#input-harga_per_bobot').val('');
         $('#input-harga-paket').val('');
         $('#col-status').hide();
         $('#radio-status-aktif').attr('checked', false);
@@ -57,9 +59,11 @@ $(document).ready(function() {
     });
 
     // untuk menghilangkan thousand separator dari input
-    $('#form-paket-cuci').on('submit', function() {
+    $('#form-paket-cuci').on('submit', function(e) {
+        e.preventDefault();
         $('#input-harga_per_bobot').val($('#input-harga_per_bobot').val().replace('.', ''));
         $('#input-harga-paket').val($('#input-harga-paket').val().replace('.', ''));
+        this.submit();
     });
 });
 
