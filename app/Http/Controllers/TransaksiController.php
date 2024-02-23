@@ -34,7 +34,7 @@ class TransaksiController extends Controller
         });
         if ($permissionExist) {
             $outlet_id = User::getOutletId(Auth::id());
-            return Transaksi::detail()->where('outlet_id', $outlet_id)->find($id);
+            dd(Transaksi::detail()->where('outlet_id', $outlet_id)->find($id));
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
         }
