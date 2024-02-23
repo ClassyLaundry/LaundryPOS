@@ -138,9 +138,11 @@ class TransaksiController extends Controller
     {
         $outlet_id = User::getOutletId(Auth::id());
         $transaksi = Transaksi::detail()
-            ->where('tipe_transaksi', $request->tipe)
-            ->orWhere('tipe_transaksi', null)
             ->where('outlet_id', $outlet_id)
+            ->where(function ($query) use ($request) {
+                $query->where('tipe_transaksi', $request->tipe)
+                    ->orWhere('tipe_transaksi', null);
+            })
             ->where(function ($query) use ($request) {
                 $query->where('id', 'like', '%' . $request->key . '%')
                     ->orWhereHas('pelanggan', function ($q) use ($request) {
@@ -148,7 +150,7 @@ class TransaksiController extends Controller
                     });
             })
             ->latest()->paginate(15);
-        dd($transaksi);
+            // dd($transaksi->toSql(), $transaksi->getBindings());
         return view('components.tableListTrans', [
             'status' => 200,
             'transaksis' => $transaksi
