@@ -58,6 +58,7 @@ $(document).ready(function() {
 
     // untuk menghilangkan thousand separator dari input
     $('#form-paket-cuci').on('submit', function() {
+        $('#input-harga_per_bobot').val($('#input-harga_per_bobot').val().replace('.', ''));
         $('#input-harga-paket').val($('#input-harga-paket').val().replace('.', ''));
     });
 });
