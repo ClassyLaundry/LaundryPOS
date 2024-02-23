@@ -21,6 +21,7 @@ $(document).ready(function() {
             url: "/transaksi/detail/" + id,
         }).done(function(data) {
             let trans = data;
+            console.log(trans);
             $('#id-trans').text(trans.id);
             $('#kode-trans').text(trans.kode);
 
