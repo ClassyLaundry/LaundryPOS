@@ -84,29 +84,17 @@
                                 </div>
                                 @if (isset($delivery->transaksi->packing->packing_inventories))
                                 <div class="px-3 py-1 border-bottom rounded packing font-monospace">
-                                    @php
-                                    $packType = [];
-                                        $count = count($delivery->transaksi->packing->packing_inventories);
-                                        for ($i = 0; $i < $count; $i++) {
-                                            $packing = $delivery->transaksi->packing->packing_inventories[$i];
-                                            $new = true;
-                                            foreach ($packType as $temp) {
-                                                if ($temp['nama'] == $packing->inventory->nama) {
-                                                    $new = false;
-                                                }
-                                            }
-                                            if ($new) {
-                                                $packType[$packing->inventory->nama] = 1;
-                                            } else {
-                                                $packType[$packing->inventory->nama] += $packing->qty;
-                                            }
-                                            var_dump($packType);
-                                            var_dump($packing);
-                                        }
-                                    @endphp
                                     <h4>
-                                        @foreach ($packType as $key => $value)
-                                            {{ strtolower($key) . ': ' . $value }}
+                                        @foreach ($on_going_packing as $key => $value)
+                                            @if($loop->index == 0)
+                                                @if (count($on_going_packing) != 1)
+                                                    {{ strtolower($key) . ': ' . $value . ',' }}
+                                                @else
+                                                    {{ strtolower($key) . ': ' . $value }}
+                                                @endif
+                                            @else
+                                                {{ strtolower($key) . ': ' . $value }}
+                                            @endif
                                         @endforeach
                                     </h4>
                                 </div>

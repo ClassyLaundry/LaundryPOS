@@ -316,12 +316,34 @@ class PageController extends Controller
         });
         if ($permissionExist) {
             if (Auth::user()->role == 'delivery') {
+                $onGoingDeliveries = PickupDelivery::with('transaksi')->where('action', 'delivery')->where('driver_id', $user->id)->where('is_done', 0)->get();
+                $onGoingPackType = [];
+                foreach($onGoingDeliveries as $delivery) {
+                    $onGoingPackType = [];
+                    $count = count($delivery->transaksi->packing->packing_inventories);
+                    for ($i = 0; $i < $count; $i++) {
+                        $packing = $delivery->transaksi->packing->packing_inventories[$i];
+                        $new = true;
+
+                        if (isset($onGoingPackType[$packing->inventory->nama])) {
+                            $new = false;
+                        }
+
+                        if ($new) {
+                            $onGoingPackType[$packing->inventory->nama] = 1;
+                        } else {
+                            $onGoingPackType[$packing->inventory->nama] += $packing->qty;
+                        }
+                    }
+                }
+
                 return view(
                     'pages.transaksi.PickupDeliveryDriver',
                     [
                         'on_going_pickups' => PickupDelivery::with('transaksi')->where('action', 'pickup')->where('driver_id', $user->id)->where('is_done', 0)->get(),
                         'is_done_pickups' => PickupDelivery::with('transaksi')->where('action', 'pickup')->where('driver_id', $user->id)->where('is_done', 1)->get(),
-                        'on_going_deliveries' => PickupDelivery::with('transaksi')->where('action', 'delivery')->where('driver_id', $user->id)->where('is_done', 0)->get(),
+                        'on_going_deliveries' => $onGoingDeliveries,
+                        'on_going_packing' => $onGoingPackType,
                         'is_done_deliveries' => PickupDelivery::with('transaksi')->where('action', 'delivery')->where('driver_id', $user->id)->where('is_done', 1)->get(),
                         'driver' => $user,
                         // 'transaksis' => Transaksi::join('pickup_deliveries', 'transaksis.id', '=', 'pickup_deliveries.transaksi_id')->where('pickup_deliveries.driver_id', $user->id)->select('transaksis.*')->get(),

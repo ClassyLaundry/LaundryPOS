@@ -17,7 +17,7 @@
                 <td>{{ $trans->kode }}</td>
                 <td>{{ $trans->tipe_transaksi }}</td>
                 <td>{{ $trans->outlet->nama }}</td>
-                <td class="text-center">{{ $trans->created_at }}</td>
+                <td class="text-center">{{ date('d-M-Y H:i', strtotime($trans->created_at)) }}</td>
                 <td>{{ $trans->pelanggan->nama }}</td>
                 <td>Rp</td>
                 <td class="text-end thousand-separator">{{ $trans->grand_total }}</td>
