@@ -21,7 +21,6 @@ $(document).ready(function() {
             url: "/transaksi/detail/" + id,
         }).done(function(data) {
             let trans = data;
-            console.log(trans);
             $('#id-trans').text(trans.id);
             $('#kode-trans').text(trans.kode);
 
@@ -148,9 +147,6 @@ $(document).ready(function() {
 
             parent.removeClass('disabled');
             $('#modal-opsi-trans').modal('hide');
-            // if (getCookie('transaksi-intro_trans') == '') {
-            //     introDetailTransaksi();
-            // }
         });
     });
 
