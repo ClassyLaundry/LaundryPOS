@@ -30,8 +30,8 @@
                                 @foreach ($pelanggans as $pelanggan)
                                 <tr>
                                     <td>{{ strtolower($pelanggan->nama) }}</td>
-                                    <td class="text-center">{{ date('d-M-Y', strtotime($pelanggan->created_at)) }}</td>
-                                    <td class="text-center">@isset($pelanggan->transaksi_terakhir) {{ date('d-M-Y', strtotime($pelanggan->transaksi_terakhir->created_at)) }} @else - @endisset</td>
+                                    <td class="text-center">{{ $pelanggan->created_at }}</td>
+                                    <td class="text-center">@isset($pelanggan->transaksi_terakhir) {{ $pelanggan->transaksi_terakhir->created_at }} @else - @endisset</td>
                                     <td><div class="d-flex justify-content-between"><span>Rp</span><span>{{ number_format($pelanggan->saldo_akhir, 0, ',', '.') }}</span></div></td>
                                     <td class="cell-action">
                                         <div class="d-flex h-100 align-items-center justify-content-end">

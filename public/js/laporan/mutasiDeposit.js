@@ -10,6 +10,15 @@ $(document).ready(function() {
     });
 
     $('#table-laporan').dataTable({
+        columnDefs : [{
+            targets: [1, 2],
+            render: function (data, type, row) {
+                if ((type === 'display' || type === 'filter') && data != '-') {
+                    return new Date(data).toLocaleDateString('en-GB');
+                }
+                return data;
+            }
+        }],
         order: [[0, 'asc']],
         columns: [
             null,
