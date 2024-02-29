@@ -225,7 +225,15 @@ $(document).ready(function() {
 
     $('#table-container').load(window.location.origin + '/component/pembayaran', function() {
         $("#table-pembayaran").dataTable({
-            columnDefs : [{targets:3, type:"date-eu"}],
+            columnDefs : [{
+                targets: [1, 2],
+                render: function (data, type, row) {
+                    if ((type === 'display' || type === 'filter') && data != '') {
+                        return new Date(data).toLocaleDateString('en-GB');
+                    }
+                    return data;
+                }
+            }],
             columns: [
                 null,
                 null,

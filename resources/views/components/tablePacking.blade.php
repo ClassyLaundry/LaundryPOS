@@ -17,8 +17,8 @@
                     <td class="text-center">{{ $trans->kode }}</td>
                     <td class="text-center">{{ ucwords($trans->tipe_transaksi) }}</td>
                     <td>{{ $trans->pelanggan->nama }}</td>
-                    <td class="d-none d-lg-table-cell text-center">{{ date('d-M-Y', strtotime($trans->created_at)) }}</td>
-                    <td class="d-none d-lg-table-cell text-center">@isset($trans->done_date){{ date('d-M-Y', strtotime($trans->done_date)) }}@endisset</td>
+                    <td class="d-none d-lg-table-cell text-center">{{ $trans->created_at }}</td>
+                    <td class="d-none d-lg-table-cell text-center">@isset($trans->done_date){{ $trans->done_date }}@endisset</td>
                     <td class="cell-action">
                         <button id="btn-{{ $trans->id }}" class="btn btn-primary btn-sm btn-show-action" type="button"><i class="fas fa-bars"></i></button>
                     </td>

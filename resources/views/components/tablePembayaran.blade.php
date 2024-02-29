@@ -20,8 +20,8 @@
                 <td class="text-center">{{ $transaksi->kode }}</td>
                 <td class="text-center">{{ $transaksi->tipe_transaksi }}</td>
                 <td class="text-center">{{ $transaksi->pelanggan->nama }}</td>
-                <td class="text-center">{{ date('d/m/Y', strtotime($transaksi->created_at)) }}</td>
-                <td class="text-center">@isset($transaksi->done_date) {{ date('d/m/Y', strtotime($transaksi->done_date)) }} @endisset</td>
+                <td class="text-center">{{ $transaksi->created_at }}</td>
+                <td class="text-center">@isset($transaksi->done_date) {{ $transaksi->done_date }} @endisset</td>
                 <td>
                     <div class="d-flex justify-content-between">
                         <span>Rp</span>

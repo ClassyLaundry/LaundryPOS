@@ -191,6 +191,15 @@ $(document).ready(function() {
 
     $('#container-list-trans').load(window.location.origin + '/component/packing', function() {
         $("#table-list-trans").dataTable({
+            columnDefs : [{
+                targets: [3, 4],
+                render: function (data, type, row) {
+                    if ((type === 'display' || type === 'filter') && data != '') {
+                        return new Date(data).toLocaleDateString('en-GB');
+                    }
+                    return data;
+                }
+            }],
             order: [[0, 'desc']],
             columns: [
                 null,
