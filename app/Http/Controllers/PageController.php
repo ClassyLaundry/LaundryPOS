@@ -189,7 +189,7 @@ class PageController extends Controller
             return view(
                 'pages.proses.Rewash',
                 [
-                    'rewashes' => Rewash::with('itemTransaksi')->get(),
+                    'rewashes' => Rewash::with('item_transaksi')->get(),
                     'jenisRewashes' => JenisRewash::get(),
                     'transaksis' => Transaksi::latest()->get(),
                     'pencucis' => User::role('produksi_cuci')->get(),
