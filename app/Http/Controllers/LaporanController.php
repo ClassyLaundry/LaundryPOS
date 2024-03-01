@@ -12,8 +12,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use function PHPSTORM_META\type;
-
 class LaporanController extends Controller
 {
     public function tablePiutang(Request $request)
@@ -99,57 +97,82 @@ class LaporanController extends Controller
 
     public function laporanOmset(Request $request)
     {
-        $result = [];
+        // $result = [];
         if ($request->has('start') && $request->has('end')) {
             $start = $request->start . ' 00:00:00';
             $end = $request->end . ' 23:59:59';
 
-            $pembayarans = Pembayaran::with('transaksi')->orderBy('created_at')->whereBetween('created_at', [$start, $end])->get();
-            $pelanggans = Pelanggan::get();
-            foreach ($pembayarans as $key) {
-                $temp = [];
-                $ctr = 0;
-                if(array_search(substr($key->created_at, 0, 10), array_column($result, 'tanggal'))===false){
-                    $temp1 = Pembayaran::with('transaksi')->whereBetween('created_at', [substr($key->created_at, 0, 10). ' 00:00:00', substr($key->created_at,0,10).' 23:59:59'])->get();
-                    foreach ($temp1 as $key2) {
-                        $kode = $key2->transaksi->first()->kode ?? 'null';
-                        // dd($temp1);
-                        if ( array_search(substr($key->created_at, 0, 10), array_column($temp, 'tanggal')) === false) {
-                            if (array_search($pelanggans->find($key2->transaksi->first()->pelanggan_id ?? 0)->nama ?? 'null', array_column($temp, 'nama_pelanggan')) === false) {
-                            //ini if cadangan kalau tidak bisa di server
-                            // if (array_search($key2->transaksi->first()->pelanggan->nama, array_column($temp, 'nama_pelanggan')) === false) {
-                                // Add the new data for a unique nama_pelanggan
-                                array_push($temp, [
-                                    // 'kode_transaksi' => $key2->transaksi->first()->kode,
-                                    // 'kode_pelanggan' => $key2->transaksi->first()->pelanggan->id,
-                                    // 'nama_pelanggan' => $key2->transaksi->first()->pelanggan->nama,
-                                    // 'nominal' => $this->NominalPelanggans($temp1, substr($key2->created_at, 0, 10), $key2->transaksi->first()->kode)
+            $completedTransactions = Pembayaran::whereBetween('created_at', [$start, $end])
+                ->whereHas('transaksi', function($query) {
+                    $query->where('lunas', true);
+                })
+                ->with('transaksi')
+                ->orderBy('created_at')
+                ->get();
 
-                                    //ini code cadangan klo di server gk bisa
-                                    'kode_transaksi' => $kode,
-                                    'kode_pelanggan' => $pelanggans->find($key2->transaksi->first()->pelanggan_id ?? 0)->id ?? 0,
-                                    'nama_pelanggan' => $pelanggans->find($key2->transaksi->first()->pelanggan_id ?? 0)->nama ?? 'null',
-                                    'nominal' => $this->NominalPelanggans($temp1, substr($key2->created_at, 0, 10), $kode),
-                                ]);
-                                $ctr++;
-                            }
-                        }
-                    }
-                    array_push($result,[
-                        'tanggal' => substr($key->created_at, 0, 10),
-                        'total' => $this->sumPelanggans($pembayarans, substr($key->created_at, 0, 10)),
-                        'data' => $temp,
-                        'count' => $ctr
-                    ]);
-                }
-                $temp = [];
-                $ctr = 0;
-            }
+            $countPerDay = Pembayaran::whereBetween('created_at', [$start, $end])
+                ->whereHas('transaksi', function ($query) {
+                    $query->where('lunas', true);
+                })
+                ->with('transaksi')
+                ->orderBy('created_at')
+                ->get()
+                ->groupBy(function ($item) {
+                    return $item->created_at->format('d-m-Y');
+                })
+                ->map(function ($group) {
+                    return count($group);
+                });
+
+            // return $completedTransactions;
+
+            // $pembayarans = Pembayaran::with('transaksi')->orderBy('created_at')->whereBetween('created_at', [$start, $end])->get();
+            // $pelanggans = Pelanggan::get();
+            // foreach ($pembayarans as $key) {
+            //     $temp = [];
+            //     $ctr = 0;
+            //     if(array_search(substr($key->created_at, 0, 10), array_column($result, 'tanggal'))===false){
+            //         $temp1 = Pembayaran::with('transaksi')->whereBetween('created_at', [substr($key->created_at, 0, 10). ' 00:00:00', substr($key->created_at,0,10).' 23:59:59'])->get();
+            //         foreach ($temp1 as $key2) {
+            //             $kode = $key2->transaksi->first()->kode ?? 'null';
+            //             // dd($temp1);
+            //             if ( array_search(substr($key->created_at, 0, 10), array_column($temp, 'tanggal')) === false) {
+            //                 if (array_search($pelanggans->find($key2->transaksi->first()->pelanggan_id ?? 0)->nama ?? 'null', array_column($temp, 'nama_pelanggan')) === false) {
+            //                 //ini if cadangan kalau tidak bisa di server
+            //                 // if (array_search($key2->transaksi->first()->pelanggan->nama, array_column($temp, 'nama_pelanggan')) === false) {
+            //                     // Add the new data for a unique nama_pelanggan
+            //                     array_push($temp, [
+            //                         // 'kode_transaksi' => $key2->transaksi->first()->kode,
+            //                         // 'kode_pelanggan' => $key2->transaksi->first()->pelanggan->id,
+            //                         // 'nama_pelanggan' => $key2->transaksi->first()->pelanggan->nama,
+            //                         // 'nominal' => $this->NominalPelanggans($temp1, substr($key2->created_at, 0, 10), $key2->transaksi->first()->kode)
+
+            //                         //ini code cadangan klo di server gk bisa
+            //                         'kode_transaksi' => $kode,
+            //                         'kode_pelanggan' => $pelanggans->find($key2->transaksi->first()->pelanggan_id ?? 0)->id ?? 0,
+            //                         'nama_pelanggan' => $pelanggans->find($key2->transaksi->first()->pelanggan_id ?? 0)->nama ?? 'null',
+            //                         'nominal' => $this->NominalPelanggans($temp1, substr($key2->created_at, 0, 10), $kode),
+            //                     ]);
+            //                     $ctr++;
+            //                 }
+            //             }
+            //         }
+            //         array_push($result,[
+            //             'tanggal' => substr($key->created_at, 0, 10),
+            //             'total' => $this->sumPelanggans($pembayarans, substr($key->created_at, 0, 10)),
+            //             'data' => $temp,
+            //             'count' => $ctr
+            //         ]);
+            //     }
+            //     $temp = [];
+            //     $ctr = 0;
+            // }
             // dd($result);
-            $totalOmset = $pembayarans->sum('nominal');
+            // $totalOmset = $completedTransactions->sum('nominal');
+            // dd([$completedTransactions], [$totalOmset]);
             return view('pages.laporan.Omset', [
-                'pembayarans' => $result,
-                'totalOmset' => $totalOmset,
+                'pembayarans' => $completedTransactions,
+                'rowHeight' => $countPerDay,
                 'startDate' => $start,
                 'endDate' => $end,
             ]);
@@ -164,27 +187,27 @@ class LaporanController extends Controller
 
     public function apiTableOmset(Request $request)
     {
-        $start = $request->start . ' 00:00:00';
-        $end = $request->end . ' 23:59:59';
+        // $start = $request->start . ' 00:00:00';
+        // $end = $request->end . ' 23:59:59';
 
-        $pembayarans = Pembayaran::with('transaksi')->orderBy('created_at')->whereBetween('created_at', [$start, $end])->get();
-        $rowHeight = DB::table('pembayarans')
-            ->select(DB::raw('COUNT(DATE(created_at)) as count'), DB::raw('DATE(created_at) as tanggal'))
-            ->groupBy(DB::raw('DATE(created_at)'))
-            ->whereBetween('created_at', [$start, $end])
-            ->get();
-        $sumOfEachDate = $pembayarans->groupBy(function ($date) {
-            return Carbon::parse($date->created_at)->format('d-M-Y');
-        })->map(function ($group) {
-            return $group->sum('nominal');
-        });
-        $total_omset = $pembayarans->sum('nominal');
-        return response()->json([
-            'pembayarans'  => $pembayarans,
-            'rowHeight' => $rowHeight,
-            'sumOfEachDate' => $sumOfEachDate,
-            'total_omset' => $total_omset,
-        ]);
+        // $pembayarans = Pembayaran::with('transaksi')->orderBy('created_at')->whereBetween('created_at', [$start, $end])->get();
+        // $rowHeight = DB::table('pembayarans')
+        //     ->select(DB::raw('COUNT(DATE(created_at)) as count'), DB::raw('DATE(created_at) as tanggal'))
+        //     ->groupBy(DB::raw('DATE(created_at)'))
+        //     ->whereBetween('created_at', [$start, $end])
+        //     ->get();
+        // $sumOfEachDate = $pembayarans->groupBy(function ($date) {
+        //     return Carbon::parse($date->created_at)->format('d-M-Y');
+        // })->map(function ($group) {
+        //     return $group->sum('nominal');
+        // });
+        // $total_omset = $pembayarans->sum('nominal');
+        // return response()->json([
+        //     'pembayarans'  => $pembayarans,
+        //     'rowHeight' => $rowHeight,
+        //     'sumOfEachDate' => $sumOfEachDate,
+        //     'total_omset' => $total_omset,
+        // ]);
     }
 
     public function tableKasMasuk(Request $request)

@@ -57,7 +57,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php
+                                    {{-- @php
                                         $tanggal = '';
                                         $index = 0;
                                     @endphp
@@ -99,6 +99,51 @@
                                                     <div class="d-flex justify-content-between">
                                                         <span>Rp</span>
                                                         <span>{{ number_format($pembayaran['total'], 0, ',', '.') }}</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    @endforeach --}}
+                                    @php
+                                        $date = '';
+                                        $dateIndex = 0; // di hari itu, transaksi pertama
+                                        $total = 0;
+                                    @endphp
+                                    @foreach ($pembayarans as $pembayaran)
+                                        @php
+                                            if ($date != date('d-m-Y', strtotime($pembayaran->created_at))) {
+                                                $date = date('d-m-Y', strtotime($pembayaran->created_at));
+                                                $dateIndex = 0;
+                                                $total = 0;
+                                            }
+                                        @endphp
+                                        @if ($dateIndex == 0)
+                                            <tr>
+                                                <td class="text-center" rowspan="{{ $rowHeight[date('d-m-Y', strtotime($pembayaran->created_at))] + 1 }}">{{ date('d-M-Y', strtotime($pembayaran->created_at)) }}</td>
+                                        @else
+                                            <tr>
+                                        @endif
+                                            <td class="text-center">{{ $pembayaran->transaksi->first()->kode }}</td>
+                                            <td class="text-center">{{ 'PL' . str_pad($pembayaran->transaksi->first()->pelanggan->id, 6, '0', STR_PAD_LEFT) }}</td>
+                                            <td>{{ $pembayaran->transaksi->first()->pelanggan->nama }}</td>
+                                            <td>
+                                                <div class="d-flex justify-content-between">
+                                                    <span>Rp</span>
+                                                    <span>{{ number_format($pembayaran->nominal, 0, ',', '.') }}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @php
+                                            $dateIndex++;
+                                            $total += $pembayaran->nominal;
+                                        @endphp
+                                        @if ($dateIndex == $rowHeight[date('d-m-Y', strtotime($pembayaran->created_at))])
+                                            <tr class="table-success">
+                                                <td colspan="3" class="text-center">{{ 'Total omset per ' . date('d-M-Y', strtotime($pembayaran->created_at)) }}</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-between">
+                                                        <span>Rp</span>
+                                                        <span>{{ number_format($total, 0, ',', '.') }}</span>
                                                     </div>
                                                 </td>
                                             </tr>
