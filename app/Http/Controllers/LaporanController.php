@@ -19,10 +19,10 @@ class LaporanController extends Controller
         $start = $request->start . ' 00:00:00';
         $end = $request->end . ' 23:59:59';
 
-        $pelanggans = Pelanggan::when($request->filled('orderBy'), function($query) use ($request) {
+        $pelanggans = Pelanggan::with('transaksi')->when($request->filled('orderBy'), function($query) use ($request) {
                 $query->orderBy($request->filled('orderBy'), $request->filled('order'));
             })
-            ->whereHas('transaksis', function($query) use ($start, $end) {
+            ->whereHas('transaksi', function($query) use ($start, $end) {
                 $query->where('lunas', false)
                     ->whereBetween('created_at', [$start, $end])
                     ->whereRaw('(grand_total - total_terbayar) > 0');
