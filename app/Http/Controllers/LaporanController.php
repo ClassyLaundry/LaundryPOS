@@ -232,6 +232,7 @@ class LaporanController extends Controller
 
         $rowHeight = [];
         $sumOfEachPaymentMethod = [];
+        $sum = 0;
 
         $pembayarans = Pembayaran::with(['transaksi', 'transaksi.pelanggan', 'kasir'])
             ->whereBetween('created_at', [$start, $end])
@@ -267,6 +268,8 @@ class LaporanController extends Controller
                 'keterangan' => "PEMBAYARAN VIA " . strtoupper($pembayaran->metode_pembayaran),
                 'operator' => isset($pembayaran->kasir) ? strtoupper($pembayaran->kasir->name) : '',
             ]);
+
+            $sum += $pembayaran->nominal;
         }
         foreach ($deposits as $deposit) {
             if (isset($rowHeight[$deposit->via])) {
@@ -290,6 +293,8 @@ class LaporanController extends Controller
                 'keterangan' => "PENGISIAN DEPOSIT VIA " . strtoupper($deposit->via),
                 'operator' =>  isset($deposit->kasir) ? strtoupper($deposit->kasir->name) : '',
             ]);
+
+            $sum += $deposit->kas_masuk;
         }
         $data = array_merge($data1, $data2);
 
@@ -350,7 +355,7 @@ class LaporanController extends Controller
         // dd($sumOfEachPaymentMethod);
         return view('components.tableLaporanKas', [
             'kas' => $data,
-            // 'total_kas' => $total_kas,
+            'totalKas' => $sum,
             'rowHeight' => $rowHeight,
             'sumOfEachPaymentMethod' => $sumOfEachPaymentMethod,
             'start' => $start,

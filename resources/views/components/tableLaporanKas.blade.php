@@ -1,7 +1,6 @@
 <div id="table-laporan-piutang">
     <div class="table-responsive my-2 tbody-wrap">
-        {{-- <table class="table mb-0" id="table-laporan" data-total="{{ number_format($total_kas, 0, ',', '.') }}"> --}}
-        <table class="table mb-0" id="table-laporan">
+        <table class="table mb-0" id="table-laporan" data-total="{{ number_format($totalKas, 0, ',', '.') }}">
             <thead>
                 <tr class="text-start">
                     <th>Tipe Bayar</th>
