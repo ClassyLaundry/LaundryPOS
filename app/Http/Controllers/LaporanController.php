@@ -228,13 +228,13 @@ class LaporanController extends Controller
         array_pop($tipe);
         $data1 = [];
         $data2 = [];
-        $pembayarans = Pembayaran::with(['transaksi', 'transaksi.pelanggan'])
+        $pembayarans = Pembayaran::with(['transaksi', 'transaksi.pelanggan', 'kasir'])
             ->whereBetween('created_at', [$start, $end])
             ->whereIn('metode_pembayaran', $tipe)
             ->orderBy('created_at')
             ->get();
 
-        $deposits = Saldo::with(['pelanggan', 'outlet', 'paket_deposit'])
+        $deposits = Saldo::with(['pelanggan', 'outlet', 'paket_deposit', 'kasir'])
             ->whereBetween('created_at', [$start, $end])
             ->where('jenis_input', 'deposit')
             ->orderBy('created_at')
@@ -248,6 +248,7 @@ class LaporanController extends Controller
                 'nominal' => $pembayaran->nominal,
                 'tipe' => $pembayaran->metode_pembayaran,
                 'keterangan' => "PEMBAYARAN VIA " . strtoupper($pembayaran->metode_pembayaran),
+                'operator' => isset($pembayaran->kasir) ? strtoupper($pembayaran->kasir->name) : '',
             ]);
         }
         foreach ($deposits as $deposit) {
@@ -258,6 +259,7 @@ class LaporanController extends Controller
                 'nominal' => $deposit->kas_masuk,
                 'tipe' => $deposit->via,
                 'keterangan' => "PENGISIAN DEPOSIT VIA " . strtoupper($deposit->via),
+                'operator' =>  isset($deposit->kasir) ? strtoupper($deposit->kasir->name) : '',
             ]);
         }
         $data = array_merge($data1, $data2);
@@ -268,6 +270,8 @@ class LaporanController extends Controller
             }
             return $item1->tanggal <=> $item2->tanggal;
         });
+
+        // return response()->json($data);
 
         // $paymentQuery = Pembayaran::select(
         //     'pembayarans.id as id',

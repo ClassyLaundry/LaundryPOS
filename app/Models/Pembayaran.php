@@ -44,4 +44,9 @@ class Pembayaran extends Model
     {
         return $this->belongsTo(Transaksi::class);
     }
+
+    public function kasir()
+    {
+        return $this->belongsTo(User::class, 'operator', 'id');
+    }
 }

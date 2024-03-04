@@ -127,31 +127,35 @@ $(document).ready(function() {
         let metode_pembayaran = $('#input-metode_pembayaran').val();
         let saldoAkhir = nominal + removeDot($('#data-saldo-akhir').val());
 
-        let formData = new FormData();
-        formData.append('pelanggan_id', pelangganId);
-        formData.append('paket_deposit_id', selectedPaketId);
-        formData.append('nominal', nominal);
-        formData.append('jenis_input', 'deposit');
-        formData.append('via', metode_pembayaran);
-        formData.append('saldo_akhir', saldoAkhir);
+        if (nominal == 0) {
+            alert('nominal yang di isikan tidak boleh 0');
+        } else {
+            let formData = new FormData();
+            formData.append('pelanggan_id', pelangganId);
+            formData.append('paket_deposit_id', selectedPaketId);
+            formData.append('nominal', nominal);
+            formData.append('jenis_input', 'deposit');
+            formData.append('via', metode_pembayaran);
+            formData.append('saldo_akhir', saldoAkhir);
 
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            },
-            url: "/pelanggan/" + pelangganId + "/add-saldo",
-            method: "POST",
-            contentType: false,
-            processData: false,
-            data: formData,
-        }).done(function() {
-            alert('Pengisian saldo berhasil');
-            location.reload();
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                url: "/pelanggan/" + pelangganId + "/add-saldo",
+                method: "POST",
+                contentType: false,
+                processData: false,
+                data: formData,
+            }).done(function() {
+                alert('Pengisian saldo berhasil');
+                location.reload();
 
-        }).fail(function(message) {
-            alert('error');
-            console.log(message.responseJSON.message);
-        });
+            }).fail(function(message) {
+                alert('error');
+                console.log(message.responseJSON.message);
+            });
+        }
     });
 
     function removeDot(val) {

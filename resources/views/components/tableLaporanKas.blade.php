@@ -43,6 +43,7 @@
                             </div>
                         </td>
                         <td>{{ $data->keterangan }}</td>
+                        <td>{{ $data->operator }}</td>
                     </tr>
                     {{-- @if ($rowHeight[$data->metode_pembayaran] == $index + 1 && $index != 0)
                         <tr class="table-primary">

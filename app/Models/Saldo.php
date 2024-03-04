@@ -27,4 +27,9 @@ class Saldo extends Model
     {
         return $this->belongsTo(PaketDeposit::class);
     }
+
+    public function kasir()
+    {
+        return $this->belongsTo(User::class, 'operator', 'id');
+    }
 }
