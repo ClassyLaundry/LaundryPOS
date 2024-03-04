@@ -31,8 +31,13 @@ class SaldoController extends Controller
                 $saldo_akhir -= $request->nominal;
             }
 
-            $paket_deposit = PaketDeposit::find($request->paket_deposit_id);
-            $kas_masuk = $paket_deposit->harga;
+            $kas_masuk = 0;
+            if ($request->paket_deposit_id == 1) {
+                $kas_masuk = $request->nominal;
+            } else {
+                $paket_deposit = PaketDeposit::find($request->paket_deposit_id);
+                $kas_masuk = $paket_deposit->harga;
+            }
 
             Saldo::create([
                 'pelanggan_id' => $request->pelanggan_id,

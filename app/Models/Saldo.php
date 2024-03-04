@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Data\Pelanggan;
 use App\Models\Outlet;
+use App\Models\Paket\PaketDeposit;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,5 +21,10 @@ class Saldo extends Model
     public function outlet()
     {
         return $this->belongsTo(Outlet::class);
+    }
+
+    public function paket_deposit()
+    {
+        return $this->belongsTo(PaketDeposit::class);
     }
 }
