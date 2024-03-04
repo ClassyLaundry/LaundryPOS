@@ -30,6 +30,7 @@
                         </div>
                     </div>
                     <div class="col-xl-4 col-md-6 col-12 mb-3">
+                        {{-- TODO: change to datalist (key: pelanggan->name, value: pelanggan->id) --}}
                         <div class="d-flex align-items-center justify-content-between">
                             <p class="text-nowrap me-2">Nama Pelanggan:</p>
                             <input type="text" class="form-control" name="name" id="input-nama-pelanggan">

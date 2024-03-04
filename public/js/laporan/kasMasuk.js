@@ -2,16 +2,16 @@ $(document).ready(function() {
     $('#btn-apply-filter').on('click', function() {
         let jenis = '';
         if ($('#btn-cash').is(':checked')) {
-            jenis = jenis + '1';
+            jenis = jenis + 'tunai;';
         }
         if ($('#btn-qris').is(':checked')) {
-            jenis = jenis + '2';
+            jenis = jenis + 'qris;';
         }
         if ($('#btn-debit').is(':checked')) {
-            jenis = jenis + '3';
+            jenis = jenis + 'debit;';
         }
         if ($('#btn-transfer').is(':checked')) {
-            jenis = jenis + '4';
+            jenis = jenis + 'transfer;';
         }
         if (jenis == '') {
             alert('Pilih tipe bayar');

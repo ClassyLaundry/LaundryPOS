@@ -13,7 +13,7 @@ class Pembayaran extends Model
     use HasFactory;
     protected $guarded = ['id'];
     //Array untuk Menambahkan Attribute ketika memanggil Model
-    protected $appends = ['transaksi', 'saldo'];
+    // protected $appends = ['transaksi', 'saldo'];
 
     public static function boot()
     {
@@ -21,19 +21,19 @@ class Pembayaran extends Model
         Pembayaran::observe(new UserActionObserver);
     }
 
-    public function getTransaksiAttribute()
-    {
-        if (!empty($this->transaksi_id)) {
-            return $this->transaksi();
-        }
-    }
+    // public function getTransaksiAttribute()
+    // {
+    //     if (!empty($this->transaksi_id)) {
+    //         return $this->transaksi();
+    //     }
+    // }
 
-    public function getSaldoAttribute()
-    {
-        if (!empty($this->saldo_id)) {
-            return $this->saldo();
-        }
-    }
+    // public function getSaldoAttribute()
+    // {
+    //     if (!empty($this->saldo_id)) {
+    //         return $this->saldo();
+    //     }
+    // }
 
     public function saldo()
     {

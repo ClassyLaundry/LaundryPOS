@@ -970,6 +970,8 @@ $(document).ready(function() {
     $('#form-pembayaran').on('submit', function(e) {
         e.preventDefault();
 
+        $(this).find('button[type="submit"]').addClass('disabled');
+
         let formData = new FormData();
         formData.append('transaksi_id', $('#input-trans-id').val());
         formData.append('metode_pembayaran', $('#input-metode-pembayaran').val());

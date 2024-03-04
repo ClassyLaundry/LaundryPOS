@@ -234,6 +234,7 @@ $(document).ready(function() {
                     return data;
                 }
             }],
+            // TODO: sort berdasarkan tanggal [4]
             columns: [
                 null,
                 null,

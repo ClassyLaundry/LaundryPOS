@@ -10,6 +10,7 @@ use App\Models\Diskon;
 use App\Models\DiskonTransaksi;
 use App\Models\Packing\Packing;
 use App\Models\Paket\PaketCuci;
+use App\Models\Pembayaran;
 use App\Models\SettingUmum;
 use App\Models\User;
 use App\Observers\UserActionObserver;
@@ -94,7 +95,7 @@ class Transaksi extends Model
         if ($this->tipe_transaksi == "bucket") {
             $sum_bobot = ItemTransaksi::where('transaksi_id', $this->id)->sum('total_bobot');
             $item_count = ItemTransaksi::where('transaksi_id', $this->id)->count();
-            
+
             //kalkulasi bobot bucket
             $paket_bucket = PaketCuci::where('nama_paket', 'BUCKET')->first();
             $jumlah_bucket = ceil($sum_bobot / $paket_bucket->jumlah_bobot);
@@ -225,4 +226,10 @@ class Transaksi extends Model
     {
         return $this->belongsTo(User::class, 'penyetrika', 'id');
     }
+
+    public function pembayaran()
+    {
+        return $this->hasMany(Pembayaran::class, 'transaksi_id');
+    }
+
 }
