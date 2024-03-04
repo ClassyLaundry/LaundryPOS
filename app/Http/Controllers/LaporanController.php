@@ -226,8 +226,13 @@ class LaporanController extends Controller
 
         $tipe = explode(";", $request->jenis);
         array_pop($tipe);
+
         $data1 = [];
         $data2 = [];
+
+        $rowHeight = [];
+        $sumOfEachPaymentMethod = [];
+
         $pembayarans = Pembayaran::with(['transaksi', 'transaksi.pelanggan', 'kasir'])
             ->whereBetween('created_at', [$start, $end])
             ->whereIn('metode_pembayaran', $tipe)
@@ -241,6 +246,18 @@ class LaporanController extends Controller
             ->get();
 
         foreach ($pembayarans as $pembayaran) {
+            if (isset($rowHeight[$pembayaran->metode_pembayaran])) {
+                $rowHeight[$pembayaran->metode_pembayaran]++;
+            } else {
+                $rowHeight[$pembayaran->metode_pembayaran] = 1;
+            }
+
+            if (isset($sumOfEachPaymentMethod[$pembayaran->metode_pembayaran])) {
+                $sumOfEachPaymentMethod[$pembayaran->metode_pembayaran] += $pembayaran->nominal;
+            } else {
+                $sumOfEachPaymentMethod[$pembayaran->metode_pembayaran] = $pembayaran->nominal;
+            }
+
             array_push($data1, (object)[
                 'kode' => 'PM' . str_pad($pembayaran->id, 6, '0', STR_PAD_LEFT),
                 'tanggal' => $pembayaran->created_at,
@@ -252,6 +269,18 @@ class LaporanController extends Controller
             ]);
         }
         foreach ($deposits as $deposit) {
+            if (isset($rowHeight[$deposit->via])) {
+                $rowHeight[$deposit->via]++;
+            } else {
+                $rowHeight[$deposit->via] = 1;
+            }
+
+            if (isset($sumOfEachPaymentMethod[$deposit->via])) {
+                $sumOfEachPaymentMethod[$deposit->via] += $deposit->kas_masuk;
+            } else {
+                $sumOfEachPaymentMethod[$deposit->via] = $deposit->kas_masuk;
+            }
+
             array_push($data2, (object)[
                 'kode' => 'DP' . str_pad($deposit->id, 6, '0', STR_PAD_LEFT),
                 'tanggal' => $deposit->created_at,
@@ -318,11 +347,12 @@ class LaporanController extends Controller
         //     ->map(function ($group) {
         //         return $group->sum('nominal');
         //     });
+        // dd($sumOfEachPaymentMethod);
         return view('components.tableLaporanKas', [
             'kas' => $data,
             // 'total_kas' => $total_kas,
-            // 'rowHeight' => $rowHeight,
-            // 'sumOfEachPaymentMethod' => $sumOfEachPaymentMethod,
+            'rowHeight' => $rowHeight,
+            'sumOfEachPaymentMethod' => $sumOfEachPaymentMethod,
             'start' => $start,
             'end' => $end,
         ]);

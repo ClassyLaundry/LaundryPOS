@@ -106,7 +106,7 @@
                                     @endforeach --}}
                                     @php
                                         $date = '';
-                                        $dateIndex = 0; // di hari itu, transaksi pertama
+                                        $dateIndex = 0;
                                         $total = 0;
                                     @endphp
                                     @foreach ($pembayarans as $pembayaran)

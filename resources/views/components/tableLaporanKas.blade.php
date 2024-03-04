@@ -14,25 +14,24 @@
                 </tr>
             </thead>
             <tbody>
-                {{-- @php
-                    $metode = '';
+                @php
+                    $tipe = '';
                     $index = 0;
-                @endphp --}}
+                @endphp
                 @foreach ($kas as $data)
-                {{-- @php
-                    if ($metode != $data->metode_pembayaran) {
-                        $metode = $data->metode_pembayaran;
+                @php
+                    if ($tipe != $data->tipe) {
+                        $tipe = $data->tipe;
                         $index = 0;
                     } else {
                         $index++;
                     }
-                @endphp --}}
-                    {{-- @if ($index == 0)
-                        <tr><td rowspan="{{ $rowHeight[$data->metode_pembayaran] == 1 ? $rowHeight[$data->metode_pembayaran] : $rowHeight[$data->metode_pembayaran] + 1 }}" class="table-primary">{{ Str::upper($data->metode_pembayaran) }}</td>
-                    @else --}}
+                @endphp
+                    @if ($index == 0)
+                        <tr><td rowspan="{{ $rowHeight[$tipe] == 1 ? $rowHeight[$tipe] : $rowHeight[$data->tipe] + 1 }}" class="table-primary">{{ $data->tipe }}</td>
+                    @else
                         <tr>
-                    {{-- @endif --}}
-                        <td>{{ $data->tipe }}</td>
+                    @endif
                         <td>{{ $data->kode }}</td>
                         <td>{{ date('d-M-Y', strtotime($data->tanggal)) }}</td>
                         <td>{{ Str::upper($data->pelanggan) }}</td>
@@ -45,18 +44,18 @@
                         <td>{{ $data->keterangan }}</td>
                         <td>{{ $data->operator }}</td>
                     </tr>
-                    {{-- @if ($rowHeight[$data->metode_pembayaran] == $index + 1 && $index != 0)
+                    @if ($rowHeight[$data->tipe] == $index + 1 && $index != 0)
                         <tr class="table-primary">
-                            <td colspan="3" class="text-center">{{ "TOTAL KAS MASUK VIA " . Str::upper($data->metode_pembayaran) }}</td>
+                            <td colspan="3" class="text-center">{{ "TOTAL KAS MASUK VIA " . Str::upper($data->tipe) }}</td>
                             <td>
                                 <div class="d-flex justify-content-between">
                                     <span>Rp</span>
-                                    <span>{{ number_format($sumOfEachPaymentMethod[$data->metode_pembayaran], 0, ',', '.') }}</span>
+                                    <span>{{ number_format($sumOfEachPaymentMethod[$data->tipe], 0, ',', '.') }}</span>
                                 </div>
                             </td>
-                            <td></td>
+                            <td colspan="2"></td>
                         </tr>
-                    @endif --}}
+                    @endif
                 @endforeach
             </tbody>
         </table>
