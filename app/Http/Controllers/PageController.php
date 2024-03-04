@@ -186,6 +186,7 @@ class PageController extends Controller
             return $item->name === 'Membuka Menu Proses Rewash';
         });
         if ($permissionExist) {
+            dd(Rewash::with('item_transaksi')->get());
             return view(
                 'pages.proses.Rewash',
                 [
