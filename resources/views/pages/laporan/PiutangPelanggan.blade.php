@@ -17,23 +17,29 @@
                 <hr>
 
                 <div class="row">
-                    <div class="col-xl-3 col-md-6 col-12">
-                        <div class="d-inline-flex align-items-center">
+                    <div class="col-xl-3 col-md-6 col-12 mb-3">
+                        <div class="d-flex align-items-center justify-content-between">
                             <p class="text-nowrap me-2">Tanggal Awal:</p>
-                            <input type="date" class="form-control" name="start" id="input-tanggal-awal">
+                            <input type="date" class="form-control" name="start" id="input-tanggal-awal" style="max-width: 180px;">
                         </div>
                     </div>
-                    <div class="col-xl-3 col-md-6 col-12">
-                        <div class="d-inline-flex align-items-center">
+                    <div class="col-xl-3 col-md-6 col-12 mb-3">
+                        <div class="d-flex align-items-center justify-content-between">
                             <p class="text-nowrap me-2">Tanggal Akhir:</p>
-                            <input type="date" class="form-control" name="end" id="input-tanggal-akhir">
+                            <input type="date" class="form-control" name="end" id="input-tanggal-akhir" style="max-width: 180px;">
                         </div>
                     </div>
-                    <div class="col-xl-3 col-12 text-end offset-3">
+                    <div class="col-xl-4 col-md-6 col-12 mb-3">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <p class="text-nowrap me-2">Nama Pelanggan:</p>
+                            <input type="text" class="form-control" name="name" id="input-nama-pelanggan">
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-6 col-12 mb-3 text-end">
                         <button type="button" class="btn btn-primary" id="btn-apply-filter">Apply</button>
                     </div>
                 </div>
-                <hr>
+                <hr class="mt-0">
 
                 <div id="table-container"></div>
 

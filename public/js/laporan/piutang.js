@@ -10,7 +10,7 @@ $(document).ready(function() {
     });
 
     $('#btn-apply-filter').on('click', function() {
-        $('#table-container').load(window.location.origin + '/component/piutang?start=' + $('#input-tanggal-awal').val() + '&end=' + $('#input-tanggal-akhir').val(), function () {
+        $('#table-container').load(window.location.origin + '/component/piutang?start=' + $('#input-tanggal-awal').val() + '&end=' + $('#input-tanggal-akhir').val() + '&name=' + $('#input-nama-pelanggan').val(), function () {
             $('#total-piutang').text('Rp ' + $('#table-container #table-laporan').data('total'));
         });
     });
