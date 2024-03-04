@@ -163,6 +163,6 @@
       </div>
 </div>
 
-<script src="https://cdn.datatables.net/plug-ins/1.10.11/sorting/date-eu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
 <script src="{{ asset('js/transaksi/pembayaran.js') }}"></script>
 @endsection
