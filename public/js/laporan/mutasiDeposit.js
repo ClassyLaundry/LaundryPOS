@@ -13,10 +13,8 @@ $(document).ready(function() {
         columnDefs : [{
             targets: [1, 2],
             render: function (data, type, row) {
-                console.log(data);
-                console.log(type);
                 if ((type === 'display' || type === 'filter') && data != '-') {
-                    return new Date(data).toLocaleDateString('en-GB');
+                    return moment(data).format('DD-MM-YYYY');
                 }
                 return data;
             }
