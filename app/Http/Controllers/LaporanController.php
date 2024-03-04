@@ -24,7 +24,7 @@ class LaporanController extends Controller
                 $query->orderBy($request->filled('orderBy'), $request->filled('order'));
             })
             ->when($request->filled('name'), function($query) use ($request) {
-                $query->where('nama', $request->name);
+                $query->where('nama', 'like', '%' . $request->name . '%');
             })
             ->whereHas('transaksi', function($query) use ($start, $end) {
                 $query->where('lunas', false)
@@ -32,7 +32,10 @@ class LaporanController extends Controller
                     ->whereRaw('(grand_total - total_terbayar) > 0');
             })
             ->get();
-        $total_piutang = Transaksi::where('lunas', false)->whereBetween('created_at', [$start, $end])->sum(DB::raw('grand_total - total_terbayar'));
+
+        $total_piutang = Transaksi::where('lunas', false)
+            ->whereBetween('created_at', [$start, $end])
+            ->sum(DB::raw('grand_total - total_terbayar'));
 
         return view('components.tableLaporanPiutang', [
             'pelanggans' => $pelanggans,
