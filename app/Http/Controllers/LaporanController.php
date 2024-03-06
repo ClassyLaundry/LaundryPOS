@@ -7,10 +7,12 @@ use App\Models\Outlet;
 use App\Models\Pembayaran;
 use App\Models\Saldo;
 use App\Models\Transaksi\Transaksi;
+use App\Models\User;
 use App\Models\UserAction;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class LaporanController extends Controller
@@ -19,23 +21,25 @@ class LaporanController extends Controller
     {
         $start = $request->start . ' 00:00:00';
         $end = $request->end . ' 23:59:59';
+        $outlet_id = User::getOutletId(Auth::id());
 
         $pelanggans = Pelanggan::with('transaksi')
-            ->when($request->filled('orderBy'), function($query) use ($request) {
+            ->when($request->filled('orderBy'), function ($query) use ($request) {
                 $query->orderBy($request->filled('orderBy'), $request->filled('order'));
             })
-            ->when($request->filled('name'), function($query) use ($request) {
+            ->when($request->filled('name'), function ($query) use ($request) {
                 $query->where('nama', 'like', '%' . $request->name . '%');
             })
-            ->whereHas('transaksi', function($query) use ($start, $end) {
+            ->whereHas('transaksi', function ($query) use ($start, $end, $outlet_id) {
                 $query->where('lunas', false)
+                    ->where('outlet_id', $outlet_id)
                     ->whereBetween('created_at', [$start, $end])
                     ->whereRaw('(grand_total - total_terbayar) > 0');
             })
             ->get();
 
-        // TODO: add datalist (key: pelanggan->name, value: pelanggan->id)
         $total_piutang = Transaksi::where('lunas', false)
+            ->where('outlet_id', $outlet_id)
             ->whereBetween('created_at', [$start, $end])
             ->sum(DB::raw('grand_total - total_terbayar'));
 
@@ -56,8 +60,19 @@ class LaporanController extends Controller
     {
         $start = $request->start . ' 00:00:00';
         $end = $request->end . ' 23:59:59';
-        $transaksis = Transaksi::detail()->where('lunas', false)->where('pelanggan_id', $id)->whereBetween('created_at', [$start, $end])->get();
-        $totalPiutang = Transaksi::where('lunas', false)->where('pelanggan_id', $id)->whereBetween('created_at', [$start, $end])->sum(DB::raw('grand_total - total_terbayar'));
+        $outlet_id = User::getOutletId(Auth::id());
+
+        $transaksis = Transaksi::detail()
+            ->where('lunas', false)
+            ->where('outlet_id', $outlet_id)
+            ->where('pelanggan_id', $id)
+            ->whereBetween('created_at', [$start, $end])
+            ->get();
+        $totalPiutang = Transaksi::where('lunas', false)
+            ->where('outlet_id', $outlet_id)
+            ->where('pelanggan_id', $id)
+            ->whereBetween('created_at', [$start, $end])
+            ->sum(DB::raw('grand_total - total_terbayar'));
 
         return view('pages.laporan.DetailPiutangPelanggan', [
             'transaksis' => $transaksis,
@@ -83,9 +98,10 @@ class LaporanController extends Controller
         ]);
     }
 
-    function sumPelanggans($data,$day) {
+    function sumPelanggans($data, $day)
+    {
         $sum = 0;
-        foreach ( $data as $value ) {
+        foreach ($data as $value) {
             if ($day == substr($value->created_at, 0, 10)) {
                 $sum += $value->nominal;
             }
@@ -93,7 +109,8 @@ class LaporanController extends Controller
         return $sum;
     }
 
-    function NominalPelanggans($data, $day, $trans) {
+    function NominalPelanggans($data, $day, $trans)
+    {
         $sum = 0;
         foreach ($data as $value) {
             $kode = $value->transaksi->first()->kode ?? 'null';
@@ -110,18 +127,21 @@ class LaporanController extends Controller
         if ($request->has('start') && $request->has('end')) {
             $start = $request->start . ' 00:00:00';
             $end = $request->end . ' 23:59:59';
+            $outlet_id = User::getOutletId(Auth::id());
 
             $completedTransactions = Pembayaran::whereBetween('created_at', [$start, $end])
-                ->whereHas('transaksi', function($query) {
-                    $query->where('lunas', true);
+                ->whereHas('transaksi', function ($query) use ($outlet_id) {
+                    $query->where('lunas', true)
+                        ->where('outlet_id', $outlet_id);
                 })
                 ->with('transaksi')
                 ->orderBy('created_at')
                 ->get();
 
             $countPerDay = Pembayaran::whereBetween('created_at', [$start, $end])
-                ->whereHas('transaksi', function ($query) {
-                    $query->where('lunas', true);
+                ->whereHas('transaksi', function ($query) use ($outlet_id) {
+                    $query->where('lunas', true)
+                        ->where('outlet_id', $outlet_id);
                 })
                 ->with('transaksi')
                 ->orderBy('created_at')
@@ -223,6 +243,7 @@ class LaporanController extends Controller
     {
         $start = $request->start . ' 00:00:00';
         $end = $request->end . ' 23:59:59';
+        $outlet_id = User::getOutletId(Auth::id());
 
         $tipe = explode(";", $request->jenis);
         array_pop($tipe);
@@ -237,11 +258,13 @@ class LaporanController extends Controller
         $pembayarans = Pembayaran::with(['transaksi', 'transaksi.pelanggan', 'kasir'])
             ->whereBetween('created_at', [$start, $end])
             ->whereIn('metode_pembayaran', $tipe)
+            ->where('outlet_id', $outlet_id)
             ->orderBy('created_at')
             ->get();
 
         $deposits = Saldo::with(['pelanggan', 'outlet', 'paket_deposit', 'kasir'])
             ->whereBetween('created_at', [$start, $end])
+            ->where('outlet_id', $outlet_id)
             ->where('jenis_input', 'deposit')
             ->orderBy('created_at')
             ->get();
