@@ -234,7 +234,7 @@ $(document).ready(function() {
                     return data;
                 }
             }],
-            // TODO: sort berdasarkan tanggal [4]
+            order: [[3, 'desc']],
             columns: [
                 null,
                 null,

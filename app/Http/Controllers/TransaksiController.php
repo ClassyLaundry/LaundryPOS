@@ -81,10 +81,10 @@ class TransaksiController extends Controller
 
     public function shortTableProcess($id)
     {
-        $rewashes = Rewash::with('itemTransaksi')->get();
+        $rewashes = Rewash::with('item_transaksi')->get();
         $filteredRewash = [];
         foreach ($rewashes as $rewash) {
-            if ($rewash->itemTransaksi->transaksi_id == $id) {
+            if ($rewash->item_transaksi->transaksi_id == $id) {
                 array_push($filteredRewash, $rewash);
             }
         }

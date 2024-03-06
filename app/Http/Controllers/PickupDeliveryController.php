@@ -264,14 +264,6 @@ class PickupDeliveryController extends Controller
     {
         $transaksi = Transaksi::detail()
             ->where('status', 'confirmed')
-            ->where(function ($query) {
-                $query->where('is_done_cuci', 1)
-                    ->where('is_done_setrika', 1);
-            })
-            ->orWhere(function ($query) {
-                $query->where('setrika_only', 1)
-                    ->where('is_done_setrika', 1);
-            })
             ->whereIn('id', function ($subquery) {
                 $subquery->select('transaksi_id')
                     ->from('packings');

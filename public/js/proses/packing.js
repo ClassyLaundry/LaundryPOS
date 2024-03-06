@@ -200,7 +200,7 @@ $(document).ready(function() {
                     return data;
                 }
             }],
-            order: [[0, 'desc']],
+            order: [[3, 'desc']],
             columns: [
                 null,
                 null,

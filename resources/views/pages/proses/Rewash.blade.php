@@ -29,8 +29,8 @@
                                 <tbody>
                                     @foreach ($rewashes as $rewash)
                                         <tr id='{{ $rewash->id }}'>
-                                            <td class="text-center">{{ $rewash->itemTransaksi->kode_transaksi }}</td>
-                                            <td>{{ $rewash->itemTransaksi->nama }}</td>
+                                            <td class="text-center">{{ $rewash->item_transaksi->kode_transaksi }}</td>
+                                            <td>{{ $rewash->item_transaksi->nama }}</td>
                                             <td>{{ $rewash->jenis_rewash }}</td>
                                             <td>{{ $rewash->keterangan }}</td>
                                             @if ($rewash->status)
@@ -133,11 +133,11 @@
                                         <div class="p-3 border rounded item d-flex justify-content-between align-items-start mb-3">
                                             <div class="d-flex flex-column">
                                                 <h4>
-                                                    {{ $rewash->itemTransaksi->kode_transaksi }}
+                                                    {{ $rewash->item_transaksi->kode_transaksi }}
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 16 16" fill="currentColor" class="bi bi-dot">
                                                         <path fill-rule="evenodd" d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
                                                     </svg>
-                                                    {{ $rewash->itemTransaksi->nama }}
+                                                    {{ $rewash->item_transaksi->nama }}
                                                 </h4>
                                                 <h6 class="text-muted">{{ $transaksi->created_at }}</h6>
                                             </div>

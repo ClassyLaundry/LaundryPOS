@@ -5,6 +5,7 @@
                 <tr class="text-start">
                     <th>Tipe Bayar</th>
                     <th>Kode Pembayaran</th>
+                    <th>Nomor Order</th>
                     <th>Tanggal Transaksi</th>
                     <th>Pelanggan</th>
                     <th>Nominal</th>
@@ -27,11 +28,12 @@
                     }
                 @endphp
                     @if ($index == 0)
-                        <tr><td rowspan="{{ $rowHeight[$tipe] == 1 ? $rowHeight[$tipe] : $rowHeight[$data->tipe] + 1 }}" class="table-primary">{{ $data->tipe }}</td>
+                        <tr><td rowspan="{{ $rowHeight[$tipe] == 1 ? $rowHeight[$tipe] : $rowHeight[$data->tipe] + 1 }}" class="table-primary">{{ Str::upper($data->tipe) }}</td>
                     @else
                         <tr>
                     @endif
                         <td>{{ $data->kode }}</td>
+                        <td>{{ $data->nomor_order }}</td>
                         <td>{{ date('d-M-Y', strtotime($data->tanggal)) }}</td>
                         <td>{{ Str::upper($data->pelanggan) }}</td>
                         <td>
@@ -45,7 +47,7 @@
                     </tr>
                     @if ($rowHeight[$data->tipe] == $index + 1 && $index != 0)
                         <tr class="table-primary">
-                            <td colspan="3" class="text-center">{{ "TOTAL KAS MASUK VIA " . Str::upper($data->tipe) }}</td>
+                            <td colspan="4" class="text-center">{{ "TOTAL KAS MASUK VIA " . Str::upper($data->tipe) }}</td>
                             <td>
                                 <div class="d-flex justify-content-between">
                                     <span>Rp</span>

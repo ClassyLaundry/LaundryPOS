@@ -170,6 +170,7 @@ class PembayaranController extends Controller
                 $query->where('pelanggans.nama', 'like', "%{$request->name}%")
                     ->where('transaksis.created_at', 'like', "{$request->date}%");
             })
+            ->where('outlet_id', Auth::user()->outlet->id)
             ->get();
         return view('components.tablePembayaran', [
             'transaksis' => $transaksis,
