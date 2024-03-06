@@ -123,9 +123,9 @@
                                         @else
                                             <tr>
                                         @endif
-                                            <td class="text-center">{{ $pembayaran->transaksi->first()->kode }}</td>
-                                            <td class="text-center">{{ 'PL' . str_pad($pembayaran->transaksi->first()->pelanggan->id, 6, '0', STR_PAD_LEFT) }}</td>
-                                            <td>{{ $pembayaran->transaksi->first()->pelanggan->nama }}</td>
+                                            <td class="text-center">{{ $pembayaran->transaksi->kode }}</td>
+                                            <td class="text-center">{{ 'PL' . str_pad($pembayaran->transaksi->pelanggan->id, 6, '0', STR_PAD_LEFT) }}</td>
+                                            <td>{{ $pembayaran->transaksi->pelanggan->nama }}</td>
                                             <td>
                                                 <div class="d-flex justify-content-between">
                                                     <span>Rp</span>
