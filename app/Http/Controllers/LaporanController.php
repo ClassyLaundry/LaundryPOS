@@ -3,14 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Data\Pelanggan;
-use App\Models\Outlet;
 use App\Models\Pembayaran;
 use App\Models\Saldo;
 use App\Models\Transaksi\Transaksi;
 use App\Models\User;
-use App\Models\UserAction;
-use Carbon\Carbon;
-use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -53,7 +49,9 @@ class LaporanController extends Controller
 
     public function laporanPiutangPelanggan()
     {
-        return view('pages.laporan.PiutangPelanggan');
+        return view('pages.laporan.PiutangPelanggan', [
+            'pelanggans' => Pelanggan::orderBy('nama', 'asc')->get()
+        ]);
     }
 
     public function laporanPiutangPelangganDetail($id, Request $request)
