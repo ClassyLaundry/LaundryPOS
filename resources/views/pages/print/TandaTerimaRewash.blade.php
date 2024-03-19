@@ -7,7 +7,7 @@
     <title>Transaction Receipt</title>
     <style>
         body {
-            font-family: 'Roboto';
+            font-family: sans-serif;
             font-size: 1rem;
             font-weight: 600;
         }
@@ -42,13 +42,6 @@
 
         hr {
             margin: .5rem 0;
-        }
-
-        @media print {
-            @page {
-                size: A5;
-                orientation: landscape;
-            }
         }
     </style>
 </head>

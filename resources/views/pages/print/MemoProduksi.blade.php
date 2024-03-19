@@ -7,7 +7,7 @@
     <title>Delivery Note</title>
     <style>
         body {
-            font-family: 'Inconsolata';
+            font-family: sans-serif;
             font-size: .875rem;
         }
 
