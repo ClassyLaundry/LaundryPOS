@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
 </head>
 
-<body class="h-100 py-3 px-2" style="width: 480px; margin-top: 100px;">
+<body class="h-100 py-3 ps-3" style="width: 480px; margin-top: 100px;">
     <div id="data-header">
         <h3 class="mt-0">{{ $data->header['nama_usaha'] }}</h3>
         <h3 style="white-space: nowrap; text-overflow: clip; overflow: hidden;">{{ $data->transaksi->outlet->alamat }}</h3>

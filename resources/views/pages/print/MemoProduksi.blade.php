@@ -45,7 +45,7 @@
         }
     </style>
 </head>
-<body class="lh-1" style="width: 900px; margin-top: 100px;">
+<body class="lh-1 p-3" style="width: 900px; margin-top: 100px;">
     <div id="data-header">
         <p class="fw-bold fs-6">
             {{ Str::upper($data->transaksi->outlet->nama) }}<br>
