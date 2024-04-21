@@ -52,6 +52,6 @@ $(document).ready(function() {
     });
 
     $('#action-receipt').on('click', function() {
-        window.location = "/printTandaTerima/" + btnId;
+        window.location = "/printTandaTerimaRewash/" + btnId;
     });
 });
