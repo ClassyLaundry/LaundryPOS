@@ -44,6 +44,10 @@
             margin: .5rem 0;
         }
 
+        #data-transaksi, #data-summary, #data-tambahan {
+            font-size: 0.875em;
+        }
+
         .max-two-line {
             display: inline-block;
 
@@ -69,7 +73,7 @@
         </p>
     </div>
     <hr>
-    <div id=data-transaksi style="font-size: 0.875em;">
+    <div id=data-transaksi>
         <div class="row">
             <div class="col-6 d-flex">
                 <p class="w-30">NO. ORDER</p>
@@ -182,7 +186,7 @@
         @endif
     </div>
     <hr>
-    <div id="data-summary" style="font-size: 0.875em;">
+    <div id="data-summary">
         <div class="row">
             <div class="col-4 d-flex">
                 <p class="w-30">JML PCS</p>
@@ -235,7 +239,7 @@
         </div>
     </div>
     <hr>
-    <div id="data-tambahan" style="font-size: 0.875em;">
+    <div id="data-tambahan">
         <div class="row">
             <div class="col-6 d-flex">
                 <p class="w-30">KASIR</p>

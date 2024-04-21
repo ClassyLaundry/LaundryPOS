@@ -43,11 +43,30 @@
         hr {
             margin: .5rem 0;
         }
+
+        #data-transaksi, #data-summary, #data-tambahan {
+            font-size: 0.875em;
+        }
+
+        .max-two-line {
+            display: inline-block;
+
+            max-width: 350px;
+            max-height: 28px;
+            line-height: 14px;
+
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     </style>
 </head>
-<body class="lh-1 ps-3" style="width: 900px; margin-top: 100px;">
+<body class="lh-1" style="width: 900px; margin-top: 100px;">
     <div id="data-header">
-        <p class="fw-bold fs-5">
+        <p class="fw-bold fs-6 d-flex flex-column">
             {{ Str::upper($data->transaksi->outlet->nama) }}<br>
             {{ $data->transaksi->outlet->alamat }}<br>
             {{ $data->header['delivery_text'] }}
@@ -80,15 +99,15 @@
                 <p class="w-30">SISA DEPOSIT</p>
                 <p class="w-70">: {{ $data->transaksi->pelanggan->saldo_akhir }}</p>
             </div>
-            <div class="col-4 d-flex justify-content-center">
+            <div class="col-4 d-flex justify-content-center mt-1">
                 <p>EXPRESS</p>
                 <p>: {{ $data->transaksi->express ? 'YA' : 'TIDAK' }}</p>
             </div>
-            <div class="col-4 d-flex justify-content-center">
+            <div class="col-4 d-flex justify-content-center mt-1">
                 <p>SETRIKA SAJA</p>
                 <p>: {{ $data->transaksi->setrika_only ? 'YA' : 'TIDAK' }}</p>
             </div>
-            <div class="col-4 d-flex justify-content-center">
+            <div class="col-4 d-flex justify-content-center mt-1">
                 <p>DELIVERY</p>
                 <p>: {{ $data->transaksi->need_delivery ? 'YA' : 'TIDAK' }}</p>
             </div>
@@ -159,43 +178,54 @@
             </tbody>
         </table>
         @endif
-        <hr>
-        <div class="w-75 d-flex justify-content-between alingn-items-center">
-            <p>JML PCS: {{ $data->total_qty }}</p>
-            <p>JML BOBOT: {{ $data->total_bobot }}</p>
-            <p>JML M<sup>2</sup>: 0</p>
+    </div>
+    <hr>
+    <div id="data-summary">
+        <div class="row">
+            <div class="col-4 d-flex">
+                <p class="w-30">JML PCS</p>
+                <p class="w-70">: {{ $data->total_qty }}</p>
+            </div>
+            <div class="col-4 d-flex">
+                <p style="width: 35%;">JML BOBOT</p>
+                <p style="width: 65%;">: {{ $data->total_bobot }}</p>
+            </div>
+            <div class="col-4 d-flex">
+                <p class="w-25">JML M<sup>2</sup></p>
+                <p class="w-75">: 0</p>
+            </div>
         </div>
         <div class="d-flex">
-            <p>CATATAN:&nbsp;</p>
-            <p>{{ "REWASH - " . $data->rewash->jenis_rewash . " || " }} @isset($data->catatan) {{ $data->catatan }} || @endisset {{ $data->transaksi->catatan }}</p>
+            <p class="d-flex justify-content-between" style="min-width: 89px; max-width: 89px;"><span>CATATAN</span><span>:</span></p>
+            <p>&nbsp;@isset($data->catatan) {{ $data->catatan }} || @endisset {{ $data->transaksi->catatan }}</p>
         </div>
         <hr>
         <div class="row">
             <div class="col-4 d-flex">
-                <p class="w-30">SUBTOTAL</p>
-                <p class="w-70">: {{ number_format($data->transaksi->subtotal, 0, ',', '.') }}</p>
+                <p class="w-50">SUBTOTAL</p>
+                <p class="w-50">: {{ number_format($data->transaksi->subtotal, 0, ',', '.') }}</p>
             </div>
             <div class="col-4 d-flex">
-                <p class="w-30">GRAND TOTAL</p>
-                <p class="w-70">: {{ number_format($data->transaksi->grand_total, 0, ',', '.') }}</p>
-            </div>
-            <div class="col-4"></div>
-            <div class="col-4 d-flex">
-                <p class="w-30">DISKON</p>
-                <p class="w-70">: {{ number_format($data->transaksi->subtotal - $data->transaksi->grand_total, 0, ',', '.') }}</p>
-            </div>
-            <div class="col-4 d-flex">
-                <p class="w-30">TELAH BAYAR</p>
-                <p class="w-70">: {{ isset($data->transaksi->total_terbayar) ? number_format($data->transaksi->total_terbayar, 0, ',', '.') : '0' }}</p>
+                <p class="w-50 text-nowrap">GRAND TOTAL</p>
+                <p class="w-50">: {{ number_format($data->transaksi->grand_total, 0, ',', '.') }}</p>
             </div>
             <div class="col-4"></div>
             <div class="col-4 d-flex">
-                <p class="w-30">DELIVERY</p>
-                <p class="w-70">: 0</p>
+                <p class="w-50">DISKON</p>
+                <p class="w-50">: {{ number_format($data->transaksi->subtotal - $data->transaksi->grand_total, 0, ',', '.') }}</p>
             </div>
             <div class="col-4 d-flex">
-                <p class="w-30">SISA</p>
-                <p class="w-70">: {{ number_format($data->transaksi->grand_total - $data->transaksi->total_terbayar, 0, ',', '.') }}</p>
+                <p class="w-50 text-nowrap">TELAH BAYAR</p>
+                <p class="w-50">: {{ isset($data->transaksi->total_terbayar) ? number_format($data->transaksi->total_terbayar, 0, ',', '.') : '0' }}</p>
+            </div>
+            <div class="col-4"></div>
+            <div class="col-4 d-flex">
+                <p class="w-50">DELIVERY</p>
+                <p class="w-50">: 0</p>
+            </div>
+            <div class="col-4 d-flex">
+                <p class="w-50">SISA</p>
+                <p class="w-50">: {{ number_format($data->transaksi->grand_total - $data->transaksi->total_terbayar, 0, ',', '.') }}</p>
             </div>
             <div class="col-4 d-flex">
                 <p>@if ($data->transaksi->lunas) LUNAS @else BELUM LUNAS @endif</p>
