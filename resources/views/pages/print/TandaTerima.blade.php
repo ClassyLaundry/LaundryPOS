@@ -39,13 +39,13 @@
     <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
 </head>
 
-<body class="h-100 py-3 ps-3" style="width: 480px; margin-top: 100px;">
+<body class="h-100 p-3" style="width: 480px; margin-top: 100px;">
     <div id="data-header">
         <h3 class="mt-0">{{ $data->header['nama_usaha'] }}</h3>
         <h3 style="white-space: nowrap; text-overflow: clip; overflow: hidden;">{{ $data->transaksi->outlet->alamat }}</h3>
         <h3>{{ $data->transaksi->outlet->telp_1 }}</h3>
     </div>
-    <p class="hr-text">
+    <p class="hr-text lh-1">
         =========================================================================================================================
     </p>
     <p>Tipe: {{ Str::ucfirst($data->transaksi->tipe_transaksi) }}</p>
@@ -53,11 +53,11 @@
         <p class="w-50">Tanggal Masuk: {{ date('d-M-Y', strtotime($data->transaksi->created_at)) }}</p>
         <p class="w-50">Tanggal Selesai: {{ date('d-M-Y', strtotime($data->transaksi->done_date)) }}</p>
     </div>
-    <p class="hr-text" style="margin-bottom: 4px;">
+    <p class="hr-text lh-1" style="margin-bottom: 4px;">
         =========================================================================================================================
     </p>
     <p class="m-0">Item</p>
-    <p class="hr-text m-0">
+    <p class="hr-text lh-1 m-0">
         -------------------------------------------------------------------------------------------------------------------------
     </p>
     <div id="detail-transaksi">
@@ -68,13 +68,13 @@
         </div>
         @endforeach
     </div>
-    <p class="hr-text">
+    <p class="hr-text lh-1">
         =========================================================================================================================
     </p>
     <div>
-        <p>Jumlah Item: {{ $data->total_item }}</p>
+        <p>Jumlah Item: {{ $data->total_qty }}</p>
     </div>
-    <p class="hr-text">
+    <p class="hr-text lh-1">
         =========================================================================================================================
     </p>
     <div>
