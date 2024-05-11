@@ -71,6 +71,11 @@ $(document).ready(function() {
         $('#modal-data-pelanggan').modal('show');
     });
 
+    $('#table-pickup').on('click', 'page-link', function(e) {
+        e.preventDefault();
+        $('#table-pickup').load($(this).attr('href'));
+    });
+
     var pelangganId = 0;
     $('#table-pelanggan').load(window.location.origin + '/component/pelanggan?paginate=5', function() {
         $('#table-pelanggan th:last').hide();
