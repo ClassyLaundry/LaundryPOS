@@ -201,6 +201,8 @@ $(document).ready(function() {
     $('#form-pembayaran').on('submit', function(e) {
         e.preventDefault();
 
+        $('#form-pembayaran').find('button[type="submit"]').attr('disabled', true);
+
         let formData = new FormData();
         formData.append('transaksi_id', $('#input-trans-id').val());
         formData.append('metode_pembayaran', $('#input-metode-pembayaran').val());
@@ -219,6 +221,7 @@ $(document).ready(function() {
             alert("Pembayaran berhasil");
             window.location = window.location;
         }).fail(function(message) {
+            $('#form-pembayaran').find('button[type="submit"]').attr('disabled', false);
             console.log(message);
         });
     });
