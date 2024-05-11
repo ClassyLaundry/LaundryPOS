@@ -133,6 +133,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <p>Parfum: <span id="nama-parfum" class="fw-bold"></span></p>
                         <div id="table-short-trans"></div>
                         <ul class="list-unstyled form-control list-action" id="list-action-2">
                             <li id="action-notes">Catatan</li>

@@ -59,7 +59,12 @@ $(document).ready(function() {
 
     $('#action-detail').on('click', function() {
         $('#table-short-trans').load(window.location.origin + '/component/shortTrans/' + btnId + '/process');
-        $('#modal-detail').modal('show');
+        $.ajax({
+            url: "/transaksi/detail/" + btnId,
+        }).done(function(response) {
+            $('#nama-parfum').text(response.parfum.nama);
+            $('#modal-detail').modal('show');
+        });
     });
 
     $('#action-add').on('click', function() {
