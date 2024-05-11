@@ -178,7 +178,7 @@ class PickupDeliveryController extends Controller
 
     public function pickup()
     {
-        $pickup = PickupDelivery::where('action', 'pickup')->paginate(5);
+        $pickup = PickupDelivery::where('action', 'pickup')->latest()->paginate(5);
         return view('components.tablePickup', [
             'pickups' => $pickup
         ]);
@@ -219,6 +219,7 @@ class PickupDeliveryController extends Controller
             'finished' => $done_pickups
         ], 200);
     }
+
     public function admin_today()
     {
         $today = Carbon::today();

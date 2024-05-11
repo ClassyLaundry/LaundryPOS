@@ -71,7 +71,7 @@ $(document).ready(function() {
         $('#modal-data-pelanggan').modal('show');
     });
 
-    $('#table-pickup').on('click', 'page-link', function(e) {
+    $('#table-pickup').on('click', '.page-link', function(e) {
         e.preventDefault();
         $('#table-pickup').load($(this).attr('href'));
     });
