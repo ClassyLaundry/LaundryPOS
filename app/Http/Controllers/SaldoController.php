@@ -48,7 +48,7 @@ class SaldoController extends Controller
                 'via' => $request->via,
                 'saldo_akhir' => $saldo_akhir,
                 'kas_masuk' => $kas_masuk,
-                'modified_by' => Auth::id()
+                'operator' => Auth::id()
             ]);
 
             return null;
