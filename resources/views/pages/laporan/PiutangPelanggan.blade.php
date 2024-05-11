@@ -36,7 +36,7 @@
 
                             <datalist id="list-pelanggan">
                                 @foreach ($pelanggans as $pelanggan)
-                                    <option value="{{ $pelanggan->id }}">{{ $pelanggan->nama }}</option>
+                                    <option>{{ $pelanggan->nama }}</option>
                                 @endforeach
                             </datalist>
 
