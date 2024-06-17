@@ -138,9 +138,9 @@ class UserController extends Controller
         ];
     }
 
-    public function changePassword(Request $request, User $user)
+    public function changePassword(Request $request, $id)
     {
-        $user = User::find(auth()->id());
+        $user = User::find($id);
         $permissions = $user->getPermissionsViaRoles();
         $permissionExist = collect($permissions)->first(function ($item) {
             return $item->name === 'Mengubah Data Password Karyawan';
@@ -154,7 +154,6 @@ class UserController extends Controller
             }
 
             $new = Hash::make($request->new_password);
-            // $user->update(['password' => $new]);
             $user->password = $new;
             $user->save();
             return [

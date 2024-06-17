@@ -122,6 +122,7 @@ $(document).ready(function() {
         }).done(function(data) {
             $('#btn-change-password').removeClass('disabled');
             if (data.message == "Success") {
+                alert('Password berhasil dirubah');
                 $('#modal-change-password').modal('hide');
             } else {
                 $('#error-msg').text(data.message);
