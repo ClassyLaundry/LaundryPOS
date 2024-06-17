@@ -154,7 +154,9 @@ class UserController extends Controller
             }
 
             $new = Hash::make($request->new_password);
-            $user->update(['password' => $new]);
+            // $user->update(['password' => $new]);
+            $user->password = $new;
+            $user->save();
             return [
                 'status' => 200,
                 'message' => 'Success'
