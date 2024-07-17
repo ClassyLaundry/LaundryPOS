@@ -128,8 +128,7 @@ class LaporanController extends Controller
 
             $completedTransactions = Pembayaran::whereBetween('created_at', [$start, $end])
                 ->whereHas('transaksi', function ($query) use ($outlet_id) {
-                    $query->where('lunas', true)
-                        ->where('outlet_id', $outlet_id);
+                    $query->where('outlet_id', $outlet_id);
                 })
                 ->where('outlet_id', Auth::user()->outlet_id)
                 ->with('transaksi')
@@ -138,8 +137,7 @@ class LaporanController extends Controller
 
             $countPerDay = Pembayaran::whereBetween('created_at', [$start, $end])
                 ->whereHas('transaksi', function ($query) use ($outlet_id) {
-                    $query->where('lunas', true)
-                        ->where('outlet_id', $outlet_id);
+                    $query->where('outlet_id', $outlet_id);
                 })
                 ->where('outlet_id', Auth::user()->outlet_id)
                 ->with('transaksi')
