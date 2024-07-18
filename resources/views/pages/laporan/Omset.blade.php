@@ -127,7 +127,11 @@
                                             <td class="text-center">{{ $pembayaran->transaksi->kode }}</td>
                                             <td class="text-center">{{ 'PL' . str_pad($pembayaran->transaksi->pelanggan->id, 6, '0', STR_PAD_LEFT) }}</td>
                                             <td>{{ $pembayaran->transaksi->pelanggan->nama }}</td>
-                                            <td>{{ $pembayaran->transaksi->lunas}}</td>
+                                            @if ($pembayaran->transaksi->lunas)
+                                                <td class="text-center">Lunas</td>
+                                            @else
+                                                <td class="text-center">Belum lunas</td>
+                                            @endif
                                             <td>
                                                 <div class="d-flex justify-content-between">
                                                     <span>Rp</span>
