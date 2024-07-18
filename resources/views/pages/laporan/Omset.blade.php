@@ -53,6 +53,7 @@
                                         <th>Kode Transaksi</th>
                                         <th>Kode Pelanggan</th>
                                         <th>Nama Pelanggan</th>
+                                        <th>Status Transaksi</th>
                                         <th>Besar Omset</th>
                                     </tr>
                                 </thead>
@@ -126,6 +127,7 @@
                                             <td class="text-center">{{ $pembayaran->transaksi->kode }}</td>
                                             <td class="text-center">{{ 'PL' . str_pad($pembayaran->transaksi->pelanggan->id, 6, '0', STR_PAD_LEFT) }}</td>
                                             <td>{{ $pembayaran->transaksi->pelanggan->nama }}</td>
+                                            <td>{{ $pembayaran->transaksi->lunas}}</td>
                                             <td>
                                                 <div class="d-flex justify-content-between">
                                                     <span>Rp</span>
@@ -139,7 +141,7 @@
                                         @endphp
                                         @if ($dateIndex == $rowHeight[date('d-m-Y', strtotime($pembayaran->created_at))])
                                             <tr class="table-success">
-                                                <td colspan="3" class="text-center">{{ 'Total omset per ' . date('d-M-Y', strtotime($pembayaran->created_at)) }}</td>
+                                                <td colspan="4" class="text-center">{{ 'Total omset per ' . date('d-M-Y', strtotime($pembayaran->created_at)) }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-between">
                                                         <span>Rp</span>
