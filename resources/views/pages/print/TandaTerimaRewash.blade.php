@@ -200,7 +200,7 @@
             <p>&nbsp;@isset($data->catatan) {{ $data->catatan }} || @endisset {{ $data->transaksi->catatan }}</p>
         </div>
         <hr>
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-4 d-flex">
                 <p class="w-50">SUBTOTAL</p>
                 <p class="w-50">: {{ number_format($data->transaksi->subtotal, 0, ',', '.') }}</p>
@@ -230,7 +230,7 @@
             <div class="col-4 d-flex">
                 <p>@if ($data->transaksi->lunas) LUNAS @else BELUM LUNAS @endif</p>
             </div>
-        </div>
+        </div> --}}
     </div>
     <hr>
     <div id="data-tambahan">
