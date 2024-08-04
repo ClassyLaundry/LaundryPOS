@@ -1,0 +1,307 @@
+.bg-clean {
+  background: #f1f7fc;
+}
+
+section.bg-clean form {
+  max-width: 320px;
+  width: 90%;
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 4px;
+  color: #505e6c;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+}
+
+section.bg-clean form .form-container {
+  background: #f7f9fc;
+  border: none;
+  border-bottom: 1px solid #dfe7f1;
+  border-radius: 0;
+  box-shadow: none;
+  outline: none;
+  height: 41px;
+}
+
+section.bg-clean .form-container .form-control:focus {
+  color: inherit!important;
+  background-color: inherit!important;
+  border-color: inherit!important;
+  box-shadow: none!important;
+}
+
+section#pengaturan-karyawan #modal-change-password form .form-container {
+  display: block;
+  width: 100%;
+  padding: 0;
+  padding-right: 6px;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+section#pengaturan-karyawan #modal-change-password form .form-container .form-control {
+  background: inherit;
+  border: none;
+  border-radius: 0.25rem;
+  box-shadow: none;
+  outline: none;
+  height: inherit;
+}
+
+section#pengaturan-karyawan #modal-change-password form .form-container .form-control:focus {
+  color: inherit!important;
+  background-color: inherit!important;
+  border-color: inherit!important;
+  box-shadow: none!important;
+}
+
+section.bg-clean form .form-container .form-control {
+  background: inherit;
+  border: none;
+  border-bottom: 1px solid #dfe7f1;
+  border-radius: 0;
+  box-shadow: none;
+  outline: none;
+  height: 40px;
+}
+
+section.bg-clean form .btn-primary {
+  border: none;
+  border-radius: 4px;
+  padding: 11px;
+  box-shadow: none;
+  text-shadow: none;
+  outline: none !important;
+}
+
+section.bg-clean form .btn-primary:active, section.bg-clean form .form-container input {
+  transform: translateY(1px);
+}
+
+.bg-clean form .forgot {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  color: #6f7a85;
+  opacity: 0.9;
+  text-decoration: none;
+}
+
+.bg-clean form .forgot:hover, .bg-clean form .forgot:active {
+  opacity: 1;
+  text-decoration: none;
+}
+
+.bg-main {
+    background-color: #222F64!important;
+}
+
+.color-main {
+    background-color: #53A6D0!important;
+}
+
+.bg-sub {
+    color: #222F64!important;
+}
+
+.color-sub {
+    color: #53A6D0!important;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+.menu-item {
+  cursor: default;
+}
+
+.menu-item.active, .menu-item:hover {
+  background-color: rgb(31,40,45);
+}
+
+#side-nav .nav-menu i, .bg-clean i {
+    width: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+#side-nav .nav-menu svg {
+    width: 20px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+}
+
+section#pengaturan-outlet .col-12, section#pengaturan-karyawan #modal-update .col-12, section#pengaturan-karyawan #modal-change-password .col-12 {
+  margin-bottom: 0.5rem;
+}
+
+section#pengaturan-karyawan table th {
+  text-align: center;
+}
+
+a {
+  color: inherit!important;
+  text-decoration: none!important;
+  font-weight: initial!important;
+}
+
+#list-action li:hover, .list-action li:hover{
+  color: #fff;
+  background-color: #0d6efd;
+}
+
+#list-action li, .list-action li {
+  padding: 0px 12px;
+}
+
+#list-action, .list-action {
+  width: 150px;
+  padding: 6px 0px;
+  z-index: 1000;
+  position: absolute;
+  display: none;
+  cursor: default;
+  top: 0;
+  left: 0;
+}
+
+.cell-action {
+    text-align: end;
+    padding: 4px 8px!important;
+}
+
+p, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0;
+}
+
+.modal .modal-body .row .col-12 {
+    margin-bottom: 1rem;
+}
+
+#header .btn {
+    color: white;
+    font-size: 24px;
+    box-shadow: none!important;
+}
+
+#header {
+    height: 60px;
+}
+
+#side-nav {
+    width: 205px;
+    background: rgb(45,55,60);
+    color: white;
+    height: calc(100vh - 60px);
+    overflow-x: auto;
+}
+
+#pengaturan-hak-akses .col-12 {
+    margin-bottom: 1.5rem;
+}
+
+ul {
+    margin-bottom: 0px;
+}
+
+div.form-control input[type='text'], div.form-control input[type='number'] {
+    outline: none;
+    border: none;
+}
+
+thead tr {
+    text-align: center;
+}
+
+.large {
+    font-size: 1.125rem;
+}
+
+.extra-large {
+    font-size: 2rem;
+    padding: 2px 8px;
+}
+
+.disabled {
+    pointer-events: none !important;
+}
+
+.stain-selection {
+    background-color: transparent;
+}
+
+.stain-selection:hover {
+    background-color: rgb(0, 255, 0, 0.15);
+}
+
+.stain-selection.selected {
+    background-color: rgb(0, 255, 0, 0.30);
+}
+
+.full-when-small.active-fill {
+    width: 100%!important;
+}
+
+#table-trans-item tbody::-webkit-scrollbar {
+    width: 3px;
+}
+
+/* Track */
+#table-trans-item tbody::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+#table-trans-item tbody::-webkit-scrollbar-thumb {
+    background: rgba(159, 166, 178, .75)
+}
+
+/* Handle on hover */
+#table-trans-item tbody::-webkit-scrollbar-thumb:hover {
+    background: rgba(159, 166, 178, 1)
+}
+
+#section-transaksi-saldo #paket-container .card.selected {
+    box-shadow: rgba(34, 47, 100, 0.16) 0px 1px 4px, rgb(34, 47, 100) 0px 0px 0px 3px;
+}
+
+#section-transaksi-saldo #paket-container .card-body {
+    height: 150px;
+}
+
+#section-transaksi-saldo #paket-container .card {
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+#proses-cuci .item, #proses-setrika .item {
+    border: 1px solid rgba(0,0,0,0.125);
+    z-index: 1;
+    background: white;
+}
+
+.sortable-placeholder {
+    margin-top: 1rem;
+    height: 82px;
+    border-radius: 1rem;
+    border: 4px dashed #dee2e6;
+}
+
+.border-pickup {
+    border-color: rgb(75, 192, 192)!important;
+}
+
+.border-delivery {
+    border-color: rgb(153, 102, 255)!important;
+}
