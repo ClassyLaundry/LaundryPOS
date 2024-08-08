@@ -146,11 +146,12 @@ class TransaksiController extends Controller
             ->where(function ($query) use ($request) {
                 $query->where('id', 'like', '%' . $request->key . '%')
                     ->orWhereHas('pelanggan', function ($q) use ($request) {
-                        $q->where('nama', 'like', '%' . $request->key . '%');
+                        $q->where('nama', 'like', '%' . $request->key . '%')
+                            ->orWhere('alamat', 'like', '%' . $request->key . '%')
+                            ->orWhere('telephone', 'like', '%' . $request->key . '%');
                     });
             })
-            ->latest()->paginate(15);
-            // dd($transaksi->toSql(), $transaksi->getBindings());
+            ->latest()->paginate(10);
         return view('components.tableListTrans', [
             'status' => 200,
             'transaksis' => $transaksi

@@ -150,8 +150,9 @@ $(document).ready(function() {
         });
     });
 
-    var searchTrans, key = '';
+    var searchTrans, key = '', page = 1;
     $('#input-key-trans').on('input', function() {
+        page = 1;
         clearTimeout(searchTrans);
         searchTrans = setTimeout(searchListTrans, 2000);
     });
@@ -160,17 +161,15 @@ $(document).ready(function() {
 
     function searchListTrans() {
         key = $('#input-key-trans').val();
-        $('#container-list-trans').load(window.location.origin + '/transaksi/search?tipe=bucket&key=' + encodeURIComponent(key), function() {
+        $('#container-list-trans').load(window.location.origin + '/transaksi/search?tipe=bucket&key=' + encodeURIComponent(key) + '&page=' + page, function() {
             setThousandSeparator();
         });
     }
 
     $('#container-list-trans').on('click', '.page-link', function(e) {
         e.preventDefault();
-        let page = $(this).attr('href').substr(-1);
-        $('#container-list-trans').load(window.location.origin + '/transaksi/search?tipe=bucket&key=' + encodeURIComponent(key) + '&page=' + page, function() {
-            setThousandSeparator();
-        });
+        page = $(this).attr('href').substr(-1);
+        searchListTrans();
     });
 
     $('#add-new-trans').on('click', function() {
