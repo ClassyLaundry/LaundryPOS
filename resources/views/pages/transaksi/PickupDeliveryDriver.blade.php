@@ -158,9 +158,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="px-3 py-1 pesan-pelanggan font-monospace" style="display: none;">
-                                    <h4>{{ $pickup->request }}</h4>
-                                </div>
                             </div>
                         @endforeach
 
@@ -187,10 +184,10 @@
                                     <div class="position-relative">
                                         <h4 class="fw-bold me-4" style="font-style: italic;">Delivery</h4>
                                         <i class="fa-solid fa-flag-checkered position-absolute top-50 start-0 translate-middle fa-4x" style="font-style: italic; opacity: 0.25;"></i>
+                                        <button class="btn btn-sm btn-show-action position-absolute end-0" type="button" style="top: -12px;" id="trans-{{ $delivery->id }}" style="box-shadow: none;">
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </button>
                                     </div>
-                                </div>
-                                <div class="px-3 py-1 pesan-pelanggan font-monospace" style="display: none;">
-                                    <h4>{{ $delivery->request }}</h4>
                                 </div>
                             </div>
                         @endforeach

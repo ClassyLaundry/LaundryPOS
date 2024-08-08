@@ -96,6 +96,13 @@ $(document).ready(function() {
         let lebarBtn = $(this).css('width');
         let lebarTambahan = 2;
         lebarBtn = parseInt(lebarBtn.substr(0, lebarBtn.indexOf('px')));
+
+        let outermostCard = $(this).closest('.card');
+        while (outermostCard.parent().closest('.card').length > 0) {
+            outermostCard = outermostCard.parent().closest('.card');
+        }
+        $('#list-action').css('left', $(this).offset().left - outermostCard.offset().left - lebarList + lebarBtn + lebarTambahan);
+
         $('#list-action').css('left', $(this).offset().left - $(this).closest('.card').offset().left - lebarList + lebarBtn + lebarTambahan);
 
         let tinggiBtn = $(this).css('height');
