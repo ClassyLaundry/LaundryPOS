@@ -167,11 +167,20 @@ class UserController extends Controller
 
     public function logout(Request $request)
     {
-        $role = User::getRole(Auth::id());
-        if ($role == "administrator") {
-            // $user = User::find(Auth::id());
-            // $user->outlet_id = null;
-        }
+        // $role = User::getRole(Auth::id());
+        // if ($role == "administrator") {
+        //     // $user = User::find(Auth::id());
+        //     // $user->outlet_id = null;
+        // }
+
+        // Auth::logout();
+        // $request->session()->invalidate();
+        // $request->session()->regenerateToken();
+
+        // return redirect()->route('login');
+
+        $user = Auth::user();
+        $role = $user ? User::getRole($user->id) : null;
 
         Auth::logout();
         $request->session()->invalidate();

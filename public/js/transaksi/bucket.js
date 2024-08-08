@@ -461,7 +461,7 @@ $(document).ready(function() {
 
                 currentlySelectedItemTransactionID = 0;
                 currentlySelectedItemName = '';
-                $('#table-container').load(window.location.origin + '/component/transPremium/' + transId, function() {
+                $('#table-container').load(window.location.origin + '/component/transBucket/' + transId, function() {
                     setThousandSeparator();
                 });
 
