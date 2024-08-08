@@ -78,10 +78,26 @@
         =========================================================================================================================
     </p>
     <div>
-        @isset($data->pickup) <p>Delivery: {{ $data->pickup->driver->name }}</p>@endisset
         <p>Pelanggan: {{ $data->pelanggan->nama }}</p>
-        @isset($data->pickup) <p style="word-wrap: break-word; text-overflow: ellipsis; overflow: hidden; max-height: 28px;">Alamat: {{ substr($data->pickup->alamat, 0, 60) }}</p>@endisset
-        @isset($data->pickup) <p style="word-wrap: break-word; text-overflow: ellipsis; overflow: hidden; max-height: 41px;">Catatan: {{ substr($data->pickup->request, 0, 90) }}</p>@endisset
+
+        @isset($data->pickup)
+            <p>Delivery: {{ $data->pickup->driver->name }}</p>
+            <p style="word-wrap: break-word; text-overflow: ellipsis; overflow: hidden; max-height: 28px;">
+                Alamat: {{ Str::limit($data->pickup->alamat, 60) }}
+            </p>
+        @endisset
+
+        @if (!empty($data->transaksi->catatan) || !empty($data->pickup->request))
+            <p style="word-wrap: break-word; text-overflow: ellipsis; overflow: hidden; max-height: 41px;">
+                Catatan:
+                @isset($data->pickup->request)
+                    <span class="text-danger">{{ Str::limit($data->pickup->request, 90) }}</span>
+                @endisset
+                @isset($data->transaksi->catatan)
+                    <span class="text-primary">{{ Str::limit($data->transaksi->catatan, 90) }}</span>
+                @endisset
+            </p>
+        @endif
     </div>
 </body>
 
