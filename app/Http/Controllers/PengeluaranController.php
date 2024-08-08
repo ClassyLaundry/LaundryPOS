@@ -11,6 +11,24 @@ use Illuminate\Support\Facades\Auth;
 
 class PengeluaranController extends Controller
 {
+    public function show($id)
+    {
+        $user = User::find(auth()->id());
+        $permissions = $user->getPermissionsViaRoles();
+        $permissionExist = collect($permissions)->first(function ($item) {
+            return $item->name === 'Melihat Detail Pengeluaran';
+        });
+        if ($permissionExist) {
+            $pengeluaran = Pengeluaran::find($id);
+            return [
+                'status' => 200,
+                $pengeluaran,
+            ];
+        } else {
+            abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
+        }
+    }
+
     public function insert(InsertPengeluaranRequest $request)
     {
         $user = User::find(auth()->id());
@@ -31,31 +49,16 @@ class PengeluaranController extends Controller
                 $outlet->update([
                     'saldo' => $outlet->saldo - $request->nominal
                 ]);
-                return redirect()->intended(route('menu-pengeluaran'));
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Data pengeluaran berhasil tersimpan'
+                ]);
             } else {
                 return response()->json([
-                    'status' => 400,
+                    'status' => 402,
                     'message' => 'Saldo Kurang'
                 ]);
             }
-        } else {
-            abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
-        }
-    }
-
-    public function show($id)
-    {
-        $user = User::find(auth()->id());
-        $permissions = $user->getPermissionsViaRoles();
-        $permissionExist = collect($permissions)->first(function ($item) {
-            return $item->name === 'Melihat Detail Pengeluaran';
-        });
-        if ($permissionExist) {
-            $pengeluaran = Pengeluaran::find($id);
-            return [
-                'status' => 200,
-                $pengeluaran,
-            ];
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
         }
@@ -78,6 +81,33 @@ class PengeluaranController extends Controller
         }
     }
 
+    // public function delete($id)
+    // {
+    //     $user = User::find(auth()->id());
+    //     $permissions = $user->getPermissionsViaRoles();
+    //     $permissionExist = collect($permissions)->first(function ($item) {
+    //         return $item->name === 'Menghapus Pengeluaran';
+    //     });
+    //     if ($permissionExist) {
+    //         $outlet_id = Auth::user()->outlet_id;
+    //         $outlet = Outlet::find($outlet_id);
+
+    //         $pengeluaran = Pengeluaran::find($id);
+    //         $outlet->update([
+    //             'saldo' => $outlet->saldo + $pengeluaran->nominal
+    //         ]);
+    //         $outlet->save();
+    //         Pengeluaran::destroy($id);
+
+    //         return response()->json([
+    //             'status' => 200,
+    //             'message' => 'Data pengeluaran berhasil terhapus'
+    //         ]);
+    //     } else {
+    //         abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
+    //     }
+    // }
+
     public function delete($id)
     {
         $user = User::find(auth()->id());
@@ -85,12 +115,21 @@ class PengeluaranController extends Controller
         $permissionExist = collect($permissions)->first(function ($item) {
             return $item->name === 'Menghapus Pengeluaran';
         });
-        if ($permissionExist) {
-            Pengeluaran::destroy($id);
 
-            return redirect()->intended(route('menu-pengeluaran'));
-        } else {
+        if (!$permissionExist) {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
         }
+
+        $pengeluaran = Pengeluaran::find($id);
+        $outlet = Outlet::find($user->outlet_id);
+        $outlet->increment('saldo', $pengeluaran->nominal);
+
+        $pengeluaran->delete();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Data pengeluaran berhasil terhapus'
+        ]);
     }
+
 }

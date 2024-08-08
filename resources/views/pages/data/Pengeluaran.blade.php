@@ -28,6 +28,7 @@
                                 <th>Deskripsi</th>
                                 <th>Tanggal</th>
                                 <th colspan="2">Nominal</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -38,6 +39,11 @@
                                 <td class="text-center">{{ $pengeluaran->created_at }}</td>
                                 <td>Rp</td>
                                 <td class="text-end thousand-separator">{{ $pengeluaran->nominal }}</td>
+                                <td class="cell-action">
+                                    <button id="btn-{{ $pengeluaran->id }}" class="btn btn-danger btn-sm btn-delete" type="button">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -45,7 +51,7 @@
                 </div>
                 {{ $data->links() }}
                 @if(in_array("Membuat Pengeluaran", Session::get('permissions')) || Session::get('role') == 'administrator')
-                <button class="btn btn-primary btn-tambah mt-2" type="button">
+                <button id='btn-tambah' class="btn btn-primary mt-2" type="button">
                     <i class="fas fa-plus-circle"></i>
                     &nbsp;Tambah
                 </button>

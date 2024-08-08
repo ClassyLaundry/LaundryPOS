@@ -7,12 +7,12 @@ $(document).ready(function() {
         $('#list-action').detach();
     }
     var btnIndex = -1, btnId = 0;
-    $('#data-pengeluaran .btn-show-action').on('click', function() {
+    $('#table-pengeluaran .btn').on('click', function() {
         btnIndex = $(this).index('.btn-show-action') + 1;
         btnId = $(this).attr('id').substring(4);
     });
 
-    $('#data-pengeluaran .btn-tambah').on('click', function() {
+    $('#btn-tambah').on('click', function() {
         btnIndex = -1;
         $('.modal-title').text('Tambah pengeluaran baru');
 
@@ -23,12 +23,17 @@ $(document).ready(function() {
         $('#modal-update').modal('show');
     });
 
-    $('#action-delete').on('click', function() {
+    $('.btn-delete').on('click', function() {
         if (confirm('Yakin menghapus data ?')) {
             $.ajax({
                 url: "/data/pengeluaran/delete/" + btnId,
-            }).done(function() {
-                window.location = window.location.origin + window.location.pathname;
+            }).done(function(data) {
+                if (data.status == 200) {
+                    alert(data.message);
+                    window.location = window.location.origin + window.location.pathname;
+                } else {
+                    alert(data.message);
+                }
             });
         }
     });
@@ -52,11 +57,12 @@ $(document).ready(function() {
             processData: false,
             data: formData,
         }).done(function(data) {
-            if (data.status == '400') {
-                alert('saldo outlet tidak mencukupi');
+            if (data.status == '402') {
+                alert(data.message);
                 $('#modal-update').modal('hide');
                 $('#btn-submit').removeClass('disabled');
-            } else {
+            } else if (data.status == '200'){
+                alert(data.message);
                 window.location = window.location.origin + window.location.pathname;
             }
         });
