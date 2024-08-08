@@ -74,7 +74,7 @@
         <div class="d-flex">
             <div class="d-flex w-50">
                 <p class="w-30">PELANGGAN</p>
-                <p class="w-70">: {{ $data->transaksi->pelanggan->no_id }} / {{ Str::upper($data->transaksi->pelanggan->nama) }}</p>
+                <p class="w-70">: {{ 'PL' . str_pad($data->transaksi->pelanggan->id, 6, '0', STR_PAD_LEFT) }} / {{ Str::upper($data->transaksi->pelanggan->nama) }}</p>
             </div>
             <div class="d-flex w-50">
                 <p class="w-30">TGL CUCI</p>
