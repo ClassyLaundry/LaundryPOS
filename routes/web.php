@@ -137,6 +137,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/data/pelanggan/{id}', [PelangganController::class, 'update']);
     Route::get('/data/pelanggan/delete/{id}', [PelangganController::class, 'delete']);
     Route::get('/component/pelanggan', [PelangganController::class, 'search']);
+    Route::get('/component/pelanggan2', [PelangganController::class, 'search2']);
     Route::get('/data/pelanggan/{id_pelanggan}/detail', [PelangganController::class, 'detailPelanggan']);
     Route::post('/data/pelanggan/catatan', [CatatanPelangganController::class, 'insert']);
     Route::post('/data/pelanggan/catatan/{id}', [CatatanPelangganController::class, 'update']);

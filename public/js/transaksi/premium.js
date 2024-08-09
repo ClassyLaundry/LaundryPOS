@@ -188,7 +188,7 @@ $(document).ready(function() {
         $(this).next().toggle();
     });
 
-    $('#table-list-pelanggan-2').load(window.location.origin + '/component/pelanggan?paginate=5', function() {
+    $('#table-list-pelanggan-2').load(window.location.origin + '/component/pelanggan2?paginate=5', function() {
         $('#table-list-pelanggan-2 th:last').hide();
         $('#table-list-pelanggan-2 .cell-action').hide();
     });
@@ -200,11 +200,11 @@ $(document).ready(function() {
     var searchPelanggan;
     $('#input-nama-pelanggan-2').on('input', function() {
         clearTimeout(searchPelanggan);
-        searchPelanggan = setTimeout(searchListPelanggan, 2000);
+        searchPelanggan = setTimeout(searchListPelanggan, 1000);
     });
 
     function searchListPelanggan() {
-        $('#table-list-pelanggan-2').load(window.location.origin + '/component/pelanggan?key=' + encodeURIComponent($('#input-nama-pelanggan-2').val()) + '&filter=nama&paginate=5', function() {
+        $('#table-list-pelanggan-2').load(window.location.origin + '/component/pelanggan2?key=' + encodeURIComponent($('#input-nama-pelanggan-2').val()) + '&filter=nama&paginate=5', function() {
             $('#table-list-pelanggan-2 th:last').hide();
             $('#table-list-pelanggan-2 .cell-action').hide();
         });

@@ -141,4 +141,17 @@ class PelangganController extends Controller
             'pelanggans' => $pelanggan,
         ]);
     }
+
+    public function search2(Request $request)
+    {
+        $pelanggan = Pelanggan::when($request->filled('key'), function ($query) use ($request) {
+            $query->where('nama', 'like', '%' . $request->key . '%')
+                ->orWhere('alamat', 'like', '%' . $request->key . '%')
+                ->orWhere('telephone', 'like', '%' . $request->key . '%');
+        })->orderBy('created_at', 'asc')->paginate($request->paginate);
+
+        return view('components.tablePelanggan', [
+            'pelanggans' => $pelanggan,
+        ]);
+    }
 }
