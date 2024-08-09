@@ -29,6 +29,7 @@ class JenisItemController extends Controller
 
     public function componentFind(Request $request)
     {
+        // dd($request->paginate);
         return view('components.tableJenisItem', [
             'items' => JenisItem::where(function ($query) use ($request) {
                 $query->where('nama', 'like', "%{$request->key}%")

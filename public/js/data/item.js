@@ -17,16 +17,17 @@ $(document).ready(function() {
     });
     $('#data-item').on('click', '.page-link', function(e) {
         e.preventDefault();
-        $('#table-item').load($(this).attr('href'));
+        page = $(this).attr('href').substr(-1);
+        search();
     });
-    var searchData, paginateCount = 5;
+    var searchData, page = 1, paginateCount = 5;
     $('#input-search').on('input', function() {
         clearTimeout(searchData);
-        searchData = setTimeout(search, 2000);
+        searchData = setTimeout(search, 1000);
     });
 
     function search() {
-        $('#table-item').load(window.location.origin + '/component/jenis-item?key=' + encodeURIComponent($('#input-search').val()) +'&paginate=' + paginateCount, function() {
+        $('#table-item').load(window.location.origin + '/component/jenis-item?key=' + encodeURIComponent($('#input-search').val()) + '&page=' + page + '&paginate=' + paginateCount, function() {
             setThousandSeparator();
         });
     }
