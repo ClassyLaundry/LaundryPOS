@@ -187,12 +187,15 @@ class PageController extends Controller
             return $item->name === 'Membuka Menu Proses Rewash';
         });
         if ($permissionExist) {
+            $outlet_id = User::getOutletId(Auth::id());
             return view(
                 'pages.proses.Rewash',
                 [
-                    'rewashes' => Rewash::with('item_transaksi')->get(),
+                    'rewashes' => Rewash::whereHas('item_transaksi.transaksi', function ($query) use ($outlet_id) {
+                        $query->where('outlet_id', $outlet_id);
+                    })->with('item_transaksi')->get(),
                     'jenisRewashes' => JenisRewash::get(),
-                    'transaksis' => Transaksi::latest()->get(),
+                    'transaksis' => Transaksi::where('outlet_id', $outlet_id)->latest()->get(),
                     'pencucis' => User::role('produksi_cuci')->get(),
                 ]
             );
@@ -238,7 +241,7 @@ class PageController extends Controller
             });
         }
 
-        $karyawans = $query->orderBy('id', 'asc')->paginate(5);
+        $karyawans = $query->whereNot('id', 1)->whereNot('id', 2)->orderBy('id', 'asc')->paginate(5);
         return view(
             'components.tableKaryawan',
             [
