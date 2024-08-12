@@ -9,28 +9,32 @@ $(document).ready(function() {
         btnId = $(this).attr('id').substring(4);
     });
 
-    var searchKey;
+    var searchKey, key = '', page = 1;
     $('#input-search').on('input', function() {
         clearTimeout(searchKey);
-        searchKey = setTimeout(reloadList, 2000);
+        page = 1;
+        key = encodeURIComponent($('#input-search').val());
+        searchKey = setTimeout(reloadList, 1000);
     });
 
     reloadList();
 
     function reloadList() {
         let role = $('#dropdown-filter-role .dropdown-menu .dropdown-item.active').data('value');
-        $('#list-karyawan').load(window.location.origin + '/component/karyawan?key=' + encodeURIComponent($('#input-search').val()) + (role != '' ? '&role=' + role : ''));
+        $('#list-karyawan').load(window.location.origin + '/component/karyawan' + ('?key=' + key) + (role != '' ? '&role=' + role : '') + '&page=' + page);
     }
 
     $('#dropdown-filter-role .dropdown-menu .dropdown-item').on('click', function() {
         $('#dropdown-filter-role .dropdown-menu .dropdown-item.active').removeClass('active');
         $(this).addClass('active');
+        page = 1;
         reloadList();
     });
 
     $('#list-karyawan').on('click', '.page-link', function(e) {
         e.preventDefault();
-        $('#list-karyawan').load($(this).attr('href'));
+        page = $(this).attr('href').split('page=')[1];
+        reloadList();
     });
 
     // untuk update data karyawan
