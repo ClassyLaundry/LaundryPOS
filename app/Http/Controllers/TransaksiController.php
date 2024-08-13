@@ -137,19 +137,40 @@ class TransaksiController extends Controller
     public function search(Request $request)
     {
         $outlet_id = User::getOutletId(Auth::id());
-        $transaksi = Transaksi::detail()
-            ->where('outlet_id', $outlet_id)
-            ->where(function ($query) use ($request) {
-                $query->where('tipe_transaksi', $request->tipe)
-                    ->orWhere('tipe_transaksi', null);
-            })
-            ->where(function ($query) use ($request) {
-                $query->where('id', 'like', '%' . $request->key . '%')
-                    ->orWhereHas('pelanggan', function ($q) use ($request) {
-                        $q->where('nama', 'like', '%' . $request->key . '%');
-                    });
-            })
-            ->latest()->paginate(10);
+        $role = User::getRole(Auth::id());
+        if ($role == "delivery") {
+            $transaksi = Transaksi::detail()
+                ->whereHas('pickup_delivery', function ($query) {
+                    $query->where('action', 'pickup')
+                        ->where('driver_id', Auth::id());
+                })
+                ->where('outlet_id', $outlet_id)
+                ->where(function ($query) use ($request) {
+                    $query->where('tipe_transaksi', $request->tipe)
+                        ->orWhere('tipe_transaksi', null);
+                })
+                ->where(function ($query) use ($request) {
+                    $query->where('id', 'like', '%' . $request->key . '%')
+                        ->orWhereHas('pelanggan', function ($q) use ($request) {
+                            $q->where('nama', 'like', '%' . $request->key . '%');
+                        });
+                })
+                ->latest()->paginate(10);
+        } else {
+            $transaksi = Transaksi::detail()
+                ->where('outlet_id', $outlet_id)
+                ->where(function ($query) use ($request) {
+                    $query->where('tipe_transaksi', $request->tipe)
+                        ->orWhere('tipe_transaksi', null);
+                })
+                ->where(function ($query) use ($request) {
+                    $query->where('id', 'like', '%' . $request->key . '%')
+                        ->orWhereHas('pelanggan', function ($q) use ($request) {
+                            $q->where('nama', 'like', '%' . $request->key . '%');
+                        });
+                })
+                ->latest()->paginate(10);
+        }
         return view('components.tableListTrans', [
             'status' => 200,
             'transaksis' => $transaksi
