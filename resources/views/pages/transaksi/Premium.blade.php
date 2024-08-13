@@ -339,7 +339,7 @@
                             <h5 class="card-title">Informasi</h5>
                             <hr class="mb-0">
                             <div class="row">
-                                <div class="g-0 col col-xl-3 col-md-6 col-12 position-relative">
+                                <div class="g-0 col col-xl-4 col-md-6 col-12 position-relative">
                                     <div class="h-100 border-end" style="padding: 1rem .75rem;">
                                         <section id="section-info-pelanggan">
                                             <header class="d-flex justify-content-between align-items-center">
@@ -435,7 +435,7 @@
                                         </section>
                                     </div>
                                 </div>
-                                <div class="g-0 col col-xl-3 col-md-6 col-12 position-relative">
+                                <div class="g-0 col col-xl-4 col-md-6 col-12 position-relative">
                                     <div class="h-100 border-end" style="padding: 1rem .75rem;">
                                         <section id="section-info-pickup-delivery" class="h-100">
                                             <header class="d-flex justify-content-between align-items-center">
@@ -452,12 +452,9 @@
                                                     </div>
                                                     <div id="container-pickup" class="position-relative mb-2" style="display: none;">
                                                         <h6>Kode Pickup</h6>
-                                                        <select class="form-control" id="select-kode-pickup" disabled>
-                                                            <option value="" selected hidden>-</option>
-                                                            @foreach ($data['pickup'] as $pickup)
-                                                                <option value="{{ $pickup->id }}">{{ $pickup->kode }}</option>
-                                                            @endforeach
-                                                        </select>
+                                                        <input type="text" name="" id="input-kode-pickup" class="form-control" readonly>
+                                                        <h6>Driver</h6>
+                                                        <input type="text" name="" id="input-driver-pickup" class="form-control" readonly>
                                                     </div>
                                                     <div class="form-check" id="check-delivery" style="margin-bottom: .5rem;">
                                                         <input class="form-check-input" type="checkbox" id="formCheck-delivery" />
@@ -480,30 +477,7 @@
                                         </section>
                                     </div>
                                 </div>
-                                <div class="g-0 col col-xl-3 col-md-6 col-12 position-relative">
-                                    <div class="h-100 border-end" style="padding: 1rem .75rem;">
-                                        <section id="section-info-outlet">
-                                            <header>
-                                                <h5 class="d-flex justify-content-between align-items-center">
-                                                    Outlet
-                                                    <button class="btn show-data" id="show-data-outlet" type="button">
-                                                        <i class="fas fa-chevron-down large"></i>
-                                                    </button>
-                                                </h5>
-                                            </header>
-                                            <div id="info-outlet" class="position-relative mt-2" style="display: none;">
-                                                <h6>Outlet input</h6>
-                                                <select class="form-control disabled" id="select-outlet">
-                                                    <option value="" selected hidden>-</option>
-                                                    @foreach ($data['outlet'] as $outlet)
-                                                        <option value="{{ $outlet->id }}">{{ $outlet->nama }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </section>
-                                    </div>
-                                </div>
-                                <div class="g-0 col col-xl-3 col-md-6 col-12 position-relative">
+                                <div class="g-0 col col-xl-4 col-md-6 col-12 position-relative">
                                     <div class="h-100" style="padding: 1rem .75rem;">
                                         <section id="section-info-penerimaan" class="h-100">
                                             <header>
