@@ -371,7 +371,7 @@ $(document).ready(function() {
             let item = data[0];
 
             $.ajax({
-                url: "/transaksi/addItem?jenis_item_id=" + item.id + "&transaksi_id=" + $('#id-trans').text(),
+                url: "/transaksi/addItem?jenis_item_id=" + item.id + "&transaksi_id=" + $('#id-trans').text() + "&tipe=bucket",
             }).done(function(data) {
                 $('#table-container').load(window.location.origin + '/component/transBucket/' + transId, function() {
                     setThousandSeparator();

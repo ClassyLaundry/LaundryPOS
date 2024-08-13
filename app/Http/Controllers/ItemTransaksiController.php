@@ -31,13 +31,17 @@ class ItemTransaksiController extends Controller
             $request['total_bobot'] = $jenis_item->bobot_bucket;
             $finder = ItemTransaksi::where('transaksi_id', $request->transaksi_id)->where('jenis_item_id', $request->jenis_item_id)->first();
             $trans = Transaksi::find($request->transaksi_id);
+            $temporaryTipeTransaksi = $trans->tipe_transaksi;
+            $trans->tipe_transaksi = $request['tipe'];
+            $trans->save();
+
             if ($finder) {
                 $finder->qty = $finder->qty + 1;
                 $finder->diskon_jenis_item = $jenis_item->diskon_jenis_item;
                 if ($trans->tipe_transaksi == 'bucket') {
                     $finder->bobot_bucket = $jenis_item->bobot_bucket;
                     $finder->total_bobot = $finder->qty * $finder->bobot_bucket;
-                } else {
+                } else if ($trans->tipe_transaksi == 'premium') {
                     $finder->harga_premium = $jenis_item->harga_premium;
                     $finder->total_premium = $finder->qty * $finder->harga_premium;
                 }
@@ -48,7 +52,7 @@ class ItemTransaksiController extends Controller
                 if ($trans->tipe_transaksi == 'bucket') {
                     $item_transaksi->total_bobot = $item_transaksi->qty * $item_transaksi->bobot_bucket;
                     $item_transaksi->total_premium = 0;
-                } else {
+                } else if ($trans->tipe_transaksi == 'premium') {
                     $item_transaksi->total_bobot = 0;
                     $item_transaksi->total_premium = $item_transaksi->qty * $item_transaksi->harga_premium;
                 }
@@ -58,6 +62,9 @@ class ItemTransaksiController extends Controller
             $transaksi = Transaksi::detail()->find($request['transaksi_id'])->recalculate();
             $transaksi->modified_by = Auth::id();
             $transaksi->save();
+
+            $trans->tipe_transaksi = $temporaryTipeTransaksi;
+            $trans->save();
             return  [
                 'status' => 200,
                 $transaksi,
