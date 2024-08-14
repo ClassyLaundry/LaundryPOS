@@ -446,7 +446,7 @@
                                             </header>
                                             <div id="info-pickup-delivery" class="mt-2" style="display: none;">
                                                 <div class="mb-5">
-                                                    <div class="form-check" id="check-pickup" style="margin-bottom: .5rem;">
+                                                    <div class="form-check" id="check-pickup" style="margin-bottom: .5rem;" class="disabled">
                                                         <input class="form-check-input" type="checkbox" id="formCheck-pickup">
                                                         <label class="form-check-label" for="formCheck-pickup">Pickup</label>
                                                     </div>
@@ -504,8 +504,6 @@
                                                         </select>
                                                         <h6 class="mt-2">Nama Penerima</h6>
                                                         <input type="text" class="form-control" id="input-nama-penerima" name="penerima" required>
-                                                        <h6 class="mt-2">Tanggal Penerimaan</h6>
-                                                        <input type="date" class="form-control" id="input-date-penerimaan" name=tanggal_penerimaan required>
                                                         <h6 class="mt-2">Foto Penerima</h6>
                                                         <input type="file" class="form-control" id="input-foto-penerima" name="image" accept="image/*" required>
                                                     </div>

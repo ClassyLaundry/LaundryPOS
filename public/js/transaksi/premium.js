@@ -65,7 +65,7 @@ $(document).ready(function() {
                 $('#formCheck-pickup').prop('checked', true);
                 $('#input-kode-pickup').val(pickup.kode);
                 $('#input-driver-pickup').val(pickup.nama_driver);
-                $('#check-pickup').addClass('disabled');
+                $('#container-pickup').addClass('disabled');
             } else {
                 $('#formCheck-pickup').parent().next().hide();
                 $('#formCheck-pickup').prop('checked', false);
@@ -95,7 +95,6 @@ $(document).ready(function() {
                 $('#select-outlet-ambil').parent().addClass('disabled');
                 $('#select-outlet-ambil').val(penerima.outlet_id);
                 $('#input-nama-penerima').val(penerima.penerima);
-                $('#input-date-penerimaan').val(penerima.tanggal_penerimaan);
                 $('#input-foto-penerima').hide().prev().hide();
 
                 $('#simpan-info-penerimaan').hide();
@@ -103,7 +102,6 @@ $(document).ready(function() {
                 $('#select-outlet-ambil').parent().removeClass('disabled');
                 $('#select-outlet-ambil').val('');
                 $('#input-nama-penerima').val('');
-                $('#input-date-penerimaan').val('');
                 $('#input-foto-penerima').show().prev().show();
 
                 $('#simpan-info-penerimaan').show();
@@ -269,7 +267,6 @@ $(document).ready(function() {
         formData.append('transaksi_id', id_trans);
         formData.append('ambil_di_outlet', ambil_di_outlet);
         formData.append('outlet_id', id_outlet);
-        formData.append('tanggal_penerimaan', $('#input-date-penerimaan').val());
         formData.append('penerima', $('#input-nama-penerima').val());
         formData.append('image', $('#input-foto-penerima').prop("files")[0]);
 

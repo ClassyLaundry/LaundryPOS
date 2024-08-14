@@ -315,7 +315,7 @@
                                                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                                                 <span class="visually-hidden">Next</span>
                                                             </button>
-                                                          </div>
+                                                        </div>
                                                     </div>
                                                     <div class="text-end">
                                                         <input type="file" class="form-control" id="input-foto-item" accept="image/*" name="files[]" multiple required />
@@ -447,7 +447,7 @@
                                         </header>
                                         <div id="info-pickup-delivery" class="mt-2" style="display: none;">
                                             <div class="mb-5">
-                                                <div class="form-check" id="check-pickup" style="margin-bottom: .5rem;">
+                                                <div class="form-check" id="check-pickup" style="margin-bottom: .5rem;" class="disabled">
                                                     <input class="form-check-input" type="checkbox" id="formCheck-pickup">
                                                     <label class="form-check-label" for="formCheck-pickup">Pickup</label>
                                                 </div>
@@ -505,16 +505,15 @@
                                                     </select>
                                                     <h6 class="mt-2">Nama Penerima</h6>
                                                     <input type="text" class="form-control" id="input-nama-penerima" name="penerima" required>
-                                                    <h6 class="mt-2">Tanggal Penerimaan</h6>
-                                                    <input type="date" class="form-control" id="input-date-penerimaan" name=tanggal_penerimaan required>
                                                     <h6 class="mt-2">Foto Penerima</h6>
                                                     <input type="file" class="form-control" id="input-foto-penerima" name="image" accept="image/*" required>
                                                 </div>
-                                                @if(in_array("Menambahkan Penerima Ke Transaksi", Session::get('permissions')) || Session::get('role') == 'administrator')
                                                 <div class="position-absolute" style="right: 1rem; bottom: 1rem;">
-                                                    <button class="btn btn-primary full-when-small" id="simpan-info-penerimaan" type="submit">Simpan Penerimaan</button>
+                                                    @if(in_array("Menambahkan Penerima Ke Transaksi", Session::get('permissions')) || Session::get('role') == 'administrator')
+                                                        <button class="btn btn-primary full-when-small" id="simpan-info-penerimaan" type="submit">Simpan Penerimaan</button>
+                                                    @endif
+                                                    <button type="button" id="btn-show-foto_penerima" class="btn btn-primary" style="display: none;" data-url="">Tampilkan Foto</button>
                                                 </div>
-                                                @endif
                                             </form>
                                         </div>
                                     </section>
@@ -642,7 +641,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 <script src="{{ asset('js/transaksi/bucket.js') }}"></script>

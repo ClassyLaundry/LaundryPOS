@@ -65,7 +65,6 @@ $(document).ready(function() {
                 $('#formCheck-pickup').prop('checked', true);
                 $('#input-kode-pickup').val(pickup.kode);
                 $('#input-driver-pickup').val(pickup.nama_driver);
-                $('#check-pickup').addClass('disabled');
                 $('#container-pickup').addClass('disabled');
             } else {
                 $('#formCheck-pickup').parent().next().hide();
@@ -96,16 +95,19 @@ $(document).ready(function() {
                 $('#select-outlet-ambil').parent().addClass('disabled');
                 $('#select-outlet-ambil').val(penerima.outlet_id);
                 $('#input-nama-penerima').val(penerima.penerima);
-                $('#input-date-penerimaan').val(penerima.tanggal_penerimaan);
                 $('#input-foto-penerima').hide().prev().hide();
+                $('#btn-show-foto_penerima').show();
+                $('#btn-show-foto_penerima').show();
+                $('#btn-show-foto_penerima').data('url', penerima.foto_penerima);
 
                 $('#simpan-info-penerimaan').hide();
             } else {
                 $('#select-outlet-ambil').parent().removeClass('disabled');
                 $('#select-outlet-ambil').val('');
                 $('#input-nama-penerima').val('');
-                $('#input-date-penerimaan').val('');
                 $('#input-foto-penerima').show().prev().show();
+                $('#btn-show-foto_penerima').hide();
+                $('#btn-show-foto_penerima').data('url', '');
 
                 $('#simpan-info-penerimaan').show();
             }
@@ -267,7 +269,6 @@ $(document).ready(function() {
         formData.append('transaksi_id', id_trans);
         formData.append('ambil_di_outlet', ambil_di_outlet);
         formData.append('outlet_id', id_outlet);
-        formData.append('tanggal_penerimaan', $('#input-date-penerimaan').val());
         formData.append('penerima', $('#input-nama-penerima').val());
         formData.append('image', $('#input-foto-penerima').prop("files")[0]);
 
@@ -287,6 +288,10 @@ $(document).ready(function() {
             alert('error');
             console.log(message);
         });
+    });
+
+    $('#btn-show-foto_penerima').on('click', function() {
+        window.open($(this).data('url'), '_blank');
     });
 
     $('.show-data').on('click', function() {
