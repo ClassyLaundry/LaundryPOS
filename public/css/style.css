@@ -305,3 +305,11 @@ thead tr {
 .border-delivery {
     border-color: rgb(153, 102, 255)!important;
 }
+
+.dropdown-item.active {
+    color: white!important;
+}
+
+.dropdown-item {
+    cursor: pointer!important;
+}

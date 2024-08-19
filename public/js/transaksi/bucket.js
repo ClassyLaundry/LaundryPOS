@@ -160,7 +160,7 @@ $(document).ready(function() {
 
     $('#container-list-trans').on('click', '.page-link', function(e) {
         e.preventDefault();
-        page = $(this).attr('href').substr(-1);
+        page = $(this).attr('href').split('page=')[1];
         searchListTrans();
     });
 

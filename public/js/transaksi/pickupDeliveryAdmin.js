@@ -1,34 +1,34 @@
 $(document).ready(function() {
-    $('#input-week').change(function() {
-        $(this).hide();
-        let selectedWeek = $(this).val();
-        let year = selectedWeek.substring(0, 4);
-        let weekNumber = selectedWeek.substring(6);
+    // $('#input-week').change(function() {
+    //     $(this).hide();
+    //     let selectedWeek = $(this).val();
+    //     let year = selectedWeek.substring(0, 4);
+    //     let weekNumber = selectedWeek.substring(6);
 
-        let startDate = new Date(year, 0, 1 + (weekNumber - 1) * 7 + 1);
-        let endDate = new Date(year, 0, 1 + (weekNumber - 1) * 7 + 6 + 1);
+    //     let startDate = new Date(year, 0, 1 + (weekNumber - 1) * 7 + 1);
+    //     let endDate = new Date(year, 0, 1 + (weekNumber - 1) * 7 + 6 + 1);
 
-        let startDateString = formatDate(startDate);
-        let endDateString = formatDate(endDate);
+    //     let startDateString = formatDate(startDate);
+    //     let endDateString = formatDate(endDate);
 
-        $('#selected-date-range').text(startDateString + ' - ' + endDateString);
-        $('#selected-date-range').show();
-        $('#btn-reset').show();
-    });
+    //     $('#selected-date-range').text(startDateString + ' - ' + endDateString);
+    //     $('#selected-date-range').show();
+    //     $('#btn-reset').show();
+    // });
 
-    $('#btn-reset').on('click', function(e) {
-        $(this).hide();
-        $('#selected-date-range').hide();
-        $('#input-week').show();
-    });
+    // $('#btn-reset').on('click', function(e) {
+    //     $(this).hide();
+    //     $('#selected-date-range').hide();
+    //     $('#input-week').show();
+    // });
 
-    function formatDate(date) {
-        var day = date.getDate();
-        var month = date.getMonth() + 1;
-        var year = date.getFullYear();
+    // function formatDate(date) {
+    //     var day = date.getDate();
+    //     var month = date.getMonth() + 1;
+    //     var year = date.getFullYear();
 
-        return (day < 10 ? '0' + day : day) + '/' + (month < 10 ? '0' + month : month) + '/' + year;
-    }
+    //     return (day < 10 ? '0' + day : day) + '/' + (month < 10 ? '0' + month : month) + '/' + year;
+    // }
 
     var btnIndex = -1, btnId = 0, selectedTable = "";
     $('#table-pickup, #table-delivery').on('click', '.btn-show-action', function(e) {
@@ -42,10 +42,10 @@ $(document).ready(function() {
         }
     });
 
-    $('#action-update').on('click', function() {
-        // $ajax disini
-        $('#modal-create-delivery').modal('show');
-    });
+    // $('#action-update').on('click', function() {
+    //     // $ajax disini
+    //     $('#modal-create-delivery').modal('show');
+    // });
 
     $('#action-delete').on('click', function() {
         if (confirm('Cancel pickup delivery ?')) {
@@ -63,17 +63,55 @@ $(document).ready(function() {
     });
 
     // Pick Up
+    const currentDate = new Date();
+    var year = currentDate.getFullYear();
+    var month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    $('.input-month').val(`${year}-${month}`);
+
+    var paginatePickUp = 5, pagePickUp = 1, keyPickUp = '', searchByPickUp = 'pelanggan', searchPickUpData;
+
+    function searchPickUp() {
+        $('#table-pickup').load(window.location.origin + '/component/pickup?search=' + searchByPickUp + '&key=' + encodeURIComponent(keyPickUp) + '&paginate=' + paginatePickUp + '&page=' + pagePickUp);
+    }
+
+    searchPickUp();
+
+    $('#table-pickup').on('click', '.page-link', function(e) {
+        e.preventDefault();
+        pagePickUp = $(this).attr('href').split('page=')[1];
+        searchPickUp();
+    });
+
+    $("#section-pickup .filter-search").on('click', function() {
+        searchByPickUp = $(this).data('search');
+        $("#section-pickup .filter-search").each(function(index, element) {
+            $(element).removeClass('active');
+        });
+        $(this).addClass('active');
+        searchPickUp();
+    });
+
+    $('#input-search-pickup').on('input', function() {
+        keyPickUp = $(this).val();
+        clearTimeout(searchPickUpData);
+        searchPickUpData = setTimeout(searchPickUp, 1000);
+    });
+
+    $("#section-pickup .filter-paginate").on('click', function() {
+        paginatePickUp = parseInt($(this).data('paginate'));
+        $("#section-pickup .filter-paginate").each(function(index, element) {
+            $(element).removeClass('active');
+        });
+        $(this).addClass('active');
+        searchPickUp();
+    });
+
     $('#create-pickup').on('click', function() {
         $('#modal-create-pickup').modal('show');
     });
 
     $('#input-pickup-pelanggan').on('click', function() {
         $('#modal-data-pelanggan').modal('show');
-    });
-
-    $('#table-pickup').on('click', '.page-link', function(e) {
-        e.preventDefault();
-        $('#table-pickup').load($(this).attr('href'));
     });
 
     var pelangganId = 0;
@@ -125,12 +163,6 @@ $(document).ready(function() {
     // Delivery
     $('#create-delivery').on('click', function() {
         $('#modal-create-delivery').modal('show');
-    });
-
-    $('#table-pickup').load(window.location.origin + '/component/pickup');
-    $('#section-pickup').on('click', '.page-link', function(e) {
-        e.preventDefault();
-        $('#table-pickup').load($(this).attr('href'));
     });
 
     $('#table-delivery').load(window.location.origin + '/component/delivery');

@@ -345,10 +345,10 @@ class PageController extends Controller
                     'pages.transaksi.PickupDeliveryDriver',
                     [
                         'on_going_pickups' => PickupDelivery::with('transaksi')->where('action', 'pickup')->where('driver_id', $user->id)->where('is_done', 0)->get(),
-                        'is_done_pickups' => PickupDelivery::with('transaksi')->where('action', 'pickup')->where('driver_id', $user->id)->where('is_done', 1)->get(),
+                        'is_done_pickups' => PickupDelivery::with('transaksi')->where('action', 'pickup')->where('driver_id', $user->id)->where('is_done', 1)->whereDate('created_at', now()->toDateString())->get(),
                         'on_going_deliveries' => $onGoingDeliveries,
                         'on_going_packing' => $onGoingPackType,
-                        'is_done_deliveries' => PickupDelivery::with('transaksi')->where('action', 'delivery')->where('driver_id', $user->id)->where('is_done', 1)->get(),
+                        'is_done_deliveries' => PickupDelivery::with('transaksi')->where('action', 'delivery')->where('driver_id', $user->id)->where('is_done', 1)->whereDate('created_at', now()->toDateString())->get(),
                         'driver' => $user,
                         // 'transaksis' => Transaksi::join('pickup_deliveries', 'transaksis.id', '=', 'pickup_deliveries.transaksi_id')->where('pickup_deliveries.driver_id', $user->id)->select('transaksis.*')->get(),
                     ]
