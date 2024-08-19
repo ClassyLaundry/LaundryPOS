@@ -20,7 +20,7 @@
                 <td class="text-center">{{ date('d-M-Y H:i', strtotime($trans->created_at)) }}</td>
                 <td>{{ $trans->pelanggan->nama }}</td>
                 <td>Rp</td>
-                <td class="text-end thousand-separator">{{ $trans->grand_total }}</td>
+                <td class="text-end">{{ number_format($trans->grand_total, 0, ',', '.') }}</td>
                 <td class="text-center" style="white-space: nowrap">
                 @if($trans->lunas)
                     Lunas

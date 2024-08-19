@@ -30,6 +30,24 @@ $(document).ready(function() {
     //     return (day < 10 ? '0' + day : day) + '/' + (month < 10 ? '0' + month : month) + '/' + year;
     // }
 
+    $('#tab-pickup_delivery').on('click', '.nav-link', function() {
+        let formData = new FormData();
+        formData.append('tab', $(this).text());
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            url: "/transaksi/pickup-delivery/changeTab",
+            method: "POST",
+            contentType: false,
+            processData: false,
+            data: formData,
+        }).fail(function(message) {
+            console.log(message);
+        });
+    });
+
     var btnIndex = -1, btnId = 0, selectedTable = "";
     $('#table-pickup, #table-delivery').on('click', '.btn-show-action', function(e) {
         btnIndex = $(this).index('.btn-show-action') + 1;
@@ -60,6 +78,52 @@ $(document).ready(function() {
                 console.log(errorThrown);
             });
         }
+    });
+
+    var pelangganId = 0;
+    $('#table-pelanggan').load(window.location.origin + '/component/pelanggan?paginate=5', function() {
+        $('#table-pelanggan th:last').hide();
+        $('#table-pelanggan .cell-action').hide();
+    });
+    $('#table-pelanggan').on('click', '.page-link', function(e) {
+        e.preventDefault();
+        $('#table-pelanggan').load($(this).attr('href'));
+    });
+
+    function search() {
+        $('#table-pelanggan').load(window.location.origin + '/component/pelanggan?key=' + encodeURIComponent($('#input-nama-pelanggan').val()) + '&filter=nama&paginate=5', function() {
+            $('#table-pelanggan th:last').hide();
+            $('#table-pelanggan .cell-action').hide();
+        });
+    }
+
+    var searchPelanggan;
+    $('#input-nama-pelanggan').on('input', function() {
+        clearTimeout(searchPelanggan);
+        searchPelanggan = setTimeout(searchListPelanggan, 2000);
+    });
+
+    function searchListPelanggan() {
+        search();
+    }
+
+    $('#table-pelanggan').on('click', 'tr', function() {
+        pelangganId = $(this).attr('id').substr(10);
+
+        $.ajax({
+            url: "/data/pelanggan/" + pelangganId,
+        }).done(function(data) {
+            $('#input-pickup-pelanggan').val(data[0].nama);
+            $('#input-pickup-pelanggan-id').val(pelangganId);
+            $('#input-pickup-alamat').val(data[0].alamat);
+
+            $('#modal-data-pelanggan').modal('hide');
+
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+        });
     });
 
     // Pick Up
@@ -119,61 +183,43 @@ $(document).ready(function() {
         $('#modal-data-pelanggan').modal('show');
     });
 
-    var pelangganId = 0;
-    $('#table-pelanggan').load(window.location.origin + '/component/pelanggan?paginate=5', function() {
-        $('#table-pelanggan th:last').hide();
-        $('#table-pelanggan .cell-action').hide();
-    });
-    $('#table-pelanggan').on('click', '.page-link', function(e) {
-        e.preventDefault();
-        $('#table-pelanggan').load($(this).attr('href'));
-    });
-
-    function search() {
-        $('#table-pelanggan').load(window.location.origin + '/component/pelanggan?key=' + encodeURIComponent($('#input-nama-pelanggan').val()) + '&filter=nama&paginate=5', function() {
-            $('#table-pelanggan th:last').hide();
-            $('#table-pelanggan .cell-action').hide();
-        });
-    }
-
-    var searchPelanggan;
-    $('#input-nama-pelanggan').on('input', function() {
-        clearTimeout(searchPelanggan);
-        searchPelanggan = setTimeout(searchListPelanggan, 2000);
-    });
-
-    function searchListPelanggan() {
-        search();
-    }
-
-    $('#table-pelanggan').on('click', 'tr', function() {
-        pelangganId = $(this).attr('id').substr(10);
-
-        $.ajax({
-            url: "/data/pelanggan/" + pelangganId,
-        }).done(function(data) {
-            $('#input-pickup-pelanggan').val(data[0].nama);
-            $('#input-pickup-pelanggan-id').val(pelangganId);
-            $('#input-pickup-alamat').val(data[0].alamat);
-
-            $('#modal-data-pelanggan').modal('hide');
-
-        }).fail(function(jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR);
-            console.log(textStatus);
-            console.log(errorThrown);
-        });
-    });
-
     // Delivery
+    var paginateDelivery = 5, pageDelivery = 1, keyDelivery = '', dateDelivery = $('#input-delivery-month').val(), searchByDelivery = 'pelanggan', searchDeliveryData;
+
+    function searchDelivery() {
+        $('#table-delivery').load(window.location.origin + '/component/delivery?search=' + searchByDelivery + '&key=' + encodeURIComponent(keyDelivery) + '&date=' + dateDelivery + '&paginate=' + paginateDelivery + '&page=' + pageDelivery);
+    }
+
+    searchDelivery();
+
+    $('#input-delivery-month').on('change', function() {
+        dateDelivery = $(this).val();
+        searchDelivery();
+    });
+
+    $('#table-delivery').on('click', '.page-link', function(e) {
+        e.preventDefault();
+        pageDelivery = $(this).attr('href').split('page=')[1];
+        searchDelivery();
+    });
+
+    $('#input-search-delivery').on('input', function() {
+        keyDelivery = $(this).val();
+        clearTimeout(searchDeliveryData);
+        searchDeliveryData = setTimeout(searchDelivery, 1000);
+    });
+
+    $("#section-delivery .filter-paginate").on('click', function() {
+        paginateDelivery = parseInt($(this).data('paginate'));
+        $("#section-delivery .filter-paginate").each(function(index, element) {
+            $(element).removeClass('active');
+        });
+        $(this).addClass('active');
+        searchDelivery();
+    });
+
     $('#create-delivery').on('click', function() {
         $('#modal-create-delivery').modal('show');
-    });
-
-    $('#table-delivery').load(window.location.origin + '/component/delivery');
-    $('#section-delivery').on('click', '.page-link', function(e) {
-        e.preventDefault();
-        $('#table-delivery').load($(this).attr('href'));
     });
 
     $('#input-delivery-kode').on('click', function() {

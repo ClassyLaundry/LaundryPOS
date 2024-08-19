@@ -23,11 +23,11 @@
                                     <div class="d-flex flex-column">
                                         <h4>{{ $staging->kode }}</h4>
                                         <h6>
-                                            <span class="text-muted">{{ date('d-M-Y', strtotime($staging->created_at)) }}</span>
+                                            <span class="text-muted">{{ date('d-m-Y', strtotime($staging->created_at)) }}</span>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 16 16" fill="currentColor" class="bi bi-dot">
                                                 <path fill-rule="evenodd" d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
                                             </svg>
-                                            <span class="fw-bold">{{ date('d-M-Y', strtotime($staging->done_date)) }}</span>
+                                            <span class="fw-bold">{{ date('d-m-Y', strtotime($staging->done_date)) }}</span>
                                         </h6>
                                     </div>
                                     <div class="position-relative">
@@ -61,11 +61,11 @@
                                     <div class="d-flex flex-column">
                                         <h4>{{ $hub_penyetrika->kode }}</h4>
                                         <h6>
-                                            <span class="text-muted">{{ date('d-M-Y', strtotime($hub_penyetrika->created_at)) }}</span>
+                                            <span class="text-muted">{{ date('d-m-Y', strtotime($hub_penyetrika->created_at)) }}</span>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 16 16" fill="currentColor" class="bi bi-dot">
                                                 <path fill-rule="evenodd" d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
                                             </svg>
-                                            <span class="fw-bold">{{ date('d-M-Y', strtotime($hub_penyetrika->done_date)) }}</span>
+                                            <span class="fw-bold">{{ date('d-m-Y', strtotime($hub_penyetrika->done_date)) }}</span>
                                         </h6>
                                     </div>
                                     <div class="position-relative">
@@ -99,11 +99,11 @@
                                     <div class="d-flex flex-column">
                                         <h4>{{ $done_setrika->kode }}</h4>
                                         <h6>
-                                            <span class="text-muted">{{ date('d-M-Y', strtotime($done_setrika->created_at)) }}</span>
+                                            <span class="text-muted">{{ date('d-m-Y', strtotime($done_setrika->created_at)) }}</span>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 16 16" fill="currentColor" class="bi bi-dot">
                                                 <path fill-rule="evenodd" d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
                                             </svg>
-                                            <span class="fw-bold">{{ date('d-M-Y', strtotime($done_setrika->done_date)) }}</span>
+                                            <span class="fw-bold">{{ date('d-m-Y', strtotime($done_setrika->done_date)) }}</span>
                                         </h6>
                                     </div>
                                     <div class="position-relative">

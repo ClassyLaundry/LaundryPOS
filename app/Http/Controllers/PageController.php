@@ -568,10 +568,6 @@ class PageController extends Controller
                     ]
                 );
             }
-            $data['transaksis'] = Transaksi::with('tukang_setrika')->detail()->latest()->get();
-            $data['jenis_rewashes'] = JenisRewash::get();
-            $data['rewash'] = Rewash::get();
-            $data['penyetrikas'] = User::role('produksi_setrika')->with('setrikaan')->get();
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
         }

@@ -8,16 +8,15 @@
         <a>Pickup &amp; Delivery</a>
     </header>
 
-    <ul role="tablist" class="nav nav-tabs position-relative border-bottom-0">
-        <li role="presentation" class="nav-item"><a role="tab" data-bs-toggle="tab" class="nav-link active" href="#tab-1">Pickup</a></li>
-        <li role="presentation" class="nav-item"><a role="tab" data-bs-toggle="tab" class="nav-link" href="#tab-2">Delivery</a></li>
-        <li role="presentation" class="nav-item"><a role="tab" data-bs-toggle="tab" class="nav-link" href="#tab-3">Outlet</a></li>
-        <li role="presentation" class="nav-item"><a role="tab" data-bs-toggle="tab" class="nav-link" href="#tab-4">Task Hub</a></li>
+    <ul role="tablist" class="nav nav-tabs position-relative border-bottom-0" id="tab-pickup_delivery">
+        <li role="presentation" class="nav-item"><a role="tab" data-bs-toggle="tab" class="nav-link @if(session('last_tab') == 'Pickup') active @endif" href="#tab-1">Pickup</a></li>
+        <li role="presentation" class="nav-item"><a role="tab" data-bs-toggle="tab" class="nav-link @if(session('last_tab') == 'Delivery') active @endif" href="#tab-2">Delivery</a></li>
+        <li role="presentation" class="nav-item"><a role="tab" data-bs-toggle="tab" class="nav-link @if(session('last_tab') == 'Outlet') active @endif" href="#tab-3">Outlet</a></li>
+        <li role="presentation" class="nav-item"><a role="tab" data-bs-toggle="tab" class="nav-link @if(session('last_tab') == 'Task Hub') active @endif" href="#tab-4">Task Hub</a></li>
     </ul>
-
+    {{-- @dd(session('last_tab')) --}}
     <div class="tab-content">
-
-        <div role="tabpanel" class="tab-pane active" id="tab-1">
+        <div role="tabpanel" class="tab-pane @if(session('last_tab') == 'Pickup') active @endif" id="tab-1">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
@@ -74,28 +73,103 @@
             </div>
         </div>
 
-        <div role="tabpanel" class="tab-pane" id="tab-2">
-            <section id="section-delivery" class="mb-3">
-                <h4>Delivery</h4>
-                <hr />
-                <div id="table-delivery" class="table-container" data-table="delivery"></div>
-                @if(in_array("Membuat Pickup Delivery", Session::get('permissions')) || Session::get('role') == 'administrator')
-                <div class="text-end mt-3">
-                    <button id="create-delivery" class="btn btn-primary">Delivery Baru</button>
+        <div role="tabpanel" class="tab-pane @if(session('last_tab') == 'Delivery') active @endif" id="tab-2">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="lh-base">Delivery</h4>
+                        @if(in_array("Membuat Pickup Delivery", Session::get('permissions')) || Session::get('role') == 'administrator')
+                        <button id="create-delivery" class="btn btn-primary">Delivery Baru</button>
+                        @endif
+                    </div>
+                    <hr />
+                    <section id="section-delivery">
+                        <div class="row">
+                            <div class="col-lg-4 col-4 order-lg-1 order-1 mb-2">
+                                <div class="dropdown" id="dropdown-filter">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButtonFilter" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Filter
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonFilter" style="min-width: 6rem;">
+                                        <li><h6 class="dropdown-header">Search By</h6></li>
+                                        <li><a class="dropdown-item active filter-search" data-search='pelanggan'>Pelanggan</a></li>
+                                        <li><a class="dropdown-item filter-search" data-search='driver'>Driver</a></li>
+                                        <li><a class="dropdown-item filter-search" data-search='alamat'>Alamat</a></li>
+                                        <li><a class="dropdown-item filter-search" data-search='status'>Status</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><h6 class="dropdown-header">Paginate</h6></li>
+                                        <li><a class="dropdown-item active filter-paginate" data-paginate='5'>5 items</a></li>
+                                        <li><a class="dropdown-item filter-paginate" data-paginate='10'>10 items</a></li>
+                                        <li><a class="dropdown-item filter-paginate" data-paginate='25'>25 items</a></li>
+                                        <li><a class="dropdown-item filter-paginate" data-paginate='50'>50 items</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-12 order-lg-2 order-3 mb-2">
+                                <div class="d-flex align-items-center form-control">
+                                    <i class="fa-solid fa-magnifying-glass me-2"></i>
+                                    <input type="search" id="input-search-delivery" class="w-100" style="outline: none; border: none;">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-8 order-lg-3 order-2 mb-2 text-end">
+                                <div class="d-inline-flex align-items-center">
+                                    <h6 class="me-2">Tanggal</h6>
+                                    <input type="month" name="month" class="form-control input-month" id="input-delivery-month">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="table-delivery" class="table-container" data-table="delivery"></div>
+                    </section>
                 </div>
-                @endif
-            </section>
+            </div>
         </div>
 
-        <div role="tabpanel" class="tab-pane" id="tab-3">
-            <section id="section-ambil-outlet" class="mb-3">
-                <h4>Ambil di outlet</h4>
-                <hr />
-                <div id="table-di-outlet" class="table-container"></div>
-            </section>
+        <div role="tabpanel" class="tab-pane @if(session('last_tab') == 'Outlet') active @endif" id="tab-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="lh-base">Ambil di outlet</h4>
+                    <hr />
+                    <section id="section-ambil-outlet">
+                        <div class="row">
+                            <div class="col-lg-4 col-4 order-lg-1 order-1 mb-2">
+                                <div class="dropdown" id="dropdown-filter">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButtonFilter" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Filter
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonFilter" style="min-width: 6rem;">
+                                        <li><h6 class="dropdown-header">Search By</h6></li>
+                                        <li><a class="dropdown-item active filter-search" data-search='pelanggan'>Pelanggan</a></li>
+                                        <li><a class="dropdown-item filter-search" data-search='penerima'>Penerima</a></li>
+                                        <li><a class="dropdown-item filter-search" data-search='outlet'>Outlet</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><h6 class="dropdown-header">Paginate</h6></li>
+                                        <li><a class="dropdown-item active filter-paginate" data-paginate='5'>5 items</a></li>
+                                        <li><a class="dropdown-item filter-paginate" data-paginate='10'>10 items</a></li>
+                                        <li><a class="dropdown-item filter-paginate" data-paginate='25'>25 items</a></li>
+                                        <li><a class="dropdown-item filter-paginate" data-paginate='50'>50 items</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-12 order-lg-2 order-3 mb-2">
+                                <div class="d-flex align-items-center form-control">
+                                    <i class="fa-solid fa-magnifying-glass me-2"></i>
+                                    <input type="search" id="input-search-outlet" class="w-100" style="outline: none; border: none;">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-8 order-lg-3 order-2 mb-2 text-end">
+                                <div class="d-inline-flex align-items-center">
+                                    <h6 class="me-2">Tanggal</h6>
+                                    <input type="month" name="month" class="form-control input-month" id="input-outlet-month">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="table-di-outlet" class="table-container"></div>
+                    </section>
+                </div>
+            </div>
         </div>
 
-        <div role="tabpanel" class="tab-pane" id="tab-4">
+        <div role="tabpanel" class="tab-pane @if(session('last_tab') == 'Task Hub') active @endif" id="tab-4">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -180,7 +254,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 

@@ -156,6 +156,7 @@ Route::middleware(['auth'])->group(function () {
     //Pickup & Delivery
     Route::get('/transaksi/pickup-delivery', [PageController::class, 'pickupDelivery'])->name('pickup-delivery');
     Route::get('/transaksi/pickup-delivery/{id}', [PickupDeliveryController::class, 'show']);
+    Route::post('/transaksi/pickup-delivery/changeTab', [PickupDeliveryController::class, 'saveTab']);
     Route::post('/transaksi/pickup-delivery', [PickupDeliveryController::class, 'insert']);
     Route::post('/transaksi/pickup-delivery/{id}', [PickupDeliveryController::class, 'update']);
     Route::get('/transaksi/pickup-delivery/delete/{id}', [PickupDeliveryController::class, 'delete']);

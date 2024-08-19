@@ -18,7 +18,7 @@
                 <tr>
                     <td class="text-center">{{ $pickup->kode }}</td>
                     <td>{{ $pickup->pelanggan->nama }}</td>
-                    <td class="text-center">{{ date('d-M-Y h:i', strtotime($pickup->created_at)) }}</td>
+                    <td class="text-center">{{ date('d-M-Y H:i', strtotime($pickup->created_at)) }}</td>
                     <td>{{ $pickup->alamat }}</td>
                     <td class="text-center">{{ $pickup->nama_driver }}</td>
                     <td class="text-center">{{ ($pickup->is_done) ? 'Selesai' : 'Proses' }}</td>

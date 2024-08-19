@@ -67,7 +67,7 @@
             </div>
             <div class="d-flex w-50">
                 <p class="w-30">PENCETAKAN</p>
-                <p class="w-70">: {{ date('d-M-Y h:i') }}</p>
+                <p class="w-70">: {{ date('d-M-Y H:i') }}</p>
             </div>
         </div>
 
@@ -78,7 +78,7 @@
             </div>
             <div class="d-flex w-50">
                 <p class="w-30">TGL CUCI</p>
-                <p class="w-70">: {{ date('d-M-Y h:i', strtotime($data->transaksi->created_at)) }} / {{ date('d-M-Y', strtotime($data->transaksi->done_date)) }}</p>
+                <p class="w-70">: {{ date('d-M-Y H:i', strtotime($data->transaksi->created_at)) }} / {{ date('d-M-Y', strtotime($data->transaksi->done_date)) }}</p>
             </div>
         </div>
 

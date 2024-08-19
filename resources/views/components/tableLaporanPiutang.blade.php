@@ -38,7 +38,7 @@
                         @endif
                         <td>{{ $index }}</td>
                         <td>{{ $trans->kode }}</td>
-                        <td>{{ date('d-M-Y h:i:s', strtotime($trans->created_at)) }}</td>
+                        <td>{{ date('d-M-Y H:i:s', strtotime($trans->created_at)) }}</td>
                         <td>
                             <div class="d-flex justify-content-between">
                                 <span>Rp</span>

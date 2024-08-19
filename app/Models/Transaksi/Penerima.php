@@ -31,4 +31,9 @@ class Penerima extends Model
     {
         return $this->belongsTo(Outlet::class);
     }
+
+    public function transaksi()
+    {
+        return $this->belongsTo(Transaksi::class);
+    }
 }

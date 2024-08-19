@@ -15,6 +15,12 @@ use Illuminate\Support\Facades\Auth;
 
 class PickupDeliveryController extends Controller
 {
+    public function saveTab(Request $request)
+    {
+        $request->session()->put('last_tab', $request->tab);
+        return response()->json(['status' => 'success', 'tab' => $request->tab]);
+    }
+
     public function insert(InsertPickupDeliveryRequest $request)
     {
         $user = User::find(auth()->id());
@@ -24,6 +30,7 @@ class PickupDeliveryController extends Controller
         });
         if ($permissionExist) {
             $action = $request->action;
+            $request->session()->put('last_tab', $action);
             if ($action == "pickup") {
                 $transaksi = Transaksi::create([
                     'pelanggan_id' => $request->pelanggan_id,
@@ -231,7 +238,7 @@ class PickupDeliveryController extends Controller
 
     public function ambil_di_outlet()
     {
-        $diOutlet = Penerima::where('ambil_di_outlet', 1)->paginate(5);
+        $diOutlet = Penerima::with('transaksi')->where('ambil_di_outlet', 1)->paginate(10);
         return view('components.tableDiOutlet', [
             'diOutlets' => $diOutlet
         ]);
@@ -297,22 +304,23 @@ class PickupDeliveryController extends Controller
     {
         $transaksi = Transaksi::detail()
             ->where('status', 'confirmed')
-            ->whereIn('id', function ($subquery) {
+            ->whereIn('id', function ($subquery) { // check kalau sudah di packing
                 $subquery->select('transaksi_id')
                     ->from('packings');
             })
-            ->whereNotIn('id', function ($subquery) {
+            ->whereNotIn('id', function ($subquery) { // check kalau sudah ada delivery
                 $subquery->select('transaksi_id')
                     ->from('pickup_deliveries')
+                    ->where('action', 'delivery')
                     ->whereNotNull('transaksi_id');
             })
-            ->where(function ($query) use ($request) {
+            ->where(function ($query) use ($request) { // search nama pelanggan
                 $query->where('id', 'like', '%' . $request->key . '%')
                     ->orWhereHas('pelanggan', function ($q) use ($request) {
                         $q->where('nama', 'like', '%' . $request->key . '%');
                     });
             })
-            ->latest()->paginate(15);
+            ->latest()->paginate(10);
 
         return view('components.tableTransDelivery', [
             'status' => 200,
