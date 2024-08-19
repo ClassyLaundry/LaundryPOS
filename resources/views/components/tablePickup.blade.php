@@ -2,11 +2,12 @@
     <table class="table">
         <thead>
             <tr>
-                <th style="width: 10%;">Kode</th>
-                <th style="width: 30%;">Pelanggan</th>
-                <th style="width: 20%;">Driver</th>
+                <th>Kode</th>
+                <th>Pelanggan</th>
+                <th>Waktu Order</th>
                 <th>Alamat</th>
-                <th style="width: 10%;">Status</th>
+                <th>Driver</th>
+                <th>Status</th>
                 @if(in_array("Menghapus Pickup Delivery", Session::get('permissions')) || Session::get('role') == 'administrator')
                     <th style="width: 38.25px;"></th>
                 @endif
@@ -17,8 +18,9 @@
                 <tr>
                     <td class="text-center">{{ $pickup->kode }}</td>
                     <td>{{ $pickup->pelanggan->nama }}</td>
-                    <td class="text-center">{{ $pickup->nama_driver }}</td>
+                    <td class="text-center">{{ date('d-M-Y h:i', strtotime($pickup->created_at)) }}</td>
                     <td>{{ $pickup->alamat }}</td>
+                    <td class="text-center">{{ $pickup->nama_driver }}</td>
                     <td class="text-center">{{ ($pickup->is_done) ? 'Selesai' : 'Proses' }}</td>
                     @if(in_array("Menghapus Pickup Delivery", Session::get('permissions')) || Session::get('role') == 'administrator')
                     <td class='text-end p-1'>

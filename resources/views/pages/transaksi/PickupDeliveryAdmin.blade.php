@@ -28,8 +28,8 @@
                     </div>
                     <hr />
                     <section id="section-pickup">
-                        <div class="row mb-2">
-                            <div class="col-4">
+                        <div class="row">
+                            <div class="col-lg-4 col-4 order-lg-1 order-1 mb-2">
                                 <div class="dropdown" id="dropdown-filter">
                                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButtonFilter" data-bs-toggle="dropdown" aria-expanded="false">
                                         Filter
@@ -49,13 +49,13 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-lg-4 col-12 order-lg-2 order-3 mb-2">
                                 <div class="d-flex align-items-center form-control">
                                     <i class="fa-solid fa-magnifying-glass me-2"></i>
                                     <input type="search" id="input-search-pickup" class="w-100" style="outline: none; border: none;">
                                 </div>
                             </div>
-                            <div class="col-4 text-end">
+                            <div class="col-lg-4 col-8 order-lg-3 order-2 mb-2 text-end">
                                 <div class="d-inline-flex align-items-center">
                                     <h6 class="me-2">Tanggal</h6>
                                     <input type="month" name="month" class="form-control input-month" id="input-pickup-month">

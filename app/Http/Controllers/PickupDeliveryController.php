@@ -178,34 +178,41 @@ class PickupDeliveryController extends Controller
 
     public function pickup(Request $request)
     {
+        $year = substr($request->date, 0, 4);
+        $month = substr($request->date, 5, 2);
+
         return view('components.tablePickup', [
             'pickups' => PickupDelivery::with('pelanggan', 'driver')->where('action', 'pickup')
-            ->when($request->filled('key'), function ($query) use ($request) {
-                $query->when($request->filled('search'), function ($query) use ($request) {
-                    if ($request->search === 'pelanggan') {
-                        $query->WhereHas('pelanggan', function ($query) use ($request) {
-                            $query->where('nama', 'like', '%' . $request->key . '%');
-                        });
-                    } elseif ($request->search === 'driver') {
-                        $query->WhereHas('driver', function ($query) use ($request) {
-                            $query->where('username', 'like', '%' . $request->key . '%');
-                        });
-                    } elseif ($request->search === 'alamat') {
-                        $query->Where('alamat', 'like', '%' . $request->key . '%');
-                    } elseif ($request->search === 'status') {
-                        $query->Where('is_done', ($request->key === 'done' || $request->key === 'selesai') ? 1 : 0);
-                    } else {
-                        $query->orWhereHas('pelanggan', function ($query) use ($request) {
-                            $query->where('nama', 'like', '%' . $request->key . '%');
-                        });
-                        $query->orWhereHas('driver', function ($query) use ($request) {
-                            $query->where('username', 'like', '%' . $request->key . '%');
-                        });
-                        $query->orWhere('alamat', 'like', '%' . $request->key . '%');
-                        $query->orWhere('is_done', ($request->key === 'done' || $request->key === 'selesai') ? 1 : 0);
-                    }
-                });
-            })->latest()->paginate($request->paginate),
+                ->when($request->filled('key'), function ($query) use ($request) {
+                    $query->when($request->filled('search'), function ($query) use ($request) {
+                        if ($request->search === 'pelanggan') {
+                            $query->WhereHas('pelanggan', function ($query) use ($request) {
+                                $query->where('nama', 'like', '%' . $request->key . '%');
+                            });
+                        } elseif ($request->search === 'driver') {
+                            $query->WhereHas('driver', function ($query) use ($request) {
+                                $query->where('username', 'like', '%' . $request->key . '%');
+                            });
+                        } elseif ($request->search === 'alamat') {
+                            $query->Where('alamat', 'like', '%' . $request->key . '%');
+                        } elseif ($request->search === 'status') {
+                            $query->Where('is_done', ($request->key === 'done' || $request->key === 'selesai') ? 1 : 0);
+                        } else {
+                            $query->orWhereHas('pelanggan', function ($query) use ($request) {
+                                $query->where('nama', 'like', '%' . $request->key . '%');
+                            });
+                            $query->orWhereHas('driver', function ($query) use ($request) {
+                                $query->where('username', 'like', '%' . $request->key . '%');
+                            });
+                            $query->orWhere('alamat', 'like', '%' . $request->key . '%');
+                            $query->orWhere('is_done', ($request->key === 'done' || $request->key === 'selesai') ? 1 : 0);
+                        }
+                    });
+                })
+                ->whereYear('created_at', $year)
+                ->whereMonth('created_at', $month)
+                ->latest()
+                ->paginate($request->paginate),
         ]);
     }
 

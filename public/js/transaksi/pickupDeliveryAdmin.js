@@ -68,13 +68,18 @@ $(document).ready(function() {
     var month = String(currentDate.getMonth() + 1).padStart(2, '0');
     $('.input-month').val(`${year}-${month}`);
 
-    var paginatePickUp = 5, pagePickUp = 1, keyPickUp = '', searchByPickUp = 'pelanggan', searchPickUpData;
+    var paginatePickUp = 5, pagePickUp = 1, keyPickUp = '', datePickUp = $('#input-pickup-month').val(), searchByPickUp = 'pelanggan', searchPickUpData;
 
     function searchPickUp() {
-        $('#table-pickup').load(window.location.origin + '/component/pickup?search=' + searchByPickUp + '&key=' + encodeURIComponent(keyPickUp) + '&paginate=' + paginatePickUp + '&page=' + pagePickUp);
+        $('#table-pickup').load(window.location.origin + '/component/pickup?search=' + searchByPickUp + '&key=' + encodeURIComponent(keyPickUp) + '&date=' + datePickUp + '&paginate=' + paginatePickUp + '&page=' + pagePickUp);
     }
 
     searchPickUp();
+
+    $('#input-pickup-month').on('change', function() {
+        datePickUp = $(this).val();
+        searchPickUp();
+    });
 
     $('#table-pickup').on('click', '.page-link', function(e) {
         e.preventDefault();
