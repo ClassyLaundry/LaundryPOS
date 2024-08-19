@@ -203,6 +203,15 @@ $(document).ready(function() {
         searchDelivery();
     });
 
+    $("#section-delivery .filter-search").on('click', function() {
+        searchByDelivery = $(this).data('search');
+        $("#section-delivery .filter-search").each(function(index, element) {
+            $(element).removeClass('active');
+        });
+        $(this).addClass('active');
+        searchDelivery();
+    });
+
     $('#input-search-delivery').on('input', function() {
         keyDelivery = $(this).val();
         clearTimeout(searchDeliveryData);

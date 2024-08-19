@@ -196,23 +196,14 @@ class PickupDeliveryController extends Controller
                             $query->WhereHas('pelanggan', function ($query) use ($request) {
                                 $query->where('nama', 'like', '%' . $request->key . '%');
                             });
+                        } elseif ($request->search === 'alamat') {
+                            $query->Where('alamat', 'like', '%' . $request->key . '%');
                         } elseif ($request->search === 'driver') {
                             $query->WhereHas('driver', function ($query) use ($request) {
                                 $query->where('username', 'like', '%' . $request->key . '%');
                             });
-                        } elseif ($request->search === 'alamat') {
-                            $query->Where('alamat', 'like', '%' . $request->key . '%');
                         } elseif ($request->search === 'status') {
                             $query->Where('is_done', ($request->key === 'done' || $request->key === 'selesai') ? 1 : 0);
-                        } else {
-                            $query->orWhereHas('pelanggan', function ($query) use ($request) {
-                                $query->where('nama', 'like', '%' . $request->key . '%');
-                            });
-                            $query->orWhereHas('driver', function ($query) use ($request) {
-                                $query->where('username', 'like', '%' . $request->key . '%');
-                            });
-                            $query->orWhere('alamat', 'like', '%' . $request->key . '%');
-                            $query->orWhere('is_done', ($request->key === 'done' || $request->key === 'selesai') ? 1 : 0);
                         }
                     });
                 })
@@ -223,16 +214,34 @@ class PickupDeliveryController extends Controller
         ]);
     }
 
-    public function delivery()
+    public function delivery(Request $request)
     {
-        $outlet_id = User::getOutletId(Auth::id());
-        $delivery = PickupDelivery::whereHas('transaksi', function ($query) use ($outlet_id) {
-            $query->where('outlet_id', $outlet_id);
-        })
-            ->where('action', 'delivery')
-            ->paginate(5);
+        $year = substr($request->date, 0, 4);
+        $month = substr($request->date, 5, 2);
+
         return view('components.tableDelivery', [
-            'deliveries' => $delivery
+            'deliveries' => PickupDelivery::with('pelanggan', 'driver')->where('action', 'delivery')
+                ->when($request->filled('key'), function ($query) use ($request) {
+                    $query->when($request->filled('search'), function ($query) use ($request) {
+                        if ($request->search === 'pelanggan') {
+                            $query->WhereHas('pelanggan', function ($query) use ($request) {
+                                $query->where('nama', 'like', '%' . $request->key . '%');
+                            });
+                        } elseif ($request->search === 'alamat') {
+                            $query->Where('alamat', 'like', '%' . $request->key . '%');
+                        } elseif ($request->search === 'driver') {
+                            $query->WhereHas('driver', function ($query) use ($request) {
+                                $query->where('username', 'like', '%' . $request->key . '%');
+                            });
+                        } elseif ($request->search === 'status') {
+                            $query->Where('is_done', ($request->key === 'done' || $request->key === 'selesai') ? 1 : 0);
+                        }
+                    });
+                })
+                ->whereYear('created_at', $year)
+                ->whereMonth('created_at', $month)
+                ->latest()
+                ->paginate($request->paginate),
         ]);
     }
 

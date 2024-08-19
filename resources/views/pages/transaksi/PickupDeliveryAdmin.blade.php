@@ -36,8 +36,8 @@
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonFilter" style="min-width: 6rem;">
                                         <li><h6 class="dropdown-header">Search By</h6></li>
                                         <li><a class="dropdown-item active filter-search" data-search='pelanggan'>Pelanggan</a></li>
-                                        <li><a class="dropdown-item filter-search" data-search='driver'>Driver</a></li>
                                         <li><a class="dropdown-item filter-search" data-search='alamat'>Alamat</a></li>
+                                        <li><a class="dropdown-item filter-search" data-search='driver'>Driver</a></li>
                                         <li><a class="dropdown-item filter-search" data-search='status'>Status</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><h6 class="dropdown-header">Paginate</h6></li>
@@ -93,8 +93,8 @@
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonFilter" style="min-width: 6rem;">
                                         <li><h6 class="dropdown-header">Search By</h6></li>
                                         <li><a class="dropdown-item active filter-search" data-search='pelanggan'>Pelanggan</a></li>
-                                        <li><a class="dropdown-item filter-search" data-search='driver'>Driver</a></li>
                                         <li><a class="dropdown-item filter-search" data-search='alamat'>Alamat</a></li>
+                                        <li><a class="dropdown-item filter-search" data-search='driver'>Driver</a></li>
                                         <li><a class="dropdown-item filter-search" data-search='status'>Status</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><h6 class="dropdown-header">Paginate</h6></li>
