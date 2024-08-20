@@ -3,6 +3,9 @@
         <i id="side-icon" class="fas fa-bars"></i>
     </button>
     <div class="d-flex align-items-center">
+        <div class="me-4 text-white">
+            Selamat datang, {{ Auth::user()->name }}! - {{ Auth::user()->outlet->nama }}
+        </div>
         <div class="position-relative me-3">
             <button class="btn btn-sm d-flex" type="button">
                 <i class="fa-solid fa-bell" style="font-size: 1rem"></i>
