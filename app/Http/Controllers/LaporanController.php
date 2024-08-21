@@ -544,7 +544,10 @@ class LaporanController extends Controller
     public function laporanMutasiDeposit()
     {
         return view('pages.laporan.MutasiDeposit', [
-            'pelanggans' => Pelanggan::orderBy('nama', 'asc')->get(),
+            //list yang pernah ngisi deposit
+            'pelanggans' => Pelanggan::whereHas('saldo', function ($query) {
+                $query->whereNotNull('saldo_akhir');
+            })->orderBy('nama', 'asc')->get(),
         ]);
     }
 
