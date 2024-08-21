@@ -88,7 +88,7 @@ class Transaksi extends Model
         //declare variable
         $subtotal = 0;
         $total_diskon_promo = 0;
-        $diskon_member = $pelanggan->member ? 10 : 0;
+        $diskon_member = 0;
         $grand_total = 0;
 
         //find bucket dan premium

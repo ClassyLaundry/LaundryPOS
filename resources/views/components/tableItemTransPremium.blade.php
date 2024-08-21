@@ -104,12 +104,12 @@
                 <td class="text-end thousand-separator py-1 px-2" id="diskon-promo">{{ $trans->total_diskon_promo }}</td>
                 <td class="p-1"></td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <td class="text-end py-1 px-2" colspan="6">Diskon Member</td>
                 <td class="py-1 px-2" style="width: 35px">Rp</td>
                 <td class="text-end thousand-separator py-1 px-2" id="diskon-member">{{ $trans->diskon_member }}</td>
                 <td class="p-1"></td>
-            </tr>
+            </tr> --}}
             <tr>
                 <td class="text-end py-1 px-2" colspan="6">Diskon Spesial</td>
                 <td class="py-1 px-2" style="width: 35px">Rp</td>
