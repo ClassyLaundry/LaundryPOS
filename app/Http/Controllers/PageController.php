@@ -355,6 +355,9 @@ class PageController extends Controller
                 );
             } else {
                 $outlet_id = User::getOutletId(Auth::id());
+                if (!session()->has('last_tab') || session()->get('last_tab') === null) {
+                    session()->put('last_tab', 'Pickup');
+                }
                 return view(
                     'pages.transaksi.PickupDeliveryAdmin',
                     [

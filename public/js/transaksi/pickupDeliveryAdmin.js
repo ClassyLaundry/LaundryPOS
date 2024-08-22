@@ -269,10 +269,47 @@ $(document).ready(function() {
     });
 
     // Ambil di outlet
-    $('#table-di-outlet').load(window.location.origin + '/component/ambil_di_outlet');
-    $('#section-ambil-outlet').on('click', '.page-link', function(e) {
+    var paginateOutlet = 5, pageOutlet = 1, keyOutlet = '', dateOutlet = $('#input-outlet-month').val(), searchByOutlet = 'pelanggan', searchOutletData;
+
+    function searchDiOutlet() {
+        $('#table-outlet').load(window.location.origin + '/component/ambil_di_outlet?search=' + searchByOutlet + '&key=' + encodeURIComponent(keyOutlet) + '&date=' + dateOutlet + '&paginate=' + paginateOutlet + '&page=' + pageOutlet);
+    }
+
+    searchDiOutlet();
+
+    $('#input-outlet-month').on('change', function() {
+        dateOutlet = $(this).val();
+        searchDiOutlet();
+    });
+
+    $('#table-outlet').on('click', '.page-link', function(e) {
         e.preventDefault();
-        $('#table-di-outlet').load($(this).attr('href'));
+        pageOutlet = $(this).attr('href').split('page=')[1];
+        searchDiOutlet();
+    });
+
+    $("#section-outlet .filter-search").on('click', function() {
+        searchByOutlet = $(this).data('search');
+        $("#section-outlet .filter-search").each(function(index, element) {
+            $(element).removeClass('active');
+        });
+        $(this).addClass('active');
+        searchDiOutlet();
+    });
+
+    $('#input-search-outlet').on('input', function() {
+        keyOutlet = $(this).val();
+        clearTimeout(searchOutletData);
+        searchOutletData = setTimeout(searchDiOutlet, 1000);
+    });
+
+    $("#section-outlet .filter-paginate").on('click', function() {
+        paginateOutlet = parseInt($(this).data('paginate'));
+        $("#section-outlet .filter-paginate").each(function(index, element) {
+            $(element).removeClass('active');
+        });
+        $(this).addClass('active');
+        searchDiOutlet();
     });
 
     // Task hub

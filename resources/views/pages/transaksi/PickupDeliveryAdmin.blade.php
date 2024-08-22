@@ -129,7 +129,7 @@
                 <div class="card-body">
                     <h4 class="lh-base">Ambil di outlet</h4>
                     <hr />
-                    <section id="section-ambil-outlet">
+                    <section id="section-outlet">
                         <div class="row">
                             <div class="col-lg-4 col-4 order-lg-1 order-1 mb-2">
                                 <div class="dropdown" id="dropdown-filter">
@@ -163,7 +163,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="table-di-outlet" class="table-container"></div>
+                        <div id="table-outlet" class="table-container"></div>
                     </section>
                 </div>
             </div>

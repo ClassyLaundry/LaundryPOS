@@ -245,11 +245,39 @@ class PickupDeliveryController extends Controller
         ]);
     }
 
-    public function ambil_di_outlet()
+    public function ambil_di_outlet(Request $request)
     {
-        $diOutlet = Penerima::with('transaksi')->where('ambil_di_outlet', 1)->paginate(10);
+        // $diOutlet = Penerima::with('transaksi')->where('ambil_di_outlet', 1)->paginate(10);
+        // return view('components.tableDiOutlet', [
+        //     'diOutlets' => $diOutlet
+        // ]);
+
+        $year = substr($request->date, 0, 4);
+        $month = substr($request->date, 5, 2);
+
         return view('components.tableDiOutlet', [
-            'diOutlets' => $diOutlet
+            'diOutlets' => Penerima::with('transaksi')->where('ambil_di_outlet', 1)
+                ->when($request->filled('key'), function ($query) use ($request) {
+                    $query->when($request->filled('search'), function ($query) use ($request) {
+                        if ($request->search === 'pelanggan') {
+                            $query->WhereHas('transaksi', function ($query) use ($request) {
+                                $query->WhereHas('pelanggan', function ($query) use ($request) {
+                                    $query->where('nama', 'like', '%' . $request->key . '%');
+                                });
+                            });
+                        } elseif ($request->search === 'penerima') {
+                            $query->Where('penerima', 'like', '%' . $request->key . '%');
+                        } elseif ($request->search === 'outlet') {
+                            $query->WhereHas('outlet', function ($query) use ($request) {
+                                $query->where('nama', 'like', '%' . $request->key . '%');
+                            });
+                        }
+                    });
+                })
+                ->whereYear('created_at', $year)
+                ->whereMonth('created_at', $month)
+                ->latest()
+                ->paginate($request->paginate),
         ]);
     }
 
