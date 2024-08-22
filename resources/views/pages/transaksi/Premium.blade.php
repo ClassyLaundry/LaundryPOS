@@ -54,7 +54,7 @@
                         <div id="info-pelanggan-2" class="mt-2">
                             <div class="mb-2 position-relative">
                                 <button class="btn btn-primary" id="search-pelanggan-2" type="button"><i class="fas fa-search"></i> Cari Pelanggan</button>
-                                <div class="position-absolute card card-body w-100 mt-2" style="background-color: white;height: 342px; display: none;">
+                                <div class="position-absolute card card-body w-100 mt-2" style="background-color: white; min-height: 342px; display: none;">
                                     <form class="mb-3">
                                         <div class="d-flex">
                                             <input type="search" class="form-control" id="input-nama-pelanggan-2" placeholder="Nama pelanggan" />

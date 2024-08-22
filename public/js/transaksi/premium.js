@@ -175,27 +175,28 @@ $(document).ready(function() {
         $(this).next().toggle();
     });
 
-    $('#table-list-pelanggan-2').load(window.location.origin + '/component/pelanggan2?paginate=5', function() {
-        $('#table-list-pelanggan-2 th:last').hide();
-        $('#table-list-pelanggan-2 .cell-action').hide();
-    });
-    $('#table-list-pelanggan-2').on('click', '.page-link', function(e) {
-        e.preventDefault();
-        $('#table-list-pelanggan-2').load($(this).attr('href'));
-    });
-
-    var searchPelanggan;
-    $('#input-nama-pelanggan-2').on('input', function() {
-        clearTimeout(searchPelanggan);
-        searchPelanggan = setTimeout(searchListPelanggan, 1000);
-    });
+    var pagePelanggan = 1, keyPelanggan = '', searchPelanggan;
 
     function searchListPelanggan() {
-        $('#table-list-pelanggan-2').load(window.location.origin + '/component/pelanggan2?key=' + encodeURIComponent($('#input-nama-pelanggan-2').val()) + '&filter=nama&paginate=5', function() {
+        $('#table-list-pelanggan-2').load(window.location.origin + '/component/pelanggan2?key=' + keyPelanggan + '&paginate=5&page=' + pagePelanggan, function() {
             $('#table-list-pelanggan-2 th:last').hide();
             $('#table-list-pelanggan-2 .cell-action').hide();
         });
     }
+
+    searchListPelanggan();
+
+    $('#table-list-pelanggan-2').on('click', '.page-link', function(e) {
+        e.preventDefault();
+        pagePelanggan = $(this).attr('href').split('page=')[1];
+        searchDiOutlet();
+    });
+
+    $('#input-nama-pelanggan-2').on('input', function() {
+        keyPelanggan = encodeURIComponent($('#input-nama-pelanggan-2').val());
+        clearTimeout(searchPelanggan);
+        searchPelanggan = setTimeout(searchListPelanggan, 1000);
+    });
 
     $('#table-list-pelanggan-2').on('click', 'tbody tr', function() {
         let parent = $(this).parent();
