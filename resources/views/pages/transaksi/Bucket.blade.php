@@ -446,7 +446,7 @@
                                             </button>
                                         </header>
                                         <div id="info-pickup-delivery" class="mt-2" style="display: none;">
-                                            <div class="mb-5">
+                                            <div class="mb-5 disabled">
                                                 <div class="form-check" id="check-pickup" style="margin-bottom: .5rem;" class="disabled">
                                                     <input class="form-check-input" type="checkbox" id="formCheck-pickup">
                                                     <label class="form-check-label" for="formCheck-pickup">Pickup</label>
