@@ -49,6 +49,7 @@ Route::get('/printNota/{id}', [PrintController::class, 'nota']);
 Route::get('/printMemoProduksi/{id}', [PrintController::class, 'memoProduksi']);
 Route::get('/printKitir/{id}', [PrintController::class, 'kitir']);
 Route::get('/printTandaTerima/{id}', [PrintController::class, 'tandaTerima']);
+Route::get('/printTandaTerimaRewash/{id}', [PrintController::class, 'tandaTerimaRewash']);
 Route::get('/printPreview/{id}', [PrintController::class, 'preview']);
 
 Route::middleware(['guest'])->group(function () {
