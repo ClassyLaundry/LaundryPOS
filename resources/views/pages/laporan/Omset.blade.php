@@ -139,7 +139,7 @@
                                         @endphp
                                         @if ($dateIndex == $rowHeight[date('d-m-Y', strtotime($pembayaran->created_at))])
                                             <tr class="table-success">
-                                                <td colspan="4" class="text-center">{{ 'Total omset per ' . date('d-M-Y', strtotime($pembayaran->created_at)) }}</td>
+                                                <td colspan="3" class="text-center">{{ 'Total omset per ' . date('d-M-Y', strtotime($pembayaran->created_at)) }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-between">
                                                         <span>Rp</span>
