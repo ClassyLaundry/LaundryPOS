@@ -498,7 +498,7 @@ class LaporanController extends Controller
 
         $total_piutang = Transaksi::with('pelanggan')
             ->where('lunas', false)
-            ->where('outlet_id', $outlet_id)
+            // ->where('outlet_id', $outlet_id)
             ->whereBetween('created_at', [$start, $end])
             ->when($request->filled('name'), function ($query) use ($request) {
                 $query->whereHas('pelanggan', function ($query) use ($request) {
