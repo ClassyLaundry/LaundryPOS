@@ -496,9 +496,15 @@ class LaporanController extends Controller
             })
             ->get();
 
-        $total_piutang = Transaksi::where('lunas', false)
+        $total_piutang = Transaksi::with('pelanggan')
+            ->where('lunas', false)
             ->where('outlet_id', $outlet_id)
             ->whereBetween('created_at', [$start, $end])
+            ->when($request->filled('name'), function ($query) use ($request) {
+                $query->whereHas('pelanggan', function ($query) use ($request) {
+                    $query->where('nama', 'like', '%' . $request->name . '%');
+                });
+            })
             ->sum(DB::raw('grand_total - total_terbayar'));
 
         return view('components.tableLaporanPiutang', [

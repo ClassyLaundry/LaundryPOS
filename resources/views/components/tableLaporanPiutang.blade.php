@@ -33,40 +33,42 @@
                             $totalTagihan += $trans->grand_total;
                             $totalKurangBayar += $trans->grand_total - $trans->total_terbayar;
                         @endphp
-                        @if($index2 > 0)
-                            <tr>
-                        @endif
-                        <td>{{ $index }}</td>
-                        <td>{{ $trans->kode }}</td>
-                        <td>{{ date('d-M-Y H:i:s', strtotime($trans->created_at)) }}</td>
-                        <td>
-                            <div class="d-flex justify-content-between">
-                                <span>Rp</span>
-                                <span>{{ number_format($trans->grand_total, 0, ',', '.') }}</span>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="d-flex justify-content-between">
-                                <span>Rp</span>
-                                <span>{{ number_format($trans->grand_total - $trans->total_terbayar, 0, ',', '.') }}</span>
-                            </div>
-                        </td>
-                        @if($index == 1)
-                            <td class="cell-action">
-                                <div class="d-flex h-100 align-items-center justify-content-end">
-                                    <button id="btn-{{ $pelanggan->id }}" class="btn btn-primary btn-sm btn-show-action" type="button">
-                                        <i class="fas fa-bars"></i>
-                                    </button>
+                        @if ($totalKurangBayar > 0)
+                            @if($index2 > 0)
+                                <tr>
+                            @endif
+                            <td>{{ $index }}</td>
+                            <td>{{ $trans->kode }}</td>
+                            <td>{{ date('d-M-Y H:i:s', strtotime($trans->created_at)) }}</td>
+                            <td>
+                                <div class="d-flex justify-content-between">
+                                    <span>Rp</span>
+                                    <span>{{ number_format($trans->grand_total, 0, ',', '.') }}</span>
                                 </div>
                             </td>
+                            <td>
+                                <div class="d-flex justify-content-between">
+                                    <span>Rp</span>
+                                    <span>{{ number_format($trans->grand_total - $trans->total_terbayar, 0, ',', '.') }}</span>
+                                </div>
+                            </td>
+                            @if($index == 1)
+                                <td class="cell-action">
+                                    <div class="d-flex h-100 align-items-center justify-content-end">
+                                        <button id="btn-{{ $pelanggan->id }}" class="btn btn-primary btn-sm btn-show-action" type="button">
+                                            <i class="fas fa-bars"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            @endif
+                            @if($index2 == 0)
+                                </tr>
+                            @endif
+                            @php
+                                $index++;
+                                $index2++;
+                            @endphp
                         @endif
-                        @if($index2 == 0)
-                            </tr>
-                        @endif
-                        @php
-                            $index++;
-                            $index2++;
-                        @endphp
                     @endif
                 @endforeach
                 <tr class="table-info">
