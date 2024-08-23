@@ -208,9 +208,7 @@ $(document).ready(function() {
 
     function searchListTrans() {
         key = $('#input-key-trans').val();
-        $('#container-list-trans').load(window.location.origin + '/component/transDelivery?key=' + encodeURIComponent(key), function() {
-            setThousandSeparator();
-        });
+        $('#container-list-trans').load(window.location.origin + '/component/transDelivery?key=' + encodeURIComponent(key));
     }
 
     $('#container-list-trans').on('click', '#table-list-trans tbody tr', function() {

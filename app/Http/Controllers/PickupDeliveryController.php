@@ -351,7 +351,7 @@ class PickupDeliveryController extends Controller
                     ->where('action', 'delivery')
                     ->whereNotNull('transaksi_id');
             })
-            ->whereNotIn('transaksi_id', function ($subquery) { // check kalau sudah adi ambil di outlet
+            ->whereNotIn('id', function ($subquery) { // check kalau sudah adi ambil di outlet
                 $subquery->select('transaksi_id')
                     ->from('penerimas')
                     ->where('ambil_di_outlet', true);
