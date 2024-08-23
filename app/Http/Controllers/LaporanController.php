@@ -474,6 +474,7 @@ class LaporanController extends Controller
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
         }
     }
+
     public function tablePiutang(Request $request)
     {
         $start = $request->start . ' 00:00:00';
@@ -614,11 +615,17 @@ class LaporanController extends Controller
                     return count($group);
                 });
 
+            $totalOmset = 0;
+            foreach($completedTransactions as $completedTransaction) {
+                $totalOmset += $completedTransaction->nominal;
+            }
+
             return view('pages.laporan.Omset', [
                 'pembayarans' => $completedTransactions,
                 'rowHeight' => $countPerDay,
                 'startDate' => $start,
                 'endDate' => $end,
+                'totalOmset' => $totalOmset,
             ]);
         } else {
             return view('pages.laporan.Omset');

@@ -53,7 +53,6 @@
                                         <th>Kode Transaksi</th>
                                         <th>Kode Pelanggan</th>
                                         <th>Nama Pelanggan</th>
-                                        <th>Status Transaksi</th>
                                         <th>Besar Omset</th>
                                     </tr>
                                 </thead>
@@ -127,11 +126,6 @@
                                             <td class="text-center">{{ $pembayaran->transaksi->kode }}</td>
                                             <td class="text-center">{{ 'PL' . str_pad($pembayaran->transaksi->pelanggan->id, 6, '0', STR_PAD_LEFT) }}</td>
                                             <td>{{ $pembayaran->transaksi->pelanggan->nama }}</td>
-                                            @if ($pembayaran->transaksi->lunas)
-                                                <td class="text-center">Lunas</td>
-                                            @else
-                                                <td class="text-center">Belum lunas</td>
-                                            @endif
                                             <td>
                                                 <div class="d-flex justify-content-between">
                                                     <span>Rp</span>
