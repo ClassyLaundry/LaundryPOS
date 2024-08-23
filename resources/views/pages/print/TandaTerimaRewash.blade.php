@@ -156,7 +156,6 @@
                     <th class="text-center" style="width: 5%;">QTY</th>
                     <th class="text-center" style="width: 7.5%;">UNIT</th>
                     <th class="text-center" style="width: 10%;">DISKON</th>
-                    <th class="text-center" style="width: 10%;">TOTAL</th>
                     <th class="text-center">KETERANGAN</th>
                 </tr>
             </thead>
@@ -167,7 +166,6 @@
                         <td class="text-center">{{$item->qty}}</td>
                         <td class="text-center">{{$item->satuan_unit}}</td>
                         <td class="text-center">{{$item->diskon_jenis_item}}</td>
-                        <td class="text-center">{{ number_format($item->total_premium, 0, ',', '.') }}</td>
                         <td class="text-start p-0">
                             <p class="max-two-line">
                                 @foreach ($item->item_notes as $item_note)
