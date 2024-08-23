@@ -217,6 +217,7 @@ $(document).ready(function() {
         $.ajax({
             url: "/transaksi/detail/" + transId,
         }).done(function(response) {
+            console.log(response);
             $('#input-delivery-kode').val(response.kode);
             $('#input-delivery-transaksi-id').val(response.id);
             $('#input-delivery-nama').val(response.pelanggan.nama);
