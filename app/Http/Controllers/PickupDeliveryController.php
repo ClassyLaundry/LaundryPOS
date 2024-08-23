@@ -30,7 +30,7 @@ class PickupDeliveryController extends Controller
         });
         if ($permissionExist) {
             $action = $request->action;
-            $request->session()->put('last_tab', $action);
+            $request->session()->put('last_tab', ucwords($action));
             if ($action == "pickup") {
                 $transaksi = Transaksi::create([
                     'pelanggan_id' => $request->pelanggan_id,
@@ -350,6 +350,11 @@ class PickupDeliveryController extends Controller
                     ->from('pickup_deliveries')
                     ->where('action', 'delivery')
                     ->whereNotNull('transaksi_id');
+            })
+            ->whereNotIn('transaksi_id', function ($subquery) { // check kalau sudah adi ambil di outlet
+                $subquery->select('transaksi_id')
+                    ->from('penerimas')
+                    ->where('ambil_di_outlet', true);
             })
             ->where(function ($query) use ($request) { // search nama pelanggan
                 $query->where('id', 'like', '%' . $request->key . '%')
