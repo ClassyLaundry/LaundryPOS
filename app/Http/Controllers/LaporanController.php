@@ -504,8 +504,9 @@ class LaporanController extends Controller
                 $query->whereHas('pelanggan', function ($query) use ($request) {
                     $query->where('nama', 'like', '%' . $request->name . '%');
                 });
-            })
-            ->sum(DB::raw('grand_total - total_terbayar'));
+            });
+            // ->sum(DB::raw('grand_total - total_terbayar'));
+            dd($total_piutang);
 
         return view('components.tableLaporanPiutang', [
             'pelanggans' => $pelanggans,
