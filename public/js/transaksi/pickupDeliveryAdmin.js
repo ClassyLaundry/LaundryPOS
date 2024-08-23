@@ -1,35 +1,4 @@
 $(document).ready(function() {
-    // $('#input-week').change(function() {
-    //     $(this).hide();
-    //     let selectedWeek = $(this).val();
-    //     let year = selectedWeek.substring(0, 4);
-    //     let weekNumber = selectedWeek.substring(6);
-
-    //     let startDate = new Date(year, 0, 1 + (weekNumber - 1) * 7 + 1);
-    //     let endDate = new Date(year, 0, 1 + (weekNumber - 1) * 7 + 6 + 1);
-
-    //     let startDateString = formatDate(startDate);
-    //     let endDateString = formatDate(endDate);
-
-    //     $('#selected-date-range').text(startDateString + ' - ' + endDateString);
-    //     $('#selected-date-range').show();
-    //     $('#btn-reset').show();
-    // });
-
-    // $('#btn-reset').on('click', function(e) {
-    //     $(this).hide();
-    //     $('#selected-date-range').hide();
-    //     $('#input-week').show();
-    // });
-
-    // function formatDate(date) {
-    //     var day = date.getDate();
-    //     var month = date.getMonth() + 1;
-    //     var year = date.getFullYear();
-
-    //     return (day < 10 ? '0' + day : day) + '/' + (month < 10 ? '0' + month : month) + '/' + year;
-    // }
-
     $('#tab-pickup_delivery').on('click', '.nav-link', function() {
         let formData = new FormData();
         formData.append('tab', $(this).text());
@@ -59,11 +28,6 @@ $(document).ready(function() {
             $('#action-update').show();
         }
     });
-
-    // $('#action-update').on('click', function() {
-    //     // $ajax disini
-    //     $('#modal-create-delivery').modal('show');
-    // });
 
     $('#action-delete').on('click', function() {
         if (confirm('Cancel pickup delivery ?')) {
