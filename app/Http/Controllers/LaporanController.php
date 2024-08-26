@@ -481,6 +481,11 @@ class LaporanController extends Controller
         $end = $request->end . ' 23:59:59';
         $outlet_id = User::getOutletId(Auth::id());
 
+        $withPelanggan = false;
+        if (isset($request->name)) {
+            $withPelanggan = true;
+        }
+
         $pelanggans = Pelanggan::with('transaksi')
             ->when($request->filled('orderBy'), function ($query) use ($request) {
                 $query->orderBy($request->filled('orderBy'), $request->filled('order'));
@@ -511,6 +516,7 @@ class LaporanController extends Controller
             'start' => $start,
             'end' => $end,
             'total_piutang' => $total_piutang,
+            'withPelanggan' => $withPelanggan
         ]);
     }
 
