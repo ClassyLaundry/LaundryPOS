@@ -10,16 +10,8 @@
     <section id="laporan-omset">
         <div class="card">
             <div class="card-body">
-                <div class="card-title d-flex justify-content-between align-items-center">
+                <div class="card-title">
                     <h4>Laporan Omset</h4>
-                    <h5 class="d-flex justify-content-between" style="width: 300px;">
-                        <span>Total Omset:</span>
-                        <span id="total-omset">
-                        @isset($totalOmset)
-                            {{ 'Rp ' . number_format($totalOmset, 0, ',', '.') }}
-                        @endisset
-                        </span>
-                    </h5>
                 </div>
                 <hr>
                 <div class="d-flex justify-content-between">

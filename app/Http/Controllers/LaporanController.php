@@ -664,16 +664,10 @@ class LaporanController extends Controller
                     return count($group);
                 });
 
-            $totalOmset = 0;
-            foreach($completedTransactions as $completedTransaction) {
-                $totalOmset += $completedTransaction->nominal;
-            }
-
             return view('pages.laporan.Omset', [
                 'pembayarans' => $completedTransactions,
                 'rowHeight' => $countPerDay,
                 'date' => $date,
-                'totalOmset' => $totalOmset,
             ]);
         } else {
             return view('pages.laporan.Omset');
