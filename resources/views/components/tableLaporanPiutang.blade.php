@@ -60,7 +60,7 @@
                                 </div>
                             </td>
                         @endif
-                        @if($index2 == 0 || !$withPelanggan)
+                        @if($index2 == 0)
                             </tr>
                         @endif
                         @php

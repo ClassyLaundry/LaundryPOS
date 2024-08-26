@@ -500,6 +500,7 @@ class LaporanController extends Controller
                     ->whereRaw('(grand_total - total_terbayar) > 0');
             })
             ->get();
+            dd($pelanggans);
 
         $total_piutang = Transaksi::with('pelanggan')
             ->where('lunas', false)
