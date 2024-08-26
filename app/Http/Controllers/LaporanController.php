@@ -589,7 +589,7 @@ class LaporanController extends Controller
         return $sum;
     }
 
-    public function laporanOmset(Request $request)
+    /*public function laporanOmset(Request $request)
     {
         if ($request->has('start') && $request->has('end')) {
             $start = $request->start . ' 00:00:00';
@@ -630,6 +630,49 @@ class LaporanController extends Controller
                 'rowHeight' => $countPerDay,
                 'startDate' => $start,
                 'endDate' => $end,
+                'totalOmset' => $totalOmset,
+            ]);
+        } else {
+            return view('pages.laporan.Omset');
+        }
+    }*/
+
+    public function laporanOmset(Request $request)
+    {
+        if ($request->has('date')) {
+            $date = $request->date;
+            $outlet_id = User::getOutletId(Auth::id());
+
+            $completedTransactions = Pembayaran::whereDate('created_at', $date)
+                ->whereHas('transaksi', function ($query) use ($outlet_id) {
+                    $query->where('outlet_id', $outlet_id);
+                })
+                ->with('transaksi')
+                ->get();
+
+            $countPerDay = Pembayaran::whereDate('created_at', $date)
+                ->whereHas('transaksi', function ($query) use ($outlet_id) {
+                    $query->where('outlet_id', $outlet_id);
+                })
+                ->where('outlet_id', Auth::user()->outlet_id)
+                ->with('transaksi')
+                ->get()
+                ->groupBy(function ($item) {
+                    return $item->created_at->format('d-m-Y');
+                })
+                ->map(function ($group) {
+                    return count($group);
+                });
+
+            $totalOmset = 0;
+            foreach($completedTransactions as $completedTransaction) {
+                $totalOmset += $completedTransaction->nominal;
+            }
+
+            return view('pages.laporan.Omset', [
+                'pembayarans' => $completedTransactions,
+                'rowHeight' => $countPerDay,
+                'date' => $date,
                 'totalOmset' => $totalOmset,
             ]);
         } else {

@@ -22,26 +22,14 @@
                     </h5>
                 </div>
                 <hr>
-
-                <div class="row">
-                    <div class="col-xl-3 col-md-6 col-12">
-                        <div class="d-inline-flex align-items-center">
-                            <p class="text-nowrap me-2">Tanggal Awal:</p>
-                            <input type="date" class="form-control" name="tanggal_awal" id="input-tanggal-awal" value=@isset($startDate) {{ $startDate }} @endisset>
-                        </div>
+                <div class="d-flex justify-content-between">
+                    <div class="d-inline-flex align-items-center">
+                        <p class="text-nowrap me-2">Tanggal:</p>
+                        <input type="date" class="form-control" name="tanggal" id="input-tanggal" value=@isset($date) {{ $date }} @endisset>
                     </div>
-                    <div class="col-xl-3 col-md-6 col-12">
-                        <div class="d-inline-flex align-items-center">
-                            <p class="text-nowrap me-2">Tanggal Akhir:</p>
-                            <input type="date" class="form-control" name="tanggal_akhir" id="input-tanggal-akhir" value=@isset($endDate) {{ $endDate }} @endisset>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-12 text-end offset-xl-3">
-                        <button type="button" class="btn btn-primary" id="btn-apply-filter">Apply</button>
-                    </div>
+                    <button type="button" class="btn btn-primary" id="btn-apply-filter">Apply</button>
                 </div>
                 <hr>
-
                 <div id="table-container">
                     @isset($pembayarans)
                     <div class="mt-4" id="table-laporan-omset">
@@ -54,6 +42,7 @@
                                         <th>Kode Pelanggan</th>
                                         <th>Nama Pelanggan</th>
                                         <th>Besar Omset</th>
+                                        <th>Operator</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -132,13 +121,14 @@
                                                     <span>{{ number_format($pembayaran->nominal, 0, ',', '.') }}</span>
                                                 </div>
                                             </td>
+                                            <td class="text-center">{{ $pembayaran->kasir->name }}</td>
                                         </tr>
                                         @php
                                             $dateIndex++;
                                             $total += $pembayaran->nominal;
                                         @endphp
                                         @if ($dateIndex == $rowHeight[date('d-m-Y', strtotime($pembayaran->created_at))])
-                                            <tr class="table-success">
+                                            <tr class="table-success fw-bold">
                                                 <td colspan="3" class="text-center">{{ 'Total omset per ' . date('d-M-Y', strtotime($pembayaran->created_at)) }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-between">
@@ -146,6 +136,7 @@
                                                         <span>{{ number_format($total, 0, ',', '.') }}</span>
                                                     </div>
                                                 </td>
+                                                <td></td>
                                             </tr>
                                         @endif
                                     @endforeach
