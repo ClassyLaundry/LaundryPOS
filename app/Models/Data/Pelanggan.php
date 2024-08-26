@@ -59,9 +59,12 @@ class Pelanggan extends Model
         return $this->transaksi->count();
     }
 
-    public function jumlahTransaksiBetweenDate($start, $end)
+    public function jumlahTransaksiPiutangBetweenDate($start, $end)
     {
         return $this->transaksi()
+            ->where('lunas', 0)
+            ->where('status', 'confirmed')
+            ->whereNot('grand_total', 0)
             ->whereDate('created_at', '>=', $start)
             ->whereDate('created_at', '<=', $end)
             ->count();

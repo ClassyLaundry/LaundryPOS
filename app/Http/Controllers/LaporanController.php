@@ -495,7 +495,6 @@ class LaporanController extends Controller
             })
             ->whereHas('transaksi', function ($query) use ($start, $end, $outlet_id) {
                 $query->where('lunas', false)
-                    ->whereNotNull('kode')
                     ->where('outlet_id', $outlet_id)
                     ->whereBetween('created_at', [$start, $end])
                     ->whereRaw('(grand_total - total_terbayar) > 0');

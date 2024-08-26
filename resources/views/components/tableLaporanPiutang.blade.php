@@ -15,15 +15,15 @@
             </thead>
             <tbody>
             @foreach ($pelanggans as $pelanggan)
-            @if ($pelanggan->jumlahTransaksiBetweenDate($start, $end) > 0)
+            @if ($pelanggan->jumlahTransaksiPiutangBetweenDate($start, $end) > 0)
             @php
                 $totalTagihan = 0;
                 $totalKurangBayar = 0;
                 $index = 1;
             @endphp
             <tr>
-                <td rowspan="{{ $pelanggan->jumlahTransaksiBetweenDate($start, $end) + 1 }}">{{ 'PL' . str_pad($pelanggan->id, 6, '0', STR_PAD_LEFT) }}</td>
-                <td rowspan="{{ $pelanggan->jumlahTransaksiBetweenDate($start, $end) + 1 }}">{{ Str::upper($pelanggan->nama) }}</td>
+                <td rowspan="{{ $pelanggan->jumlahTransaksiPiutangBetweenDate($start, $end) + 1 }}">{{ 'PL' . str_pad($pelanggan->id, 6, '0', STR_PAD_LEFT) }}</td>
+                <td rowspan="{{ $pelanggan->jumlahTransaksiPiutangBetweenDate($start, $end) + 1 }}">{{ Str::upper($pelanggan->nama) }}</td>
                 @foreach($pelanggan->transaksi as $key => $trans)
                     @php
                         $index2 = 0;
