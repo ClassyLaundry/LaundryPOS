@@ -44,16 +44,8 @@ $(document).ready(function() {
         }
     });
 
-    var pelangganId = 0;
-    $('#table-pelanggan').load(window.location.origin + '/component/pelanggan?paginate=5', function() {
-        $('#table-pelanggan th:last').hide();
-        $('#table-pelanggan .cell-action').hide();
-    });
-    $('#table-pelanggan').on('click', '.page-link', function(e) {
-        e.preventDefault();
-        $('#table-pelanggan').load($(this).attr('href'));
-    });
 
+    var searchPelanggan;
     function search() {
         $('#table-pelanggan').load(window.location.origin + '/component/pelanggan?key=' + encodeURIComponent($('#input-nama-pelanggan').val()) + '&filter=nama&paginate=5', function() {
             $('#table-pelanggan th:last').hide();
@@ -61,7 +53,13 @@ $(document).ready(function() {
         });
     }
 
-    var searchPelanggan;
+    search();
+
+    $('#table-pelanggan').on('click', '.page-link', function(e) {
+        e.preventDefault();
+        $('#table-pelanggan').load($(this).attr('href'));
+    });
+
     $('#input-nama-pelanggan').on('input', function() {
         clearTimeout(searchPelanggan);
         searchPelanggan = setTimeout(searchListPelanggan, 2000);
@@ -71,6 +69,7 @@ $(document).ready(function() {
         search();
     }
 
+    var pelangganId = 0;
     $('#table-pelanggan').on('click', 'tr', function() {
         pelangganId = $(this).attr('id').substr(10);
 

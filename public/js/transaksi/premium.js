@@ -189,7 +189,7 @@ $(document).ready(function() {
     $('#table-list-pelanggan-2').on('click', '.page-link', function(e) {
         e.preventDefault();
         pagePelanggan = $(this).attr('href').split('page=')[1];
-        searchDiOutlet();
+        searchListPelanggan();
     });
 
     $('#input-nama-pelanggan-2').on('input', function() {

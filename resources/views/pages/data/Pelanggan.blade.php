@@ -10,7 +10,15 @@
     <section id="data-pelanggan">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Data Pelanggan</h4>
+                <div class="d-flex justify-content-between">
+                    <h4 class="card-title mb-0">Data Pelanggan</h4>
+                    @if(in_array("Membuat Pelanggan", Session::get('permissions')) || Session::get('role') == 'administrator')
+                    <button class="btn btn-primary btn-tambah btn-sm" type="button">
+                        <i class="fas fa-plus"></i>
+                        &nbsp;Tambah
+                    </button>
+                    @endif
+                </div>
                 <hr>
                 <div class="d-flex justify-content-between">
                     <div class="dropdown" id="dropdown-filter">
@@ -36,13 +44,8 @@
                         <input class="form-control mx-1" id="input-search" type="search" name="search" style="max-width: 200px;">
                     </div>
                 </div>
-                <div id="table-pelanggan"></div>
-                @if(in_array("Membuat Pelanggan", Session::get('permissions')) || Session::get('role') == 'administrator')
-                <button class="btn btn-primary btn-tambah mt-2" type="button">
-                    <i class="fas fa-plus-circle"></i>
-                    &nbsp;Tambah
-                </button>
-                @endif
+                <div id="table-pelanggan" class="mt-3"></div>
+
                 <ul class="list-unstyled form-control" id="list-action">
                     @if(in_array("Membuka Halaman Detail Pelanggan", Session::get('permissions')) || Session::get('role') == 'administrator')
                     <li id="action-detail">Detail pelanggan</li>
@@ -53,7 +56,7 @@
                 </ul>
             </div>
         </div>
-{{-- create pelanggan --}}
+        {{-- create pelanggan --}}
         <div class="modal fade" role="dialog" tabindex="-1" id="modal-update">
             <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -61,7 +64,7 @@
                         <h4 class="modal-title">Data Pelanggan</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form id="modal-form" action="/data/pelanggan" method="POST">
+                    <form id="modal-form" action="" method="POST">
                         @csrf
                         <div class="modal-body">
                             <div class="row">
@@ -132,7 +135,6 @@
                 </div>
             </div>
         </div>
-
 
     </section>
 </div>

@@ -12,20 +12,23 @@ $(document).ready(function() {
         btnId = $(this).attr('id').substring(4);
     });
 
-    $('#table-pelanggan').load(window.location.origin + '/component/pelanggan?paginate=5');
+    var searchData, searchFilter = 'nama', paginateCount = 5, currentPage = 1;
+    function search() {
+        $('#table-pelanggan').load(window.location.origin + '/component/pelanggan?key=' + encodeURIComponent($('#input-search').val()) + '&filter=' + searchFilter + '&paginate=' + paginateCount + '&page=' + currentPage);
+    }
+
+    search();
+
     $('#data-pelanggan').on('click', '.page-link', function(e) {
         e.preventDefault();
-        $('#table-pelanggan').load($(this).attr('href'));
+        currentPage = $(this).attr('href').split('page=')[1];
+        search();
     });
-    var searchData, searchFilter = 'nama', paginateCount = 5;
+
     $('#input-search').on('input', function() {
         clearTimeout(searchData);
         searchData = setTimeout(search, 2000);
     });
-
-    function search() {
-        $('#table-pelanggan').load(window.location.origin + '/component/pelanggan?key=' + encodeURIComponent($('#input-search').val()) + '&filter=' + searchFilter + '&paginate=' + paginateCount);
-    }
 
     $("#dropdown-filter .filter-search").on('click', function() {
         searchFilter = $(this).data('search');
