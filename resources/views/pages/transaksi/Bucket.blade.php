@@ -498,7 +498,7 @@
                                                 @endif
                                                     <h6 class="mt-2">Outlet Ambil</h6>
                                                     <select class="form-control" id="select-outlet-ambil" required>
-                                                        <option value="">-</option>
+                                                        <option value="0">-</option>
                                                         @foreach ($data['outlet'] as $outlet)
                                                             <option value="{{ $outlet->id }}">{{ $outlet->nama }}</option>
                                                         @endforeach

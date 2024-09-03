@@ -23,6 +23,9 @@ class PenerimaController extends Controller
             return $item->name === 'Menambahkan Penerima Ke Transaksi';
         });
         if ($permissionExist) {
+            if ($request->outlet_id == 0) {
+                $request->merge(['outlet_id' => null]);
+            }
             $transaksi_id = $request->only('transaksi_id');
             $penerima = Penerima::where('transaksi_id', $transaksi_id)->first();
             if (empty($penerima)) {
