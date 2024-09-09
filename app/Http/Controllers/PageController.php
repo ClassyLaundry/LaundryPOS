@@ -323,22 +323,34 @@ class PageController extends Controller
                 $onGoingDeliveries = PickupDelivery::with('transaksi')->where('action', 'delivery')->where('driver_id', $user->id)->where('is_done', 0)->get();
                 $onGoingPackType = [];
                 foreach($onGoingDeliveries as $delivery) {
-                    $onGoingPackType = [];
-                    $count = count($delivery->transaksi->packing->packing_inventories);
-                    for ($i = 0; $i < $count; $i++) {
-                        $packing = $delivery->transaksi->packing->packing_inventories[$i];
-                        $new = true;
+                    $deliveryId = $delivery->id;
 
-                        if (isset($onGoingPackType[$packing->inventory->nama])) {
-                            $new = false;
-                        }
+                    if (!isset($onGoingPackType[$deliveryId])) {
+                        $onGoingPackType[$deliveryId] = [
+                            'deliveryId' => $deliveryId,
+                            'inventories' => ''
+                        ];
+                    }
 
-                        if ($new) {
-                            $onGoingPackType[$packing->inventory->nama] = 1;
+                    $inventoryStrings = [];
+
+                    foreach ($delivery->transaksi->packing->packing_inventories as $packing) {
+                        $inventoryName = $packing->inventory->nama;
+                        $quantity = $packing->qty;
+
+                        if (isset($inventoryStrings[$inventoryName])) {
+                            $inventoryStrings[$inventoryName] += $quantity;
                         } else {
-                            $onGoingPackType[$packing->inventory->nama] += $packing->qty;
+                            $inventoryStrings[$inventoryName] = $quantity;
                         }
                     }
+
+                    $formattedInventories = [];
+                    foreach ($inventoryStrings as $inventoryName => $quantity) {
+                        $formattedInventories[] = $inventoryName . ' : ' . $quantity;
+                    }
+
+                    $onGoingPackType[$deliveryId]['inventories'] = implode(', ', $formattedInventories);
                 }
 
                 return view(

@@ -86,14 +86,8 @@
                                 <div class="px-3 py-1 border-bottom rounded packing font-monospace">
                                     <h4>
                                         @foreach ($on_going_packing as $key => $value)
-                                            @if($loop->index == 0)
-                                                @if (count($on_going_packing) != 1)
-                                                    {{ strtolower($key) . ': ' . $value . ',' }}
-                                                @else
-                                                    {{ strtolower($key) . ': ' . $value }}
-                                                @endif
-                                            @else
-                                                {{ strtolower($key) . ': ' . $value }}
+                                            @if($value["deliveryId"] == $delivery->id)
+                                                {{ strtolower($value["inventories"]) }}
                                             @endif
                                         @endforeach
                                     </h4>
