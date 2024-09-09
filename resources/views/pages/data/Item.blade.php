@@ -75,7 +75,7 @@
                                     <select class="form-select" id="input-unit" name="unit">
                                         <option value="PCS">Piece</option>
                                         <option value="KG">Kilogram</option>
-                                        <option value="MTR">Meter</option>
+                                        <option value="MTR">Meter<sup>2</sup></option>
                                     </select>
                                 </div>
                                 <div class="col-12 col-sm-6">

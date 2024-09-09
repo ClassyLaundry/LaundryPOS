@@ -649,6 +649,7 @@ class LaporanController extends Controller
             $date = $request->date;
             $outlet_id = User::getOutletId(Auth::id());
 
+            // test
             $completedTransactions = Pembayaran::whereDate('created_at', $date)
                 ->whereHas('transaksi', function ($query) use ($outlet_id) {
                     $query->where('outlet_id', $outlet_id);

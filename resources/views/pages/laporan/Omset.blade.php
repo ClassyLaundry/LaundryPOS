@@ -90,6 +90,7 @@
                                         $dateIndex = 0;
                                         $total = 0;
                                     @endphp
+                                    {{-- test --}}
                                     @foreach ($pembayarans as $pembayaran)
                                         @php
                                             if ($date != date('d-m-Y', strtotime($pembayaran->created_at))) {
