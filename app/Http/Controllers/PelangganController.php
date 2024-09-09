@@ -54,6 +54,7 @@ class PelangganController extends Controller
             return $item->name === 'Mengubah Data Pelanggan';
         });
         if ($permissionExist) {
+
             $merged = $request->merge(['modified_by' => Auth::id()])->toArray();
             Pelanggan::find($id)->update($merged);
 
@@ -61,7 +62,7 @@ class PelangganController extends Controller
             if ($catatan_pelanggan == null) {
                 CatatanPelanggan::create([
                     'pelanggan_id' => $id,
-                    'catatan_khusus' => $request->catatan_khusus
+                    'catatan_khusus' => $request->catatan_khusus,
                 ]);
             } else {
                 $catatan_pelanggan->catatan_khusus = $request->catatan_khusus;

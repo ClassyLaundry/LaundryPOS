@@ -1,27 +1,7 @@
 $(document).ready(function() {
     const id = $('#modal-form').attr('action').split('/')[3];
-    $('#table-history-transaksi').load(window.location.origin + '/pelanggan/' + id + '/history/transaksi', function() {
-        setThousandSeparator();
-    });
-    $('#table-history-saldo').load(window.location.origin + '/pelanggan/' + id + '/history/saldo?order=desc', function() {
-        setThousandSeparator();
-    });
-
-    function setThousandSeparator () {
-        let length = $('.thousand-separator').length;
-        if (length != 0) {
-            $('.thousand-separator').each(function(index, element) {
-                let val = $(element).text();
-                if (val != '') {
-                    while(val.indexOf('.') != -1) {
-                        val = val.replace('.', '');
-                    }
-                    let number = parseInt(val);
-                    $(element).text(number.toLocaleString(['ban', 'id']));
-                }
-            });
-        }
-    };
+    $('#table-history-transaksi').load(window.location.origin + '/pelanggan/' + id + '/history/transaksi');
+    $('#table-history-saldo').load(window.location.origin + '/pelanggan/' + id + '/history/saldo?order=desc');
 
     $('#btn-ubah').on('click', function() {
         $('#modal-form input:disabled, #modal-form textarea:disabled').each(function(index, element) {

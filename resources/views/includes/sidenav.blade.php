@@ -268,6 +268,14 @@
                     </a>
                 </div>
                 @endif
+                @if(in_array("Melihat Laporan Pengeluaran", Session::get('permissions')) || Session::get('role') == 'administrator')
+                <div id="nav-laporan-pengeluaran">
+                    <a href="/laporan/pengeluaran" class="menu-item menu-laporan pe-3 py-1 d-flex align-items-center" style="padding-left: 2rem;">
+                        <i class="fa-solid fa-comments-dollar"></i>
+                        <p class="ms-3">Pengeluaran</p>
+                    </a>
+                </div>
+                @endif
             </div>
         </div>
 
