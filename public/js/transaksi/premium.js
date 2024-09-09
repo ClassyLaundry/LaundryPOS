@@ -937,11 +937,9 @@ $(document).ready(function() {
         $.ajax({
             url: "/transaksi/" + transId + "/log",
         }).done(function(response) {
-            console.log(response);
             $('#table-log tbody').empty();
             response.logs.forEach(function(log, index) {
-                console.log(log);
-                $('#table-log tbody').append("<tr><td class='text-center'>" + log.created_at.replace('T',' ').substring(0, log.created_at.indexOf('.')) + "</td><td class='text-center'>" + log.penanggung_jawab + "</td><td>" + log.process + "</td></tr>");
+                $('#table-log tbody').append("<tr><td class='text-center'>" + log.created_at.replace('T',' ').substring(0, log.created_at.indexOf('.')) + "</td><td class='text-center'>" + log.karyawan.name + "</td><td>" + log.process + "</td></tr>");
             });
         });
     });

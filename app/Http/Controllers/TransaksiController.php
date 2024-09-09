@@ -564,7 +564,7 @@ class TransaksiController extends Controller
     public function logTransaksi($id)
     {
         return [
-            "logs" => LogTransaksi::where('transaksi_id', $id)->get(),
+            "logs" => LogTransaksi::with('karyawan')->where('transaksi_id', $id)->get(),
         ];
     }
 
