@@ -124,7 +124,7 @@ $(document).ready(function() {
                 setThousandSeparator();
             });
 
-            if (trans.lunas) {
+            if (trans.status == "confirmed") {
                 $('#cancel-trans').hide();
             } else {
                 $('#cancel-trans').show();
