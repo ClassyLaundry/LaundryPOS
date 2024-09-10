@@ -255,6 +255,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/proses/rewash/insert', [RewashController::class, 'insert']);
     Route::get('/proses/rewash/update-status/{id}', [RewashController::class, 'updateStatus']);
     Route::get('/proses/rewash/delete/{rewash}', [RewashController::class, 'delete']);
+    Route::get('/component/transRewash', [RewashController::class, 'transaksiRewash']);
 
     //Packing
     Route::get('/proses/packing', [PageController::class, 'packing']);

@@ -20,7 +20,8 @@
                                     <tr>
                                         <th>Kode Transaksi</th>
                                         <th>Nama Item</th>
-                                        <th>Jenis</th>
+                                        <th>Qty</th>
+                                        <th>Jenis Rewash</th>
                                         <th>Keterangan</th>
                                         <th>Status</th>
                                         <th style="width: 46.25px;"></th>
@@ -31,7 +32,8 @@
                                         <tr id='{{ $rewash->id }}'>
                                             <td class="text-center">{{ $rewash->item_transaksi->kode_transaksi }}</td>
                                             <td>{{ $rewash->item_transaksi->nama }}</td>
-                                            <td>{{ $rewash->jenis_rewash }}</td>
+                                            <td class="text-center">{{ $rewash->item_transaksi_qty }}</td>
+                                            <td class="text-center">{{ $rewash->jenis_rewash }}</td>
                                             <td>{{ $rewash->keterangan }}</td>
                                             @if ($rewash->status)
                                                 <td class="text-center">sudah selesai</td>
@@ -78,22 +80,19 @@
                                 @csrf
                                 <div class="modal-body">
                                     <div class="row">
-                                        <div class="col-4 mb-3">
+                                        <div class="col-3 mb-3">
                                             <h5>Kode Transaksi</h5>
-                                            <select id="kode-trans" class="form-select">
-                                                <option value hidden selected></option>
-                                                @foreach ($transaksis as $transaksi)
-                                                    @if ($transaksi->pencuci != null)
-                                                        <option value="{{ $transaksi->id }}">{{ $transaksi->kode }}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
+                                            <input type="text" name="kode_transaksi" id="input-rewash-kode" class="form-control" required>
                                         </div>
-                                        <div class="col-8 mb-3">
+                                        <div class="col-6 mb-3">
                                             <h5>Jenis Item</h5>
                                             <select name="item_transaksi_id" id="item-trans" class="form-select" required>
                                                 <option value hidden selected></option>
                                             </select>
+                                        </div>
+                                        <div class="col-3 mb-3">
+                                            <h5>Quantity Item</h5>
+                                            <input type="number" name="item_transaksi_qty" id="qty-rewash" class="form-control" max=1 min=1 step="1" data-bs-toggle="tooltip" data-bs-placement="top" title="" required>
                                         </div>
                                         <div class="col-12 mb-3">
                                             <h5>Alasan Cuci</h5>
@@ -117,8 +116,26 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="modal fade" role="dialog" tabindex="-1" id="modal-opsi-trans">
+                    <div class="modal-dialog modal-xl modal-dialog-centered modal-fullscreen-sm-down" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Opsi Transaksi</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" style="min-height: 450px;">
+                                <input class="form-control" type="search" id="input-key-trans">
+                                @if(in_array("Melihat Detail Transaksi", Session::get('permissions')) || Session::get('role') == 'administrator')
+                                    <div id="container-list-trans"></div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
         </div>
+
         <div role="tabpanel" class="tab-pane" id="tab-2">
             <section id="proses-rewash">
                 <div id="hub" class="row card d-flex flex-row position-relative border-0">
@@ -139,9 +156,9 @@
                                                     </svg>
                                                     {{ $rewash->item_transaksi->nama }}
                                                 </h4>
-                                                <h6 class="text-muted">{{ $transaksi->created_at }}</h6>
+                                                <h6 class="text-muted">{{ $rewash->item_transaksi->created_at }}</h6>
                                             </div>
-                                            <button class="btn btn-sm btn-show-action" type="button" id="trans-{{ $transaksi->id }}" style="box-shadow: none;">
+                                            <button class="btn btn-sm btn-show-action" type="button" id="trans-{{ $rewash->item_transaksi->id }}" style="box-shadow: none;">
                                                 <i class="fa-solid fa-ellipsis-vertical"></i>
                                             </button>
                                         </div>
@@ -154,6 +171,7 @@
                 </div>
             </section>
         </div>
+
     </div>
 </div>
 

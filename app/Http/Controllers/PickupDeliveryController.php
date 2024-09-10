@@ -341,6 +341,7 @@ class PickupDeliveryController extends Controller
     {
         $transaksi = Transaksi::detail()
             ->where('status', 'confirmed')
+            ->where('outlet_id', User::getOutletId(Auth::id()))
             ->whereIn('id', function ($subquery) { // check kalau sudah di packing
                 $subquery->select('transaksi_id')
                     ->from('packings');
@@ -351,7 +352,7 @@ class PickupDeliveryController extends Controller
                     ->where('action', 'delivery')
                     ->whereNotNull('transaksi_id');
             })
-            ->whereNotIn('id', function ($subquery) { // check kalau sudah adi ambil di outlet
+            ->whereNotIn('id', function ($subquery) { // check kalau sudah di ambil di outlet
                 $subquery->select('transaksi_id')
                     ->from('penerimas')
                     ->where('ambil_di_outlet', true);

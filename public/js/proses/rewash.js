@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    $('[data-bs-toggle="tooltip"]').tooltip();
+
     var btnIndex = -1, btnId = 0;
     $('.btn-show-action').on('click', function() {
         btnIndex = $(this).index('.btn-show-action') + 1;
@@ -33,17 +35,65 @@ $(document).ready(function() {
         $('#modal-create-rewash').modal('show');
     });
 
-    $('#kode-trans').on('change', function() {
+    $('#input-rewash-kode').on('click', function() {
+        searchListTrans();
+        $('#modal-opsi-trans').modal('show');
+    });
+
+    var searchTrans, key = '';
+    $('#input-key-trans').on('input', function() {
+        clearTimeout(searchTrans);
+        searchTrans = setTimeout(searchListTrans, 2000);
+    });
+
+    function searchListTrans() {
+        key = $('#input-key-trans').val();
+        $('#container-list-trans').load(window.location.origin + '/component/transRewash?key=' + encodeURIComponent(key));
+    }
+
+    $('#container-list-trans').on('click', '#table-list-trans tbody tr', function() {
+        let transId = $(this).attr('id');
+
         $.ajax({
-            url: "/transaksi/detail/" + $('#kode-trans').val(),
-        }).done(function(data) {
-            let item_transaksis = data.item_transaksi;
+            url: "/transaksi/detail/" + transId,
+        }).done(function(response) {
+            console.log(response);
+            $('#input-rewash-kode').val(response.kode);
+
             $('#item-trans').empty();
-            item_transaksis.forEach(item_transaksi => {
-                $('#item-trans').append("<option value='" + item_transaksi.id + "'>" + item_transaksi.nama +"</option>");
+            response.item_transaksi.forEach(item => {
+                $('#item-trans').append("<option value='" + item.id + "' data-max='" + item.qty + "'>" + item.nama +"</option>");
             });
+
+            let qtyMax = $('#item-trans option:selected').data('max');
+            $('#qty-rewash').attr('max', qtyMax);
+            $('#qty-rewash').attr('title', "Max " + qtyMax);
+            $('#qty-rewash').val(1);
+            $('#modal-opsi-trans').modal('hide');
+
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
         });
     });
+
+    $('#item-trans').on('change', function() {
+        $('#qty-rewash').attr('max', $('#item-trans option:selected').data('max'));
+        $('#qty-rewash').val(1);
+    });
+
+    // $('#kode-trans').on('change', function() {
+    //     $.ajax({
+    //         url: "/transaksi/detail/" + $('#kode-trans').val(),
+    //     }).done(function(data) {
+    //         let item_transaksis = data.item_transaksi;
+    //         $('#item-trans').empty();
+    //         item_transaksis.forEach(item_transaksi => {
+    //             $('#item-trans').append("<option value='" + item_transaksi.id + "'>" + item_transaksi.nama +"</option>");
+    //         });
+    //     });
+    // });
 
     $('#action-finish').on('click', function() {
         if (confirm('Nyatakan rewash selesai ?')) {
@@ -52,6 +102,6 @@ $(document).ready(function() {
     });
 
     $('#action-receipt').on('click', function() {
-        window.location = "/printTandaTerimaRewash/" + btnId;
+        window.open("/printTandaTerimaRewash/" + btnId, '_blank');
     });
 });

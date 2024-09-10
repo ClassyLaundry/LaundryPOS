@@ -17,9 +17,24 @@ use Illuminate\Support\Facades\Auth;
 class RewashController extends Controller
 {
 
-    public function test()
+    public function transaksiRewash(Request $request)
     {
-        return Rewash::with('itemTransaksi')->get();
+        $transaksi = Transaksi::detail()
+            ->where('status', 'confirmed')
+            ->where('outlet_id', User::getOutletId(Auth::id()))
+            ->where('is_done_cuci', 1)
+            ->where(function ($query) use ($request) {
+                $query->where('kode', 'like', '%' . $request->key . '%')
+                    ->orWhereHas('pelanggan', function ($q) use ($request) {
+                        $q->where('nama', 'like', '%' . $request->key . '%');
+                    });
+            })
+            ->latest()->paginate(10);
+
+        return view('components.tableTransRewash', [
+            'status' => 200,
+            'transaksis' => $transaksi
+        ]);
     }
 
     public function insert(Request $request)
@@ -49,6 +64,7 @@ class RewashController extends Controller
             }
             Rewash::create([
                 'item_transaksi_id' => $request->item_transaksi_id,
+                'item_transaksi_qty' => $request->item_transaksi_qty,
                 'jenis_rewash_id' => $request->jenis_rewash_id,
                 'modified_by' => Auth::id(),
                 'pencuci' => $transaksi->pencuci,
@@ -60,7 +76,6 @@ class RewashController extends Controller
                 'type' => 'Rewash',
                 'message' => 'Ada Item yang perlu di rewash! \n' . $request->keterangan,
                 'to_user' => $transaksi->pencuci
-
             ]);
             LogTransaksi::create([
                 'transaksi_id' => $transaksi->id,
