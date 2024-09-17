@@ -645,23 +645,15 @@ class LaporanController extends Controller
 
     public function laporanOmset(Request $request)
     {
-        if ($request->has('date')) {
-            $date = $request->date;
-            $outlet_id = User::getOutletId(Auth::id());
+        if ($request->has('start') && $request->has('end')) {
+            $start = $request->start . ' 00:00:00';
+            $end = $request->end . ' 23:59:59';
 
-            // test
-            $completedTransactions = Pembayaran::whereDate('created_at', $date)
-                ->whereHas('transaksi', function ($query) use ($outlet_id) {
-                    $query->where('outlet_id', $outlet_id);
-                })
+            $completedTransactions = Pembayaran::whereBetween('created_at', [$start, $end])
                 ->with('transaksi')
                 ->get();
 
-            $countPerDay = Pembayaran::whereDate('created_at', $date)
-                ->whereHas('transaksi', function ($query) use ($outlet_id) {
-                    $query->where('outlet_id', $outlet_id);
-                })
-                ->where('outlet_id', Auth::user()->outlet_id)
+            $countPerDay = Pembayaran::whereBetween('created_at', [$start, $end])
                 ->with('transaksi')
                 ->get()
                 ->groupBy(function ($item) {
@@ -674,7 +666,8 @@ class LaporanController extends Controller
             return view('pages.laporan.Omset', [
                 'pembayarans' => $completedTransactions,
                 'rowHeight' => $countPerDay,
-                'date' => $date,
+                'start' => $request->start,
+                'end' => $request->end,
             ]);
         } else {
             return view('pages.laporan.Omset');

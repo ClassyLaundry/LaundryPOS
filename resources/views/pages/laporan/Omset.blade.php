@@ -14,14 +14,24 @@
                     <h4>Laporan Omset</h4>
                 </div>
                 <hr>
-                <div class="d-flex justify-content-between">
-                    <div class="d-inline-flex align-items-center">
-                        <p class="text-nowrap me-2">Tanggal:</p>
-                        <input type="date" class="form-control" name="tanggal" id="input-tanggal" value=@isset($date) {{ $date }} @endisset>
+                <div class="row">
+                    <div class="col-xl-3 col-md-6 col-12 mb-3">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <p class="text-nowrap me-2">Tanggal Awal:</p>
+                            <input type="date" class="form-control" name="start" id="input-tanggal-awal" style="max-width: 180px;"value=@isset($start) {{ $start }} @endisset>
+                        </div>
                     </div>
-                    <button type="button" class="btn btn-primary" id="btn-apply-filter">Apply</button>
+                    <div class="col-xl-3 col-md-6 col-12 mb-3">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <p class="text-nowrap me-2">Tanggal Akhir:</p>
+                            <input type="date" class="form-control" name="end" id="input-tanggal-akhir" style="max-width: 180px;"value=@isset($end) {{ $end }} @endisset>
+                        </div>
+                    </div>
+                    <div class="offset-xl-4 col-xl-2 col-12 mb-3 text-end">
+                        <button type="button" class="btn btn-primary" id="btn-apply-filter">Apply</button>
+                    </div>
                 </div>
-                <hr>
+                <hr class="m-0">
                 <div id="table-container">
                     @isset($pembayarans)
                     <div class="mt-4" id="table-laporan-omset">
