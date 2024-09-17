@@ -8,21 +8,31 @@ $(document).ready(function() {
     });
 
     let params = (new URL(document.location)).searchParams;
-    let trans_id = params.get("trans_id");
+    let trans_kode = params.get("trans_kode");
     let trans_item = params.get("trans_item");
-    if (trans_id !== null && trans_item !== null) {
-        $('#kode-trans').val(trans_id);
+    if (trans_kode !== null && trans_item !== null) {
+
         $.ajax({
-            url: "/transaksi/detail/" + $('#kode-trans').val(),
-        }).done(function(data) {
-            let item_transaksis = data.item_transaksi;
+            url: "/transaksi/kode/" + trans_kode,
+        }).done(function(response) {
+            console.log(response);
+
+            $('#input-rewash-kode').val(response.kode);
+
             $('#item-trans').empty();
-            item_transaksis.forEach(item_transaksi => {
-                $('#item-trans').append("<option value='" + item_transaksi.id + "'>" + item_transaksi.nama + "</option>");
+            response.item_transaksi.forEach(item => {
+                $('#item-trans').append("<option value='" + item.id + "' data-max='" + item.qty + "'>" + item.nama +"</option>");
             });
             $('#item-trans').val(trans_item);
+
+            let qtyMax = $('#item-trans option:selected').data('max');
+            $('#qty-rewash').attr('max', qtyMax);
+            $('#qty-rewash').attr('title', "Max " + qtyMax);
+            $('#qty-rewash').val(1);
+            $('#modal-opsi-trans').modal('hide');
+
+            $('#modal-create-rewash').modal('show');
         });
-        $('#modal-create-rewash').modal('show');
     }
 
     if($('#list-action').children().length == 0) {

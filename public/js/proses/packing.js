@@ -1,9 +1,10 @@
 $(document).ready(function() {
-    var btnIndex = -1, btnId = 0, tipeTrans = '';
+    var btnIndex = -1, btnId = 0, tipeTrans = '', kodeTrans = '';
     $('#container-list-trans').on('click', '.btn-show-action', function() {
         btnIndex = $(this).index('.btn-show-action') + 1;
         btnId = $(this).attr('id').substring(4);
         tipeTrans = $(this).closest('tr').children().eq(1).text().toLowerCase();
+        kodeTrans = $(this).closest('tr').children().eq(0).text();
     });
 
     $('#action-detail').on('click', function() {
@@ -61,6 +62,10 @@ $(document).ready(function() {
             $('#modal-list-catatan-item').find('.modal-title').html('Catatan item ' + btnItemTransName);
             $('#modal-list-catatan-item').modal('show');
         });
+    });
+
+    $('#action-rewash').on('click', function() {
+        window.location = window.location.origin + '/proses/rewash' + '?trans_kode=' + kodeTrans + '&trans_item=' + btnItemTransId;
     });
 
     var btnItemNoteId = 0;

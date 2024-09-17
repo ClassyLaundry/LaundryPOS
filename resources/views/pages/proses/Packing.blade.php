@@ -39,6 +39,7 @@
                         </div>
                         <ul class="list-unstyled form-control list-action" id="list-action-2">
                             <li id="action-notes">Catatan Item</li>
+                            <li id="action-rewash">Rewash</li>
                         </ul>
                     </div>
                 </div>

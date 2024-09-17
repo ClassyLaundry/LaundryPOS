@@ -157,7 +157,7 @@ $(document).ready(function() {
     // });
 
     $('#action-rewash').on('click', function() {
-        window.location = window.location.origin + '/proses/rewash' + '?trans_id=' + btnId + '&trans_item=' + btnItemTransId;
+        window.location = window.location.origin + '/proses/rewash' + '?trans_kode=' + kodeTrans + '&trans_item=' + btnItemTransId;
     });
 
     var btnItemNoteId = 0;

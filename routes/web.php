@@ -186,6 +186,7 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('/transaksi', [PageController::class, 'transaksi'])->name('transaksi')->middleware('permission:Membuka Menu Transaksi');
     Route::get('/transaksi/create', [TransaksiController::class, 'insert']);
     Route::get('/transaksi/detail/{id}', [TransaksiController::class, 'show']);
+    Route::get('/transaksi/kode/{kode}', [TransaksiController::class, 'getTransaksiByKode']);
     Route::get('/transaksi/search', [TransaksiController::class, 'search']);
     Route::get('/transaksi/addItem', [ItemTransaksiController::class, 'addItemToTransaksi']);
     Route::post('/transaksi/update/{id}', [TransaksiController::class, 'update']);

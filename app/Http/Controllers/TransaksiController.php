@@ -40,6 +40,20 @@ class TransaksiController extends Controller
         }
     }
 
+    public function getTransaksiByKode($kode)
+    {
+        $user = User::find(auth()->id());
+        $permissions = $user->getPermissionsViaRoles();
+        $permissionExist = collect($permissions)->first(function ($item) {
+            return $item->name === 'Melihat Detail Transaksi';
+        });
+        if ($permissionExist) {
+            return Transaksi::detail()->where('kode', $kode)->first();
+        } else {
+            abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
+        }
+    }
+
     public function tableBucket($id)
     {
         $outlet_id = User::getOutletId(Auth::id());
