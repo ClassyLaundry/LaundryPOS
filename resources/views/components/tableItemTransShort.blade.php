@@ -63,7 +63,6 @@
         </thead>
         <tbody>
             @for($i = 0; $i < count($trans->item_transaksi); $i++)
-                @for($j = 0; $j < $trans->item_transaksi[$i]->qty; $j++)
                 <tr id="trans-{{ $trans->id }}">
                     <td style="width: 62.5%;">{{ $trans->item_transaksi[$i]->nama }}</td>
                     <td style="width: 20%;" class="text-center">{{ $trans->item_transaksi[$i]->nama_kategori }}</td>
@@ -85,6 +84,7 @@
                         </div>
                     </td>
                 </tr>
+                @for($j = 0; $j < $trans->item_transaksi[$i]->qty; $j++)
                 @if (isset($inventories))
                     <tr>
                         <td class="py-1" style="width: 62.5%;">{{ $inventories[$i * count($trans->item_transaksi) + $j]['name'] }}</td>
