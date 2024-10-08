@@ -211,9 +211,9 @@
                                         </div>
                                         <div id="active-promo" style="display: none;">
                                             <hr>
-                                            <h5>Active Promo</h5>
+                                            <h5>Diskon Aktif</h5>
                                             <div class="d-flex mt-2">
-                                                <div id="diskon-1">
+                                                <div class="me-2" id="diskon-1">
                                                     <div class="btn-group" role="group">
                                                         <button type="button" class="btn btn-primary">
                                                             <span class="kode-diskon"></span>
@@ -223,9 +223,9 @@
                                                         <button type="button" class="btn btn-danger cancel-diskon">
                                                             <i class="fa-solid fa-xmark"></i>
                                                         </button>
-                                                        </div>
+                                                      </div>
                                                 </div>
-                                                <div class="ms-2" id="diskon-2">
+                                                <div class="me-2" id="diskon-2">
                                                     <div class="btn-group" role="group">
                                                         <button type="button" class="btn btn-primary">
                                                             <span class="kode-diskon"></span>
@@ -235,7 +235,20 @@
                                                         <button type="button" class="btn btn-danger cancel-diskon">
                                                             <i class="fa-solid fa-xmark"></i>
                                                         </button>
-                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="me-2" id="diskon-member">
+                                                    <div class="btn-group" role="group">
+                                                        <button type="button" class="btn btn-member">
+                                                            <span class="kode-diskon">Member</span>
+                                                            &nbsp;-&nbsp;
+                                                            <span class="info-diskon">10 %</span>
+                                                        </button>
+                                                        <button type="button" class="btn btn-toogle">
+                                                            <i class="fa-solid fa-toggle-on" style="display: none;"></i>
+                                                            <i class="fa-solid fa-toggle-off" style="display: none;"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

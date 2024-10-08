@@ -151,7 +151,9 @@ class Transaksi extends Model
         }
         $this->total_diskon_promo = $total_diskon_promo;
         //diskon membership
-        $diskon_member = floor($subtotal * $diskon_member / 100);
+        if ($this->status_diskon_member) {
+            $diskon_member = floor($subtotal * 10 / 100);
+        }
         $this->diskon_member = $diskon_member;
         //diskon jenis item
         $diskon_jenis_item = ItemTransaksi::where('transaksi_id', $this->id)->get()->map(function ($t) {

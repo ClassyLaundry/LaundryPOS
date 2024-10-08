@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Data\Pelanggan;
 use App\Models\Diskon;
 use App\Models\DiskonTransaksi;
 use App\Models\LogTransaksi;
@@ -14,8 +15,12 @@ class DiskonTransaksiController extends Controller
 {
     public function find($id)
     {
+        $pelangganId = Transaksi::find($id)->pelanggan_id;
+
         return [
-            'data' => DiskonTransaksi::with('diskon')->where('transaksi_id', $id)->get(),
+            'dataDiskon' => DiskonTransaksi::with('diskon')->where('transaksi_id', $id)->get(),
+            'statusMember' => Pelanggan::find($pelangganId)->member,
+            'statusDiskonMember' => Transaksi::find($id)->status_diskon_member
         ];
     }
 
@@ -77,5 +82,14 @@ class DiskonTransaksiController extends Controller
         return [
             'status' => 200,
         ];
+    }
+
+    public function toogleMembershipDiscount($transactionId)
+    {
+        $transaksi = Transaksi::find($transactionId);
+        $transaksi->status_diskon_member = !$transaksi->status_diskon_member;
+        $transaksi->save();
+        $transaksi->recalculate();
+        return response()->json(['message' => 'Transaction membership discount status toggled successfully']);
     }
 }

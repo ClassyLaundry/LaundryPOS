@@ -198,6 +198,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/transaksi/{id}/restore', [TransaksiController::class, 'restoreTransaksi']);
     Route::get('/diskon-transaksi/{id}', [DiskonTransaksiController::class, 'find']);
     Route::post('/diskon-transaksi', [DiskonTransaksiController::class, 'insert']);
+    Route::post('/diskon-transaksi/{transactionId}/toggleMembershipStatus', [DiskonTransaksiController::class, 'toogleMembershipDiscount']);
     Route::get('/diskon-transaksi/{id}/delete', [DiskonTransaksiController::class, 'delete']);
     Route::get('/transaksi/{id}/log', [TransaksiController::class, 'logTransaksi']);
     Route::get('/component/shortTrans/{id}', [TransaksiController::class, 'shortTable']);

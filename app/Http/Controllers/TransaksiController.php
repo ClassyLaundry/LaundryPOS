@@ -225,8 +225,10 @@ class TransaksiController extends Controller
             return $item->name === 'Membuat Transaksi';
         });
         if ($permissionExist) {
+            $pelanggan = Pelanggan::find($request->pelanggan_id);
             $merged = $request->merge([
                 'outlet_id' => Auth::user()->outlet->id,
+                'status_diskon_member' => $pelanggan->member,
                 'modified_by' => Auth::id(),
                 'status' => "draft"
             ])->toArray();
