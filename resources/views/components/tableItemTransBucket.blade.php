@@ -82,7 +82,7 @@
             </tr>
             @if ($trans->total_diskon_promo != 0)
             <tr>
-                <td class="text-end py-1 px-2" colspan="6">Diskon Promo</td>
+                <td class="text-end py-1 px-2" colspan="4">Diskon Promo</td>
                 <td class="py-1 px-2" style="width: 35px">Rp</td>
                 <td class="text-end thousand-separator py-1 px-2" id="diskon-promo">{{ $trans->total_diskon_promo }}</td>
                 <td class="p-1"></td>
@@ -90,7 +90,7 @@
             @endif
             @if ($trans->diskon_member != 0)
             <tr>
-                <td class="text-end py-1 px-2" colspan="6">Diskon Member</td>
+                <td class="text-end py-1 px-2" colspan="4">Diskon Member</td>
                 <td class="py-1 px-2" style="width: 35px">Rp</td>
                 <td class="text-end thousand-separator py-1 px-2" id="diskon-member">{{ $trans->diskon_member }}</td>
                 <td class="p-1"></td>
@@ -98,7 +98,7 @@
             @endif
             @if ($trans->diskon_pelanggan_spesial != 0)
             <tr>
-                <td class="text-end py-1 px-2" colspan="6">Diskon Spesial</td>
+                <td class="text-end py-1 px-2" colspan="4">Diskon Spesial</td>
                 <td class="py-1 px-2" style="width: 35px">Rp</td>
                 <td class="text-end thousand-separator py-1 px-2" id="diskon-pelanggan_spesial">{{ $trans->diskon_pelanggan_spesial }}</td>
                 <td class="p-1"></td>
