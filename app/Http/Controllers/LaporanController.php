@@ -656,10 +656,12 @@ class LaporanController extends Controller
             */
             $transaksis = Transaksi::whereBetween('created_at', [$start, $end])
                 ->with('pembayaran')
+                ->where('status', 'confirmed')
                 ->get();
 
             $countPerDay = Transaksi::whereBetween('created_at', [$start, $end])
                 ->with('pembayaran')
+                ->where('status', 'confirmed')
                 ->get()
                 ->groupBy(function ($item) {
                     return $item->created_at->format('d-m-Y');

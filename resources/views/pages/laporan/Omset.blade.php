@@ -121,7 +121,7 @@
                                             <td>
                                                 <div class="d-flex justify-content-between">
                                                     <span>Rp</span>
-                                                    <span>{{ number_format($transaksi->total_terbayar, 0, ',', '.') }}</span>
+                                                    <span>{{ number_format($transaksi->grand_total, 0, ',', '.') }}</span>
                                                 </div>
                                             </td>
                                             <td class="text-center">
@@ -132,7 +132,7 @@
                                         </tr>
                                         @php
                                             $dateIndex++;
-                                            $total += $transaksi->total_terbayar;
+                                            $total += $transaksi->grand_total;
                                         @endphp
                                         @if ($dateIndex == $rowHeight[date('d-m-Y', strtotime($transaksi->created_at))])
                                             <tr class="table-success fw-bold">
