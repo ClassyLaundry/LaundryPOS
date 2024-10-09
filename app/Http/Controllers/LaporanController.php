@@ -649,12 +649,17 @@ class LaporanController extends Controller
             $start = $request->start . ' 00:00:00';
             $end = $request->end . ' 23:59:59';
 
+            /*
             $completedTransactions = Pembayaran::whereBetween('created_at', [$start, $end])
                 ->with('transaksi')
                 ->get();
+            */
+            $transaksis = Transaksi::whereBetween('created_at', [$start, $end])
+                ->with('pembayaran')
+                ->get();
 
-            $countPerDay = Pembayaran::whereBetween('created_at', [$start, $end])
-                ->with('transaksi')
+            $countPerDay = Transaksi::whereBetween('created_at', [$start, $end])
+                ->with('pembayaran')
                 ->get()
                 ->groupBy(function ($item) {
                     return $item->created_at->format('d-m-Y');
@@ -664,7 +669,8 @@ class LaporanController extends Controller
                 });
 
             return view('pages.laporan.Omset', [
-                'pembayarans' => $completedTransactions,
+                // 'pembayarans' => $completedTransactions,
+                'transaksis' => $transaksis,
                 'rowHeight' => $countPerDay,
                 'start' => $request->start,
                 'end' => $request->end,

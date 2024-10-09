@@ -33,7 +33,7 @@
                 </div>
                 <hr class="m-0">
                 <div id="table-container">
-                    @isset($pembayarans)
+                    @isset($transaksis)
                     <div class="mt-4" id="table-laporan-omset">
                         <div class="table-responsive my-2 tbody-wrap">
                             <table class="table mb-0" id="table-laporan">
@@ -101,38 +101,42 @@
                                         $total = 0;
                                     @endphp
                                     {{-- test --}}
-                                    @foreach ($pembayarans as $pembayaran)
+                                    @foreach ($transaksis as $transaksi)
                                         @php
-                                            if ($date != date('d-m-Y', strtotime($pembayaran->created_at))) {
-                                                $date = date('d-m-Y', strtotime($pembayaran->created_at));
+                                            if ($date != date('d-m-Y', strtotime($transaksi->created_at))) {
+                                                $date = date('d-m-Y', strtotime($transaksi->created_at));
                                                 $dateIndex = 0;
                                                 $total = 0;
                                             }
                                         @endphp
                                         @if ($dateIndex == 0)
                                             <tr>
-                                                <td class="text-center" rowspan="{{ $rowHeight[date('d-m-Y', strtotime($pembayaran->created_at))] + 1 }}">{{ date('d-M-Y', strtotime($pembayaran->created_at)) }}</td>
+                                                <td class="text-center" rowspan="{{ $rowHeight[date('d-m-Y', strtotime($transaksi->created_at))] + 1 }}">{{ date('d-M-Y', strtotime($transaksi->created_at)) }}</td>
                                         @else
                                             <tr>
                                         @endif
-                                            <td class="text-center">{{ $pembayaran->transaksi->kode }}</td>
-                                            <td class="text-center">{{ 'PL' . str_pad($pembayaran->transaksi->pelanggan->id, 6, '0', STR_PAD_LEFT) }}</td>
-                                            <td>{{ $pembayaran->transaksi->pelanggan->nama }}</td>
+                                            <td class="text-center">{{ $transaksi->kode }}</td>
+                                            <td class="text-center">{{ 'PL' . str_pad($transaksi->pelanggan->id, 6, '0', STR_PAD_LEFT) }}</td>
+                                            <td>{{ $transaksi->pelanggan->nama }}</td>
                                             <td>
                                                 <div class="d-flex justify-content-between">
                                                     <span>Rp</span>
-                                                    <span>{{ number_format($pembayaran->nominal, 0, ',', '.') }}</span>
+                                                    <span>{{ number_format($transaksi->total_terbayar, 0, ',', '.') }}</span>
                                                 </div>
                                             </td>
-                                            <td class="text-center">{{ $pembayaran->kasir->name }}</td>
+                                            <td class="text-center">
+                                                @isset($transaksi->pembayaran[count($transaksi->pembayaran) - 1])
+                                                    {{ $transaksi->pembayaran[count($transaksi->pembayaran) - 1]->kasir->name }}
+                                                @endisset
+                                            </td>
                                         </tr>
                                         @php
                                             $dateIndex++;
-                                            $total += $pembayaran->nominal;
+                                            $total += $transaksi->total_terbayar;
                                         @endphp
-                                        @if ($dateIndex == $rowHeight[date('d-m-Y', strtotime($pembayaran->created_at))])
+                                        @if ($dateIndex == $rowHeight[date('d-m-Y', strtotime($transaksi->created_at))])
                                             <tr class="table-success fw-bold">
-                                                <td colspan="3" class="text-center">{{ 'Total omset per ' . date('d-M-Y', strtotime($pembayaran->created_at)) }}</td>
+                                                <td colspan="3" class="text-center">{{ 'Total omset per ' . date('d-M-Y', strtotime($transaksi->created_at)) }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-between">
                                                         <span>Rp</span>
