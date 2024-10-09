@@ -198,7 +198,7 @@
             </div>
             <div class="col-4 d-flex">
                 <p class="w-25">JML M<sup>2</sup></p>
-                <p class="w-75">: 0</p>
+                <p class="w-75">: {{ $data->total_length }} M</p>
             </div>
         </div>
         <div class="d-flex">
