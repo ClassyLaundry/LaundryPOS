@@ -234,4 +234,8 @@ class Transaksi extends Model
         return $this->hasMany(Pembayaran::class, 'transaksi_id');
     }
 
+    public function kasir()
+    {
+        return $this->belongsTo(User::class, 'operator', 'id');
+    }
 }

@@ -317,7 +317,7 @@ class TransaksiController extends Controller
                 'express' => $express,
                 'setrika_only' => $setrika_only,
                 'need_delivery' => $need_delivery,
-                'done_date' => $done_date
+                'done_date' => $done_date,
             ])->toArray();
             $transaksi = Transaksi::find($id);
             $transaksi->update($merged);
@@ -345,7 +345,9 @@ class TransaksiController extends Controller
                     $transaksi->kitir_code = Transaksi::getKitirCode($transaksi->id);
                 }
             }
-
+            if (!isset($transaksi->operator)) {
+                $transaksi->operator = Auth::id();
+            }
             $transaksi->save();
 
             LogTransaksi::create([

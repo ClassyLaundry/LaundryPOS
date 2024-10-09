@@ -125,8 +125,8 @@
                                                 </div>
                                             </td>
                                             <td class="text-center">
-                                                @isset($transaksi->pembayaran[count($transaksi->pembayaran) - 1])
-                                                    {{ $transaksi->pembayaran[count($transaksi->pembayaran) - 1]->kasir->name }}
+                                                @isset($transaksi->operator)
+                                                    {{ $transaksi->kasir->name }}
                                                 @endisset
                                             </td>
                                         </tr>
