@@ -18,6 +18,13 @@
     <div class="tab-content">
         <div class="card">
             <div class="card-body pb-0">
+                <div class="staging done">
+                    <div class="d-flex align-items-center form-control">
+                        <i class="fa-solid fa-magnifying-glass me-2"></i>
+                        <input type="search" id="input-search" class="w-100" style="outline: none; border: none;">
+                    </div>
+                    <hr>
+                </div>
                 <div role="tabpanel" class="tab-pane" id="tab-1">
                     <div class="list-container" id="hub-staging"></div>
                 </div>

@@ -475,9 +475,12 @@ class TransaksiController extends Controller
         if ($request->type == "0") {
             $listTrans = Transaksi::with('pelanggan')
                 ->when($request->filled('key'), function ($query) use ($request) {
-                    $query->WhereHas('pelanggan', function ($query) use ($request) {
-                        $query->where('nama', 'like', '%' . $request->key . '%');
-                    })->orWhere('kode', 'like', '%' . $request->key . '%');
+                    $query->where(function ($query) use ($request) {
+                        $query->whereHas('pelanggan', function ($query) use ($request) {
+                            $query->where('nama', 'like', '%' . $request->key . '%');
+                        })
+                        ->orWhere('kode', 'like', '%' . $request->key . '%');
+                    });
                 })
                 ->whereNull('pencuci')
                 ->where('status', 'confirmed')
@@ -493,9 +496,12 @@ class TransaksiController extends Controller
         } else if ($request->type == "2") {
             $listTrans = Transaksi::with('pelanggan')
                 ->when($request->filled('key'), function ($query) use ($request) {
-                    $query->WhereHas('pelanggan', function ($query) use ($request) {
-                        $query->where('nama', 'like', '%' . $request->key . '%');
-                    })->orWhere('kode', 'like', '%' . $request->key . '%');
+                    $query->where(function ($query) use ($request) {
+                        $query->whereHas('pelanggan', function ($query) use ($request) {
+                            $query->where('nama', 'like', '%' . $request->key . '%');
+                        })
+                        ->orWhere('kode', 'like', '%' . $request->key . '%');
+                    });
                 })
                 ->where('pencuci', Auth::id())
                 ->where('is_done_cuci', 1)
