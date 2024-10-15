@@ -40,6 +40,7 @@ $(document).ready(function() {
             url: "/transaksi/detail/" + btnId,
         }).done(function(response) {
             $('#nama-parfum').text(response.parfum.nama);
+            $('#modal-detail .modal-title').text("Detail " + response.kode);
             $('#modal-detail').modal('show');
         });
     });

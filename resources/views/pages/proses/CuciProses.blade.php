@@ -56,7 +56,7 @@
     </div>
 
     <div role="dialog" tabindex="-1" class="modal fade" id="modal-list-catatan-item">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Catatan Item</h4>
@@ -83,7 +83,7 @@
                 <form id="form-catatan">
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col col-lg-4">
+                            <div class="col-12 col-lg-4">
                                 <div class="mb-2">
                                     <h5>Noted by</h5>
                                     <input type="text" class="form-control" id="penulis-catatan-item" />
@@ -93,7 +93,7 @@
                                     <textarea class="form-control" id="catatan-item" required style="max-height: 531px;"></textarea>
                                 </div>
                             </div>
-                            <div class="col col-lg-8">
+                            <div class="col-12 col-lg-8">
                                 <div class="position-relative border rounded mb-2">
                                     <div id="container-image-item" class="carousel carousel-dark slide" data-bs-interval="false">
                                         <div class="carousel-inner">
