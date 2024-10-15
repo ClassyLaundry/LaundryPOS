@@ -9,7 +9,7 @@
         <a>Cuci</a>
     </header>
 
-    <?php
+    {{-- <?php
       $currentDate = new DateTime();
 
       function getISOWeek($date) {
@@ -29,7 +29,7 @@
     </ul>
 
     <div class="tab-content">
-        
+
         <div role="tabpanel" class="tab-pane active" id="tab-1">
             <section id="section-data-cuci">
                 <div class="card">
@@ -237,45 +237,51 @@
                 </div>
             </section>
         </div>
+    </div> --}}
+
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="lh-base">Cuci</h4>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-4 col-4 order-lg-1 order-1 mb-2">
+                        <div class="dropdown" id="dropdown-filter">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButtonFilter" data-bs-toggle="dropdown" aria-expanded="false">
+                                Filter
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonFilter" style="min-width: 6rem;">
+                                <li><h6 class="dropdown-header">Search By</h6></li>
+                                <li><a class="dropdown-item active filter-search" data-search='kode'>Kode</a></li>
+                                <li><a class="dropdown-item filter-search" data-search='pelanggan'>Pelanggan</a></li>
+                                <li><a class="dropdown-item filter-search" data-search='tipe'>Tipe</a></li>
+                                <li><a class="dropdown-item filter-search" data-search='tanggal-buat'>Tanggal Transaksi</a></li>
+                                <li><a class="dropdown-item filter-search" data-search='tanggal-selesai'>Tanggal Selesai</a></li>
+                                <li><a class="dropdown-item filter-search" data-search='pencuci'>Pencuci</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><h6 class="dropdown-header">Paginate</h6></li>
+                                <li><a class="dropdown-item active filter-paginate" data-paginate='5'>5 items</a></li>
+                                <li><a class="dropdown-item filter-paginate" data-paginate='10'>10 items</a></li>
+                                <li><a class="dropdown-item filter-paginate" data-paginate='25'>25 items</a></li>
+                                <li><a class="dropdown-item filter-paginate" data-paginate='50'>50 items</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-12 order-lg-2 order-3 mb-2">
+                        <div class="d-flex align-items-center form-control">
+                            <i class="fa-solid fa-magnifying-glass me-2"></i>
+                            <input type="search" id="input-search" class="w-100" style="outline: none; border: none;">
+                        </div>
+                    </div>
+                </div>
+                <div id="table-cuci-admin" class="table-container"></div>
+            </div>
+        </div>
     </div>
 </div>
-<script>
-    $(document).ready(function() {
-        if ($('#selected-date-range').text() != '') {
-            $('#input-week').hide();
-            $('#btn-reset').show();
-            $('#selected-date-range').show();
-        }
 
-        $('#input-week').change(function() {
-            $(this).hide();
-            let selectedWeek = $(this).val();
-            let year = selectedWeek.substring(0, 4);
-            let weekNumber = selectedWeek.substring(6);
-
-            let startDate = new Date(year, 0, 1 + (weekNumber - 1) * 7 + 1);
-            let endDate = new Date(year, 0, 1 + (weekNumber - 1) * 7 + 6 + 1);
-
-            let startDateString = formatDate(startDate);
-            let endDateString = formatDate(endDate);
-
-            window.location = window.location.pathname + '?start=' + startDateString + '&end=' + endDateString;
-        });
-
-        $('#btn-reset').on('click', function() {
-            $('#input-week').show();
-            $('#btn-reset').hide();
-            $('#selected-date-range').hide();
-        });
-
-        function formatDate(date) {
-            var day = date.getDate();
-            var month = date.getMonth() + 1;
-            var year = date.getFullYear();
-
-            return (day < 10 ? '0' + day : day) + '/' + (month < 10 ? '0' + month : month) + '/' + year;
-        }
-    });
-</script>
+<script src="{{ asset('js/proses/cuciAdmin.js') }}"></script>
 @endsection
 

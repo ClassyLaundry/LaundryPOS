@@ -432,6 +432,83 @@ class TransaksiController extends Controller
         }
     }
 
+    public function adminCuci(Request $request)
+    {
+        return view('components.tableCuciAdmin', [
+            'transaksis' => Transaksi::with('pelanggan', 'tukang_cuci')
+                ->when($request->filled('key'), function ($query) use ($request) {
+                    $query->when($request->filled('search'), function ($query) use ($request) {
+                        if ($request->search === 'kode') {
+                            $query->Where('kode', 'like', '%' . $request->key . '%');
+                        } elseif ($request->search === 'pelanggan') {
+                            $query->WhereHas('pelanggan', function ($query) use ($request) {
+                                $query->where('nama', 'like', '%' . $request->key . '%');
+                            });
+                        } elseif ($request->search === 'tipe') {
+                            if ($request->key == 'express') {
+                                $query->where('express', 1);
+                            } else if ($request->key == 'on time' || $request->key == 'ontime') {
+                                $query->where('on_time', 1);
+                            } else if ($request->key == 'normal') {
+                                $query->where('express', 0)->where('on_time', 0);
+                            }
+                        } elseif ($request->search === 'tanggal-buat') {
+                            $query->Where('created_at', 'like', '%' . $request->key . '%');
+                        } elseif ($request->search === 'tanggal-selesai') {
+                            $query->where('done_date', 'like', '%' . $request->key . '%');
+                        } elseif ($request->search === 'pencuci') {
+                            $query->WhereHas('tukang_cuci', function ($query) use ($request) {
+                                $query->where('username', 'like', '%' . $request->key . '%');
+                            });
+                        }
+                    });
+                })
+                ->where('status', 'confirmed')
+                ->latest()
+                ->paginate($request->paginate),
+        ]);
+    }
+
+    public function workerCuci(Request $request)
+    {
+        $listTrans = [];
+        if ($request->type == "0") {
+            $listTrans = Transaksi::with('pelanggan')
+                ->when($request->filled('key'), function ($query) use ($request) {
+                    $query->WhereHas('pelanggan', function ($query) use ($request) {
+                        $query->where('nama', 'like', '%' . $request->key . '%');
+                    })->orWhere('kode', 'like', '%' . $request->key . '%');
+                })
+                ->whereNull('pencuci')
+                ->where('status', 'confirmed')
+                ->latest()
+                ->get();
+        } else if ($request->type == "1") {
+            $listTrans = Transaksi::with('pelanggan')
+                ->where('pencuci', Auth::id())
+                ->where('is_done_cuci', 0)
+                ->where('status', 'confirmed')
+                ->latest()
+                ->get();
+        } else if ($request->type == "2") {
+            $listTrans = Transaksi::with('pelanggan')
+                ->when($request->filled('key'), function ($query) use ($request) {
+                    $query->WhereHas('pelanggan', function ($query) use ($request) {
+                        $query->where('nama', 'like', '%' . $request->key . '%');
+                    })->orWhere('kode', 'like', '%' . $request->key . '%');
+                })
+                ->where('pencuci', Auth::id())
+                ->where('is_done_cuci', 1)
+                ->where('status', 'confirmed')
+                ->latest()
+                ->get();
+        }
+
+        return view('components.listCardTransaksi', [
+            'transaksis' => $listTrans
+        ]);
+    }
+
     public function clearStatusCuci(Transaksi $transaksi)
     {
         $user = User::find(auth()->id());
