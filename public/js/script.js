@@ -115,7 +115,7 @@ $(document).ready(function() {
         flag = true;
     });
 
-    $('#data-pelanggan #table-pelanggan, #data-item #table-item, .section-detail-transaksi #table-trans-item tbody, #table-container, #list-karyawan, #container-list-trans, #table-pickup, #table-delivery, .list-container').on('click touchend', '.btn-show-action', function(event) {
+    $('#data-pelanggan #table-pelanggan, #data-item #table-item, .section-detail-transaksi #table-trans-item tbody, #table-container, #list-karyawan, #container-list-trans, #table-pickup, #table-delivery, .list-container').on('click', '.btn-show-action', function(event) {
 
         if (event.type === 'touchstart') {
             console.log('Triggered by touch event');
