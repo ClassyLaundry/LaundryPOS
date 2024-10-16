@@ -115,7 +115,17 @@ $(document).ready(function() {
         flag = true;
     });
 
-    $('#data-pelanggan #table-pelanggan, #data-item #table-item, .section-detail-transaksi #table-trans-item tbody, #table-container, #list-karyawan, #container-list-trans, #table-pickup, #table-delivery, .list-container').on('click touchend', '.btn-show-action', function() {
+    $('#data-pelanggan #table-pelanggan, #data-item #table-item, .section-detail-transaksi #table-trans-item tbody, #table-container, #list-karyawan, #container-list-trans, #table-pickup, #table-delivery, .list-container').on('click touchend', '.btn-show-action', function(event) {
+
+        if (event.type === 'touchstart') {
+            console.log('Triggered by touch event');
+            alert('Triggered by touch event');
+        } else if (event.type === 'click') {
+            console.log('Triggered by click event');
+        } else {
+            alert(event.type);
+        }
+
         let lebarList = 150;
         let lebarBtn = $(this).css('width');
         let lebarTambahan = 2;
