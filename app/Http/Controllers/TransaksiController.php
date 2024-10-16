@@ -434,7 +434,7 @@ class TransaksiController extends Controller
 
     public function adminCuci(Request $request)
     {
-        return view('components.tableCuciAdmin', [
+        return view('components.tableProsesAdmin', [
             'transaksis' => Transaksi::with('pelanggan', 'tukang_cuci')
                 ->when($request->filled('key'), function ($query) use ($request) {
                     $query->when($request->filled('search'), function ($query) use ($request) {
@@ -464,8 +464,10 @@ class TransaksiController extends Controller
                     });
                 })
                 ->where('status', 'confirmed')
+                ->where('outlet_id', Auth::user()->outlet_id)
                 ->latest()
                 ->paginate($request->paginate),
+            'tipe' => 'cuci'
         ]);
     }
 
@@ -509,6 +511,93 @@ class TransaksiController extends Controller
                 ->latest()
                 ->get();
         }
+
+        return view('components.listCardTransaksi', [
+            'transaksis' => $listTrans
+        ]);
+    }
+
+    public function adminSetrika(Request $request)
+    {
+        return view('components.tableProsesAdmin', [
+            'transaksis' => Transaksi::with('pelanggan', 'tukang_setrika')
+                ->when($request->filled('key'), function ($query) use ($request) {
+                    $query->when($request->filled('search'), function ($query) use ($request) {
+                        if ($request->search === 'kode') {
+                            $query->Where('kode', 'like', '%' . $request->key . '%');
+                        } elseif ($request->search === 'pelanggan') {
+                            $query->WhereHas('pelanggan', function ($query) use ($request) {
+                                $query->where('nama', 'like', '%' . $request->key . '%');
+                            });
+                        } elseif ($request->search === 'tipe') {
+                            if ($request->key == 'express') {
+                                $query->where('express', 1);
+                            } else if ($request->key == 'on time' || $request->key == 'ontime') {
+                                $query->where('on_time', 1);
+                            } else if ($request->key == 'normal') {
+                                $query->where('express', 0)->where('on_time', 0);
+                            }
+                        } elseif ($request->search === 'tanggal-buat') {
+                            $query->Where('created_at', 'like', '%' . $request->key . '%');
+                        } elseif ($request->search === 'tanggal-selesai') {
+                            $query->where('done_date', 'like', '%' . $request->key . '%');
+                        } elseif ($request->search === 'penyetrika') {
+                            $query->WhereHas('tukang_setrika', function ($query) use ($request) {
+                                $query->where('username', 'like', '%' . $request->key . '%');
+                            });
+                        }
+                    });
+                })
+                ->where(function ($query) {
+                    $query->where('setrika_only', 1)
+                        ->orWhere('is_done_cuci', 1);
+                })
+                ->where('status', 'confirmed')
+                ->where('outlet_id', Auth::user()->outlet_id)
+                ->latest()
+                ->paginate($request->paginate),
+            'tipe' => 'setrika'
+        ]);
+    }
+
+    public function workerSetrika(Request $request)
+    {
+        $listTrans = [];
+        if ($request->type == "0") {
+            $listTrans = Transaksi::with('pelanggan')
+                ->when($request->filled('key'), function ($query) use ($request) {
+                    $query->where(function ($query) use ($request) {
+                        $query->whereHas('pelanggan', function ($query) use ($request) {
+                            $query->where('nama', 'like', '%' . $request->key . '%');
+                        })
+                        ->orWhere('kode', 'like', '%' . $request->key . '%');
+                    });
+                })
+                ->whereNull('penyetrika');
+        } else if ($request->type == "1") {
+            $listTrans = Transaksi::with('pelanggan')
+                ->where('penyetrika', Auth::id())
+                ->where('is_done_setrika', 0);
+        } else if ($request->type == "2") {
+            $listTrans = Transaksi::with('pelanggan')
+                ->when($request->filled('key'), function ($query) use ($request) {
+                    $query->where(function ($query) use ($request) {
+                        $query->whereHas('pelanggan', function ($query) use ($request) {
+                            $query->where('nama', 'like', '%' . $request->key . '%');
+                        })
+                        ->orWhere('kode', 'like', '%' . $request->key . '%');
+                    });
+                })
+                ->where('penyetrika', Auth::id())
+                ->where('is_done_setrika', 1);
+        }
+        $listTrans = $listTrans->where(function ($query) {
+                            $query->where('setrika_only', 1)
+                                ->orWhere('is_done_cuci', 1);
+                        })
+                        ->where('status', 'confirmed')
+                        ->latest()
+                        ->get();
 
         return view('components.listCardTransaksi', [
             'transaksis' => $listTrans

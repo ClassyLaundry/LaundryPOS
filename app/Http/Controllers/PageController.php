@@ -469,30 +469,7 @@ class PageController extends Controller
         });
         if ($permissionExist) {
             if (Auth::user()->role == 'produksi_cuci') {
-                return view(
-                    'pages.proses.CuciProses',
-                    [
-                        'transaksi_staging' => Transaksi::with('tukang_cuci')->detail()
-                            ->where('outlet_id', Auth::user()->outlet->id)
-                            ->where('status', 'confirmed')
-                            ->where('setrika_only', 0)
-                            ->whereNull('pencuci')
-                            ->orderBy('done_date', 'asc')->get(),
-                        'transaksi_pencuci' => Transaksi::with('tukang_cuci')->detail()
-                            ->where('outlet_id', Auth::user()->outlet->id)
-                            ->where('pencuci', Auth::user()->id)
-                            ->where('setrika_only', 0)
-                            ->where('is_done_cuci', 0)
-                            ->orderBy('done_date', 'asc')->get(),
-                        'transaksi_done_cuci' => Transaksi::with('tukang_cuci')->detail()
-                            ->where('outlet_id', Auth::user()->outlet->id)
-                            ->where('pencuci', Auth::user()->id)
-                            ->where('setrika_only', 0)
-                            ->where('is_done_cuci', 1)
-                            ->where('done_date', '>=', Carbon::today())
-                            ->orderBy('done_date', 'asc')->get(),
-                    ]
-                );
+                return view('pages.proses.CuciProses');
             } else {
                 return view('pages.proses.CuciAdmin');
             }
@@ -509,60 +486,10 @@ class PageController extends Controller
             return $item->name === 'Membuka Menu Hub Setrika';
         });
         if ($permissionExist) {
-            $startDate = null;
-            $endDate = null;
-            if ($request->has('start')) {
-                $startDate = Carbon::createFromFormat('d/m/Y', $request->start)->format('Y-m-d');
-            } else {
-                $startDate = Carbon::now()->startOfWeek()->format('Y-m-d');
-            }
-            if ($request->has('end')) {
-                $endDate = Carbon::createFromFormat('d/m/Y', $request->end)->format('Y-m-d');
-            } else {
-                $endDate = Carbon::now()->endOfWeek()->format('Y-m-d');
-            }
             if (Auth::user()->role == 'produksi_setrika') {
-                return view(
-                    'pages.proses.SetrikaProses',
-                    [
-                        'transaksi_staging' => Transaksi::with('tukang_setrika')->detail()
-                            ->where('outlet_id', Auth::user()->outlet->id)
-                            ->where('status', 'confirmed')
-                            ->whereNull('penyetrika')
-                            ->where(function ($query) {
-                                $query->where('is_done_cuci', 1)
-                                    ->orWhere(function ($query1) {
-                                        $query1->where('is_done_cuci', 0)
-                                            ->where('setrika_only', 1);
-                                    });
-                            })
-                            ->orderBy('done_date', 'asc')->get(),
-                        'transaksi_penyetrika' => Transaksi::with('tukang_setrika')->detail()
-                            ->where('outlet_id', Auth::user()->outlet->id)
-                            ->where('penyetrika', Auth::user()->id)
-                            ->where('is_done_setrika', 0)
-                            ->orderBy('done_date', 'asc')->get(),
-                        'transaksi_done_setrika' => Transaksi::with('tukang_setrika')->detail()
-                            ->where('outlet_id', Auth::user()->outlet->id)
-                            ->where('penyetrika', Auth::user()->id)
-                            ->where('is_done_setrika', 1)
-                            ->where('done_date', '>=', Carbon::today())
-                            ->orderBy('done_date', 'asc')->get(),
-                        'jenis_rewashes' => JenisRewash::get(),
-                    ]
-                );
+                return view('pages.proses.SetrikaProses');
             } else {
-                return view(
-                    'pages.proses.SetrikaAdmin',
-                    [
-                        'transaksis' => Transaksi::with('tukang_setrika')->detail()
-                            ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
-                                return $query->whereBetween('created_at', [$startDate, $endDate]);
-                            })->latest()->get(),
-                        'penyetrikas' => User::role('produksi_setrika')->with('setrikaan')->get(),
-                        'dateRange' => isset($request->start) ? $request->start . ' - ' . $request->end : Carbon::now()->startOfWeek()->format('d-m-Y') . ' - ' . Carbon::now()->endOfWeek()->format('d-m-Y'),
-                    ]
-                );
+                return view('pages.proses.SetrikaAdmin');
             }
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');

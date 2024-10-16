@@ -115,7 +115,7 @@ $(document).ready(function() {
         flag = true;
     });
 
-    $('#data-pelanggan #table-pelanggan, #data-item #table-item, .section-detail-transaksi #table-trans-item tbody, #table-container, #list-karyawan, #container-list-trans, #table-pickup, #table-delivery, .list-container').on('click', '.btn-show-action', function() {
+    $('#data-pelanggan #table-pelanggan, #data-item #table-item, .section-detail-transaksi #table-trans-item tbody, #table-container, #list-karyawan, #container-list-trans, #table-pickup, #table-delivery, .list-container').on('click touchend', '.btn-show-action', function() {
         let lebarList = 150;
         let lebarBtn = $(this).css('width');
         let lebarTambahan = 2;
@@ -131,6 +131,9 @@ $(document).ready(function() {
         tinggiBtn = parseInt(tinggiBtn.substr(0, tinggiBtn.indexOf('px')));
         if($(this).closest('.list-container').length == 1) {
             tinggiTambahan += 16;
+            if ($(this).closest('.list-container').parent().siblings('.staging.done').css('display') == 'block') {
+                tinggiTambahan += 73;
+            }
         }
         $('#list-action').css('top', $(this).offset().top - $(this).closest('.card').offset().top + tinggiBtn + tinggiHeader + tinggiTambahan);
 

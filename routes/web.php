@@ -219,6 +219,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/component/admin/cuci', [TransaksiController::class, 'adminCuci']);
     Route::get('/component/worker/cuci', [TransaksiController::class, 'workerCuci']);
     Route::get('/proses/setrika', [PageController::class, 'hubSetrika']);
+    Route::get('/component/admin/setrika', [TransaksiController::class, 'adminSetrika']);
+    Route::get('/component/worker/setrika', [TransaksiController::class, 'workerSetrika']);
     //ganti status pencuci & penyetrika
     Route::get('/transaksi/{transaksi}/pencuci', [TransaksiController::class, 'changeStatusCuci']);
     Route::get('/transaksi/{transaksi}/pencuci/done', [TransaksiController::class, 'doneCuci']);

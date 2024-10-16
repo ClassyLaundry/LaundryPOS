@@ -11,7 +11,7 @@ $(document).ready(function() {
             $(element).hide();
             $(element).find('.list-container').empty();
         });
-        $('.tab-pane').eq(tabIndex).find('.list-container').load(window.location.origin + '/component/worker/cuci?key=' + encodeURIComponent(key) + '&type=' + tabIndex);
+        $('.tab-pane').eq(tabIndex).find('.list-container').load(window.location.origin + '/component/worker/setrika?key=' + encodeURIComponent(key) + '&type=' + tabIndex);
         $('.tab-pane').eq(tabIndex).show();
     }
 
@@ -47,13 +47,15 @@ $(document).ready(function() {
         btnId = $(this).attr('id').substring(6);
     });
 
+    var kodeTrans = "";
     $('#action-detail').on('click', function() {
         $('#table-short-trans').load(window.location.origin + '/component/shortTrans/' + btnId + '/process');
         $.ajax({
             url: "/transaksi/detail/" + btnId,
         }).done(function(response) {
             $('#nama-parfum').text(response.parfum.nama);
-            $('#modal-detail .modal-title').text("Detail " + response.kode);
+            kodeTrans = response.kode;
+            $('#modal-detail .modal-title').text("Detail " + kodeTrans);
             $('#modal-detail').modal('show');
         });
     });
@@ -61,7 +63,7 @@ $(document).ready(function() {
     $('#action-takein').on('click', function() {
         $('#trans-' + btnId).addClass('disabled');
         $.ajax({
-            url: "/transaksi/" + btnId + "/pencuci",
+            url: "/transaksi/" + btnId + "/penyetrika",
         }).done(function() {
             search();
         });
@@ -70,16 +72,16 @@ $(document).ready(function() {
     $('#action-cancel').on('click', function() {
         $('#trans-' + btnId).addClass('disabled');
         $.ajax({
-            url: "/transaksi/" + btnId + "/pencuci/delete",
+            url: "/transaksi/" + btnId + "/penyetrika/delete",
         }).done(function() {
             search();
         });
     });
 
     $('#action-finish').on('click', function() {
-        if(confirm("Nyatakan cuci selesai ?")) {
+        if(confirm("Nyatakan setrika selesai ?")) {
             $.ajax({
-                url: "/transaksi/" + btnId + "/pencuci/done",
+                url: "/transaksi/" + btnId + "/penyetrika/done",
             }).done(function() {
                 search();
             });
@@ -123,6 +125,10 @@ $(document).ready(function() {
             $('#modal-list-catatan-item').find('.modal-title').html('Catatan item ' + btnItemTransName);
             $('#modal-list-catatan-item').modal('show');
         });
+    });
+
+    $('#action-rewash').on('click', function() {
+        window.location = window.location.origin + '/proses/rewash' + '?trans_kode=' + kodeTrans + '&trans_item=' + btnItemTransId;
     });
 
     var btnItemNoteId = 0;

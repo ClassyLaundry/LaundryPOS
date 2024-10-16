@@ -254,8 +254,8 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonFilter" style="min-width: 6rem;">
                                 <li><h6 class="dropdown-header">Search By</h6></li>
-                                <li><a class="dropdown-item active filter-search" data-search='kode'>Kode</a></li>
-                                <li><a class="dropdown-item filter-search" data-search='pelanggan'>Pelanggan</a></li>
+                                <li><a class="dropdown-item filter-search" data-search='kode'>Kode</a></li>
+                                <li><a class="dropdown-item active filter-search" data-search='pelanggan'>Pelanggan</a></li>
                                 <li><a class="dropdown-item filter-search" data-search='tipe'>Tipe</a></li>
                                 <li><a class="dropdown-item filter-search" data-search='tanggal-buat'>Tanggal Transaksi</a></li>
                                 <li><a class="dropdown-item filter-search" data-search='tanggal-selesai'>Tanggal Selesai</a></li>

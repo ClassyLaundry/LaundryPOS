@@ -2,12 +2,12 @@ $(document).ready(function() {
     var paginate = 5, page = 1, key = '', searchBy = 'pelanggan', searchData;
 
     function search() {
-        $('#table-cuci-admin').load(window.location.origin + '/component/admin/cuci?search=' + searchBy + '&key=' + encodeURIComponent(key) + '&paginate=' + paginate + '&page=' + page);
+        $('#table-setrika-admin').load(window.location.origin + '/component/admin/setrika?search=' + searchBy + '&key=' + encodeURIComponent(key) + '&paginate=' + paginate + '&page=' + page);
     }
 
     search();
 
-    $('#table-cuci-admin').on('click', '.page-link', function(e) {
+    $('#table-setrika-admin').on('click', '.page-link', function(e) {
         e.preventDefault();
         page = $(this).attr('href').split('page=')[1];
         search();
