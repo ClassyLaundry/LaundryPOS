@@ -125,7 +125,7 @@ $(document).ready(function() {
         } else {
             alert(event.type);
         }
-
+        let closestCardHeight = $(this).closest('.card').offset().top;
         let lebarList = 150;
         let lebarBtn = $(this).css('width');
         let lebarTambahan = 2;
@@ -140,12 +140,11 @@ $(document).ready(function() {
         let tinggiTambahan = 0;
         tinggiBtn = parseInt(tinggiBtn.substr(0, tinggiBtn.indexOf('px')));
         if($(this).closest('.list-container').length == 1) {
-            tinggiTambahan += 16;
-            if ($(this).closest('.list-container').parent().siblings('.staging.done').css('display') == 'block') {
-                tinggiTambahan += 73;
-            }
+            closestCardHeight = $(this).closest('.beacon').offset().top;
         }
-        $('#list-action').css('top', $(this).offset().top - $(this).closest('.card').offset().top + tinggiBtn + tinggiHeader + tinggiTambahan);
+        $('#list-action').css('top', $(this).offset().top - closestCardHeight + tinggiBtn + tinggiHeader + tinggiTambahan);
+        console.log("TOP: " + $(this).offset().top);
+        console.log("CARD TOP: " + closestCardHeight);
 
         $('#list-action').show();
         btnIndex = $(this).index('.btn-show-action') + 1;

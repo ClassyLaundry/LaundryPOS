@@ -16,7 +16,7 @@
     </ul>
 
     <div class="tab-content">
-        <div class="card">
+        <div class="card beacon">
             <div class="card-body pb-0">
                 <div class="staging done">
                     <div class="d-flex align-items-center form-control">
