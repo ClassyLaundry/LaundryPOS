@@ -267,8 +267,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/proses/packing', [PageController::class, 'packing']);
     Route::post('/proses/packing', [PackingController::class, 'create']);
     Route::get('/component/packing', [PackingController::class, 'tablePacking']);
-    Route::get('/component/packing/{id}/bucket', [PackingController::class, 'tablePackingBucket']);
-    Route::get('/component/packing/{id}/premium', [PackingController::class, 'tablePackingPremium']);
+    Route::get('/component/packing/{id}', [PackingController::class, 'tablePackingDetail']);
 
     //Laporan
     Route::get('/laporan/piutang', [LaporanController::class, 'laporanPiutangPelanggan']);

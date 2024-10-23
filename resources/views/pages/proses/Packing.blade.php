@@ -116,35 +116,17 @@
             </div>
         </div>
 
-        <div class="modal fade" role="dialog" tabindex="-1" id="modal-packing-bucket">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Kemas</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form id="form-packing-bucket">
-                        <div class="modal-body">
-                            <div id="table-container-bucket"></div>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-primary" id="simpan-packing" type="submit">Simpan & Antar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
 
-        <div class="modal fade" role="dialog" tabindex="-1" id="modal-packing-premium">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal fade" role="dialog" tabindex="-1" id="modal-packing">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Kemas</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form id="form-packing-premium">
+                    <form id="form-packing">
                         <div class="modal-body">
-                            <div id="table-container-premium"></div>
+                            <div id="table-container"></div>
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-primary" id="simpan-packing" type="submit">Simpan & Antar</button>

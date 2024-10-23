@@ -189,8 +189,8 @@ $(document).ready(function() {
     });
 
     $('#action-kemas').on('click', function() {
-        $('#table-container-' + tipeTrans).load(window.location.origin + '/component/packing/' + btnId + '/' + tipeTrans, function() {
-            $('#modal-packing-' + tipeTrans).modal('show');
+        $('#table-container').load(window.location.origin + '/component/packing/' + btnId, function() {
+            $('#modal-packing').modal('show');
         });
     });
 
@@ -217,38 +217,7 @@ $(document).ready(function() {
         });
     });
 
-    $('#form-packing-bucket').on('submit', function(e) {
-        e.preventDefault();
-
-        let inventories = [];
-        inventories.push({
-            inventory_id: $('#table-container-bucket #input-inventory').val(),
-            qty: $('#table-container-bucket #input-inventory-qty').val(),
-        });
-
-        let formData = new FormData();
-        formData.append('transaksi_id', btnId);
-        formData.append('inventories', JSON.stringify(inventories));
-
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            },
-            url: "/proses/packing",
-            method: "POST",
-            contentType: false,
-            processData: false,
-            data: formData,
-        }).done(function() {
-            alert('Data packing berhasil disimpan');
-            window.location = window.location.origin + window.location.pathname;
-        }).fail(function(message) {
-            alert('error');
-            console.log(message);
-        });
-    });
-
-    $('#form-packing-premium').on('submit', function(e) {
+    $('#form-packing').on('submit', function(e) {
         e.preventDefault();
 
         let inventories = [];

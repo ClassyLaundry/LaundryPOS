@@ -102,17 +102,9 @@ class PackingController extends Controller
         ]);
     }
 
-    public function tablePackingBucket($id)
+    public function tablePackingDetail($id)
     {
-        return view('components.tablePackingBucket', [
-            'transaksi' => Transaksi::detail()->find($id),
-            'inventories' => Inventory::where('kategori', 'packing')->get(),
-        ]);
-    }
-
-    public function tablePackingPremium($id)
-    {
-        return view('components.tablePackingPremium', [
+        return view('components.tablePackingDetail', [
             'transaksi' => Transaksi::detail()->find($id),
             'inventories' => Inventory::where('kategori', 'packing')->get(),
         ]);
