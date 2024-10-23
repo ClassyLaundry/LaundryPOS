@@ -115,16 +115,8 @@ $(document).ready(function() {
         flag = true;
     });
 
-    $('#data-pelanggan #table-pelanggan, #data-item #table-item, .section-detail-transaksi #table-trans-item tbody, #table-container, #list-karyawan, #container-list-trans, #table-pickup, #table-delivery, .list-container').on('click', '.btn-show-action', function(event) {
+    $('#data-pelanggan #table-pelanggan, #data-item #table-item, .section-detail-transaksi #table-trans-item tbody, #table-container, #list-karyawan, #container-list-trans, #table-pickup, #table-delivery, .list-container').on('click', '.btn-show-action', function() {
 
-        if (event.type === 'touchstart') {
-            console.log('Triggered by touch event');
-            alert('Triggered by touch event');
-        } else if (event.type === 'click') {
-            console.log('Triggered by click event');
-        } else {
-            alert(event.type);
-        }
         let closestCardHeight = $(this).closest('.card').offset().top;
         let lebarList = 150;
         let lebarBtn = $(this).css('width');
@@ -143,8 +135,6 @@ $(document).ready(function() {
             closestCardHeight = $(this).closest('.beacon').offset().top;
         }
         $('#list-action').css('top', $(this).offset().top - closestCardHeight + tinggiBtn + tinggiHeader + tinggiTambahan);
-        console.log("TOP: " + $(this).offset().top);
-        console.log("CARD TOP: " + closestCardHeight);
 
         $('#list-action').show();
         btnIndex = $(this).index('.btn-show-action') + 1;
