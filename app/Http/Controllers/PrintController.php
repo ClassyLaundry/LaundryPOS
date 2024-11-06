@@ -97,8 +97,14 @@ class PrintController extends Controller
         ];
         $total_qty = 0;
         $total_bobot = 0;
+        $total_length = 0;
         foreach ($transaksi->item_transaksi as $item) {
-            $total_qty += $item->qty;
+            $jenisitem = JenisItem::find($item->jenis_item_id);
+            if ($jenisitem->unit == "PCS") {
+                $total_qty += $item->qty;
+            } else if ($jenisitem->unit == "MTR") {
+                $total_length += $item->qty;
+            }
             $total_bobot += $item->total_bobot;
         }
         $status_delivery = PickupDelivery::where("transaksi_id", $transaksi_id)->where('action', 'delivery')->get()->count() != 0 ? 'YA' : 'TIDAK';
@@ -114,6 +120,7 @@ class PrintController extends Controller
         $data->transaksi = $transaksi;
         $data->total_qty = $total_qty;
         $data->total_bobot = $total_bobot;
+        $data->total_length = $total_length;
         $data->status_delivery = $status_delivery;
         $data->pelanggan = $pelanggan;
         $data->packing = $packing;

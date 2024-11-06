@@ -166,16 +166,25 @@
             </tbody>
         </table>
         @endif
-        <hr>
-        <div class="w-75 d-flex justify-content-between alingn-items-center">
-            <p>Jml PCS: {{ $data->total_qty }}</p>
-            <p>Jml BOBOT: {{ $data->total_bobot }}</p>
-            <p>Jml M<sup>2</sup>: 0</p>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-4 d-flex">
+            <p class="w-30">JML PCS</p>
+            <p class="w-70">: {{ $data->total_qty }}</p>
         </div>
-        <div class="d-flex">
-            <p>CATATAN:</p>
-            <p>@isset($data->catatan) {{ $data->catatan }} || @endisset {{ $data->transaksi->catatan }}</p>
+        <div class="col-4 d-flex">
+            <p style="width: 35%;">JML BOBOT</p>
+            <p style="width: 65%;">: {{ $data->total_bobot }}</p>
         </div>
+        <div class="col-4 d-flex">
+            <p class="w-25">JML M<sup>2</sup></p>
+            <p class="w-75">: {{ $data->total_length }} M</p>
+        </div>
+    </div>
+    <div class="d-flex">
+        <p class="d-flex justify-content-between" style="min-width: 89px; max-width: 89px;"><span>CATATAN</span><span>:</span></p>
+        <p>&nbsp;@isset($data->catatan) {{ $data->catatan }} || @endisset {{ $data->transaksi->catatan }}</p>
     </div>
     <hr>
     <div id="data-tim-produksi">
