@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Hash;
 class TransaksiController extends Controller
 {
 
-    public function show($id)
+    public function show($id, Request $request)
     {
         $user = User::find(auth()->id());
         $permissions = $user->getPermissionsViaRoles();
@@ -33,8 +33,12 @@ class TransaksiController extends Controller
             return $item->name === 'Melihat Detail Transaksi';
         });
         if ($permissionExist) {
-            $outlet_id = User::getOutletId(Auth::id());
-            return Transaksi::detail()->where('outlet_id', $outlet_id)->find($id);
+            if (isset($request->outlet) && $request->outlet == "0") {
+                return Transaksi::detail()->find($id);
+            } else {
+                $outlet_id = User::getOutletId(Auth::id());
+                return Transaksi::detail()->where('outlet_id', $outlet_id)->find($id);
+            }
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
         }

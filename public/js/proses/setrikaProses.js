@@ -51,7 +51,7 @@ $(document).ready(function() {
     $('#action-detail').on('click', function() {
         $('#table-short-trans').load(window.location.origin + '/component/shortTrans/' + btnId + '/process');
         $.ajax({
-            url: "/transaksi/detail/" + btnId,
+            url: "/transaksi/detail/" + btnId + "?outlet=0",
         }).done(function(response) {
             $('#nama-parfum').text(response.parfum.nama);
             kodeTrans = response.kode;
