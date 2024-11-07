@@ -52,7 +52,7 @@ $(document).ready(function() {
         $.ajax({
             url: "/transaksi/detail/" + btnId + "?outlet=0",
         }).done(function(response) {
-            console.log(response);
+            // console.log(response);
             $('#nama-parfum').text(response.parfum.nama);
             $('#modal-detail .modal-title').text("Detail " + response.kode);
             $('#modal-detail').modal('show');

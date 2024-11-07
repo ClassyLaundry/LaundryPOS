@@ -76,11 +76,7 @@ $(document).ready(function() {
     // untuk menghapus data kategori
     $('#action-delete').on('click', function() {
         if (confirm('Yakin menghapus data ?')) {
-            $.ajax({
-                url: "/data/pelanggan/delete/" + btnId,
-            }).done(function() {
-                window.location = window.location.origin + window.location.pathname;
-            });
+            window.location = window.location.origin + "/data/pelanggan/delete/" + btnId;
         }
     });
 
