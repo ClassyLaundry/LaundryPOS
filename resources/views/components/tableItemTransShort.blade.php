@@ -67,7 +67,7 @@
                 <tr id="trans-{{ $trans->id }}">
                     <td style="width: 62.5%;">{{ $trans->item_transaksi[$i]->nama }}</td>
                     <td style="width: 20%;" class="text-center">{{ $trans->item_transaksi[$i]->nama_kategori }}</td>
-                    <td style="width: 7.5%;" class="text-center">{{ $item_transaksi->qty }}</td>
+                    <td style="width: 7.5%;" class="text-center">{{ $trans->item_transaksi[$i]->qty }}</td>
                     <td class="cell-action">
                         <div class="d-flex h-100 align-items-center justify-content-end">
                             @if(isset($rewashes))
