@@ -224,7 +224,7 @@ $(document).ready(function() {
         for (let i = 0; i < $('.input-inventory').length; i++) {
             inventories.push({
                 inventory_id: $('.input-inventory').eq(i).val(),
-                qty: 1,
+                qty: $('.input-qty').eq(i).val(),
             });
         }
 

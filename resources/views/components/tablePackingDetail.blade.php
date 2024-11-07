@@ -2,9 +2,10 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Nama Item</th>
-                <th>Note</th>
-                <th>Tipe Kemas</th>
+                <th class="col-6">Nama Item</th>
+                <th class="col-3">Note</th>
+                <th class="col-2">Tipe Kemas</th>
+                <th class="col-1">Qty</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,9 @@
                                 @endforeach
                             </select>
                         </td>
+                        <td class="py-1">
+                            <input type="number" class="input-qty form-control form-select-sm pe-1 ps-3 text-center" min="1" step="1" value="1">
+                        </td>
                     </tr>
                     @endfor
                 @else
@@ -43,6 +47,9 @@
                                 <option value="{{ $inventory->id }}">{{ $inventory->nama }}</option>
                             @endforeach
                         </select>
+                    </td>
+                    <td class="py-1">
+                        <input type="number" class="input-qty form-control form-select-sm pe-1 ps-3 text-center" min="1" step="1" value="1">
                     </td>
                 </tr>
                 @endif

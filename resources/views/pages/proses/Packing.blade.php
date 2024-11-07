@@ -118,7 +118,7 @@
 
 
         <div class="modal fade" role="dialog" tabindex="-1" id="modal-packing">
-            <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down" role="document">
+            <div class="modal-dialog modal-xl modal-dialog-centered modal-fullscreen-sm-down" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Kemas</h4>
