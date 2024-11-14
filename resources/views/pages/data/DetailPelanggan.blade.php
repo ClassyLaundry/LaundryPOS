@@ -87,11 +87,11 @@
                         @endif
                         <div class="col-12 mb-2">
                             <h5>Catatan Pelanggan</h5>
-                            <textarea class="form-control" id="input-catatan-khusus" name="catatan_khusus" disabled>@isset($catatan->catatan_khusus) {{ $catatan->catatan_khusus }} @endisset</textarea>
+                            <textarea class="form-control" id="input-catatan-khusus" name="special_note" disabled>@isset($pelanggan->special_note) {{ $pelanggan->special_note }} @endisset</textarea>
                         </div>
                         <div class="col-12 mb-2">
                             <h5>Catatan Internal</h5>
-                            <textarea class="form-control" id="input-catatan-internal" name="secret_note" disabled>@isset($pelanggan->secret_note) {{ $pelanggan->secret_note }} @endisset</textarea>
+                            <textarea class="form-control" id="input-catatan-internal" name="internal_note" disabled>@isset($pelanggan->internal_note) {{ $pelanggan->internal_note }} @endisset</textarea>
                         </div>
                         {{-- <div class="col-12 col-lg-4 mb-2">
                             <h5>Status</h5>

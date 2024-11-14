@@ -33,7 +33,7 @@ $(document).ready(function() {
             if (trans.setrika_only) {
                 $('#formCheck-setrika').val(1);
             }
-            $('#input-catatan-trans').val(trans.catatan);
+            $('#input-catatan-trans').val(trans.catatan_transaksi);
             $('#tanggal-selesai-proses').val(trans.done_date);
 
             let pelanggan = trans.pelanggan;

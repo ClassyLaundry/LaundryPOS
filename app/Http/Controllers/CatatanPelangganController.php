@@ -6,6 +6,7 @@ use App\Models\Data\CatatanPelanggan;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+// ABANDONED
 class CatatanPelangganController extends Controller
 {
     public function insert(Request $request)

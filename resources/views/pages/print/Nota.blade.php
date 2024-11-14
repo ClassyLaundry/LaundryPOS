@@ -203,7 +203,7 @@
         </div>
         <div class="d-flex">
             <p class="d-flex justify-content-between" style="min-width: 89px; max-width: 89px;"><span>CATATAN</span><span>:</span></p>
-            <p>&nbsp;@isset($data->catatan) {{ $data->catatan }} || @endisset {{ $data->transaksi->catatan }}</p>
+            <p>&nbsp;@isset($data->pelanggan->special_note) {{ $data->pelanggan->special_note }} || @endisset {{ $data->transaksi->catatan_transaksi }}</p>
         </div>
         <hr>
         <div class="row">

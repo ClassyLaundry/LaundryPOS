@@ -181,7 +181,7 @@ class Transaksi extends Model
     //Function untuk melakukan Query detail Transaksi beserta table lain yang memiliki Relation
     public function scopeDetail($query)
     {
-        return $query->with('item_transaksi', 'pickup_delivery', 'outlet', 'parfum', 'pelanggan', 'penerima', 'pelanggan.catatan_pelanggan', 'penerima', 'item_transaksi.rewash', 'packing');
+        return $query->with('item_transaksi', 'pickup_delivery', 'outlet', 'parfum', 'pelanggan', 'penerima', 'penerima', 'item_transaksi.rewash', 'packing');
     }
 
     public function item_transaksi()

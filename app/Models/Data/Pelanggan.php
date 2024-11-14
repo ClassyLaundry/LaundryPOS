@@ -4,7 +4,6 @@ namespace App\Models\Data;
 
 use App\Models\Saldo;
 use App\Models\Transaksi\Transaksi;
-use App\Models\User;
 use App\Observers\UserActionObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +20,7 @@ class Pelanggan extends Model
         'saldo_akhir',
         'tagihan',
     ];
+    protected $fillable = ['special_note', 'internal_note'];
     protected $dates = ['created_at'];
 
     public static function boot()
@@ -75,11 +75,6 @@ class Pelanggan extends Model
     public function getPiutangAttribute()
     {
         return $this->transaksi()->where('lunas', false)->sum(DB::raw('grand_total - total_terbayar'));
-    }
-
-    public function catatan_pelanggan()
-    {
-        return $this->hasOne(CatatanPelanggan::class);
     }
 
     public function saldo()

@@ -42,7 +42,7 @@ class PrintController extends Controller
     public function nota($transaksi_id)
     {
         $transaksi = Transaksi::detail()->with('item_transaksi.item_notes')->find($transaksi_id);
-        $pelanggan = Pelanggan::with('catatan_pelanggan')->find($transaksi->pelanggan_id);
+        $pelanggan = Pelanggan::find($transaksi->pelanggan_id);
         $header = [
             'nama_usaha' => SettingUmum::where('nama', 'Print Header Nama Usaha')->first()->value,
             'delivery_text' => SettingUmum::where('nama', 'Print Header Delivery Text')->first()->value
@@ -60,7 +60,6 @@ class PrintController extends Controller
             $total_bobot += $item->total_bobot;
         }
         $status_delivery = PickupDelivery::where("transaksi_id", $transaksi_id)->where('action', 'delivery')->get()->count() != 0 ? 'YA' : 'TIDAK';
-        $catatan = CatatanPelanggan::where('pelanggan_id', $transaksi->pelanggan_id)->first();
 
         $data = collect();
         $data->header = $header;
@@ -70,9 +69,6 @@ class PrintController extends Controller
         $data->total_length = $total_length;
         $data->status_delivery = $status_delivery;
         $data->pelanggan = $pelanggan;
-        if ($catatan != null) {
-            $data->catatan = $catatan->catatan_khusus;
-        }
 
         return view('pages.print.Nota', [
             'data' => $data
@@ -90,7 +86,7 @@ class PrintController extends Controller
     public function memoProduksi($transaksi_id)
     {
         $transaksi = Transaksi::detail()->find($transaksi_id);
-        $pelanggan = Pelanggan::with('catatan_pelanggan')->find($transaksi->pelanggan_id);
+        $pelanggan = Pelanggan::find($transaksi->pelanggan_id);
         $header = [
             'nama_usaha' => SettingUmum::where('nama', 'Print Header Nama Usaha')->first()->value,
             'delivery_text' => SettingUmum::where('nama', 'Print Header Delivery Text')->first()->value
