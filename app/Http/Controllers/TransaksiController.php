@@ -391,6 +391,28 @@ class TransaksiController extends Controller
         }
     }
 
+    public function setOnTime(Request $request, $id)
+    {
+        $user = User::find(auth()->id());
+        $permissions = $user->getPermissionsViaRoles();
+        $permissionExist = collect($permissions)->first(function ($item) {
+            return $item->name === 'Mengubah Data Transaksi';
+        });
+        if ($permissionExist) {
+            $transaksi = Transaksi::find($id);
+            $transaksi->on_time = $request->on_time;
+            $transaksi->save();
+            $transaksi->recalculate();
+            LogTransaksi::create([
+                'transaksi_id' => $id,
+                'penanggung_jawab' => Auth::id(),
+                'process' => strtoupper('update transaksi, tipe on time'),
+            ]);
+        } else {
+            abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
+        }
+    }
+
     public function setSetrikaOnly(Request $request, $id)
     {
         $user = User::find(auth()->id());

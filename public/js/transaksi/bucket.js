@@ -473,7 +473,7 @@ $(document).ready(function() {
         $(this).toggleClass('selected');
     });
 
-    $('#formCheck-express, #formCheck-setrika').on('change', function() {
+    $('#formCheck-express, #formCheck-ontime, #formCheck-setrika').on('change', function() {
         if($(this).is(':checked')) {
             $(this).val(1);
         } else {
@@ -688,6 +688,28 @@ $(document).ready(function() {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             },
             url: "/transaksi/express/" + transId,
+            method: "POST",
+            contentType: false,
+            processData: false,
+            data: formData,
+        }).done(function() {
+            $('#table-container').load(window.location.origin + '/component/transBucket/' + transId, function() {
+                setThousandSeparator();
+            });
+        }).fail(function(message) {
+            console.log(message);
+        });
+    });
+
+    $('#formCheck-ontime').on('change', function() {
+        let formData = new FormData();
+        formData.append('on_time', $(this).val());
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            url: "/transaksi/on_time/" + transId,
             method: "POST",
             contentType: false,
             processData: false,
