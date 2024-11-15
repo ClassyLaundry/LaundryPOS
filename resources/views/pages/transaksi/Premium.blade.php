@@ -506,7 +506,7 @@
                                                 </h5>
                                             </header>
                                             <div id="info-penerimaan" class="mt-2" style="display: none;">
-                                                <form id="form-penerimaan">
+                                                <form id="form-penerimaan" enctype="multipart/form-data">
                                                     @if(in_array("Menambahkan Penerima Ke Transaksi", Session::get('permissions')) || Session::get('role') == 'administrator')
                                                         <div class="mb-5">
                                                     @else
@@ -524,11 +524,12 @@
                                                         <h6 class="mt-2">Foto Penerima</h6>
                                                         <input type="file" class="form-control" id="input-foto-penerima" name="image" accept="image/*" required>
                                                     </div>
-                                                    @if(in_array("Menambahkan Penerima Ke Transaksi", Session::get('permissions')) || Session::get('role') == 'administrator')
                                                     <div class="position-absolute" style="right: 1rem; bottom: 1rem;">
-                                                        <button class="btn btn-primary full-when-small" id="simpan-info-penerimaan" type="submit">Simpan Penerimaan</button>
+                                                        @if(in_array("Menambahkan Penerima Ke Transaksi", Session::get('permissions')) || Session::get('role') == 'administrator')
+                                                            <button class="btn btn-primary full-when-small" id="simpan-info-penerimaan" type="submit">Simpan Penerimaan</button>
+                                                        @endif
+                                                        <button type="button" id="btn-show-foto_penerima" class="btn btn-primary" style="display: none;" data-url="">Tampilkan Foto</button>
                                                     </div>
-                                                    @endif
                                                 </form>
                                             </div>
                                         </section>

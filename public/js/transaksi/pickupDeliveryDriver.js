@@ -43,19 +43,53 @@ $(document).ready(function() {
     });
 
     $('#action-change-status').on('click', function() {
-        if (confirm('Nyatakan ' + currentlySelectedType + ' selesai ?') == true) {
-            $.ajax({
-                url: "/transaksi/pickup-delivery/" + orderId + "/is-done",
-            }).done(function(data) {
-                window.location = window.location.origin + window.location.pathname;
-            });
+        if (currentlySelectedType == "pickup") {
+            if (confirm('Nyatakan ' + currentlySelectedType + ' selesai ?') == true) {
+                $.ajax({
+                    url: "/transaksi/pickup-delivery/" + orderId + "/is-done",
+                }).done(function(data) {
+                    window.location = window.location.origin + window.location.pathname;
+                });
+            }
+        } else if(currentlySelectedType == "delivery") {
+            $('.kode-transaksi').text($('h6').eq(btnIndex).text());
+            $('#modal-konfirmasi-pengiriman').modal('show');
         }
     });
 
-    $(".hub-karyawan").sortable();
+    $('#form-penerimaan').on('submit', function(e) {
+        e.preventDefault();
+
+        let formData = new FormData();
+        formData.append('transaksi_id', btnId);
+        formData.append('ambil_di_outlet', 0);
+        formData.append('penerima', $('#input-nama-penerima').val());
+        formData.append('image', $('#input-foto-penerima').prop("files")[0]);
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            url: "/transaksi/penerima",
+            method: "POST",
+            contentType: false,
+            processData: false,
+            data: formData,
+        }).done(function() {
+            $.ajax({
+                url: "/transaksi/pickup-delivery/" + orderId + "/is-done",
+            }).done(function(data) {
+                alert("data berhasil disimpan");
+                window.location = window.location.origin + window.location.pathname;
+            });
+        }).fail(function(message) {
+            alert('error');
+            console.log(message);
+        });
+    });
 
     $('#action-detail').on('click', function() {
-        $('#kode-transaksi').text($('h6').eq(btnIndex).text());
+        $('.kode-transaksi').text($('h6').eq(btnIndex).text());
 
         $('#table-short-trans').load(window.location.origin + '/component/shortTrans/' + btnId + '/delivery', function() {
             $('#table-short-trans').find('.cell-action').detach();

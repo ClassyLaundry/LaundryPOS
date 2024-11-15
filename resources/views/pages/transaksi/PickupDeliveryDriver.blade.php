@@ -196,7 +196,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Detail Transaksi <span id="kode-transaksi"></span></h4>
+                <h4 class="modal-title">Detail Transaksi <span class="kode-transaksi"></span></h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -209,6 +209,29 @@
                 <div class="invisible">
                     Total tagihan: <span id="tagihan-transaksi" class="thousand-separator"></span>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div role="dialog" tabindex="-1" class="modal fade" id="modal-konfirmasi-pengiriman">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Konfirmasi pengiriman <span class="kode-transaksi"></span></h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form-penerimaan" enctype="multipart/form-data">
+                    @csrf
+                    <h6 class="mt-2">Nama Penerima</h6>
+                    <input type="text" class="form-control" id="input-nama-penerima" name="penerima" required>
+                    <h6 class="mt-2">Foto Penerima</h6>
+                    <input type="file" class="form-control" id="input-foto-penerima" name="foto_penerima" accept="image/*" required>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="simpan-info-pengiriman" form="form-penerimaan" type="submit">Simpan Bukti Pengiriman</button>
             </div>
         </div>
     </div>

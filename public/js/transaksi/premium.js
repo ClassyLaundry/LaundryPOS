@@ -97,9 +97,12 @@ $(document).ready(function() {
 
             if (penerima) {
                 $('#select-outlet-ambil').parent().addClass('disabled');
-                $('#select-outlet-ambil').val(penerima.outlet_id);
+                $('#select-outlet-ambil').val(penerima.outlet_id ? penerima.outlet_id : 0);
                 $('#input-nama-penerima').val(penerima.penerima);
                 $('#input-foto-penerima').hide().prev().hide();
+                $('#btn-show-foto_penerima').show();
+                $('#btn-show-foto_penerima').show();
+                $('#btn-show-foto_penerima').data('url', penerima.foto_penerima);
 
                 $('#simpan-info-penerimaan').hide();
             } else {
@@ -107,6 +110,8 @@ $(document).ready(function() {
                 $('#select-outlet-ambil').val('');
                 $('#input-nama-penerima').val('');
                 $('#input-foto-penerima').show().prev().show();
+                $('#btn-show-foto_penerima').hide();
+                $('#btn-show-foto_penerima').data('url', '');
 
                 $('#simpan-info-penerimaan').show();
             }
@@ -287,11 +292,17 @@ $(document).ready(function() {
         }).done(function() {
             $('#simpan-info-penerimaan').removeClass('disabled');
             $('#simpan-info-penerimaan').hide();
+            alert("data berhasil disimpan");
         }).fail(function(message) {
             alert('error');
             console.log(message);
         });
     });
+
+    $('#btn-show-foto_penerima').on('click', function() {
+        window.open($(this).data('url'), '_blank');
+    });
+
     $('.show-data').on('click', function() {
         let dataType = $(this).attr('id').substring($(this).attr('id').indexOf('data-') + 5);
         if (!$(this).hasClass('show')) {

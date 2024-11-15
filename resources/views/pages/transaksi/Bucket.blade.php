@@ -507,7 +507,7 @@
                                             </h5>
                                         </header>
                                         <div id="info-penerimaan" class="mt-2" style="display: none;">
-                                            <form id="form-penerimaan">
+                                            <form id="form-penerimaan" enctype="multipart/form-data">
                                                 @if(in_array("Menambahkan Penerima Ke Transaksi", Session::get('permissions')) || Session::get('role') == 'administrator')
                                                     <div class="mb-5">
                                                 @else

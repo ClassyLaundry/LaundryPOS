@@ -93,7 +93,7 @@ $(document).ready(function() {
 
             if (penerima) {
                 $('#select-outlet-ambil').parent().addClass('disabled');
-                $('#select-outlet-ambil').val(penerima.outlet_id);
+                $('#select-outlet-ambil').val(penerima.outlet_id ? penerima.outlet_id : 0);
                 $('#input-nama-penerima').val(penerima.penerima);
                 $('#input-foto-penerima').hide().prev().hide();
                 $('#btn-show-foto_penerima').show();
@@ -285,6 +285,7 @@ $(document).ready(function() {
         }).done(function() {
             $('#simpan-info-penerimaan').removeClass('disabled');
             $('#simpan-info-penerimaan').hide();
+            alert("data berhasil disimpan");
         }).fail(function(message) {
             alert('error');
             console.log(message);

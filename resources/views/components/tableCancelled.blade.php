@@ -9,7 +9,7 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody style="cursor: pointer">
+        <tbody>
             @foreach ($transaksis as $trans)
             <tr id={{ $trans->id }}>
                 <td class="text-center">{{ $trans->kode }}</td>
@@ -18,7 +18,7 @@
                 <td>Rp</td>
                 <td class="text-end thousand-separator">{{ $trans->grand_total }}</td>
                 <td class='text-end p-1' style='width: 46.25px;'>
-                    <button id='btn-{{ $trans->id }}' class='btn btn-primary btn-sm btn-show-action' type='button'>
+                    <button id='btn-{{ $trans->id }}' class='btn btn-primary btn-sm btn-show-action' type='button' style="cursor: pointer">
                         <i class='fas fa-bars' aria-hidden='true'></i>
                     </button>
                 </td>
