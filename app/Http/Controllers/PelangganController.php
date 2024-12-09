@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PelangganController extends Controller
 {
-    public function insert(InsertPelangganRequest $request)
+    public function insert(Request $request)
     {
         $user = User::find(auth()->id());
         $permissions = $user->getPermissionsViaRoles();
@@ -19,8 +19,10 @@ class PelangganController extends Controller
             return $item->name === 'Membuat Pelanggan';
         });
         if ($permissionExist) {
-            $merged = $request->merge(['modified_by' => Auth::id()])->toArray();
-            Pelanggan::create($merged);
+            $data = $request->all();
+            $data['modified_by'] = auth()->check() ? auth()->id() : null;
+
+            Pelanggan::create($data);
 
             return redirect()->intended(route('menu-pelanggan'));
         } else {

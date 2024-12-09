@@ -34,6 +34,7 @@ class InsertPelangganRequest extends FormRequest
             'telephone' => 'nullable|string|unique:pelanggans,telephone',
             'email' => 'nullable|string',
             'secret_note' => 'nullable|string',
+            'modified_by' => 'nullable|integer',
         ];
     }
 }

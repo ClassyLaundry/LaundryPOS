@@ -36,7 +36,6 @@ class DiskonTransaksiController extends Controller
                 if (!$dt) {
                     $transaksi = Transaksi::find($request->transaksi_id);
                     $canApply = DiskonHistory::canApplyDiscount($transaksi->id, $diskon->id, $transaksi->pelanggan_id);
-                    // dd($canApply);
                     if ($canApply) {
                         // Insert the discount into the discount_history table
                         DiskonTransaksi::create([

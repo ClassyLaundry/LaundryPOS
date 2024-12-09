@@ -20,7 +20,7 @@ class Pelanggan extends Model
         'saldo_akhir',
         'tagihan',
     ];
-    protected $fillable = ['special_note', 'internal_note', 'nama', 'tanggal_lahir', 'alamat', 'gender', 'member', 'no_id', 'jenis_id', 'telephone', 'email', 'status'];
+    protected $fillable = ['special_note', 'internal_note', 'nama', 'tanggal_lahir', 'alamat', 'gender', 'member', 'no_id', 'jenis_id', 'telephone', 'email', 'status', 'modified_by'];
     protected $dates = ['created_at'];
 
     public static function boot()
