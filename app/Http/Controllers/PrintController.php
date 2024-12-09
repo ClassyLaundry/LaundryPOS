@@ -138,11 +138,12 @@ class PrintController extends Controller
     {
         $transaksi = Transaksi::detail()->find($transaksi_id);
         $cetak = $request->cetak;
-        if ($cetak < 2) {
-            $cetak = 2;
-        }
 
-        $paper_size = [0, 0, 120, 61 * $cetak - intval(($cetak - 1))];
+        if ($cetak == 1) {
+            $paper_size = [0, 0, 120, 61 * 2 - intval((2 - 1))];
+        } else {
+            $paper_size = [0, 0, 120, 61 * $cetak - intval(($cetak - 1))];
+        }
         $pdf = Pdf::loadView('pages.print.Kitir', [
             'data' => $transaksi,
             'cetak' => $cetak,

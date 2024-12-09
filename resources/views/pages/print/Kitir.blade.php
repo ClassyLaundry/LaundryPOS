@@ -11,9 +11,13 @@
     </style>
 </head>
 <body>
-    @for($i = 0; $i < $cetak; $i++)
-        <p style="position: absolute; left: -15px; top: {{ $i * 80 - 50 }}px; width: 150%; font-size: 1.5rem; font-weight: bold;">{{ $data->kitir_code }}</p>
-    @endfor
+    @if ($cetak == 1)
+        <p style="position: absolute; left: -15px; top: {{ -50 }}px; width: 150%; font-size: 1.5rem; font-weight: bold;">{{ $data->kitir_code }}</p>
+    @else
+        @for($i = 0; $i < $cetak; $i++)
+            <p style="position: absolute; left: -15px; top: {{ $i * 80 - 50 }}px; width: 150%; font-size: 1.5rem; font-weight: bold;">{{ $data->kitir_code }}</p>
+        @endfor
+    @endif
 </body>
 
 </html>
