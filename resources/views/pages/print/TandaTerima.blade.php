@@ -87,8 +87,8 @@
 
         <p style="word-wrap: break-word; text-overflow: ellipsis; overflow: hidden; max-height: 41px;">
             Catatan:
-            @isset($data->transaksi->catatan)
-                <span>{{ Str::limit($data->transaksi->catatan, 90) }}</span>
+            @isset($data->transaksi->catatan_transaksi)
+                <span>{{ Str::limit($data->transaksi->catatan_transaksi, 90) }}</span>
             @endisset
         </p>
     </div>

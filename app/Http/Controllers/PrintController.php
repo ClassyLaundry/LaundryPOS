@@ -154,7 +154,7 @@ class PrintController extends Controller
     public function tandaTerima($transaksi_id)
     {
         $transaksi = Transaksi::detail()->with('item_transaksi.item_notes')->find($transaksi_id);
-        $pelanggan = Pelanggan::with('catatan_pelanggan')->find($transaksi->pelanggan_id);
+        $pelanggan = Pelanggan::find($transaksi->pelanggan_id);
         $header = [
             'nama_usaha' => SettingUmum::where('nama', 'Print Header Nama Usaha')->first()->value,
             'delivery_text' => SettingUmum::where('nama', 'Print Header Delivery Text')->first()->value
@@ -166,7 +166,6 @@ class PrintController extends Controller
             $total_bobot += $item->total_bobot;
         }
         $status_delivery = PickupDelivery::where("transaksi_id", $transaksi_id)->where('action', 'delivery')->get()->count() != 0 ? 'YA' : 'TIDAK';
-        $catatan = CatatanPelanggan::where('pelanggan_id', $transaksi->pelanggan_id)->first();
         $pickup = PickupDelivery::with('driver')->where("transaksi_id", $transaksi_id)->where('action', 'pickup')->first();
 
         $data = collect();
@@ -177,9 +176,6 @@ class PrintController extends Controller
         $data->status_delivery = $status_delivery;
         $data->pelanggan = $pelanggan;
         $data->pickup = $pickup;
-        if ($catatan != null) {
-            $data->catatan = $catatan->catatan_khusus;
-        }
 
         return view('pages.print.TandaTerima', [
             'data' => $data
@@ -191,7 +187,7 @@ class PrintController extends Controller
         $rewash = Rewash::with('jenis_rewash', 'item_transaksi.item_notes')->find($rewash_id);
         $jenis_item = JenisItem::find($rewash->item_transaksi->jenis_item_id);
         $transaksi = Transaksi::detail()->find($rewash->item_transaksi->transaksi_id);
-        $pelanggan = Pelanggan::with('catatan_pelanggan')->find($transaksi->pelanggan_id);
+        $pelanggan = Pelanggan::find($transaksi->pelanggan_id);
         $header = [
             'nama_usaha' => SettingUmum::where('nama', 'Print Header Nama Usaha')->first()->value,
             'delivery_text' => SettingUmum::where('nama', 'Print Header Delivery Text')->first()->value
@@ -199,7 +195,6 @@ class PrintController extends Controller
         $total_qty = $rewash->item_transaksi->qty;
         $total_bobot = $rewash->item_transaksi->total_bobot;
         $status_delivery = PickupDelivery::where("transaksi_id", $transaksi->id)->where('action', 'delivery')->get()->count() != 0 ? 'YA' : 'TIDAK';
-        $catatan = CatatanPelanggan::where('pelanggan_id', $transaksi->pelanggan_id)->first();
 
         $data = collect();
         $data->header = $header;
@@ -211,9 +206,6 @@ class PrintController extends Controller
         $data->total_bobot = $total_bobot;
         $data->status_delivery = $status_delivery;
         $data->pelanggan = $pelanggan;
-        if ($catatan != null) {
-            $data->catatan = $catatan->catatan_khusus;
-        }
 
         return view('pages.print.TandaTerimaRewash', [
             'data' => $data
