@@ -771,10 +771,10 @@ $(document).ready(function() {
                 $('#diskon-1 .kode-diskon').text(response.dataDiskon[0].diskon.code);
                 promoCount++;
                 if (response.dataDiskon[0].diskon.jenis_diskon == "exact") {
-                    $('#diskon-1 .info-diskon').text("Rp " + response.data[0].diskon.nominal.toLocaleString(['ban', 'id']));
+                    $('#diskon-1 .info-diskon').text("Rp " + response.dataDiskon[0].diskon.nominal.toLocaleString(['ban', 'id']));
                 } else if (response.dataDiskon[0].diskon.jenis_diskon == "percentage") {
                     if (response.dataDiskon[0].diskon.maximal_diskon != 0) {
-                        $('#diskon-1 .info-diskon').text(response.dataDiskon[0].diskon.nominal + " % - Max Rp " + response.data[0].diskon.maximal_diskon.toLocaleString(['ban', 'id']));
+                        $('#diskon-1 .info-diskon').text(response.dataDiskon[0].diskon.nominal + " % - Max Rp " + response.dataDiskon[0].diskon.maximal_diskon.toLocaleString(['ban', 'id']));
                     } else {
                         $('#diskon-1 .info-diskon').text(response.dataDiskon[0].diskon.nominal + " %");
                     }
@@ -791,7 +791,7 @@ $(document).ready(function() {
                         $('#diskon-2 .info-diskon').text("Rp " + response.dataDiskon[1].diskon.nominal.toLocaleString(['ban', 'id']));
                     } else if (response.dataDiskon[1].diskon.jenis_diskon == "percentage") {
                         if (response.dataDiskon[1].diskon.maximal_diskon != 0) {
-                            $('#diskon-2 .info-diskon').text(response.dataDiskon[1].diskon.nominal + " % - Max Rp " + response.data[1].diskon.maximal_diskon.toLocaleString(['ban', 'id']));
+                            $('#diskon-2 .info-diskon').text(response.dataDiskon[1].diskon.nominal + " % - Max Rp " + response.dataDiskon[1].diskon.maximal_diskon.toLocaleString(['ban', 'id']));
                         } else {
                             $('#diskon-2 .info-diskon').text(response.dataDiskon[1].diskon.nominal + " %");
                         }

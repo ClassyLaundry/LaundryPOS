@@ -25,6 +25,8 @@ class DiskonController extends Controller
                 'jenis_diskon' => $jenis_diskon,
                 'nominal' => $request->nominal,
                 'maximal_diskon' => ($request->jenis_diskon == 'percentage') ? $request->maximal_diskon : 0,
+                'is_stackable' => $request->is_stackable,
+                'max_usage_per_customer' => $request->max_usage_per_customer,
                 'refferal_pelanggan' => $request->referral,
                 'expired' => Date::createFromFormat('Y-m-d', $request->expired_date),
             ]);
@@ -49,6 +51,8 @@ class DiskonController extends Controller
                 'jenis_diskon' => $jenis_diskon,
                 'nominal' => $request->nominal,
                 'maximal_diskon' => ($request->jenis_diskon == 'percentage') ? $request->maximal_diskon : 0,
+                'is_stackable' => $request->is_stackable,
+                'max_usage_per_customer' => $request->max_usage_per_customer,
                 'refferal_pelanggan' => $request->referral,
                 'expired' => Date::createFromFormat('Y-m-d', $request->expired_date),
             ]);

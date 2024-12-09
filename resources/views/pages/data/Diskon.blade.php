@@ -20,6 +20,8 @@
                                 <th>Deskripsi</th>
                                 <th>Besar Diskon</th>
                                 <th>Diskon Maksimal</th>
+                                <th>Bertumpuk</th>
+                                <th class="text-wrap" style="max-width: 175px;">Maksimal Penggunaan per Pelanggan</th>
                                 <th>Pelanggan Referral</th>
                                 <th>Expired Date</th>
                                 <th>Status</th>
@@ -52,6 +54,12 @@
                                         <span class="thousand-separator">{{ $diskon->maximal_diskon }}</span>
                                     </div>
                                 </td>
+                                @if ($diskon->is_stackable)
+                                    <td class="text-center" data-stackable="1">Ya</td>
+                                @else
+                                    <td class="text-center" data-stackable="0">Tidak</td>
+                                @endif
+                                <td class="text-center">{{ $diskon->max_usage_per_customer }}</td>
                                 <td class="text-center">@isset($diskon->pelanggan) {{ $diskon->pelanggan->nama }} @else - @endisset</td>
                                 <td class="text-center">{{ $diskon->expired }}</td>
                                 @if ($diskon->deleted_at != null)
@@ -147,16 +155,31 @@
                                         <input class="w-100 ms-2 input-thousand-separator" type="text" id="input-max-nominal" name="maximal_diskon" required>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="d-flex align-items-center justify-content-between">
+                                <div class="col-4 mb-3">
+                                    <div class="d-flex align-items-center h-100">
+                                        <div class="form-check mt-3">
+                                            <input class="form-check-input me-2" type="checkbox" id="formCheck-is_stackable">
+                                            <h5 class="form-check-label" for="formCheck-is_stackable">Bisa Bertumpuk?</h5>
+                                            <input type="hidden" name="is_stackable" value="0">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <h6>Maksimal penggunaan diskon per pelanggan</h6>
+                                    <input class="w-100 form-control" type="number" id="input-max-penggunaan" name="max_usage_per_customer" min=1 value="1" required>
+                                </div>
+                                <div class="col-4 mb-3">
+                                    <div class="d-flex h-100 align-items-center">
                                         <div class="form-check">
                                             <input class="form-check-input me-2" type="checkbox" id="formCheck-referral" name="referral">
-                                            <h5 class="form-check-label" for="formCheck-referral">Referral</h5>
+                                            <h5 class="form-check-label" for="formCheck-referral">Ada Referral?</h5>
                                         </div>
-                                        <div class="d-flex flex-fill ms-4 disabled">
-                                            <input class="form-control me-2 disabled" type="text" id="input-pelanggan_referral" name="pelanggan_referral" placeholder="Nama pelanggan" disabled>
-                                            <button class="btn btn-outline-primary" id="pilih-pelanggan" type="button"><i class="fas fa-search"></i></button>
-                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <div class="d-flex disabled">
+                                        <input class="form-control me-2 disabled" type="text" id="input-pelanggan_referral" name="pelanggan_referral" placeholder="Nama pelanggan" disabled>
+                                        <button class="btn btn-outline-primary" id="pilih-pelanggan" type="button"><i class="fas fa-search"></i></button>
                                     </div>
                                 </div>
                             </div>

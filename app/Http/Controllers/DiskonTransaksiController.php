@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Data\Pelanggan;
 use App\Models\Diskon;
+use App\Models\DiskonHistory;
 use App\Models\DiskonTransaksi;
 use App\Models\LogTransaksi;
 use App\Models\Transaksi\Transaksi;
@@ -33,21 +34,38 @@ class DiskonTransaksiController extends Controller
                 $dt = DiskonTransaksi::where('transaksi_id', $request->transaksi_id)
                     ->where('diskon_id', $diskon->id)->first();
                 if (!$dt) {
-                    DiskonTransaksi::create([
-                        'transaksi_id' => $request->transaksi_id,
-                        'diskon_id' => $diskon->id
-                    ]);
                     $transaksi = Transaksi::find($request->transaksi_id);
-                    $transaksi->recalculate();
-                    LogTransaksi::create([
-                        'transaksi_id' => $request->transaksi_id,
-                        'penanggung_jawab' => Auth::id(),
-                        'process'=> strtoupper('add promo code '.$request->code)
-                    ]);
-                    return [
-                        'status' => 200,
-                        'message' => 'Success'
-                    ];
+                    $canApply = DiskonHistory::canApplyDiscount($transaksi->id, $diskon->id, $transaksi->pelanggan_id);
+                    // dd($canApply);
+                    if ($canApply) {
+                        // Insert the discount into the discount_history table
+                        DiskonTransaksi::create([
+                            'transaksi_id' => $request->transaksi_id,
+                            'diskon_id' => $diskon->id
+                        ]);
+                        $transaksi->recalculate();
+                        LogTransaksi::create([
+                            'transaksi_id' => $request->transaksi_id,
+                            'penanggung_jawab' => Auth::id(),
+                            'process' => strtoupper('add promo code '.$request->code)
+                        ]);
+                        DiskonHistory::create([
+                            'id_transaksi' => $transaksi->id,
+                            'id_diskon' => $diskon->id,
+                            'id_pelanggan' => $transaksi->pelanggan_id
+                        ]);
+                        return [
+                            'status' => 200,
+                            'message' => 'Success'
+                        ];
+                    } else {
+                        // Handle the case where the discount cannot be applied
+                        return [
+                            'status' => 400,
+                            'message' => 'Kode diskon melebihi limit atau diskon tidak boleh bertumpuk'
+                        ];
+                    }
+
                 } else {
                     return [
                         'status' => 400,
@@ -72,6 +90,8 @@ class DiskonTransaksiController extends Controller
     {
         $diskon_transaksi = DiskonTransaksi::find($id);
         $transaksi = Transaksi::find($diskon_transaksi->transaksi_id);
+        $diskon_history = DiskonHistory::where('id_transaksi', $transaksi->id)->first();
+        DiskonHistory::destroy($diskon_history->id);
         DiskonTransaksi::destroy($id);
         $transaksi->recalculate();
         LogTransaksi::create([

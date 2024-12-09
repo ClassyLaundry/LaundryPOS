@@ -27,6 +27,7 @@ use App\Http\Controllers\DiskonController;
 use App\Http\Controllers\DiskonTransaksiController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\CatatanPelangganController;
+use App\Http\Controllers\DiskonHistoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -153,6 +154,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/data/diskon', [DiskonController::class, 'insert']);
     Route::post('/data/diskon/{diskon}', [DiskonController::class, 'update']);
     Route::get('/data/diskon/delete/{id}', [DiskonController::class, 'delete']);
+
+    // Diskon History
+    Route::get('/diskon-history', [DiskonHistoryController::class, 'index']);
+    Route::post('/diskon-history', [DiskonHistoryController::class, 'store']);
 
     //Pickup & Delivery
     Route::get('/transaksi/pickup-delivery', [PageController::class, 'pickupDelivery'])->name('pickup-delivery');

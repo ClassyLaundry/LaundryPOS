@@ -31,7 +31,7 @@ $(document).ready(function() {
 
         $('#input-kode').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(1)').html());
         $('#input-deskripsi').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(2)').html());
-        $('#input-expired').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(5)').html());
+        $('#input-expired').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(8)').html());
         if ($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(3) .thousand-separator').next().text() == "%") {
             $('#tipe-percentage').trigger('click');
             $('#input-nominal-2').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(3) .thousand-separator').text());
@@ -40,6 +40,13 @@ $(document).ready(function() {
             $('#tipe-exact').trigger('click');
             $('#input-nominal-1').val($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(3) .thousand-separator').text());
         }
+        if ($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(5)').data("stackable")) {
+            $('#formCheck-is_stackable').prop("checked", true);
+        } else {
+            $('#formCheck-is_stackable').prop("checked", false);
+        }
+        $('#input-max-penggunaan').val(parseInt($('tbody tr:nth-child(' + btnIndex + ') td:nth-child(6)').html()));
+        $('#formCheck-is_stackable').val();
 
         $('#modal-diskon').modal('show');
     });
@@ -76,6 +83,11 @@ $(document).ready(function() {
     $('#modal-form').on('submit', function(e) {
         e.preventDefault();
         $('#btn-submit').addClass('disabled');
+        if($('#formCheck-is_stackable').prop("checked")) {
+            $('input[type="hidden"][name="is_stackable"]').val(1);
+        } else {
+            $('input[type="hidden"][name="is_stackable"]').val(0);
+        }
         e.currentTarget.submit();
     });
 

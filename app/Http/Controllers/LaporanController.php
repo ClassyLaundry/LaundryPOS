@@ -7,6 +7,7 @@ use App\Exports\LaporanOmsetExport;
 use App\Exports\LaporanPelangganExport;
 use App\Exports\LaporanSaldoExport;
 use App\Models\Data\Pelanggan;
+use App\Models\Outlet;
 use App\Models\Pembayaran;
 use App\Models\Saldo;
 use App\Models\Transaksi\Transaksi;
@@ -595,90 +596,42 @@ class LaporanController extends Controller
         return $sum;
     }
 
-    /*public function laporanOmset(Request $request)
-    {
-        if ($request->has('start') && $request->has('end')) {
-            $start = $request->start . ' 00:00:00';
-            $end = $request->end . ' 23:59:59';
-            $outlet_id = User::getOutletId(Auth::id());
-
-            $completedTransactions = Pembayaran::whereBetween('created_at', [$start, $end])
-                ->whereHas('transaksi', function ($query) use ($outlet_id) {
-                    $query->where('outlet_id', $outlet_id);
-                })
-                ->where('outlet_id', Auth::user()->outlet_id)
-                ->with('transaksi')
-                ->orderBy('created_at')
-                ->get();
-
-            $countPerDay = Pembayaran::whereBetween('created_at', [$start, $end])
-                ->whereHas('transaksi', function ($query) use ($outlet_id) {
-                    $query->where('outlet_id', $outlet_id);
-                })
-                ->where('outlet_id', Auth::user()->outlet_id)
-                ->with('transaksi')
-                ->orderBy('created_at')
-                ->get()
-                ->groupBy(function ($item) {
-                    return $item->created_at->format('d-m-Y');
-                })
-                ->map(function ($group) {
-                    return count($group);
-                });
-
-            $totalOmset = 0;
-            foreach($completedTransactions as $completedTransaction) {
-                $totalOmset += $completedTransaction->nominal;
-            }
-
-            return view('pages.laporan.Omset', [
-                'pembayarans' => $completedTransactions,
-                'rowHeight' => $countPerDay,
-                'startDate' => $start,
-                'endDate' => $end,
-                'totalOmset' => $totalOmset,
-            ]);
-        } else {
-            return view('pages.laporan.Omset');
-        }
-    }*/
-
     public function laporanOmset(Request $request)
     {
-        if ($request->has('start') && $request->has('end')) {
-            $start = $request->start . ' 00:00:00';
-            $end = $request->end . ' 23:59:59';
+        $outlets = Outlet::get();
+        if (!empty($request->all())) {
+            if ($request->has('start') && $request->has('end')) {
+                $start = $request->start . ' 00:00:00';
+                $end = $request->end . ' 23:59:59';
 
-            /*
-            $completedTransactions = Pembayaran::whereBetween('created_at', [$start, $end])
-                ->with('transaksi')
-                ->get();
-            */
-            $transaksis = Transaksi::whereBetween('created_at', [$start, $end])
-                ->with('kasir')
-                ->where('status', 'confirmed')
-                ->get();
+                $transaksis = Transaksi::whereBetween('created_at', [$start, $end])
+                    ->with('kasir')
+                    ->where('status', 'confirmed')
+                    ->get();
 
-            $countPerDay = Transaksi::whereBetween('created_at', [$start, $end])
-                ->where('status', 'confirmed')
-                ->get()
-                ->groupBy(function ($item) {
-                    return $item->created_at->format('d-m-Y');
-                })
-                ->map(function ($group) {
-                    return count($group);
-                });
+                $countPerDay = Transaksi::whereBetween('created_at', [$start, $end])
+                    ->where('status', 'confirmed')
+                    ->get()
+                    ->groupBy(function ($item) {
+                        return $item->created_at->format('d-m-Y');
+                    })
+                    ->map(function ($group) {
+                        return count($group);
+                    });
 
-            return view('pages.laporan.Omset', [
-                // 'pembayarans' => $completedTransactions,
-                'transaksis' => $transaksis,
-                'rowHeight' => $countPerDay,
-                'start' => $request->start,
-                'end' => $request->end,
-            ]);
-        } else {
-            return view('pages.laporan.Omset');
+                return view('pages.laporan.Omset', [
+                    'transaksis' => $transaksis,
+                    'rowHeight' => $countPerDay,
+                    'outlets' => $outlets,
+                    'start' => $request->start,
+                    'end' => $request->end,
+                ]);
+            }
         }
+
+        return view('pages.laporan.Omset', [
+            'outlets' => $outlets,
+        ]);
     }
 
     public function tableKasMasuk(Request $request)
