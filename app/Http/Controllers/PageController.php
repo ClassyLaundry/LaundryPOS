@@ -216,7 +216,7 @@ class PageController extends Controller
                 'pages.pengaturan.Karyawan',
                 [
                     'data' => User::paginate(5),
-                    'outlets' => Outlet::get(),
+                    'outlets' => Outlet::where('status', 1)->get(),
                     'roles' => Role::get(),
                 ]
             );
