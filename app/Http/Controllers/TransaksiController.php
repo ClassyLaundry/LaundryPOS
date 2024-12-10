@@ -511,7 +511,7 @@ class TransaksiController extends Controller
                     });
                 })
                 ->whereHas('outlet', function ($query) use ($request) {
-                    $query->where($request->status, 1);
+                    $query->where('status', 1);
                 })
                 ->whereNull('pencuci')
                 ->where('status', 'confirmed')
@@ -520,7 +520,7 @@ class TransaksiController extends Controller
         } else if ($request->type == "1") {
             $listTrans = Transaksi::with('pelanggan', 'outlet')
                 ->whereHas('outlet', function ($query) use ($request) {
-                    $query->where($request->status, 1);
+                    $query->where('status', 1);
                 })
                 ->where('pencuci', Auth::id())
                 ->where('is_done_cuci', 0)
@@ -538,7 +538,7 @@ class TransaksiController extends Controller
                     });
                 })
                 ->whereHas('outlet', function ($query) use ($request) {
-                    $query->where($request->status, 1);
+                    $query->where('status', 1);
                 })
                 ->where('pencuci', Auth::id())
                 ->where('is_done_cuci', 1)
@@ -609,13 +609,13 @@ class TransaksiController extends Controller
                     });
                 })
                 ->whereHas('outlet', function ($query) use ($request) {
-                    $query->where($request->status, 1);
+                    $query->where('status', 1);
                 })
                 ->whereNull('penyetrika');
         } else if ($request->type == "1") {
             $listTrans = Transaksi::with('pelanggan', 'outlet')
                 ->whereHas('outlet', function ($query) use ($request) {
-                    $query->where($request->status, 1);
+                    $query->where('status', 1);
                 })
                 ->where('penyetrika', Auth::id())
                 ->where('is_done_setrika', 0);
@@ -630,7 +630,7 @@ class TransaksiController extends Controller
                     });
                 })
                 ->whereHas('outlet', function ($query) use ($request) {
-                    $query->where($request->status, 1);
+                    $query->where('status', 1);
                 })
                 ->where('penyetrika', Auth::id())
                 ->where('is_done_setrika', 1);
