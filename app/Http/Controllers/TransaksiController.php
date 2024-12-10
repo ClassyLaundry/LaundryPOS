@@ -538,6 +538,8 @@ class TransaksiController extends Controller
                 ->get();
         }
 
+        dd($listTrans);
+
         return view('components.listCardTransaksi', [
             'transaksis' => $listTrans
         ]);
