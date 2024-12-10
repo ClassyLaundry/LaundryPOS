@@ -345,9 +345,7 @@ class TransaksiController extends Controller
                     $transaksi->memo_code = Transaksi::getMemoCode($transaksi->id);
                 }
 
-                if (empty($transaksi->kitir_code)) {
-                    $transaksi->kitir_code = Transaksi::getKitirCode($transaksi->id);
-                }
+                $transaksi->kitir_code = Transaksi::getKitirCode($transaksi->id);
             }
             if (!isset($transaksi->operator)) {
                 $transaksi->operator = Auth::id();
