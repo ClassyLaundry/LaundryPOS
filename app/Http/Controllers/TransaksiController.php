@@ -510,12 +510,18 @@ class TransaksiController extends Controller
                         ->orWhere('kode', 'like', '%' . $request->key . '%');
                     });
                 })
+                ->whereHas('outlet', function ($query) use ($request) {
+                    $query->where($request->status, 1);
+                })
                 ->whereNull('pencuci')
                 ->where('status', 'confirmed')
                 ->latest()
                 ->get();
         } else if ($request->type == "1") {
             $listTrans = Transaksi::with('pelanggan')
+                ->whereHas('outlet', function ($query) use ($request) {
+                    $query->where($request->status, 1);
+                })
                 ->where('pencuci', Auth::id())
                 ->where('is_done_cuci', 0)
                 ->where('status', 'confirmed')
@@ -531,14 +537,15 @@ class TransaksiController extends Controller
                         ->orWhere('kode', 'like', '%' . $request->key . '%');
                     });
                 })
+                ->whereHas('outlet', function ($query) use ($request) {
+                    $query->where($request->status, 1);
+                })
                 ->where('pencuci', Auth::id())
                 ->where('is_done_cuci', 1)
                 ->where('status', 'confirmed')
                 ->latest()
                 ->get();
         }
-
-        dd($listTrans);
 
         return view('components.listCardTransaksi', [
             'transaksis' => $listTrans
@@ -601,9 +608,15 @@ class TransaksiController extends Controller
                         ->orWhere('kode', 'like', '%' . $request->key . '%');
                     });
                 })
+                ->whereHas('outlet', function ($query) use ($request) {
+                    $query->where($request->status, 1);
+                })
                 ->whereNull('penyetrika');
         } else if ($request->type == "1") {
             $listTrans = Transaksi::with('pelanggan')
+                ->whereHas('outlet', function ($query) use ($request) {
+                    $query->where($request->status, 1);
+                })
                 ->where('penyetrika', Auth::id())
                 ->where('is_done_setrika', 0);
         } else if ($request->type == "2") {
@@ -615,6 +628,9 @@ class TransaksiController extends Controller
                         })
                         ->orWhere('kode', 'like', '%' . $request->key . '%');
                     });
+                })
+                ->whereHas('outlet', function ($query) use ($request) {
+                    $query->where($request->status, 1);
                 })
                 ->where('penyetrika', Auth::id())
                 ->where('is_done_setrika', 1);
