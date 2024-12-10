@@ -129,12 +129,6 @@ $(document).ready(function() {
                 setThousandSeparator();
             });
 
-            if (trans.status == "confirmed") {
-                $('#cancel-trans').hide();
-            } else {
-                $('#cancel-trans').show();
-            }
-
             $('#form-transaksi').data('action', '/transaksi/update/' + trans.id);
 
             parent.removeClass('disabled');
