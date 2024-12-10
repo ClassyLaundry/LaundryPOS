@@ -501,7 +501,7 @@ class TransaksiController extends Controller
     {
         $listTrans = [];
         if ($request->type == "0") {
-            $listTrans = Transaksi::with('pelanggan')
+            $listTrans = Transaksi::with('pelanggan', 'outlet')
                 ->when($request->filled('key'), function ($query) use ($request) {
                     $query->where(function ($query) use ($request) {
                         $query->whereHas('pelanggan', function ($query) use ($request) {
@@ -518,7 +518,7 @@ class TransaksiController extends Controller
                 ->latest()
                 ->get();
         } else if ($request->type == "1") {
-            $listTrans = Transaksi::with('pelanggan')
+            $listTrans = Transaksi::with('pelanggan', 'outlet')
                 ->whereHas('outlet', function ($query) use ($request) {
                     $query->where($request->status, 1);
                 })
@@ -528,7 +528,7 @@ class TransaksiController extends Controller
                 ->latest()
                 ->get();
         } else if ($request->type == "2") {
-            $listTrans = Transaksi::with('pelanggan')
+            $listTrans = Transaksi::with('pelanggan', 'outlet')
                 ->when($request->filled('key'), function ($query) use ($request) {
                     $query->where(function ($query) use ($request) {
                         $query->whereHas('pelanggan', function ($query) use ($request) {
@@ -599,7 +599,7 @@ class TransaksiController extends Controller
     {
         $listTrans = [];
         if ($request->type == "0") {
-            $listTrans = Transaksi::with('pelanggan')
+            $listTrans = Transaksi::with('pelanggan', 'outlet')
                 ->when($request->filled('key'), function ($query) use ($request) {
                     $query->where(function ($query) use ($request) {
                         $query->whereHas('pelanggan', function ($query) use ($request) {
@@ -613,14 +613,14 @@ class TransaksiController extends Controller
                 })
                 ->whereNull('penyetrika');
         } else if ($request->type == "1") {
-            $listTrans = Transaksi::with('pelanggan')
+            $listTrans = Transaksi::with('pelanggan', 'outlet')
                 ->whereHas('outlet', function ($query) use ($request) {
                     $query->where($request->status, 1);
                 })
                 ->where('penyetrika', Auth::id())
                 ->where('is_done_setrika', 0);
         } else if ($request->type == "2") {
-            $listTrans = Transaksi::with('pelanggan')
+            $listTrans = Transaksi::with('pelanggan', 'outlet')
                 ->when($request->filled('key'), function ($query) use ($request) {
                     $query->where(function ($query) use ($request) {
                         $query->whereHas('pelanggan', function ($query) use ($request) {
