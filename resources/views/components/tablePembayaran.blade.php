@@ -19,7 +19,7 @@
             <tr>
                 <td class="text-center">{{ $transaksi->kode }}</td>
                 <td class="text-center">{{ $transaksi->tipe_transaksi }}</td>
-                <td>{{ $transaksi->pelanggan['nama'] }}</td>
+                <td>{{ $transaksi->pelanggan->nama }}</td>
                 <td class="text-center">{{ $transaksi->created_at }}</td>
                 <td class="text-center">@isset($transaksi->done_date) {{ $transaksi->done_date }} @endisset</td>
                 <td>

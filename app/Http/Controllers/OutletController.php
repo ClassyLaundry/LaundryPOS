@@ -98,7 +98,7 @@ class OutletController extends Controller
     public function component()
     {
         return view('components.selectOutlet', [
-            'outlets' => Outlet::all(),
+            'outlets' => Outlet::where('status', 1)->get(),
         ]);
     }
 }
