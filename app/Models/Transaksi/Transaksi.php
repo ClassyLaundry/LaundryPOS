@@ -40,10 +40,7 @@ class Transaksi extends Model
         $outlet = Outlet::find($transaksi->outlet_id);
         $kode_outlet = $outlet->kode;
 
-        $today = Carbon::today();
-        $formattedDate = $today->format('m') . ' ' . $today->format('d');
-
-        $code = ($transaksi->tipe_transaksi == "bucket" ? "B / " : "P / ") . $kode_outlet . $formattedDate . str_pad(substr($transaksi->kode, -2), 2, '0', STR_PAD_LEFT);
+        $code = ($transaksi->tipe_transaksi == "bucket" ? "B / " : "P / ") . $kode_outlet . substr($transaksi->kode, 4, 4) . str_pad(substr($transaksi->kode, -2), 2, '0', STR_PAD_LEFT);
         return $code;
     }
 
@@ -180,7 +177,7 @@ class Transaksi extends Model
     //Function untuk melakukan Query detail Transaksi beserta table lain yang memiliki Relation
     public function scopeDetail($query)
     {
-        return $query->with('item_transaksi', 'pickup_delivery', 'outlet', 'parfum', 'pelanggan', 'penerima', 'penerima', 'item_transaksi.rewash', 'packing');
+        return $query->with('item_transaksi', 'pickup_delivery', 'outlet', 'parfum', 'pelanggan', 'penerima', 'penerima', 'item_transaksi.rewash', 'item_transaksi.item_notes', 'packing');
     }
 
     public function item_transaksi()
