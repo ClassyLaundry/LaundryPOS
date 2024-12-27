@@ -2,7 +2,6 @@
 
 namespace App\Models\Transaksi;
 
-use App\Models\Data\CatatanPelanggan;
 use App\Models\Data\Pelanggan;
 use App\Models\Outlet;
 use App\Models\Data\Parfum;
@@ -14,7 +13,6 @@ use App\Models\Pembayaran;
 use App\Models\SettingUmum;
 use App\Models\User;
 use App\Observers\UserActionObserver;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

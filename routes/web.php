@@ -28,6 +28,7 @@ use App\Http\Controllers\DiskonTransaksiController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\CatatanPelangganController;
 use App\Http\Controllers\DiskonHistoryController;
+use App\Http\Controllers\KomplainController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -212,6 +213,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/component/shortTrans/{id}/delivery', [TransaksiController::class, 'shortTableDelivery']);
     Route::get('/component/cancelled', [TransaksiController::class, 'tableCancelled']);
     Route::get('/component/searchItemTrans', [TransaksiController::class, 'searchItem']);
+
+    // Transaksi Komplain
+    Route::get('/transaksi/komplain', [PageController::class, 'komplain'])->name('komplain');
+    Route::get('/transaksi/komplain/searchTransaksi', [KomplainController::class, 'searchTransaksi']);
+    Route::get('/component/komplain', [KomplainController::class, 'get']);
+    Route::post('/transaksi/komplain/', [KomplainController::class, 'store']);
 
     // Bucket
     Route::get('/transaksi/bucket', [PageController::class, 'bucket'])->name('transaksiBucket');

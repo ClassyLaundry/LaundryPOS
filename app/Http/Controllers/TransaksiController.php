@@ -831,4 +831,6 @@ class TransaksiController extends Controller
             'tipe_transaksi' => $request->tipe,
         ]);
     }
+
+
 }

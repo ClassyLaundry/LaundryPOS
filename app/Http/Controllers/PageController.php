@@ -593,4 +593,9 @@ class PageController extends Controller
     {
         return view('pages.transaksi.Cancelled');
     }
+
+    public function komplain()
+    {
+        return view('pages.transaksi.Komplain');
+    }
 }
