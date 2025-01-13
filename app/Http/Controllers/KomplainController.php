@@ -39,7 +39,15 @@ class KomplainController extends Controller
 
     public function searchTransaksi(Request $request)
     {
-        $transaksi = Transaksi::where("status", "confirmed")->latest()->paginate(10);
+        $transaksi = Transaksi::when($request->key, function ($query) use ($request) {
+                $query->where('kode', 'like', "%{$request->key}%")
+                    ->orWhereHas('pelanggan', function ($query) use ($request) {
+                        $query->where('nama', 'like', "%{$request->key}%");
+                    });
+            })
+            ->where("status", "confirmed")
+            ->latest()
+            ->paginate(10);
 
         return view('components.tableTransDelivery', [
             'transaksis' => $transaksi,
