@@ -12,10 +12,10 @@
 </head>
 <body>
     @if ($cetak == 1)
-        <p style="position: absolute; left: -15px; top: {{ -50 }}px; width: 150%; font-size: 1.5rem; font-weight: bold;">{{substr($data->kitir_code,0,8) . " " . substr($data->kitir_code, -4)}}</p>
+        <p style="position: absolute; left: -15px; top: {{ -50 }}px; width: 150%; font-size: 1.5rem; font-weight: bold;">{{substr($data->kitir_code, 0, 8) . " " . substr($data->kitir_code, -4)}}</p>
     @else
         @for($i = 0; $i < $cetak; $i++)
-            <p style="position: absolute; left: -15px; top: {{ $i * 80 - 50 }}px; width: 150%; font-size: 1.5rem; font-weight: bold;">{{substr($data->kitir_code,0,8) . " " . substr($data->kitir_code, 8,4)}}</p>
+            <p style="position: absolute; left: -15px; top: {{ $i * 80 - 50 }}px; width: 150%; font-size: 1.5rem; font-weight: bold;">{{substr($data->kitir_code, 0, 8) . " " . substr($data->kitir_code, -4)}}</p>
         @endfor
     @endif
 </body>
