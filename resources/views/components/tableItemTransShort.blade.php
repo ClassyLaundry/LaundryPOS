@@ -132,5 +132,5 @@
         </tbody>
     </table>
 </div>
-<input type="hidden" id="catatan-transaksi" value="{{ $trans->catatan }}">
+<input type="hidden" id="catatan-transaksi" value="{{ $trans->catatan_transaksi }}">
 @endif
