@@ -34,6 +34,10 @@
                         <div id="container-bucket"></div>
                         <div id="container-premium"></div>
                         <div class="mt-2">
+                            <h5 class="fw-bold">Catatan Pelanggan</h5>
+                            <textarea id="text-catatan-pelanggan" class="form-control" readonly></textarea>
+                        </div>
+                        <div class="mt-2">
                             <h5 class="fw-bold">Catatan Transaksi</h5>
                             <textarea id="text-catatan-transaksi" class="form-control" readonly></textarea>
                         </div>

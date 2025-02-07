@@ -54,6 +54,14 @@
                 <div class="modal-body">
                     <p>Parfum: <span id="nama-parfum" class="fw-bold"></span></p>
                     <div id="table-short-trans"></div>
+                    <div class="mt-2">
+                        <h5 class="fw-bold">Catatan Pelanggan</h5>
+                        <textarea id="text-catatan-pelanggan" class="form-control" readonly></textarea>
+                    </div>
+                    <div class="mt-2">
+                        <h5 class="fw-bold">Catatan Transaksi</h5>
+                        <textarea id="text-catatan-transaksi" class="form-control" readonly></textarea>
+                    </div>
                     <ul class="list-unstyled form-control list-action" id="list-action-2">
                         <li id="action-notes">Catatan</li>
                         <li id="action-rewash">Rewash</li>

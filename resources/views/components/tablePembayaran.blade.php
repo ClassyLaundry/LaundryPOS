@@ -10,7 +10,7 @@
                 <th>Total</th>
                 <th>Lunas</th>
                 <th>Terbayar</th>
-                <th>Status</th>
+                {{-- <th>Status</th> --}}
                 <th style="width: 26px;"></th>
             </tr>
         </thead>
@@ -39,7 +39,7 @@
                         <span class="thousand-separator">{{ number_format($transaksi->total_terbayar, 0, ',', '.') }}</span>
                     </div>
                 </td>
-                <td class="text-center">{{ $transaksi->status }}</td>
+                {{-- <td class="text-center">{{ $transaksi->status }}</td> --}}
                 <td class="cell-action">
                     <button id="btn-{{ $transaksi->id }}" class="btn btn-primary btn-sm btn-show-action" type="button">
                         <i class="fas fa-bars"></i>

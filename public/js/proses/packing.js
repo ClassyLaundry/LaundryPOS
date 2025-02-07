@@ -13,11 +13,13 @@ $(document).ready(function() {
         if (tipeTrans == 'bucket') {
             $('#container-bucket').load(window.location.origin + '/component/shortTrans/' + btnId, function() {
                 $('#text-catatan-transaksi').text($('#container-bucket #catatan-transaksi').val());
+                $('#text-catatan-pelanggan').text($('#container-bucket #catatan-pelanggan').val());
                 $('#modal-detail').modal('show');
             });
         } else {
             $('#container-premium').load(window.location.origin + '/component/shortTrans/' + btnId, function() {
                 $('#text-catatan-transaksi').text($('#container-premium #catatan-transaksi').val());
+                $('#text-catatan-pelanggan').text($('#container-premium #catatan-pelanggan').val());
                 $('#modal-detail').modal('show');
             });
         }

@@ -133,4 +133,5 @@
     </table>
 </div>
 <input type="hidden" id="catatan-transaksi" value="{{ $trans->catatan_transaksi }}">
+<input type="hidden" id="catatan-pelanggan" value="{{ $trans->pelanggan->special_note }}">
 @endif

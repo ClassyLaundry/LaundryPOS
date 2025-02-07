@@ -49,7 +49,10 @@ $(document).ready(function() {
 
     var kodeTrans = "";
     $('#action-detail').on('click', function() {
-        $('#table-short-trans').load(window.location.origin + '/component/shortTrans/' + btnId + '/process');
+        $('#table-short-trans').load(window.location.origin + '/component/shortTrans/' + btnId + '/process', function() {
+            $('#text-catatan-transaksi').text($('#table-short-trans #catatan-transaksi').val());
+            $('#text-catatan-pelanggan').text($('#table-short-trans #catatan-pelanggan').val());
+        });
         $.ajax({
             url: "/transaksi/detail/" + btnId + "?outlet=0",
         }).done(function(response) {

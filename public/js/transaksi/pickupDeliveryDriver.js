@@ -92,6 +92,8 @@ $(document).ready(function() {
         $('.kode-transaksi').text($('h6').eq(btnIndex).text());
 
         $('#table-short-trans').load(window.location.origin + '/component/shortTrans/' + btnId + '/delivery', function() {
+            $('#text-catatan-transaksi').text($('#table-short-trans #catatan-transaksi').val());
+            $('#text-catatan-pelanggan').text($('#table-short-trans #catatan-pelanggan').val());
             $('#table-short-trans').find('.cell-action').detach();
             $.ajax({
                 url: "/transaksi/detail/" + btnId,

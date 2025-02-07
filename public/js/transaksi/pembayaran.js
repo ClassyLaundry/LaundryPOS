@@ -48,7 +48,6 @@ $(document).ready(function() {
             if (trans.diskon + trans.diskon_member == 0) {
                 $('#diskon').parent().hide();
             }
-            setThousandSeparator();
 
             if (trans.lunas) {
                 $('#btn-bayar').hide();
@@ -64,22 +63,6 @@ $(document).ready(function() {
             $('#input-kembalian').val('0');
         });
     });
-
-    function setThousandSeparator () {
-        let length = $('.thousand-separator').length;
-        if (length != 0) {
-            $('.thousand-separator').each(function(index, element) {
-                let val = $(element).text();
-                if (val != '') {
-                    while(val.indexOf('.') != -1) {
-                        val = val.replace('.', '');
-                    }
-                    let number = parseInt(val);
-                    $(element).text(number.toLocaleString(['ban', 'id']));
-                }
-            });
-        }
-    };
 
     var pelangganSaldo = 0;
     $('#btn-bayar').on('click', function() {
@@ -118,7 +101,6 @@ $(document).ready(function() {
                     $('#alert-member').alert('close');
                 }
 
-                setThousandSeparator();
                 $('#modal-pembayaran').modal('show');
             }).fail(function(jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR);
@@ -239,7 +221,6 @@ $(document).ready(function() {
             }],
             order: [[3, 'desc']],
             columns: [
-                null,
                 null,
                 null,
                 null,
