@@ -147,7 +147,8 @@ class PrintController extends Controller
         $pdf = Pdf::loadView('pages.print.Kitir', [
             'data' => $transaksi,
             'cetak' => $cetak,
-        ])->setPaper($paper_size, 'portrait');
+        ]);
+        $pdf->setPaper($paper_size);
         return $pdf->stream('invoice.pdf');
     }
 

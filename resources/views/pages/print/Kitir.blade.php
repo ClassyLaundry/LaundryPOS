@@ -4,9 +4,15 @@
 <head>
     <title>Delivery Note</title>
     <style>
-        /* Add any styles you want to use for the PDF here */
         body {
+            width: 100%;
+            height: auto;
+            margin: 0;
+            padding: 0;
             font-family: sans-serif;
+        }
+        p {
+            height: auto;
         }
     </style>
 </head>
