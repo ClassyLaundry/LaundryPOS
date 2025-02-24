@@ -124,6 +124,10 @@ class KomplainController extends Controller
      */
     public function destroy($id)
     {
-        //
+        KomplainTransaksi::destroy($id);
+        return [
+            "status" => 200,
+            "message" => "Data berhasil dihapus"
+        ];
     }
 }

@@ -10,7 +10,7 @@ $(document).ready(function() {
     let params = (new URL(document.location)).searchParams;
     let trans_kode = params.get("trans_kode");
     let trans_item = params.get("trans_item");
-    if (trans_kode !== null && trans_item !== null) {
+    if (trans_kode !== null) {
 
         $.ajax({
             url: "/transaksi/kode/" + trans_kode,
@@ -23,7 +23,9 @@ $(document).ready(function() {
             response.item_transaksi.forEach(item => {
                 $('#item-trans').append("<option value='" + item.id + "' data-max='" + item.qty + "'>" + item.nama +"</option>");
             });
-            $('#item-trans').val(trans_item);
+            if (trans_item !== null) {
+                $('#item-trans').val(trans_item);
+            }
 
             let qtyMax = $('#item-trans option:selected').data('max');
             $('#qty-rewash').attr('max', qtyMax);

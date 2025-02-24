@@ -7,6 +7,7 @@
                 <th>Nama Pelanggan</th>
                 <th colspan="2">Harga Total</th>
                 <th>Lunas</th>
+                <th></th>
             </tr>
         </thead>
         <tbody style="cursor: pointer">
@@ -23,6 +24,9 @@
                 @else
                     Belum Lunas
                 @endif
+                </td>
+                <td class="cell-action">
+                    <button id="btn-{{ $komplain->id }}"  class="btn btn-primary btn-sm btn-show-action" type="button"><i class="fas fa-bars"></i></button>
                 </td>
             </tr>
             @endforeach

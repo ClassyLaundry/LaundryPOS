@@ -74,7 +74,10 @@
 
                 <ul class="list-unstyled form-control" id="list-action">
                     @if(in_array("Merestore Transaksi", Session::get('permissions')) || Session::get('role') == 'administrator')
-                    <li id="action-restore">Restore Transaksi</li>
+                    <li id="action-cancel">Cancel Komplain</li>
+                    @endif
+                    @if(in_array("Menambah Data Proses Rewash", Session::get('permissions')) || Session::get('role') == 'administrator')
+                    <li id="action-rewash">Rewash Transaksi</li>
                     @endif
                 </ul>
             </div>

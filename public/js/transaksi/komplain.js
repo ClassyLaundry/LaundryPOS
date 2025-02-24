@@ -9,21 +9,10 @@ $(document).ready(function() {
 
     function getKomplainList() {
         komplainKey = $('#input-search-komplain').val();
-        console.log(komplainKey);
         $('#container-list-komplain').load(window.location.origin + '/component/komplain?key=' + encodeURIComponent(komplainKey) + '&page=' + komplainPage);
     }
 
     getKomplainList();
-
-    $('#action-resolve').on('click', function() { // masih belum dipakai
-        if (confirm('Yakin menyelesaikan komplain transaksi ?')) {
-            $.ajax({
-                url: "/transaksi/komplain/" + btnId + "/resolve",
-            }).done(function() {
-                window.location = window.location.origin + window.location.pathname;
-            });
-        }
-    });
 
     // List transaksi
     var searchTrans, transKey = '', transPage = 1;
@@ -37,7 +26,7 @@ $(document).ready(function() {
         transKey = $('#input-search-trans').val();
         $('#container-list-trans').load(window.location.origin + '/transaksi/komplain/searchTransaksi?key=' + encodeURIComponent(transKey) + '&page=' + transPage, function() {
             $('#modal-list-transaksi').modal("show");
-        }); // transaksi yang dicari harus sudah terconfirmed
+        });
     }
 
     $('#container-list-trans').on('click', '.page-link', function(e) {
@@ -45,7 +34,6 @@ $(document).ready(function() {
         transPage = $(this).attr('href').split('page=')[1];
         searchListTrans();
     });
-    // #
 
     $('#btn-add-komplain').on('click', function() {
         searchListTrans();
@@ -70,5 +58,28 @@ $(document).ready(function() {
     $('#btn-back-komplain').on('click', function() {
         $('#modal-add-komplain').modal("hide");
         $('#modal-list-transaksi').modal("show");
+    });
+
+    // action
+    var btnIndex = -1, btnIdTrans = 0, kodeTrans = '';
+    $('#container-list-komplain').on('click', '.btn-show-action', function() {
+        btnIndex = $(this).index('.btn-show-action') + 1;
+        btnIdKomplain = $(this).attr('id').substring(4);
+        btnIdTrans = $(this).closest('tr').attr('id');
+        kodeTrans = $(this).closest('tr').children().eq(0).html();
+    });
+
+    $('#action-cancel').on('click', function() {
+        if (confirm('Yakin membatalkan komplain transaksi?')) {
+            $.ajax({
+                url: "/transaksi/komplain/" + btnId + "/cancel",
+            }).done(function() {
+                window.location = window.location.origin + window.location.pathname;
+            });
+        }
+    });
+
+    $('#action-rewash').on('click', function() {
+        window.location = window.location.origin + '/proses/rewash' + '?trans_kode=' + kodeTrans;
     });
 });
