@@ -656,7 +656,6 @@ class LaporanController extends Controller
             ->where('outlet_id', $outlet_id)
             ->orderBy('created_at')
             ->get();
-        dd($pembayarans);
 
         $deposits = Saldo::with(['pelanggan', 'outlet', 'paket_deposit', 'kasir'])
             ->whereBetween('created_at', [$start, $end])
@@ -676,6 +675,10 @@ class LaporanController extends Controller
                 $sumOfEachPaymentMethod[$pembayaran->metode_pembayaran] += $pembayaran->nominal;
             } else {
                 $sumOfEachPaymentMethod[$pembayaran->metode_pembayaran] = $pembayaran->nominal;
+            }
+
+            if ($pembayaran->transaksi->kode == null) {
+                dd($pembayaran);
             }
 
             $temp = [
