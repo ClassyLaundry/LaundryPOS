@@ -512,6 +512,7 @@ class TransaksiController extends Controller
                     $query->where('status', 1);
                 })
                 ->whereNull('pencuci')
+                ->where('setrika_only', 0)
                 ->where('status', 'confirmed')
                 ->latest()
                 ->get();
@@ -608,6 +609,13 @@ class TransaksiController extends Controller
                 })
                 ->whereHas('outlet', function ($query) use ($request) {
                     $query->where('status', 1);
+                })
+                ->where(function ($query) {
+                    $query->where('setrika_only', true)
+                        ->orWhere(function ($query) {
+                            $query->where('setrika_only', false)
+                                ->whereNotNull('is_done_cuci');
+                        });
                 })
                 ->whereNull('penyetrika');
         } else if ($request->type == "1") {
