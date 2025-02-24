@@ -32,18 +32,18 @@
                     @else
                         <tr>
                     @endif
-                        <td>{{ $data->kode }}</td>
-                        <td>{{ $data->nomor_order }}</td>
-                        <td>{{ date('d-M-Y', strtotime($data->tanggal)) }}</td>
-                        <td>{{ Str::upper($data->pelanggan) }}</td>
+                        <td>{{ $data["kode"] }}</td>
+                        <td>{{ $data["nomor_order"] }}</td>
+                        <td>{{ date('d-M-Y', strtotime($data["tanggal"])) }}</td>
+                        <td>{{ Str::upper($data["pelanggan"]) }}</td>
                         <td>
                             <div class="d-flex justify-content-between">
                                 <span>Rp</span>
-                                <span>{{ number_format($data->nominal, 0, ',', '.') }}</span>
+                                <span>{{ number_format($data["nominal"], 0, ',', '.') }}</span>
                             </div>
                         </td>
-                        <td>{{ $data->keterangan }}</td>
-                        <td>{{ $data->operator }}</td>
+                        <td>{{ $data["keterangan"] }}</td>
+                        <td>{{ $data["operator"] }}</td>
                     </tr>
                     @if ($rowHeight[$data["tipe"]] == $index + 1 && $index != 0)
                         <tr class="table-primary">
