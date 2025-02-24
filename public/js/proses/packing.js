@@ -196,6 +196,10 @@ $(document).ready(function() {
         });
     });
 
+    $('#table-container').on('click', '#btn-clone', function() {
+        $('#table-packing tbody tr').last().clone().appendTo('#table-packing tbody');
+    });
+
     $('#container-list-trans').load(window.location.origin + '/component/packing', function() {
         $("#table-list-trans").dataTable({
             columnDefs : [{

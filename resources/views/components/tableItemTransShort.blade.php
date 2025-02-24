@@ -86,14 +86,14 @@
                         </div>
                     </td>
                 </tr>
-                @for($j = 0; $j < $trans->item_transaksi[$i]->qty; $j++)
+                {{-- @for($j = 0; $j < $trans->item_transaksi[$i]->qty; $j++)
                 @if (isset($inventories))
                     <tr>
                         <td class="py-1" style="width: 62.5%;">{{ $inventories[$i * count($trans->item_transaksi) + $j]['name'] }}</td>
                         <td class="py-1 text-center" style="width: 20%;">Packing</td>
                     </tr>
                 @endif
-                @endfor
+                @endfor --}}
             @endfor
 
             {{-- @foreach ($trans->item_transaksi as $item_transaksi)
@@ -130,6 +130,17 @@
                 @endforeach
             @endif --}}
         </tbody>
+        @if (isset($inventories))
+            <tfoot>
+                @foreach ($inventories as $inventory)
+                    <tr>
+                        <td class="py-1">{{ $inventory['name'] }}</td>
+                        <td class="py-1 text-center">Packing</td>
+                        <td class="py-1 text-center">{{ $inventory['qty'] }}</td>
+                    </tr>
+                @endforeach
+            </tfoot>
+        @endif
     </table>
 </div>
 <input type="hidden" id="catatan-transaksi" value="{{ $trans->catatan_transaksi }}">
