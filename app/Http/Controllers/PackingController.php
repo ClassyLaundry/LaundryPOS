@@ -86,13 +86,7 @@ class PackingController extends Controller
                             $q->where('nama', 'like', '%' . $request->key . '%');
                         });
                 })
-                ->where(function ($query) {
-                    $query->where('is_done_cuci', 1)
-                        ->orWhere(function ($query1) {
-                            $query1->where('is_done_cuci', 0)
-                                ->where('setrika_only', 1);
-                        });
-                })
+                ->where('is_done_setrika', 1)
                 ->whereNotIn('id', function ($subquery) {
                     $subquery->select('transaksi_id')
                         ->from('packings');
