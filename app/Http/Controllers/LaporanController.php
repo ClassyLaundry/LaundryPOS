@@ -656,6 +656,7 @@ class LaporanController extends Controller
             ->where('outlet_id', $outlet_id)
             ->orderBy('created_at')
             ->get();
+        dd($pembayarans);
 
         $deposits = Saldo::with(['pelanggan', 'outlet', 'paket_deposit', 'kasir'])
             ->whereBetween('created_at', [$start, $end])
@@ -687,7 +688,6 @@ class LaporanController extends Controller
                 'keterangan' => "PEMBAYARAN VIA " . strtoupper($pembayaran->metode_pembayaran),
                 'operator' => isset($pembayaran->kasir) ? strtoupper($pembayaran->kasir->name) : '',
             ];
-            dd($temp);
 
             array_push($data1, $temp);
 
