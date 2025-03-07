@@ -681,7 +681,7 @@ class LaporanController extends Controller
                 dd($pembayaran);
             }
 
-            $temp = [
+            array_push($data1, (object)[
                 'kode' => 'PM' . str_pad($pembayaran->id, 6, '0', STR_PAD_LEFT),
                 'nomor_order' => $pembayaran->transaksi->kode,
                 'tanggal' => $pembayaran->created_at,
@@ -690,12 +690,11 @@ class LaporanController extends Controller
                 'tipe' => $pembayaran->metode_pembayaran,
                 'keterangan' => "PEMBAYARAN VIA " . strtoupper($pembayaran->metode_pembayaran),
                 'operator' => isset($pembayaran->kasir) ? strtoupper($pembayaran->kasir->name) : '',
-            ];
-
-            array_push($data1, $temp);
+            ]);
 
             $sum += $pembayaran->nominal;
         }
+
         foreach ($deposits as $deposit) {
             if (isset($rowHeight[$deposit->via])) {
                 $rowHeight[$deposit->via]++;
