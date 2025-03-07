@@ -16,7 +16,7 @@
         </thead>
         <tbody>
         @foreach ($transaksis as $transaksi)
-            <tr>
+            <tr id="{{ $transaksi->id }}">
                 <td class="text-center">{{ $transaksi->kode }}</td>
                 <td class="text-center">{{ $transaksi->tipe_transaksi }}</td>
                 <td>{{ $transaksi->pelanggan->nama }}</td>

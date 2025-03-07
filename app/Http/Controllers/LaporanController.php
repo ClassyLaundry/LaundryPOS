@@ -725,10 +725,10 @@ class LaporanController extends Controller
         $data = array_merge($data1, $data2);
 
         usort($data, function ($item1, $item2) {
-            if ($item1["tipe"] !== $item2["tipe"]) {
-                return $item1["tipe"] <=> $item2["tipe"];
+            if ($item1->tipe !== $item2->tipe) {
+                return $item1->tipe <=> $item2->tipe;
             }
-            return $item1["tanggal"] <=> $item2["tanggal"];
+            return $item1->tanggal <=> $item2->tanggal;
         });
         return view('components.tableLaporanKas', [
             'kas' => $data,
