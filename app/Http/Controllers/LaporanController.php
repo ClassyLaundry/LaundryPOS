@@ -677,7 +677,7 @@ class LaporanController extends Controller
                 $sumOfEachPaymentMethod[$pembayaran->metode_pembayaran] = $pembayaran->nominal;
             }
 
-            if ($pembayaran->transaksi->kode == null) {
+            if ($pembayaran->transaksi == null) {
                 dd($pembayaran);
             }
 
