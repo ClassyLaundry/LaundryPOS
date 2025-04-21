@@ -12,6 +12,7 @@ use App\Models\Outlet;
 use App\Models\Packing\Packing;
 use App\Models\Packing\PackingInventory;
 use App\Models\Paket\PaketCuci;
+use App\Models\Saldo;
 use App\Models\SettingUmum;
 use App\Models\Transaksi\Rewash;
 use App\Models\Transaksi\Transaksi;
@@ -766,13 +767,26 @@ class TransaksiController extends Controller
             $transaksi->update([
                 'status' => "cancelled"
             ]);
+            $pelanggan = Pelanggan::find($transaksi->pelanggan_id);
+            $saldo_akhir = Saldo::where('pelanggan_id', $pelanggan->id)->latest()->first()->saldo_akhir;
+            $saldo_akhir += $transaksi->total_terbayar;
+            Saldo::create([
+                'pelanggan_id' => $pelanggan->id,
+                'outlet_id' => $user->outlet_id,
+                'paket_deposit_id' => 1,
+                'nominal' => $transaksi->total_terbayar,
+                'jenis_input' => "cancel",
+                'via' => "Deposit",
+                'saldo_akhir' => $saldo_akhir,
+                'kas_masuk' => 0,
+                'operator' => Auth::id()
+            ]);
             $transaksi->delete();
             LogTransaksi::create([
                 'transaksi_id' => $transaksi->id,
                 'penanggung_jawab' => Auth::id(),
                 'process' => strtoupper('cancel transaksi')
             ]);
-            return [];
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
         }
