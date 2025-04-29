@@ -19,11 +19,11 @@
 
                 <div id="container-list-trans"></div>
 
-                <ul class="list-unstyled form-control" id="list-action">
+                {{-- <ul class="list-unstyled form-control" id="list-action">
                     @if(in_array("Merestore Transaksi", Session::get('permissions')) || Session::get('role') == 'administrator')
                     <li id="action-restore">Restore Transaksi</li>
                     @endif
-                </ul>
+                </ul> --}}
             </div>
         </div>
     </section>

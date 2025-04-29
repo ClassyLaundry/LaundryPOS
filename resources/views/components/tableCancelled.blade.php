@@ -6,7 +6,7 @@
                 <th class="d-none d-lg-table-cell">Tanggal Transaksi</th>
                 <th>Nama Pelanggan</th>
                 <th colspan="2">Harga Total</th>
-                <th></th>
+                {{-- <th></th> --}}
             </tr>
         </thead>
         <tbody>
@@ -17,11 +17,11 @@
                 <td>{{ $trans->pelanggan->nama }}</td>
                 <td>Rp</td>
                 <td class="text-end thousand-separator">{{ $trans->grand_total }}</td>
-                <td class='text-end p-1' style='width: 46.25px;'>
+                {{-- <td class='text-end p-1' style='width: 46.25px;'>
                     <button id='btn-{{ $trans->id }}' class='btn btn-primary btn-sm btn-show-action' type='button' style="cursor: pointer">
                         <i class='fas fa-bars' aria-hidden='true'></i>
                     </button>
-                </td>
+                </td> --}}
             </tr>
             @endforeach
         </tbody>
