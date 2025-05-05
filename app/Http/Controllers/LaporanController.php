@@ -598,8 +598,10 @@ class LaporanController extends Controller
 
     public function laporanOmset(Request $request)
     {
-        $outlets = Outlet::get();
+        $outlet = Outlet::find(Auth::user()->outlet_id);
+        $selectedOutlet = -1;
         if (!empty($request->all())) {
+            dd($request->all());
             if ($request->has('start') && $request->has('end')) {
                 $start = $request->start . ' 00:00:00';
                 $end = $request->end . ' 23:59:59';
@@ -621,10 +623,13 @@ class LaporanController extends Controller
                         return count($group);
                     });
 
+                $selectedOutlet = $request->outlet;
+
                 return view('pages.laporan.Omset', [
                     'transaksis' => $transaksis,
                     'rowHeight' => $countPerDay,
                     'outlets' => $outlets,
+                    'selectedOutlet' => $selectedOutlet,
                     'start' => $request->start,
                     'end' => $request->end,
                 ]);
@@ -632,7 +637,8 @@ class LaporanController extends Controller
         }
 
         return view('pages.laporan.Omset', [
-            'outlets' => $outlets,
+            'outlet' => $outlet,
+            'selectedOutlet' => $selectedOutlet,
         ]);
     }
 

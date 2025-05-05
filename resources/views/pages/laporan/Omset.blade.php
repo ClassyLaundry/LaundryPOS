@@ -17,32 +17,32 @@
                 <div class="position-relative">
                     <button type="button" class="btn btn-primary" id="btn-show-filter"><i class="fa-solid fa-filter"></i> Filter</button>
                     <div id="container-filter" class="w-50 border rounded-2 p-3 position-absolute bg-white mt-1" style="display:none;">
-                        <div class="row mb-3">
-                            <div class="d-flex align-items-center col-6">
-                                <p class="text-nowrap me-2 fw-bold">Tanggal Awal</p>
-                                <input type="date" class="form-control" name="start" id="input-tanggal-awal" value=@isset($start) {{ $start }} @endisset>
-                            </div>
-                            <div class="d-flex align-items-center col-6">
-                                <p class="text-nowrap me-2 fw-bold">Tanggal Akhir</p>
-                                <input type="date" class="form-control" name="end" id="input-tanggal-akhir" value=@isset($end) {{ $end }} @endisset>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-start">
-                            <p class="text-nowrap me-2 fw-bold">Outlet</p>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="opsi_outlet" id="outlet-all">
-                                <label class="form-check-label" for="outlet-all">Semua</label>
-                            </div>
-                            @foreach ($outlets as $outlet)
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="outlet-{{ $outlet->kode }}" value="option1">
-                                    <label class="form-check-label" for="outlet-{{ $outlet->kode }}">{{ $outlet->kode }}</label>
+                        <form action="/laporan/outlet" id="form-filter">
+                            <div class="row mb-3">
+                                <div class="d-flex align-items-center col-6">
+                                    <p class="text-nowrap me-2 fw-bold">Tanggal Awal</p>
+                                    <input type="date" class="form-control" name="start" id="input-tanggal-awal" value=@isset($start) {{ $start }} @endisset>
                                 </div>
-                            @endforeach
-                        </div>
-                        <div class="d-flex w-100 justify-content-end">
-                            <button type="button" class="btn btn-primary" id="btn-apply-filter">Apply</button>
-                        </div>
+                                <div class="d-flex align-items-center col-6">
+                                    <p class="text-nowrap me-2 fw-bold">Tanggal Akhir</p>
+                                    <input type="date" class="form-control" name="end" id="input-tanggal-akhir" value=@isset($end) {{ $end }} @endisset>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start">
+                                <p class="text-nowrap me-2 fw-bold">Outlet</p>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="outlet" value="0" @if($selectedOutlet == 0) checked @endif>
+                                    <label class="form-check-label">Semua</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="outlet" value="{{ $outlet->id }}" @if($selectedOutlet == $outlet->id) checked @endif>
+                                    <label class="form-check-label">{{ substr($outlet->nama, 7) }}</label>
+                                </div>
+                            </div>
+                            <div class="d-flex w-100 justify-content-end">
+                                <button type="submit" form="form-filter" class="btn btn-primary" id="btn-apply-filter">Apply</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div id="table-container">
