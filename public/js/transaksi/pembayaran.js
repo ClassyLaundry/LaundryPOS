@@ -15,11 +15,17 @@ $(document).ready(function() {
         $.ajax({
             url: "/transaksi/detail/" + btnId,
         }).done(function(data) {
+            console.log(data);
             let trans = data;
             $('.kode-trans').text(trans.kode);
-            $('#subtotal').html(trans.subtotal);
-            $('#diskon').html(trans.subtotal - trans.grand_total);
-            $('#grand-total').html(trans.grand_total);
+
+            $('#customer-name').val(trans.pelanggan.nama);
+            $('#customer-phone_number').val(trans.pelanggan.telephone);
+            $('#customer-address').val(trans.pelanggan.alamat);
+
+            $('#subtotal').html((trans.subtotal).toLocaleString(['ban', 'id']));
+            $('#diskon').html((trans.subtotal - trans.grand_total).toLocaleString(['ban', 'id']));
+            $('#grand-total').html((trans.grand_total).toLocaleString(['ban', 'id']));
             $('#table-item-transaksi tbody').empty();
 
             let items = trans.item_transaksi;

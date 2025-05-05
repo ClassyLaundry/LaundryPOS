@@ -29,18 +29,33 @@
     </section>
 
     <div class="modal fade" role="dialog" tabindex="-1" id="modal-detail-trans">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Detail Transaksi <span class="kode-trans">kode trans</span></h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="row">
+                        <div class="col-8 mb-3">
+                            <h5>Nama Pelanggan</h5>
+                            <input class="form-control" id="customer-name" type="text" readonly>
+                        </div>
+                        <div class="col-4 mb-3">
+                            <h5>Nomor</h5>
+                            <input class="form-control" id="customer-phone_number" type="text" readonly>
+                        </div>
+                        <div class="col-12 mb-0">
+                            <h5>Alamat</h5>
+                            <input class="form-control" id="customer-address" type="text" readonly>
+                        </div>
+                    </div>
+                    <hr>
                     <div class="table-responsive">
                         <table class="table table-striped" id="table-item-transaksi">
                             <thead>
                                 <tr>
-                                    <th>Nama</th>
+                                    <th>Item</th>
                                     <th>Kategori</th>
                                     <th colspan="2">Bobot/Harga</th>
                                 </tr>
@@ -51,22 +66,23 @@
                                 <tr>
                                     <td colspan="2" class="text-end">Sub Total</td>
                                     <td>Rp</td>
-                                    <td class="thousand-separator text-end" id="subtotal"></td>
+                                    <td class="text-end" id="subtotal"></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" class="text-end">Diskon</td>
                                     <td>Rp</td>
-                                    <td class="thousand-separator text-end" id="diskon"></td>
+                                    <td class="text-end" id="diskon"></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" class="text-end">Grand Total</td>
                                     <td>Rp</td>
-                                    <td class="thousand-separator text-end" id="grand-total"></td>
+                                    <td class="text-end" id="grand-total"></td>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
                 </div>
+
                 <div class="modal-footer">
                     <button id="btn-bayar" class="btn btn-primary">Bayar</button>
                 </div>
