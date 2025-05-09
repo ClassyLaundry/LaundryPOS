@@ -5,6 +5,7 @@
                 <th>Kode</th>
                 <th>Tipe</th>
                 <th>Pelanggan</th>
+                <th>Alamat</th>
                 <th>Tanggal Transaksi</th>
                 <th>Tanggal Selesai</th>
                 <th>Total</th>
@@ -20,6 +21,7 @@
                 <td class="text-center">{{ $transaksi->kode }}</td>
                 <td class="text-center">{{ $transaksi->tipe_transaksi }}</td>
                 <td>{{ $transaksi->pelanggan->nama }}</td>
+                <td>{{ $transaksi->pelanggan->alamat }}</td>
                 <td class="text-center">{{ $transaksi->created_at }}</td>
                 <td class="text-center">@isset($transaksi->done_date) {{ $transaksi->done_date }} @endisset</td>
                 <td>

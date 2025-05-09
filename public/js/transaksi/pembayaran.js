@@ -217,7 +217,7 @@ $(document).ready(function() {
     $('#table-container').load(window.location.origin + '/component/pembayaran', function() {
         $("#table-pembayaran").dataTable({
             columnDefs : [{
-                targets: [3, 4],
+                targets: [4, 5],
                 render: function (data, type, row) {
                     if ((type === 'display' || type === 'filter') && data != '') {
                         return moment(data).format('DD-MM-YYYY');
@@ -225,8 +225,9 @@ $(document).ready(function() {
                     return data;
                 }
             }],
-            order: [[3, 'desc']],
+            order: [[4, 'desc']],
             columns: [
+                null,
                 null,
                 null,
                 null,
