@@ -627,7 +627,7 @@ class LaporanController extends Controller
                 return view('pages.laporan.Omset', [
                     'transaksis' => $transaksis,
                     'rowHeight' => $countPerDay,
-                    'outlets' => $outlet,
+                    'outlet' => $outlet,
                     'selectedOutlet' => $selectedOutlet,
                     'start' => $request->start,
                     'end' => $request->end,
