@@ -17,7 +17,7 @@
                 <div class="position-relative">
                     <button type="button" class="btn btn-primary" id="btn-show-filter"><i class="fa-solid fa-filter"></i> Filter</button>
                     <div id="container-filter" class="w-50 border rounded-2 p-3 position-absolute bg-white mt-1" style="display:none;">
-                        <form action="/laporan/outlet" id="form-filter">
+                        <form action="/laporan/omset" id="form-filter">
                             <div class="row mb-3">
                                 <div class="d-flex align-items-center col-6">
                                     <p class="text-nowrap me-2 fw-bold">Tanggal Awal</p>

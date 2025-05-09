@@ -601,7 +601,6 @@ class LaporanController extends Controller
         $outlet = Outlet::find(Auth::user()->outlet_id);
         $selectedOutlet = -1;
         if (!empty($request->all())) {
-            dd($request->all());
             if ($request->has('start') && $request->has('end')) {
                 $start = $request->start . ' 00:00:00';
                 $end = $request->end . ' 23:59:59';
