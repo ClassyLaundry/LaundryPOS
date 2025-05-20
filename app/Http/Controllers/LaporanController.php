@@ -641,6 +641,22 @@ class LaporanController extends Controller
         ]);
     }
 
+    public function exportOmset(Request $request)
+    {
+        $start = $request->start . ' 00:00:00';
+        $end = $request->end . ' 23:59:59';
+
+        $transaksis = Transaksi::whereBetween('created_at', [$start, $end])
+            ->with('kasir')
+            ->where('status', 'confirmed')
+            ->when($request->outlet != 0, function ($query) use ($request) {
+                $query->where('outlet_id', Auth::user()->outlet_id);
+            })
+            ->get();
+
+         return Excel::download(new LaporanOmsetExport($transaksis->toArray()), 'laporan_omset.xlsx');
+    }
+
     public function tableKasMasuk(Request $request)
     {
         $start = $request->start . ' 00:00:00';

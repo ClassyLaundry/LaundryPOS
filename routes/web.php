@@ -297,4 +297,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/laporan/customer', [LaporanController::class, 'customer']);
     Route::get('/component/customer', [LaporanController::class, 'tableCustomer']);
     Route::get('/export-excel', [LaporanController::class, 'exportExcel'])->name('export');
+    Route::get('/exportOmset', [LaporanController::class, 'exportOmset'])->name('export.omset');
 });

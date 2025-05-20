@@ -12,14 +12,14 @@
         </thead>
         <tbody style="cursor: pointer">
             @foreach ($komplains as $komplain)
-            <tr data-bs-toggle="tooltip" data-bss-tooltip="" title="Double klik untuk memilih" id={{ $komplain->transaksi->id }}>
-                <td>{{ $komplain->transaksi->kode }}</td>
+            <tr data-bs-toggle="tooltip" data-bss-tooltip="" title="Double klik untuk memilih" id={{ $komplain->transaksi?->id }}>
+                <td>{{ $komplain->transaksi?->kode }}</td>
                 <td class="d-none d-lg-table-cell text-center">{{ $komplain->created_at }}</td>
-                <td>{{ $komplain->transaksi->pelanggan->nama }}</td>
+                <td>{{ $komplain->transaksi?->pelanggan->nama }}</td>
                 <td>Rp</td>
-                <td class="text-end thousand-separator">{{ number_format($komplain->transaksi->grand_total, 0, ',', '.') }}</td>
+                <td class="text-end thousand-separator">{{ number_format($komplain->transaksi?->grand_total, 0, ',', '.') }}</td>
                 <td class="text-center" style="white-space: nowrap">
-                @if($komplain->transaksi->lunas)
+                @if($komplain->transaksi?->lunas)
                     Lunas
                 @else
                     Belum Lunas

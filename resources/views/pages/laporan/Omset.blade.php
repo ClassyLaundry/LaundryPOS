@@ -44,6 +44,7 @@
                             </div>
                         </form>
                     </div>
+                    <a href="{{ route('export.omset', ['start' => request('start'), 'end' => request('end'), 'outlet' => request('outlet')]) }}" class="btn btn-primary text-white position-absolute end-0" id="btn-export">Export</a>
                 </div>
                 <div id="table-container">
                     <div class="mt-4" id="table-laporan-omset">
