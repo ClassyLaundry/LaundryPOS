@@ -29,6 +29,17 @@ trait UploadTrait
         $default_path = 'image/' . $path;
         $file = $request->file('image');
         if ($file) {
+
+            // (Development mode) Upload ke folder local
+            // $file_name = time() . '_' . $file->getClientOriginalName();
+            // $final_path = $default_path . '/' . $file_name;
+            // if (!Storage::exists($default_path)) {
+            //     Storage::makeDirectory($default_path);
+            // }
+            // Storage::put($final_path, file_get_contents($file));
+            // return Storage::url($final_path);
+
+            // (Production mode) Upload ke folder digitalocean
             $test = Storage::disk('digitalocean')->put($default_path, $file, 'public');
             return Storage::disk('digitalocean')->url($test);
         }
