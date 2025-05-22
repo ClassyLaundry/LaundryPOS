@@ -101,16 +101,16 @@ $(document).ready(function() {
         while (outermostCard.parent().closest('.card').length > 0) {
             outermostCard = outermostCard.parent().closest('.card');
         }
-        $('#list-action').css('left', $(this).offset().left - outermostCard.offset().left - lebarList + lebarBtn + lebarTambahan);
+        $('#list-action, #list-action-delivery, #list-action-pickup').css('left', $(this).offset().left - outermostCard.offset().left - lebarList + lebarBtn + lebarTambahan);
 
-        $('#list-action').css('left', $(this).offset().left - $(this).closest('.card').offset().left - lebarList + lebarBtn + lebarTambahan);
+        $('#list-action, #list-action-delivery, #list-action-pickup').css('left', $(this).offset().left - $(this).closest('.card').offset().left - lebarList + lebarBtn + lebarTambahan);
 
         let tinggiBtn = $(this).css('height');
         let tinggiHeader = 0;
         tinggiBtn = parseInt(tinggiBtn.substr(0, tinggiBtn.indexOf('px')));
-        $('#list-action').css('top', $(this).offset().top - $(this).closest('.card').offset().top + tinggiBtn + tinggiHeader);
+        $('#list-action, #list-action-delivery, #list-action-pickup').css('top', $(this).offset().top - $(this).closest('.card').offset().top + tinggiBtn + tinggiHeader);
 
-        $('#list-action').show();
+        $('#list-action, #list-action-delivery, #list-action-pickup').show();
         btnIndex = $(this).index('.btn-show-action') + 1;
         flag = true;
     });
@@ -125,7 +125,7 @@ $(document).ready(function() {
         if($(this).closest('.list-container').length == 1) {
             lebarTambahan += 16;
         }
-        $('#list-action').css('left', $(this).offset().left - $(this).closest('.card').offset().left - lebarList + lebarBtn + lebarTambahan);
+        $('#list-action, #list-action-delivery, #list-action-pickup').css('left', $(this).offset().left - $(this).closest('.card').offset().left - lebarList + lebarBtn + lebarTambahan);
 
         let tinggiBtn = $(this).css('height');
         let tinggiHeader = 0;
@@ -134,9 +134,9 @@ $(document).ready(function() {
         if($(this).closest('.list-container').length == 1) {
             closestCardHeight = $(this).closest('.beacon').offset().top;
         }
-        $('#list-action').css('top', $(this).offset().top - closestCardHeight + tinggiBtn + tinggiHeader + tinggiTambahan);
+        $('#list-action, #list-action-delivery, #list-action-pickup').css('top', $(this).offset().top - closestCardHeight + tinggiBtn + tinggiHeader + tinggiTambahan);
 
-        $('#list-action').show();
+        $('#list-action, #list-action-delivery, #list-action-pickup').show();
         btnIndex = $(this).index('.btn-show-action') + 1;
         flag = true;
     });
@@ -146,8 +146,8 @@ $(document).ready(function() {
             if (flag) {
                 flag = !flag;
             } else {
-                if ($('#list-action').css('display') == 'block') {
-                    $('#list-action').hide();
+                if ($('#list-action, #list-action-delivery, #list-action-pickup').css('display') == 'block') {
+                    $('#list-action, #list-action-delivery, #list-action-pickup').hide();
                 }
             }
         }, 10);
@@ -158,8 +158,8 @@ $(document).ready(function() {
             if (flag) {
                 flag = !flag;
             } else {
-                if ($('#list-action').css('display') == 'block') {
-                    $('#list-action').hide();
+                if ($('#list-action, #list-action-delivery, #list-action-pickup').css('display') == 'block') {
+                    $('#list-action, #list-action-delivery, #list-action-pickup').hide();
                 }
             }
         }, 10);

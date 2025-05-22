@@ -157,16 +157,16 @@ a {
   font-weight: initial!important;
 }
 
-#list-action li:hover, .list-action li:hover{
+#list-action li:hover, .list-action li:hover, #list-action-delivery li:hover, #list-action-pickup li:hover{
   color: #fff;
   background-color: #0d6efd;
 }
 
-#list-action li, .list-action li {
+#list-action li, .list-action li, #list-action-delivery li, #list-action-pickup li {
   padding: 0px 12px;
 }
 
-#list-action, .list-action {
+#list-action, .list-action, #list-action-delivery, #list-action-pickup {
   width: 150px;
   padding: 6px 0px;
   z-index: 1000;

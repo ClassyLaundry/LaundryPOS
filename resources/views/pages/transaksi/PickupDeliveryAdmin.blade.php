@@ -64,11 +64,11 @@
                         <div id="table-pickup" class="table-container" data-table="pickup"></div>
                     </section>
                 </div>
-                <ul class="list-unstyled form-control" id="list-action">
+                <ul class="list-unstyled form-control" id="list-action-pickup">
                     @if(in_array("Mengubah Data Pickup Delivery", Session::get('permissions')) || Session::get('role') == 'administrator')
-                        <li id="action-update">Update</li>
+                        <li id="action-update-pickup">Update</li>
                     @endif
-                    <li id="action-delete">Cancel</li>
+                    <li id="action-delete-pickup">Cancel</li>
                 </ul>
             </div>
         </div>
@@ -121,6 +121,12 @@
                         <div id="table-delivery" class="table-container" data-table="delivery"></div>
                     </section>
                 </div>
+                <ul class="list-unstyled form-control" id="list-action-delivery">
+                    @if(in_array("Mengubah Data Pickup Delivery", Session::get('permissions')) || Session::get('role') == 'administrator')
+                        <li id="action-update-delivery">Update</li>
+                    @endif
+                    <li id="action-delete-delivery">Cancel</li>
+                </ul>
             </div>
         </div>
 
