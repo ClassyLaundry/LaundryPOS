@@ -174,6 +174,9 @@ class TransaksiController extends Controller
                             $q->where('nama', 'like', '%' . $request->key . '%');
                         });
                 })
+                ->select('transaksis.*')
+                ->selectRaw('EXISTS(SELECT 1 FROM pickup_deliveries WHERE action = "pickup" AND transaksi_id = transaksis.id) as has_pickup')
+                ->selectRaw('EXISTS(SELECT 1 FROM pickup_deliveries WHERE action = "delivery" AND transaksi_id = transaksis.id) as has_delivery')
                 ->latest()->paginate(10);
         } else {
             $transaksi = Transaksi::detail()
@@ -188,6 +191,9 @@ class TransaksiController extends Controller
                             $q->where('nama', 'like', '%' . $request->key . '%');
                         });
                 })
+                ->select('transaksis.*')
+                ->selectRaw('EXISTS(SELECT 1 FROM pickup_deliveries WHERE action = "pickup" AND transaksi_id = transaksis.id) as has_pickup')
+                ->selectRaw('EXISTS(SELECT 1 FROM pickup_deliveries WHERE action = "delivery" AND transaksi_id = transaksis.id) as has_delivery')
                 ->latest()->paginate(10);
         }
         return view('components.tableListTrans', [

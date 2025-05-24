@@ -7,6 +7,8 @@
                 <th>Nama Pelanggan</th>
                 <th colspan="2">Harga Total</th>
                 <th>Lunas</th>
+                <th>Pickup</th>
+                <th>Delivery</th>
             </tr>
         </thead>
         <tbody style="cursor: pointer">
@@ -22,6 +24,20 @@
                     Lunas
                 @else
                     Belum Lunas
+                @endif
+                </td>
+                <td class="text-center">
+                @if($trans->has_pickup)
+                    Ya
+                @else
+                    Tidak
+                @endif
+                </td>
+                <td class="text-center">
+                @if($trans->has_delivery)
+                    Ya
+                @else
+                    Tidak
                 @endif
                 </td>
             </tr>
