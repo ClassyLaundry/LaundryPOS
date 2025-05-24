@@ -270,6 +270,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/data/inventory/update/{inventory}', [InventoryController::class, 'update']);
     Route::get('/data/inventory/delete/{inventory}', [InventoryController::class, 'delete']);
     Route::post('/data/inventory/traffic', [LaporanInventoryController::class, 'insert']);
+    Route::get('/data/inventory/export', [InventoryController::class, 'export'])->name('export.inventory');
 
     //Rewash proses
     Route::get('/proses/rewash', [PageController::class, 'prosesRewash'])->name('menu-rewash');
