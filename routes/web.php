@@ -299,4 +299,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/component/customer', [LaporanController::class, 'tableCustomer']);
     Route::get('/export-excel', [LaporanController::class, 'exportExcel'])->name('export');
     Route::get('/exportOmset', [LaporanController::class, 'exportOmset'])->name('export.omset');
+    Route::get('/laporan/pengeluaran', [LaporanController::class, 'laporanPengeluaran']);
+    Route::get('/laporan/pengeluaran/export', [LaporanController::class, 'exportLaporanPengeluaran'])->name('export.pengeluaran');
 });

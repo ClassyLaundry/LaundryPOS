@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Data\Pengeluaran;
+use App\Exports\LaporanPengeluaranExport;
 
 class LaporanController extends Controller
 {
@@ -772,5 +774,89 @@ class LaporanController extends Controller
     public function laporanKas()
     {
         return view('pages.laporan.KasMasuk');
+    }
+
+    public function laporanPengeluaran(Request $request)
+    {
+        $user = User::find(auth()->id());
+        $permissions = $user->getPermissionsViaRoles();
+        $permissionExist = collect($permissions)->first(function ($item) {
+            return $item->name === 'Melihat Laporan Pengeluaran';
+        });
+        if ($permissionExist) {
+            $query = Pengeluaran::where('outlet_id', Auth::user()->outlet_id);
+
+            // Apply date range filter if provided
+            if ($request->has('start') && $request->has('end')) {
+                $start = $request->start . ' 00:00:00';
+                $end = $request->end . ' 23:59:59';
+                $query->whereBetween('created_at', [$start, $end]);
+            }
+
+            // Apply search filter if provided
+            if ($request->has('search')) {
+                $search = '%' . $request->search . '%';
+                $query->where(function($q) use ($search) {
+                    $q->where('nama', 'like', $search)
+                      ->orWhere('deskripsi', 'like', $search);
+                });
+            }
+
+            return view(
+                'pages.laporan.Pengeluaran',
+                [
+                    'data' => $query->paginate(10),
+                    'saldo' => Outlet::where('id', Auth::user()->outlet_id)->first(),
+                ]
+            );
+        } else {
+            abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
+        }
+    }
+
+    public function exportLaporanPengeluaran(Request $request)
+    {
+        $user = User::find(auth()->id());
+        $permissions = $user->getPermissionsViaRoles();
+        $permissionExist = collect($permissions)->first(function ($item) {
+            return $item->name === 'Melihat Laporan Pengeluaran';
+        });
+        if ($permissionExist) {
+        $outlet = Outlet::find(Auth::user()->outlet_id);
+        $query = Pengeluaran::where('outlet_id', Auth::user()->outlet_id);
+
+        // Apply date range filter if provided
+        if ($request->has('start') && $request->has('end')) {
+            $start = $request->start . ' 00:00:00';
+            $end = $request->end . ' 23:59:59';
+            $query->whereBetween('created_at', [$start, $end]);
+        }
+
+        // Apply search filter if provided
+        if ($request->has('search')) {
+            $search = '%' . $request->search . '%';
+            $query->where(function($q) use ($search) {
+                $q->where('nama', 'like', $search)
+                  ->orWhere('deskripsi', 'like', $search);
+            });
+        }
+
+        $pengeluarans = $query->select('nama', 'deskripsi', 'nominal', 'created_at')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $filename = 'laporan_pengeluaran_' . $outlet->nama . '_' . date('Y-m-d_H-i-s') . '.xlsx';
+
+        return Excel::download(
+            new LaporanPengeluaranExport(
+                $pengeluarans->toArray(),
+                $request->start ?? null,
+                    $request->end ?? null
+                ),
+                $filename
+            );
+        } else {
+            abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
+        }
     }
 }

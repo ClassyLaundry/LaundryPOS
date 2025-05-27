@@ -598,6 +598,10 @@
                                         <input class="form-check-input" type="checkbox" id="check-laporan-4" value="Melihat Laporan Kas Masuk">
                                         <label class="form-check-label" for="check-laporan-4">Melihat laporan kas masuk</label>
                                     </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="check-laporan-5" value="Melihat Laporan Pengeluaran">
+                                        <label class="form-check-label" for="check-laporan-5">Melihat laporan pengeluaran</label>
+                                    </div>
                                     {{-- <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="check-laporan-5" value="Membuat Laporan Custom">
                                         <label class="form-check-label" for="check-laporan-5">Membuat laporan custom</label>

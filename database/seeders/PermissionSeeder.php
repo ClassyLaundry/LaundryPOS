@@ -181,5 +181,6 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'Melihat Laporan Omset']);
         Permission::create(['name' => 'Melihat Laporan Kas Masuk']);
         Permission::create(['name' => 'Membuat Laporan Custom']);
+        Permission::create(['name' => 'Melihat Laporan Pengeluaran']);
     }
 }
