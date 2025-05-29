@@ -14,4 +14,8 @@ $(document).ready(function() {
             $('#total-piutang').text('Rp ' + $('#table-container #table-laporan').data('total'));
         });
     });
+
+    $('#btn-export').on('click', function() {
+        window.location = window.location.origin + '/laporan/piutang/export?start=' + $('#input-tanggal-awal').val() + '&end=' + $('#input-tanggal-akhir').val() + '&name=' + $('#input-nama-pelanggan').val();
+    });
 });

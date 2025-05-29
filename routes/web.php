@@ -290,6 +290,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/component/piutang', [LaporanController::class, 'tablePiutang']);
     Route::get('/laporan/piutang/{id}/detail', [LaporanController::class, 'laporanPiutangPelangganDetail']);
     Route::get('/laporan/deposit', [LaporanController::class, 'laporanMutasiDeposit']);
+    Route::get('/laporan/deposit/export', [LaporanController::class, 'exportMutasiDeposit'])->name('export.deposit');
     Route::get('/laporan/deposit/{id}/detail', [LaporanController::class, 'laporanMutasiDepositDetail']);
     Route::get('/laporan/omset', [LaporanController::class, 'laporanOmset']);
     Route::get('/component/omset', [LaporanController::class, 'tableOmset']);
@@ -301,4 +302,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/exportOmset', [LaporanController::class, 'exportOmset'])->name('export.omset');
     Route::get('/laporan/pengeluaran', [LaporanController::class, 'laporanPengeluaran']);
     Route::get('/laporan/pengeluaran/export', [LaporanController::class, 'exportLaporanPengeluaran'])->name('export.pengeluaran');
+    Route::get('/laporan/piutang/export', [LaporanController::class, 'exportPiutangPelanggan'])->name('export.piutang');
+    Route::get('/laporan/kas/export', [LaporanController::class, 'exportKasMasuk'])->name('export.kas');
 });

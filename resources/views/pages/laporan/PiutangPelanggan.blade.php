@@ -11,8 +11,11 @@
         <div class="card">
             <div class="card-body">
                 <div class="card-title d-flex justify-content-between align-items-center">
-                    <h4>Laporan Piutang</h4>
-                    <h5 class="d-flex justify-content-between" style="width: 300px;"><span>Total Piutang:</span><span id="total-piutang"></span></h5>
+                    <div>
+                        <h4>Laporan Piutang</h4>
+                        <h5 class="d-flex justify-content-between" style="width: 300px;"><span>Total Piutang:</span><span id="total-piutang"></span></h5>
+                    </div>
+                    <button type="button" class="btn btn-primary text-white" id="btn-export">Export</button>
                 </div>
                 <hr>
 

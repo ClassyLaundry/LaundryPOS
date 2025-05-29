@@ -69,13 +69,14 @@ class LaporanPengeluaranExport implements FromArray, WithHeadings, WithTitle, Wi
     {
         $headers = [
             ['LAPORAN PENGELUARAN'],
-            ['']
         ];
 
         if ($this->startDate && $this->endDate) {
             $headers[] = ['Periode: ' . date('d-m-Y', strtotime($this->startDate)) . ' s/d ' . date('d-m-Y', strtotime($this->endDate))];
+        } else {
             $headers[] = [''];
         }
+
 
         $headers[] = [
             'No',
@@ -115,7 +116,7 @@ class LaporanPengeluaranExport implements FromArray, WithHeadings, WithTitle, Wi
      */
     public function styles(Worksheet $sheet)
     {
-        $lastRow = count($this->data) + 4; // 4 is the number of header rows
+        $lastRow = count($this->data) + 3; // 3 is the number of header rows
 
         // Title style
         $sheet->getStyle('A1')->applyFromArray([
@@ -130,7 +131,7 @@ class LaporanPengeluaranExport implements FromArray, WithHeadings, WithTitle, Wi
 
         // Date range style
         if ($this->startDate && $this->endDate) {
-            $sheet->getStyle('A3')->applyFromArray([
+            $sheet->getStyle('A2')->applyFromArray([
                 'font' => [
                     'bold' => true
                 ]
@@ -156,7 +157,7 @@ class LaporanPengeluaranExport implements FromArray, WithHeadings, WithTitle, Wi
         ]);
 
         // Data style
-        $sheet->getStyle('A4:E' . ($lastRow - 1))->applyFromArray([
+        $sheet->getStyle('A4:E' . ($lastRow))->applyFromArray([
             'borders' => [
                 'allBorders' => [
                     'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN
@@ -165,7 +166,7 @@ class LaporanPengeluaranExport implements FromArray, WithHeadings, WithTitle, Wi
         ]);
 
         // Total row style
-        $sheet->getStyle('A' . ($lastRow - 1) . ':E' . ($lastRow - 1))->applyFromArray([
+        $sheet->getStyle('A' . ($lastRow) . ':E' . ($lastRow))->applyFromArray([
             'font' => [
                 'bold' => true
             ],
@@ -194,8 +195,9 @@ class LaporanPengeluaranExport implements FromArray, WithHeadings, WithTitle, Wi
         $sheet->getColumnDimension('D')->setWidth(20);
         $sheet->getColumnDimension('E')->setWidth(20);
 
-        // Merge cells for title
+        // Merge cells for title and date range
         $sheet->mergeCells('A1:E1');
+        $sheet->mergeCells('A2:E2');
 
         return [];
     }

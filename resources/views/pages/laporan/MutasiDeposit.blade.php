@@ -11,7 +11,10 @@
     <section id="data-laporan">
         <div class="card">
             <div class="card-body">
-                <h4>Laporan Mutasi Deposit</h4>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>Laporan Mutasi Deposit</h4>
+                    <a href="{{ route('export.deposit') }}" class="btn btn-primary text-white" id="btn-export">Export</a>
+                </div>
                 <hr>
 
                 <div class="mt-4" id="table-laporan-mutasi_deposit">

@@ -9,31 +9,31 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 /**
- * Class untuk export data inventory ke Excel
+ * Class untuk export data mutasi deposit ke Excel
  */
-class InventoryExport implements FromArray, WithHeadings, WithTitle, WithStyles
+class LaporanDepositExport implements FromArray, WithHeadings, WithTitle, WithStyles
 {
     /**
-     * Data inventory yang akan di-export
+     * Data mutasi deposit yang akan di-export
      * @var array
      */
     protected $data;
 
     /**
      * Constructor untuk inisialisasi data
-     * @param array $data Data inventory yang akan di-export
+     * @param $data Data mutasi deposit yang akan di-export
      */
-    public function __construct(array $data)
+    public function __construct($data)
     {
-        $this->data = array_map(function($item, $index) {
+        $this->data = $data->map(function($item, $index) {
             return [
                 'no' => $index + 1,
-                'nama' => $item['nama'],
-                'deskripsi' => $item['deskripsi'],
-                'kategori' => $item['kategori'],
-                'stok' => $item['stok']
+                'nama' => $item->nama,
+                'bergabung_sejak' => date('d-m-Y H:i', strtotime($item->created_at)),
+                'transaksi_terakhir' => $item->transaksi_terakhir ? date('d-m-Y H:i', strtotime($item->transaksi_terakhir->created_at)) : '-',
+                'saldo_pelanggan' => $item->saldo_akhir
             ];
-        }, $data, array_keys($data));
+        })->toArray();
     }
 
     /**
@@ -51,18 +51,17 @@ class InventoryExport implements FromArray, WithHeadings, WithTitle, WithStyles
      */
     public function headings(): array
     {
-
         $headers = [
-            ['LAPORAN INVENTORY'],
+            ['LAPORAN MUTASI DEPOSIT'],
             ['']
         ];
 
         $headers[] = [
             'No',
-            'Nama',
-            'Deskripsi',
-            'Tipe',
-            'Stok'
+            'Nama pelanggan',
+            'Bergabung sejak',
+            'Transaksi terakhir',
+            'Saldo pelanggan'
         ];
 
         return $headers;
@@ -74,7 +73,7 @@ class InventoryExport implements FromArray, WithHeadings, WithTitle, WithStyles
      */
     public function title(): string
     {
-        return 'Laporan Inventory';
+        return 'Laporan Mutasi Deposit';
     }
 
     /**
@@ -130,9 +129,9 @@ class InventoryExport implements FromArray, WithHeadings, WithTitle, WithStyles
         // Mengatur lebar kolom
         $sheet->getColumnDimension('A')->setWidth(5);
         $sheet->getColumnDimension('B')->setWidth(30);
-        $sheet->getColumnDimension('C')->setWidth(40);
-        $sheet->getColumnDimension('D')->setWidth(15);
-        $sheet->getColumnDimension('E')->setWidth(10);
+        $sheet->getColumnDimension('C')->setWidth(25);
+        $sheet->getColumnDimension('D')->setWidth(25);
+        $sheet->getColumnDimension('E')->setWidth(25);
 
         // Merge cells for title
         $sheet->mergeCells('A1:E1');
