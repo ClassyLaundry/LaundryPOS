@@ -52,6 +52,24 @@ trait UploadTrait
         $combined_path = null;
         $files = $request->file('image');
         foreach ($files as $file) {
+            // (Development mode) Upload ke folder local
+            // $file_name = time() . '_' . $file->getClientOriginalName();
+            // $final_path = $default_path . '/' . $file_name;
+
+            // if (!Storage::exists($default_path)) {
+            //     Storage::makeDirectory($default_path);
+            // }
+
+            // Storage::put($final_path, file_get_contents($file));
+            // $url = Storage::url($final_path);
+
+            // if ($combined_path == null) {
+            //     $combined_path = $url;
+            // } else {
+            //     $combined_path = $combined_path . ";" . $url;
+            // }
+
+            // (Production mode) Upload ke folder digitalocean
             $test = Storage::disk('digitalocean')->put($default_path, $file, 'public');
             if ($combined_path == "") {
                 $url = Storage::disk('digitalocean')->url($test);
