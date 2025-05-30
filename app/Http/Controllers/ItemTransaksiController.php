@@ -7,6 +7,8 @@ use App\Models\Data\JenisItem;
 use App\Models\Transaksi\ItemTransaksi;
 use App\Models\Transaksi\Transaksi;
 use App\Models\User;
+use App\Models\Pembayaran;
+use App\Models\Saldo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -176,11 +178,19 @@ class ItemTransaksiController extends Controller
             return $item->name === 'Menghapus Item Transaksi';
         });
         if ($permissionExist) {
-            $id_transaksi = $id->transaksi_id;
+            // Get the transaction
+            $transaksi = Transaksi::find($id->transaksi_id);
+
+            // Process refund if needed
+            $transaksi->refundItem($id->total_premium, $user);
+
+            // Delete the item
             $id->delete();
 
-            $transaksi = Transaksi::find($id_transaksi)->recalculate();
-            return  [
+            // Recalculate transaction totals
+            $transaksi->recalculate();
+
+            return [
                 'status' => 200,
                 $transaksi,
             ];
