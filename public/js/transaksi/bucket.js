@@ -33,6 +33,10 @@ $(document).ready(function() {
             if (trans.setrika_only) {
                 $('#formCheck-setrika').val(1);
             }
+            $('#formCheck-need_delivery').prop('checked', trans.need_delivery);
+            if (trans.need_delivery) {
+                $('#formCheck-need_delivery').val(1);
+            }
             $('#input-catatan-trans').val(trans.catatan_transaksi);
             $('#tanggal-selesai-proses').val(trans.done_date);
 
@@ -56,8 +60,8 @@ $(document).ready(function() {
 
             $('#select-outlet').val(trans.outlet_id);
 
-            let pickup = trans.pickup_delivery[0];
-            let delivery = trans.pickup_delivery[1];
+            let pickup = trans.pickup_delivery?.find(item => item.action === 'pickup');
+            let delivery = trans.pickup_delivery?.find(item => item.action === 'delivery');
             let penerima = trans.penerima;
 
             if (typeof pickup !== "undefined") {
@@ -79,6 +83,8 @@ $(document).ready(function() {
                 $('#check-delivery').addClass('disabled');
                 $('#container-delivery').addClass('disabled');
                 $('#container-delivery').removeClass('d-none');
+                $('#input-kode-delivery').val(delivery.kode);
+                $('#input-driver-delivery').val(delivery.nama_driver);
             }else {
                 $('#formCheck-delivery').parent().next().hide();
                 $('#formCheck-delivery').prop('checked', false);
@@ -185,7 +191,7 @@ $(document).ready(function() {
     $('#table-list-pelanggan-2').on('click', '.page-link', function(e) {
         e.preventDefault();
         pagePelanggan = $(this).attr('href').split('page=')[1];
-        searchDiOutlet();
+        searchListPelanggan();
     });
 
     $('#input-nama-pelanggan-2').on('input', function() {
@@ -468,7 +474,7 @@ $(document).ready(function() {
         $(this).toggleClass('selected');
     });
 
-    $('#formCheck-express, #formCheck-ontime, #formCheck-setrika').on('change', function() {
+    $('#formCheck-express, #formCheck-ontime, #formCheck-setrika, #formCheck-need_delivery').on('change', function() {
         if($(this).is(':checked')) {
             $(this).val(1);
         } else {
@@ -480,7 +486,7 @@ $(document).ready(function() {
         e.preventDefault();
 
         let formData = new FormData(this);
-        formData.append('need_delivery', $('#formCheck-delivery').is(':checked') ? 1 : 0);
+        // formData.append('need_delivery', $('#formCheck-delivery').is(':checked') ? 1 : 0);
 
         $.ajax({
             headers: {
