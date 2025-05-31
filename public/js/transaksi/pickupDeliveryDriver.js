@@ -64,28 +64,82 @@ $(document).ready(function() {
         formData.append('transaksi_id', btnId);
         formData.append('ambil_di_outlet', 0);
         formData.append('penerima', $('#input-nama-penerima').val());
-        formData.append('image', $('#input-foto-penerima').prop("files")[0]);
 
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            },
-            url: "/transaksi/penerima",
-            method: "POST",
-            contentType: false,
-            processData: false,
-            data: formData,
-        }).done(function() {
+        // Get the uploaded image file
+        const imageFile = $('#input-foto-penerima').prop("files")[0];
+
+        // Check if file needs resizing (> 2MB)
+        if (imageFile && imageFile.size > 2 * 1024 * 1024) {
+            alert('File harus lebih kecil dari 2MB');
+            // Create canvas and context for resizing
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Create an image object to load the file
+            const img = new Image();
+            img.onload = function() {
+                // Set max dimensions
+                const maxWidth = 800;
+                const maxHeight = 800;
+
+                // Calculate new dimensions while maintaining aspect ratio
+                let width = img.width;
+                let height = img.height;
+                if (width > height) {
+                    if (width > maxWidth) {
+                        height *= maxWidth / width;
+                        width = maxWidth;
+                    }
+                } else {
+                    if (height > maxHeight) {
+                        width *= maxHeight / height;
+                        height = maxHeight;
+                    }
+                }
+
+                // Resize image
+                canvas.width = width;
+                canvas.height = height;
+                ctx.drawImage(img, 0, 0, width, height);
+
+                // Convert to blob
+                canvas.toBlob(function(blob) {
+                    formData.append('image', blob, imageFile.name);
+                    submitForm(formData);
+                }, 'image/jpeg', 0.7); // Convert to JPEG with 70% quality
+            };
+
+            // Load the image file
+            img.src = URL.createObjectURL(imageFile);
+        } else {
+            // If file is under 2MB, append original file
+            formData.append('image', imageFile);
+            submitForm(formData);
+        }
+
+        function submitForm(formData) {
             $.ajax({
-                url: "/transaksi/pickup-delivery/" + orderId + "/is-done",
-            }).done(function(data) {
-                alert("data berhasil disimpan");
-                window.location = window.location.origin + window.location.pathname;
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                url: "/transaksi/penerima",
+                method: "POST",
+                contentType: false,
+                processData: false,
+                data: formData,
+            }).done(function() {
+                $.ajax({
+                    url: "/transaksi/pickup-delivery/" + orderId + "/is-done",
+                }).done(function(data) {
+                    alert("data berhasil disimpan");
+                    window.location = window.location.origin + window.location.pathname;
+                });
+            }).fail(function(message) {
+                alert('error');
+                // alert(JSON.stringify(message));
+                console.log(message);
             });
-        }).fail(function(message) {
-            alert('error');
-            console.log(message);
-        });
+        }
     });
 
     $('#action-detail').on('click', function() {
