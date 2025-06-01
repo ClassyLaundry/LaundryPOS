@@ -13,6 +13,8 @@ use App\Models\Transaksi\Transaksi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Transaksi\PickupDelivery;
+use App\Models\Transaksi\Penerima;
 
 class RewashController extends Controller
 {
@@ -62,12 +64,32 @@ class RewashController extends Controller
                     $submitter = $transaksi->pencuci;
                 }
             }
+
+            $pencuciSebelumnya = $transaksi->pencuci;
+
+            $transaksi->update([
+                'status' => 'rewash',
+                'is_done_cuci' => 0,
+                'is_done_setrika' => 0,
+                'penyetrika' => null,
+                'pencuci' => null,
+            ]);
+
+            // Menghapus packing untuk transaksi yang di rewash
+            Packing::where('transaksi_id', $transaksi->id)->delete();
+
+            // Menghapus delivery untuk transaksi yang di rewash
+            PickupDelivery::where('transaksi_id', $transaksi->id)->where('action', 'delivery')->delete();
+
+            // Menghapus penerima untuk transaksi yang di rewash
+            Penerima::where('transaksi_id', $transaksi->id)->delete();
+
             Rewash::create([
                 'item_transaksi_id' => $request->item_transaksi_id,
                 'item_transaksi_qty' => $request->item_transaksi_qty,
                 'jenis_rewash_id' => $request->jenis_rewash_id,
                 'modified_by' => Auth::id(),
-                'pencuci' => $transaksi->pencuci,
+                'pencuci' => $pencuciSebelumnya,
                 'keterangan' => $request->keterangan,
                 'proses_asal' => $proses_asal,
                 'submitter' => $submitter,
@@ -75,7 +97,7 @@ class RewashController extends Controller
             Notification::create([
                 'type' => 'Rewash',
                 'message' => 'Ada Item yang perlu di rewash! \n' . $request->keterangan,
-                'to_user' => $transaksi->pencuci
+                'to_user' => $pencuciSebelumnya,
             ]);
             LogTransaksi::create([
                 'transaksi_id' => $transaksi->id,
@@ -101,6 +123,14 @@ class RewashController extends Controller
             $rewash->update([
                 'status' => 1
             ]);
+
+            // Jika rewash selesai, maka status transaksi dikembalikan ke confirmed
+            $transaksi = Transaksi::find($item_transaksi->transaksi_id);
+            if($transaksi->status == 'rewash') {
+                $transaksi->update([
+                    'status' => 'confirmed'
+                ]);
+            }
 
             LogTransaksi::create([
                 'transaksi_id' => $item_transaksi->transaksi_id,
