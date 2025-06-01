@@ -92,6 +92,7 @@ class RoleSeeder extends Seeder
             'Melihat Detail Daftar Catatan Item',
             'Melihat Detail Catatan Item',
             'Membuat Catatan Item',
+            'Menambahkan Penerima Ke Transaksi'
         ]);
     }
 }
