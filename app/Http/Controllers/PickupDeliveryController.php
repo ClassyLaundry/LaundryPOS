@@ -340,7 +340,10 @@ class PickupDeliveryController extends Controller
     public function transaksiDelivery(Request $request)
     {
         $transaksi = Transaksi::detail()
-            ->where('status', 'confirmed')
+            ->where(function($query) {
+                $query->where('status', 'confirmed')
+                    ->orWhere('status', 'rewash');
+            })
             ->where('outlet_id', User::getOutletId(Auth::id()))
             ->whereIn('id', function ($subquery) { // check kalau sudah di packing
                 $subquery->select('transaksi_id')

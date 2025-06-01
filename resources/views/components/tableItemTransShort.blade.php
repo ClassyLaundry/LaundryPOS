@@ -15,19 +15,16 @@
         <tbody>
             @foreach ($trans->item_transaksi as $item_transaksi)
             <tr id="trans-{{ $trans->id }}">
-                <td style="width: 62.5%;">{{ $item_transaksi->nama }}</td>
+                <td style="width: 62.5%;">
+                    {{ $item_transaksi->nama }}
+                    @if($item_transaksi?->rewash?->status == 0)
+                        <span class="badge bg-danger">Rewash</span>
+                    @endif
+                </td>
                 <td style="width: 20%;" class="text-center">{{ $item_transaksi->nama_kategori }}</td>
                 <td style="width: 7.5%;" class="text-center">{{ $item_transaksi->qty }}</td>
                 <td class="cell-action">
                     <div class="d-flex h-100 align-items-center justify-content-end">
-                        @if(isset($rewashes))
-                            @foreach ($rewashes as $rewash)
-                                @if($rewash->item_transaksi_id == $item_transaksi->id)
-                                    <i class="me-3 text-danger fa-solid fa-circle-exclamation"></i>
-                                @break
-                                @endif
-                            @endforeach
-                        @endif
                         @if(Session::get('role') != 'delivery')
                         <button id="btn-{{ $item_transaksi->id }}" class="btn btn-primary btn-sm btn-show-action-2" type="button">
                             <i class="fas fa-bars"></i>
@@ -65,19 +62,16 @@
         <tbody>
             @for($i = 0; $i < count($trans->item_transaksi); $i++)
                 <tr id="trans-{{ $trans->id }}">
-                    <td style="width: 62.5%;">{{ $trans->item_transaksi[$i]->nama }}</td>
+                    <td style="width: 62.5%;">
+                        {{ $trans->item_transaksi[$i]->nama }}
+                        @if(isset($trans->item_transaksi[$i]->rewash) && $trans->item_transaksi[$i]->rewash->status == 0)
+                            <span class="badge bg-danger">Rewash</span>
+                        @endif
+                    </td>
                     <td style="width: 20%;" class="text-center">{{ $trans->item_transaksi[$i]->nama_kategori }}</td>
                     <td style="width: 7.5%;" class="text-center">{{ $trans->item_transaksi[$i]->qty }}</td>
                     <td class="cell-action">
                         <div class="d-flex h-100 align-items-center justify-content-end">
-                            @if(isset($rewashes))
-                                @foreach ($rewashes as $rewash)
-                                    @if($rewash->item_transaksi_id == $trans->item_transaksi[$i]->id)
-                                        <i class="me-3 text-danger fa-solid fa-circle-exclamation"></i>
-                                    @break
-                                    @endif
-                                @endforeach
-                            @endif
                             @if(Session::get('role') != 'delivery')
                             <button id="btn-{{ $trans->item_transaksi[$i]->id }}" class="btn btn-primary btn-sm btn-show-action-2" type="button">
                                 <i class="fas fa-bars"></i>

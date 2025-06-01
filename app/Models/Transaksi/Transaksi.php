@@ -16,6 +16,8 @@ use App\Observers\UserActionObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Saldo;
 
 class Transaksi extends Model
 {
@@ -163,11 +165,20 @@ class Transaksi extends Model
         //calculate grand total
         $grand_total = $subtotal - ($diskon_jenis_item + $diskon_member + $total_diskon_promo + $diskon_pelanggan_spesial);
         $grand_total < 0 ? $this->grand_total = 0 : $this->grand_total = $grand_total;
+
+        // Handle lunas status based on whether we're adding or removing items
         if ($this->lunas) {
-            if ($this->total_terbayar < $grand_total) {
+            // If transaction was paid, check if it's still fully paid after recalculation
+            if ($this->total_terbayar < $this->grand_total) {
                 $this->lunas = false;
             }
+        } else {
+            // If transaction wasn't paid, check if it's now fully paid
+            if ($this->total_terbayar >= $this->grand_total) {
+                $this->lunas = true;
+            }
         }
+
         $this->save();
         return $this;
     }
@@ -231,5 +242,62 @@ class Transaksi extends Model
     public function kasir()
     {
         return $this->belongsTo(User::class, 'operator', 'id');
+    }
+
+    public function refundItem($itemAmount, $user)
+    {
+        $pembayaran = Pembayaran::where('transaksi_id', $this->id)
+            ->where('metode_pembayaran', 'deposit')
+            ->first();
+
+        // Jika pembayaran adalah deposit
+        if ($pembayaran) {
+            // Hitung jumlah refund
+            $refundAmount = $this->calculateRefundAmount($itemAmount);
+
+            // Get saldo terakhir
+            $latestSaldo = Saldo::where('pelanggan_id', $this->pelanggan_id)
+                ->latest('created_at')
+                ->first();
+
+            // Buat record saldo baru untuk pengembalian
+            Saldo::create([
+                'pelanggan_id' => $this->pelanggan_id,
+                'outlet_id' => $user->outlet_id,
+                'nominal' => $refundAmount,
+                'jenis_input' => 'pengembalian',
+                'saldo_akhir' => $latestSaldo->saldo_akhir + $refundAmount,
+                'modified_by' => Auth::id()
+            ]);
+
+            // Update jumlah pembayaran
+            $pembayaran->nominal -= $refundAmount;
+            $pembayaran->save();
+
+            // Update total_terbayar transaksi
+            $this->total_terbayar -= $refundAmount;
+            // Hanya update status lunas jika total_terbayar menjadi kurang dari grand_total
+            if ($this->total_terbayar < $this->grand_total) {
+                $this->lunas = false;
+            }
+            $this->save();
+
+            return $refundAmount;
+        }
+
+        return 0;
+    }
+
+    private function calculateRefundAmount($itemAmount)
+    {
+        // Jika pelanggan adalah member
+        if ($this->status_diskon_member) {
+            // Hitung proporsi item dari total sebelum diskon
+            $itemProportion = $itemAmount / $this->subtotal;
+            // Hitung jumlah refund berdasarkan proporsi item dari total setelah diskon
+            return floor($itemProportion * $this->grand_total);
+        }
+        // Jika pelanggan bukan member
+        return $itemAmount;
     }
 }

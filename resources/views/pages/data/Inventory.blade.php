@@ -10,7 +10,10 @@
     <section id="data-inventory">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Data Inventory</h4>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="card-title">Data Inventory</h4>
+                    <a href="{{ route('export.inventory') }}" class="btn btn-primary text-white" id="btn-export">Export</a>
+                </div>
                 <hr>
                 <div class="d-flex justify-content-end">
                     <form method="GET" action="/data/inventory" class="d-flex align-items-center">

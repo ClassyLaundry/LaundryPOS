@@ -16,6 +16,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Data\Pengeluaran;
+use App\Exports\LaporanPengeluaranExport;
+use App\Exports\LaporanDepositExport;
+use App\Exports\LaporanPiutangPelangganExport;
+use App\Exports\LaporanKasMasukExport;
 
 class LaporanController extends Controller
 {
@@ -344,7 +349,9 @@ class LaporanController extends Controller
                     ];
                 });
 
-                return Excel::download(new LaporanPelangganExport($customers->toArray()), 'laporan_pelanggan.xlsx');
+                $filename = 'laporan_pelanggan_' . date('Y-m-d_H-i-s') . '.xlsx';
+
+                return Excel::download(new LaporanPelangganExport($customers->toArray(), $start, $end), $filename);
             }
 
             if ($pages == 'data-cuci') {
@@ -392,13 +399,16 @@ class LaporanController extends Controller
                     return $items;
                 });
 
-                return Excel::download(new LaporanCuciExport($customer->toArray()), 'laporan_cuci.xlsx');
+                $filename = 'laporan_cuci_' . date('Y-m-d_H-i-s') . '.xlsx';
+
+                return Excel::download(new LaporanCuciExport($customer->toArray(), $start, $end), $filename);
             }
         }
 
         if ($pages == 'data-omset') {
             $bulan = $request->input('bulan');
             $transaksi_berhasil = Pembayaran::whereYear('created_at', '=', date('Y', strtotime($bulan)))
+                ->with('kasir')
                 ->whereMonth('created_at', '=', date('m', strtotime($bulan)))
                 ->where('outlet_id', $outlet_id)
                 ->with(['transaksi.pelanggan'])
@@ -408,13 +418,18 @@ class LaporanController extends Controller
                 return [
                     'Tanggal' => $pembayaran->created_at->format('d-m-Y'),
                     'Kode Transaksi' => $pembayaran->transaksi->kode ?? 'N/A',
-                    'Kode Pelanggan' => 'PL' . str_pad($pembayaran->transaksi->pelanggan->id, 6, '0', STR_PAD_LEFT),
-                    'Nama Pelanggan' => $pembayaran->transaksi->pelanggan->nama,
-                    'Status Transaksi' => $pembayaran->transaksi->lunas ? 'Lunas' : 'Belum lunas',
-                    'Besar Omset' => number_format($pembayaran->nominal, 0, ',', '.')
+                    'Kode Pelanggan' => 'PL' . str_pad($pembayaran->transaksi?->pelanggan?->id, 6, '0', STR_PAD_LEFT),
+                    'Nama Pelanggan' => $pembayaran->transaksi?->pelanggan?->nama ?? 'N/A',
+                    'Status Transaksi' => $pembayaran->transaksi?->lunas ? 'Lunas' : 'Belum lunas',
+                    // 'Besar Omset' => number_format($pembayaran->nominal, 0, ',', '.'),
+                    'Besar Omset' => $pembayaran->nominal,
+                    'Operator' => $pembayaran?->kasir?->name
                 ];
             })->toArray();
-            return Excel::download(new LaporanOmsetExport($data), 'laporan_omset.xlsx');
+
+            $filename = 'laporan_omset_' . date('Y-m-d_H-i-s') . '.xlsx';
+
+            return Excel::download(new LaporanOmsetExport($data), $filename);
         }
 
         if ($pages == 'data-saldo') {
@@ -442,12 +457,17 @@ class LaporanController extends Controller
                     'Membership' => $saldos->pelanggan->member ? 'Member' : 'Bukan Member',
                     'Nama Pelanggan' => $saldos->pelanggan->nama,
                     'Jenis Input' => $saldos->jenis_input,
-                    'Nominal' => number_format($saldos->nominal, 0, ',', '.'),
+                    // 'Nominal' => number_format($saldos->nominal, 0, ',', '.'),
+                    'Nominal' => $saldos->nominal,
                     'Transaksi Terakhir' =>  date('d-M-Y', strtotime($saldos->created_at)),
-                    'Saldo Akhir' =>  number_format($saldos->saldo_akhir, 0, ',', '.')
+                    // 'Saldo Akhir' =>  number_format($saldos->saldo_akhir, 0, ',', '.')
+                    'Saldo Akhir' =>  $saldos->saldo_akhir
                 ];
             })->toArray();
-            return Excel::download(new LaporanSaldoExport($data), 'laporan_saldo.xlsx');
+
+            $filename = 'laporan_saldo_' . date('Y-m-d_H-i-s') . '.xlsx';
+
+            return Excel::download(new LaporanSaldoExport($data, $bulan), $filename);
         }
 
         return response()->json(['error' => 'Invalid page type'], 400);
@@ -608,12 +628,18 @@ class LaporanController extends Controller
                 $transaksis = Transaksi::whereBetween('created_at', [$start, $end])
                     ->with('kasir')
                     ->where('status', 'confirmed')
-                    ->where('outlet_id', Auth::user()->outlet_id)
+                    // jika outlet 0, maka ambil semua outlet, jika tidak maka ambil outlet yang dipilih
+                    ->when($request->outlet != 0, function($query) {
+                        $query->where('outlet_id', Auth::user()->outlet_id);
+                    })
                     ->get();
 
                 $countPerDay = Transaksi::whereBetween('created_at', [$start, $end])
                     ->where('status', 'confirmed')
-                    ->where('outlet_id', Auth::user()->outlet_id)
+                    // jika outlet 0, maka ambil semua outlet, jika tidak maka ambil outlet yang dipilih
+                    ->when($request->outlet != 0, function($query) {
+                        $query->where('outlet_id', Auth::user()->outlet_id);
+                    })
                     ->get()
                     ->groupBy(function ($item) {
                         return $item->created_at->format('d-m-Y');
@@ -643,18 +669,56 @@ class LaporanController extends Controller
 
     public function exportOmset(Request $request)
     {
-        $start = $request->start . ' 00:00:00';
-        $end = $request->end . ' 23:59:59';
+        $outlet = Outlet::find(Auth::user()->outlet_id);
+        $selectedOutlet = -1;
+        if (!empty($request->all())) {
+            if ($request->has('start') && $request->has('end')) {
+                $start = $request->start . ' 00:00:00';
+                $end = $request->end . ' 23:59:59';
 
-        $transaksis = Transaksi::whereBetween('created_at', [$start, $end])
-            ->with('kasir')
-            ->where('status', 'confirmed')
-            ->when($request->outlet != 0, function ($query) use ($request) {
-                $query->where('outlet_id', Auth::user()->outlet_id);
-            })
-            ->get();
+                $transaksis = Transaksi::whereBetween('created_at', [$start, $end])
+                    ->with('kasir')
+                    ->where('status', 'confirmed')
+                    // jika outlet 0, maka ambil semua outlet, jika tidak maka ambil outlet yang dipilih
+                    ->when($request->outlet != 0, function($query) {
+                        $query->where('outlet_id', Auth::user()->outlet_id);
+                    })
+                    ->get();
 
-         return Excel::download(new LaporanOmsetExport($transaksis->toArray()), 'laporan_omset.xlsx');
+                $countPerDay = Transaksi::whereBetween('created_at', [$start, $end])
+                    ->where('status', 'confirmed')
+                    // jika outlet 0, maka ambil semua outlet, jika tidak maka ambil outlet yang dipilih
+                    ->when($request->outlet != 0, function($query) {
+                        $query->where('outlet_id', Auth::user()->outlet_id);
+                    })
+                    ->get()
+                    ->groupBy(function ($item) {
+                        return $item->created_at->format('d-m-Y');
+                    })
+                    ->map(function ($group) {
+                        return count($group);
+                    });
+
+                $selectedOutlet = $request->outlet;
+
+                $data = $transaksis->map(function ($transaksi) {
+                    return [
+                        'Tanggal' => $transaksi->created_at->format('d-m-Y'),
+                        'Kode Transaksi' => $transaksi->kode,
+                        'Kode Pelanggan' => 'PL' . str_pad($transaksi->pelanggan?->id, 6, '0', STR_PAD_LEFT),
+                        'Nama Pelanggan' => $transaksi->pelanggan?->nama,
+                        'Status Transaksi' => $transaksi->lunas ? 'Lunas' : 'Belum lunas',
+                        // 'Besar Omset' => number_format($transaksi->grand_total, 0, ',', '.'),
+                        'Besar Omset' => $transaksi->grand_total,
+                        'Operator' => $transaksi->kasir?->name,
+                    ];
+                })->toArray();
+
+                $filename = 'laporan_omset_' . date('Y-m-d_H-i-s') . '.xlsx';
+
+                return Excel::download(new LaporanOmsetExport($data), $filename);
+            }
+        }
     }
 
     public function tableKasMasuk(Request $request)
@@ -766,5 +830,244 @@ class LaporanController extends Controller
     public function laporanKas()
     {
         return view('pages.laporan.KasMasuk');
+    }
+
+    public function laporanPengeluaran(Request $request)
+    {
+        $user = User::find(auth()->id());
+        $permissions = $user->getPermissionsViaRoles();
+        $permissionExist = collect($permissions)->first(function ($item) {
+            return $item->name === 'Melihat Laporan Pengeluaran';
+        });
+        if ($permissionExist) {
+            $query = Pengeluaran::where('outlet_id', Auth::user()->outlet_id);
+
+            // Apply date range filter if provided
+            if ($request->has('start') && $request->has('end')) {
+                $start = $request->start . ' 00:00:00';
+                $end = $request->end . ' 23:59:59';
+                $query->whereBetween('created_at', [$start, $end]);
+            }
+
+            // Apply search filter if provided
+            if ($request->has('search')) {
+                $search = '%' . $request->search . '%';
+                $query->where(function($q) use ($search) {
+                    $q->where('nama', 'like', $search)
+                      ->orWhere('deskripsi', 'like', $search);
+                });
+            }
+
+            return view(
+                'pages.laporan.Pengeluaran',
+                [
+                    'data' => $query->paginate(10),
+                    'saldo' => Outlet::where('id', Auth::user()->outlet_id)->first(),
+                ]
+            );
+        } else {
+            abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
+        }
+    }
+
+    public function exportLaporanPengeluaran(Request $request)
+    {
+        $user = User::find(auth()->id());
+        $permissions = $user->getPermissionsViaRoles();
+        $permissionExist = collect($permissions)->first(function ($item) {
+            return $item->name === 'Melihat Laporan Pengeluaran';
+        });
+        if ($permissionExist) {
+        $outlet = Outlet::find(Auth::user()->outlet_id);
+        $query = Pengeluaran::where('outlet_id', Auth::user()->outlet_id);
+
+        // Apply date range filter if provided
+        if ($request->has('start') && $request->has('end')) {
+            $start = $request->start . ' 00:00:00';
+            $end = $request->end . ' 23:59:59';
+            $query->whereBetween('created_at', [$start, $end]);
+        }
+
+        // Apply search filter if provided
+        if ($request->has('search')) {
+            $search = '%' . $request->search . '%';
+            $query->where(function($q) use ($search) {
+                $q->where('nama', 'like', $search)
+                  ->orWhere('deskripsi', 'like', $search);
+            });
+        }
+
+        $pengeluarans = $query->select('nama', 'deskripsi', 'nominal', 'created_at')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $filename = 'laporan_pengeluaran_' . $outlet->nama . '_' . date('Y-m-d_H-i-s') . '.xlsx';
+
+        return Excel::download(
+            new LaporanPengeluaranExport(
+                $pengeluarans->toArray(),
+                $request->start ?? null,
+                    $request->end ?? null
+                ),
+                $filename
+            );
+        } else {
+            abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
+        }
+    }
+
+    public function exportMutasiDeposit(Request $request)
+    {
+        $pelanggans = Pelanggan::whereHas('saldo', function ($query) {
+            $query->whereNotNull('saldo_akhir');
+        })->orderBy('nama', 'asc')->get();
+
+        $filename = 'laporan_mutasi_deposit_' . date('Y-m-d_H-i-s') . '.xlsx';
+
+        return Excel::download(
+            new LaporanDepositExport(
+                $pelanggans
+            ),
+            $filename
+        );
+    }
+
+    public function exportPiutangPelanggan(Request $request)
+    {
+        $start = $request->start . ' 00:00:00';
+        $end = $request->end . ' 23:59:59';
+        $outlet_id = User::getOutletId(Auth::id());
+
+        $pelanggans = Pelanggan::with(['transaksi' => function ($query) use ($start, $end, $outlet_id) {
+            $query->where('lunas', false)
+                ->where('outlet_id', $outlet_id)
+                ->whereBetween('created_at', [$start, $end])
+                ->whereRaw('(grand_total - total_terbayar) > 0')
+                ->orderBy('created_at', 'desc');
+        }])
+        ->when($request->filled('name'), function ($query) use ($request) {
+            $query->where('nama', 'like', '%' . $request->name . '%');
+        })
+        ->whereHas('transaksi', function ($query) use ($start, $end, $outlet_id) {
+            $query->where('lunas', false)
+                ->where('outlet_id', $outlet_id)
+                ->whereBetween('created_at', [$start, $end])
+                ->whereRaw('(grand_total - total_terbayar) > 0');
+        })
+        ->orderBy('nama')
+        ->get();
+
+        // Prepare data for export
+        $exportData = [];
+        foreach ($pelanggans as $pelanggan) {
+            $no = 1;
+            $total_tagihan = 0;
+            $total_kurang_bayar = 0;
+            foreach ($pelanggan->transaksi as $trx) {
+                $exportData[] = [
+                    'kode_pelanggan' => 'PL' . str_pad($pelanggan->id, 6, '0', STR_PAD_LEFT),
+                    'nama' => $pelanggan->nama,
+                    'no' => $no++,
+                    'kode_transaksi' => $trx->kode,
+                    'tanggal_transaksi' => date('d-M-Y H:i:s', strtotime($trx->created_at)),
+                    'total_tagihan' => $trx->grand_total,
+                    'kurang_bayar' => $trx->grand_total - $trx->total_terbayar,
+                    'is_summary' => false,
+                ];
+                $total_tagihan += $trx->grand_total;
+                $total_kurang_bayar += ($trx->grand_total - $trx->total_terbayar);
+            }
+            // Add summary row
+            $exportData[] = [
+                'kode_pelanggan' => '',
+                'nama' => '',
+                'no' => '',
+                'kode_transaksi' => 'Total Tagihan',
+                'tanggal_transaksi' => '',
+                'total_tagihan' => $total_tagihan,
+                'kurang_bayar' => $total_kurang_bayar,
+                'is_summary' => true,
+            ];
+        }
+
+        $filename = 'laporan_piutang_pelanggan_' . date('Y-m-d_H-i-s') . '.xlsx';
+
+        return Excel::download(new \App\Exports\LaporanPiutangPelangganExport($exportData), $filename);
+    }
+
+    /**
+     * Export Kas Masuk
+     *
+     * note: bilabror 29 may 2025. data yang ditampilkan mengikuti dengan apa yang sudah diimplementasikan pada layar.
+     */
+    public function exportKasMasuk(Request $request)
+    {
+        $start = $request->start . ' 00:00:00';
+        $end = $request->end . ' 23:59:59';
+        $outlet_id = User::getOutletId(Auth::id());
+
+        $tipe = explode(";", $request->jenis);
+        array_pop($tipe);
+
+        $data1 = [];
+        $data2 = [];
+        $sum = 0;
+
+        $pembayarans = Pembayaran::with(['transaksi', 'transaksi.pelanggan', 'kasir'])
+            ->whereBetween('created_at', [$start, $end])
+            ->whereIn('metode_pembayaran', $tipe)
+            ->where('outlet_id', $outlet_id)
+            ->orderBy('created_at')
+            ->get();
+
+        $deposits = Saldo::with(['pelanggan', 'outlet', 'paket_deposit', 'kasir'])
+            ->whereBetween('created_at', [$start, $end])
+            ->where('jenis_input', 'deposit')
+            ->where('outlet_id', $outlet_id)
+            ->orderBy('created_at')
+            ->get();
+
+        foreach ($pembayarans as $pembayaran) {
+            array_push($data1, [
+                'tipe_bayar' => strtoupper($pembayaran->metode_pembayaran),
+                'kode_pembayaran' => 'PM' . str_pad($pembayaran->id, 6, '0', STR_PAD_LEFT),
+                'nomor_order' => $pembayaran->transaksi->kode,
+                'tanggal_transaksi' => date('d-M-Y', strtotime($pembayaran->created_at)),
+                'pelanggan' => strtoupper($pembayaran->transaksi->pelanggan->nama),
+                'nominal' => $pembayaran->nominal,
+                'keterangan' => "PEMBAYARAN VIA " . strtoupper($pembayaran->metode_pembayaran),
+                'operator' => isset($pembayaran->kasir) ? strtoupper($pembayaran->kasir->name) : '',
+            ]);
+
+            $sum += $pembayaran->nominal;
+        }
+
+        foreach ($deposits as $deposit) {
+            array_push($data2, [
+                'tipe_bayar' => strtoupper($deposit->via),
+                'kode_pembayaran' => 'DP' . str_pad($deposit->id, 6, '0', STR_PAD_LEFT),
+                'nomor_order' => '-',
+                'tanggal_transaksi' => date('d-M-Y', strtotime($deposit->created_at)),
+                'pelanggan' => strtoupper($deposit->pelanggan->nama),
+                'nominal' => $deposit->kas_masuk,
+                'keterangan' => "PENGISIAN DEPOSIT VIA " . strtoupper($deposit->via),
+                'operator' => isset($deposit->kasir) ? strtoupper($deposit->kasir->name) : '',
+            ]);
+
+            $sum += $deposit->kas_masuk;
+        }
+
+        $data = array_merge($data1, $data2);
+
+        usort($data, function ($item1, $item2) {
+            if ($item1['tipe_bayar'] !== $item2['tipe_bayar']) {
+                return $item1['tipe_bayar'] <=> $item2['tipe_bayar'];
+            }
+            return strtotime($item1['tanggal_transaksi']) <=> strtotime($item2['tanggal_transaksi']);
+        });
+
+        $filename = 'laporan_kas_masuk_' . date('Y-m-d_H-i-s') . '.xlsx';
+
+        return Excel::download(new LaporanKasMasukExport($data, $request->start ?? null, $request->end ?? null), $filename);
     }
 }

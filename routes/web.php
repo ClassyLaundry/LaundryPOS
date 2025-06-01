@@ -270,6 +270,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/data/inventory/update/{inventory}', [InventoryController::class, 'update']);
     Route::get('/data/inventory/delete/{inventory}', [InventoryController::class, 'delete']);
     Route::post('/data/inventory/traffic', [LaporanInventoryController::class, 'insert']);
+    Route::get('/data/inventory/export', [InventoryController::class, 'export'])->name('export.inventory');
 
     //Rewash proses
     Route::get('/proses/rewash', [PageController::class, 'prosesRewash'])->name('menu-rewash');
@@ -289,6 +290,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/component/piutang', [LaporanController::class, 'tablePiutang']);
     Route::get('/laporan/piutang/{id}/detail', [LaporanController::class, 'laporanPiutangPelangganDetail']);
     Route::get('/laporan/deposit', [LaporanController::class, 'laporanMutasiDeposit']);
+    Route::get('/laporan/deposit/export', [LaporanController::class, 'exportMutasiDeposit'])->name('export.deposit');
     Route::get('/laporan/deposit/{id}/detail', [LaporanController::class, 'laporanMutasiDepositDetail']);
     Route::get('/laporan/omset', [LaporanController::class, 'laporanOmset']);
     Route::get('/component/omset', [LaporanController::class, 'tableOmset']);
@@ -298,4 +300,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/component/customer', [LaporanController::class, 'tableCustomer']);
     Route::get('/export-excel', [LaporanController::class, 'exportExcel'])->name('export');
     Route::get('/exportOmset', [LaporanController::class, 'exportOmset'])->name('export.omset');
+    Route::get('/laporan/pengeluaran', [LaporanController::class, 'laporanPengeluaran']);
+    Route::get('/laporan/pengeluaran/export', [LaporanController::class, 'exportLaporanPengeluaran'])->name('export.pengeluaran');
+    Route::get('/laporan/piutang/export', [LaporanController::class, 'exportPiutangPelanggan'])->name('export.piutang');
+    Route::get('/laporan/kas/export', [LaporanController::class, 'exportKasMasuk'])->name('export.kas');
 });

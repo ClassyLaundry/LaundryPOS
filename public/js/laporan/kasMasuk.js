@@ -21,4 +21,25 @@ $(document).ready(function() {
             });
         }
     });
+
+    $('#btn-export').on('click', function() {
+        let jenis = '';
+        if ($('#btn-cash').is(':checked')) {
+            jenis = jenis + 'tunai;';
+        }
+        if ($('#btn-qris').is(':checked')) {
+            jenis = jenis + 'qris;';
+        }
+        if ($('#btn-debit').is(':checked')) {
+            jenis = jenis + 'debit;';
+        }
+        if ($('#btn-transfer').is(':checked')) {
+            jenis = jenis + 'transfer;';
+        }
+        if (jenis == '') {
+            alert('Pilih tipe bayar');
+        } else {
+            window.location = window.location.origin + '/laporan/kas/export?start=' + $('#input-tanggal-awal').val() + '&end=' + $('#input-tanggal-akhir').val() + '&jenis=' + jenis;
+        }
+    });
 });

@@ -156,6 +156,10 @@
                                             <input class="form-check-input" type="checkbox" id="formCheck-setrika" name="setrika_only" value=0>
                                             <label class="form-check-label" for="formCheck-setrika">Setrika only</label>
                                         </div>
+                                        <div class="form-check ms-1">
+                                            <input class="form-check-input" type="checkbox" id="formCheck-need_delivery" name="need_delivery" value=0>
+                                            <label class="form-check-label" for="formCheck-need_delivery">Delivery</label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-12 mt-2 d-flex align-items-end justify-content-end">
@@ -480,12 +484,15 @@
                                                 </div>
                                                 <div id="container-delivery" class="position-relative mb-3 d-none">
                                                     <h6>Kode Delivery</h6>
-                                                    <select class="form-control" id="select-kode-delivery" disabled>
+                                                    <input type="text" name="" id="input-kode-delivery" class="form-control" readonly>
+                                                    <h6>Driver</h6>
+                                                    <input type="text" name="" id="input-driver-delivery" class="form-control" readonly>
+                                                    {{-- <select class="form-control" id="select-kode-delivery" disabled>
                                                         <option value="" selected hidden>-</option>
                                                         @foreach ($data['delivery'] as $delivery)
                                                             <option value="{{ $delivery->id }}">{{ $delivery->kode }}</option>
                                                         @endforeach
-                                                    </select>
+                                                    </select> --}}
                                                 </div>
                                             </div>
                                             <div class="position-absolute" style="right: 1rem; bottom: 1rem;">

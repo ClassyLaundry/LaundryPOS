@@ -22,14 +22,32 @@ $(document).ready(function() {
         btnIndex = $(this).index('.btn-show-action') + 1;
         btnId = $(this).attr('id').substring(4);
         selectedTable = $(this).closest('.table-container').data('table');
+
+        // Hide semua list action dulu
+        $('#list-action-pickup, #list-action-delivery').hide();
+
+        /**
+         * note: kenapa action-update-* di hide?
+         * karena original codenya sudah di hide
+         * by: Bil Abror
+         */
         if (selectedTable == 'pickup') {
-            $('#action-update').hide();
+            $('#action-update-pickup').hide();
+            $('#list-action-pickup').show();
         } else {
-            $('#action-update').show();
+            $('#action-update-delivery').hide();
+            $('#list-action-delivery').show();
         }
     });
 
-    $('#action-delete').on('click', function() {
+    // Hide aksi list ketika klik di luar button show action
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('.btn-show-action, #list-action-pickup, #list-action-delivery').length) {
+            $('#list-action-pickup, #list-action-delivery').hide();
+        }
+    });
+
+    $('#action-delete-pickup, #action-delete-delivery').on('click', function() {
         if (confirm('Cancel pickup delivery ?')) {
             $.ajax({
                 url: "/transaksi/pickup-delivery/delete/" + btnId,

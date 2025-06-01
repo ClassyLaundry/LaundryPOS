@@ -116,4 +116,12 @@ $(document).ready(function() {
     $('#action-receipt').on('click', function() {
         window.open("/printTandaTerimaRewash/" + btnId, '_blank');
     });
+
+    // Add form submission handler
+    $('form[action="/proses/rewash/insert"]').on('submit', function(e) {
+        e.preventDefault();
+        if (confirm('Dengan merewash maka transaksi akan kembali ke kondisi awal')) {
+            this.submit();
+        }
+    });
 });

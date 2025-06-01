@@ -65,7 +65,7 @@ class ItemTransaksi extends Model
 
     public function rewash()
     {
-        return $this->hasOne(Rewash::class);
+        return $this->hasOne(Rewash::class)->orderBy('id', 'desc');
     }
 
     public function item_notes()

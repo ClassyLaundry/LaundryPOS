@@ -16,3 +16,4 @@ yarn-error.log
 /.vscode
 public/image/penerima/*
 public/image/item_notes/*
+.DS_Store

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Inventory\Inventory;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Exports\InventoryExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InventoryController extends Controller
 {
@@ -79,5 +81,13 @@ class InventoryController extends Controller
         } else {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSION');
         }
+    }
+
+    public function export(Request $request)
+    {
+        $investories = Inventory::select('nama', 'deskripsi', 'kategori', 'stok')->orderBy("nama", "asc")->get();
+        $filename = 'laporan_inventory_' . date('Y-m-d_H-i-s') . '.xlsx';
+
+        return Excel::download(new InventoryExport($investories->toArray()), $filename);
     }
 }
