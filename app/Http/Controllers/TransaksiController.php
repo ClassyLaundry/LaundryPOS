@@ -488,10 +488,7 @@ class TransaksiController extends Controller
                         }
                     });
                 })
-                ->where(function($query) {
-                    $query->where('status', 'confirmed')
-                          ->orWhere('status', 'rewash');
-                })
+                ->where('status', 'confirmed')
                 ->where('outlet_id', Auth::user()->outlet_id)
                 ->latest()
                 ->paginate($request->paginate),
@@ -517,10 +514,7 @@ class TransaksiController extends Controller
                 })
                 ->whereNull('pencuci')
                 ->where('setrika_only', 0)
-                ->where(function($query) {
-                    $query->where('status', 'confirmed')
-                          ->orWhere('status', 'rewash');
-                })
+                ->where('status', 'confirmed')
                 ->latest()
                 ->get();
         } else if ($request->type == "1") {
@@ -530,10 +524,7 @@ class TransaksiController extends Controller
                 })
                 ->where('pencuci', Auth::id())
                 ->where('is_done_cuci', 0)
-                ->where(function($query) {
-                    $query->where('status', 'confirmed')
-                          ->orWhere('status', 'rewash');
-                })
+                ->where('status', 'confirmed')
                 ->latest()
                 ->get();
         } else if ($request->type == "2") {
@@ -551,10 +542,7 @@ class TransaksiController extends Controller
                 })
                 ->where('pencuci', Auth::id())
                 ->where('is_done_cuci', 1)
-                ->where(function($query) {
-                    $query->where('status', 'confirmed')
-                          ->orWhere('status', 'rewash');
-                })
+                ->where('status', 'confirmed')
                 ->latest()
                 ->get();
         }
@@ -599,10 +587,7 @@ class TransaksiController extends Controller
                     $query->where('setrika_only', 1)
                         ->orWhere('is_done_cuci', 1);
                 })
-                ->where(function($query) {
-                    $query->where('status', 'confirmed')
-                          ->orWhere('status', 'rewash');
-                })
+                ->where('status', 'confirmed')
                 ->where('outlet_id', Auth::user()->outlet_id)
                 ->latest()
                 ->paginate($request->paginate),
@@ -661,10 +646,7 @@ class TransaksiController extends Controller
                             $query->where('setrika_only', 1)
                                 ->orWhere('is_done_cuci', 1);
                         })
-                        ->where(function($query) {
-                            $query->where('status', 'confirmed')
-                                  ->orWhere('status', 'rewash');
-                        })
+                        ->where('status', 'confirmed')
                         ->latest()
                         ->get();
 

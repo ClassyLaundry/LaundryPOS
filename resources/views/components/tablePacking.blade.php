@@ -14,12 +14,7 @@
             @foreach ($transaksis as $trans)
                 @if ($trans->packing == null)
                 <tr id="{{ $trans->id }}">
-                    <td class="text-center d-flex gap-2">
-                        {{ $trans->kode }}
-                        @if ($trans->status == 'rewash')
-                            <span class="badge bg-danger">Rewash</span>
-                        @endif
-                    </td>
+                    <td class="text-center">{{ $trans->kode }}</td>
                     <td class="text-center">{{ ucwords($trans->tipe_transaksi) }}</td>
                     <td>{{ $trans->pelanggan->nama }}</td>
                     <td class="d-none d-lg-table-cell text-center">{{ $trans->created_at }}</td>

@@ -13,12 +13,7 @@
         <tbody style="cursor: pointer">
             @foreach ($transaksis as $trans)
             <tr id={{ $trans->id }}>
-                <td>
-                    {{ $trans->kode }}
-                    @if($trans->status === 'rewash')
-                        <span class="badge bg-danger">Rewash</span>
-                    @endif
-                </td>
+                <td>{{ $trans->kode }}</td>
                 <td class="text-center">{{ $trans->tipe_transaksi }}</td>
                 <td class="text-center">{{ date('d-M-Y H:i', strtotime($trans->created_at)) }}</td>
                 <td>{{ $trans->pelanggan->nama }}</td>

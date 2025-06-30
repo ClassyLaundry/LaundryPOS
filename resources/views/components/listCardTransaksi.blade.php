@@ -3,14 +3,7 @@
         <div class="mb-3">
             <div class="card border-2 @if ($transaksi->express) {{ 'border-danger' }} @elseif ($transaksi->on_time) {{ 'border-warning' }} @elseif ($transaksi->setrika_only) {{ 'border-info' }} @endif">
                 <div class="card-body py-1 px-2 position-relative">
-                    <div class="d-flex gap-2">
-                        <h4>{{ $transaksi->kode }}</h4>
-                        @if ($transaksi->status == 'rewash')
-                            <div>
-                                <span class="badge bg-danger">Rewash</span>
-                            </div>
-                        @endif
-                    </div>
+                    <h4>{{ $transaksi->kode }}</h4>
                     <h6>{{ $transaksi->pelanggan->nama }}</h6>
                     <h6>{{ date('d-m-Y', strtotime($transaksi->done_date)) }}</h6>
                     <div class="position-absolute top-50 end-0 translate-middle">
