@@ -6,9 +6,10 @@ use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Concerns\WithMapping;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class LaporanOmsetExport implements FromArray, WithHeadings, WithTitle, WithStyles
+class LaporanOmsetExport implements FromArray, WithHeadings, WithTitle, WithStyles, WithMapping
 {
     protected $data;
 
@@ -20,6 +21,31 @@ class LaporanOmsetExport implements FromArray, WithHeadings, WithTitle, WithStyl
     public function array(): array
     {
         return $this->data;
+    }
+
+    public function map($row): array
+    {
+        if (isset($row['is_daily_total']) && $row['is_daily_total']) {
+            return [
+                '',
+                '',
+                '',
+                $row['Nama Pelanggan'],
+                '',
+                'Rp ' . number_format($row['Besar Omset'], 0, ',', '.'),
+                ''
+            ];
+        }
+
+        return [
+            $row['Tanggal'],
+            $row['Kode Transaksi'],
+            $row['Kode Pelanggan'],
+            $row['Nama Pelanggan'],
+            $row['Status Transaksi'],
+            'Rp ' . number_format($row['Besar Omset'], 0, ',', '.'),
+            $row['Operator']
+        ];
     }
 
     public function headings(): array
@@ -80,14 +106,39 @@ class LaporanOmsetExport implements FromArray, WithHeadings, WithTitle, WithStyl
             ]
         ]);
 
-        // Data style
-        $sheet->getStyle('A4:G' . ($lastRow))->applyFromArray([
-            'borders' => [
-                'allBorders' => [
-                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN
-                ]
-            ]
-        ]);
+        // Data style and daily total style
+        $currentRow = 4; // Starting from row 4 (after headers)
+        foreach ($this->data as $row) {
+            if (isset($row['is_daily_total']) && $row['is_daily_total']) {
+                // Style for daily total rows (green background, bold)
+                $sheet->getStyle('A' . $currentRow . ':G' . $currentRow)->applyFromArray([
+                    'font' => [
+                        'bold' => true
+                    ],
+                    'fill' => [
+                        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                        'startColor' => [
+                            'rgb' => 'C6EFCE' // Light green similar to table-success
+                        ]
+                    ],
+                    'borders' => [
+                        'allBorders' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN
+                        ]
+                    ]
+                ]);
+            } else {
+                // Style for regular data rows
+                $sheet->getStyle('A' . $currentRow . ':G' . $currentRow)->applyFromArray([
+                    'borders' => [
+                        'allBorders' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN
+                        ]
+                    ]
+                ]);
+            }
+            $currentRow++;
+        }
 
         // Column widths
         $sheet->getColumnDimension('A')->setWidth(15);
