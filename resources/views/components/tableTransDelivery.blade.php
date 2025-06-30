@@ -8,6 +8,7 @@
                 <th>Nama Pelanggan</th>
                 <th colspan="2">Harga Total</th>
                 <th>Status</th>
+                <th>Delivery</th>
             </tr>
         </thead>
         <tbody style="cursor: pointer">
@@ -24,6 +25,13 @@
                     Lunas
                 @else
                     Belum Lunas
+                @endif
+                </td>
+                <td class="text-center">
+                @if($trans->need_delivery)
+                    Ya
+                @else
+                    Tidak
                 @endif
                 </td>
             </tr>
