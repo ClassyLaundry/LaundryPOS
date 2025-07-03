@@ -58,12 +58,7 @@
             @endforeach --}}
             @foreach ($transaksi->item_transaksi as $item)
                 <tr>
-                    <td>
-                        {{ $item->nama }}
-                        @if(isset($item?->rewash) && $item?->rewash?->status == 0)
-                            <span class="badge bg-danger">Rewash</span>
-                        @endif
-                    </td>
+                    <td>{{ $item->nama }}</td>
                     <td class="text-center">{{ $item->qty }}</td>
                 </tr>
             @endforeach

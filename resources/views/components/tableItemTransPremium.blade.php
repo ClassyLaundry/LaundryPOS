@@ -14,12 +14,7 @@
         <tbody>
             @foreach ($trans->item_transaksi as $item)
             <tr id='{{ $item->id }}' class="item">
-                <td style='white-space: nowrap;'>
-                    {{ $item->nama }}
-                    @if(isset($item->rewash) && $item->rewash->status == 0)
-                        <span class="badge bg-danger">Sedang di rewash</span>
-                    @endif
-                </td>
+                <td style='white-space: nowrap;'>{{ $item->nama }}</td>
                 <td class='d-none d-lg-table-cell text-center'>{{ $item->nama_kategori }}</td>
                 @if ($trans->penyetrika != null)
                     <td class='d-none d-md-table-cell text-center'>Setrika</td>

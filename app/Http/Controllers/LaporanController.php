@@ -414,18 +414,44 @@ class LaporanController extends Controller
                 ->with(['transaksi.pelanggan'])
                 ->orderBy('created_at')
                 ->get();
-            $data = $transaksi_berhasil->map(function ($pembayaran) {
-                return [
-                    'Tanggal' => $pembayaran->created_at->format('d-m-Y'),
-                    'Kode Transaksi' => $pembayaran->transaksi->kode ?? 'N/A',
-                    'Kode Pelanggan' => 'PL' . str_pad($pembayaran->transaksi?->pelanggan?->id, 6, '0', STR_PAD_LEFT),
-                    'Nama Pelanggan' => $pembayaran->transaksi?->pelanggan?->nama ?? 'N/A',
-                    'Status Transaksi' => $pembayaran->transaksi?->lunas ? 'Lunas' : 'Belum lunas',
-                    // 'Besar Omset' => number_format($pembayaran->nominal, 0, ',', '.'),
-                    'Besar Omset' => $pembayaran->nominal,
-                    'Operator' => $pembayaran?->kasir?->name
+
+            // Group pembayaran by date to calculate daily totals
+            $groupedPembayaran = $transaksi_berhasil->groupBy(function ($item) {
+                return $item->created_at->format('d-m-Y');
+            });
+
+            $data = [];
+
+            foreach ($groupedPembayaran as $date => $dayPembayaran) {
+                $dailyTotal = 0;
+
+                // Add individual payments for this day
+                foreach ($dayPembayaran as $pembayaran) {
+                    $data[] = [
+                        'Tanggal' => $pembayaran->created_at->format('d-m-Y'),
+                        'Kode Transaksi' => $pembayaran->transaksi->kode ?? 'N/A',
+                        'Kode Pelanggan' => 'PL' . str_pad($pembayaran->transaksi?->pelanggan?->id, 6, '0', STR_PAD_LEFT),
+                        'Nama Pelanggan' => $pembayaran->transaksi?->pelanggan?->nama ?? 'N/A',
+                        'Status Transaksi' => $pembayaran->transaksi?->lunas ? 'Lunas' : 'Belum lunas',
+                        'Besar Omset' => $pembayaran->nominal,
+                        'Operator' => $pembayaran?->kasir?->name,
+                        'is_daily_total' => false,
+                    ];
+                    $dailyTotal += $pembayaran->nominal;
+                }
+
+                // Add daily total row
+                $data[] = [
+                    'Tanggal' => '',
+                    'Kode Transaksi' => '',
+                    'Kode Pelanggan' => '',
+                    'Nama Pelanggan' => 'Total omset per ' . date('d-M-Y', strtotime($date)),
+                    'Status Transaksi' => '',
+                    'Besar Omset' => $dailyTotal,
+                    'Operator' => '',
+                    'is_daily_total' => true,
                 ];
-            })->toArray();
+            }
 
             $filename = 'laporan_omset_' . date('Y-m-d_H-i-s') . '.xlsx';
 
@@ -701,18 +727,43 @@ class LaporanController extends Controller
 
                 $selectedOutlet = $request->outlet;
 
-                $data = $transaksis->map(function ($transaksi) {
-                    return [
-                        'Tanggal' => $transaksi->created_at->format('d-m-Y'),
-                        'Kode Transaksi' => $transaksi->kode,
-                        'Kode Pelanggan' => 'PL' . str_pad($transaksi->pelanggan?->id, 6, '0', STR_PAD_LEFT),
-                        'Nama Pelanggan' => $transaksi->pelanggan?->nama,
-                        'Status Transaksi' => $transaksi->lunas ? 'Lunas' : 'Belum lunas',
-                        // 'Besar Omset' => number_format($transaksi->grand_total, 0, ',', '.'),
-                        'Besar Omset' => $transaksi->grand_total,
-                        'Operator' => $transaksi->kasir?->name,
+                // Group transaksi by date to calculate daily totals
+                $groupedTransaksi = $transaksis->groupBy(function ($item) {
+                    return $item->created_at->format('d-m-Y');
+                });
+
+                $data = [];
+
+                foreach ($groupedTransaksi as $date => $dayTransaksi) {
+                    $dailyTotal = 0;
+
+                    // Add individual transactions for this day
+                    foreach ($dayTransaksi as $transaksi) {
+                        $data[] = [
+                            'Tanggal' => $transaksi->created_at->format('d-m-Y'),
+                            'Kode Transaksi' => $transaksi->kode,
+                            'Kode Pelanggan' => 'PL' . str_pad($transaksi->pelanggan?->id, 6, '0', STR_PAD_LEFT),
+                            'Nama Pelanggan' => $transaksi->pelanggan?->nama,
+                            'Status Transaksi' => $transaksi->lunas ? 'Lunas' : 'Belum lunas',
+                            'Besar Omset' => $transaksi->grand_total,
+                            'Operator' => $transaksi->kasir?->name,
+                            'is_daily_total' => false,
+                        ];
+                        $dailyTotal += $transaksi->grand_total;
+                    }
+
+                    // Add daily total row
+                    $data[] = [
+                        'Tanggal' => '',
+                        'Kode Transaksi' => '',
+                        'Kode Pelanggan' => '',
+                        'Nama Pelanggan' => 'Total omset per ' . date('d-M-Y', strtotime($date)),
+                        'Status Transaksi' => '',
+                        'Besar Omset' => $dailyTotal,
+                        'Operator' => '',
+                        'is_daily_total' => true,
                     ];
-                })->toArray();
+                }
 
                 $filename = 'laporan_omset_' . date('Y-m-d_H-i-s') . '.xlsx';
 

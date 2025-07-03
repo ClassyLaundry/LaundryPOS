@@ -21,12 +21,7 @@
         <tbody>
             @foreach ($transaksis as $transaksi)
             <tr id={{ $transaksi->id }}>
-                <td class='text-center'>
-                    {{ $transaksi->kode }}
-                    @if($transaksi->status === 'rewash')
-                        <span class="badge bg-danger">Sedang di rewash</span>
-                    @endif
-                </td>
+                <td class='text-center'>{{ $transaksi->kode }}</td>
                 <td class='text-center'>{{ $transaksi->pelanggan->nama }}</td>
                 <td class='text-center'>
                     @if ($transaksi->express)

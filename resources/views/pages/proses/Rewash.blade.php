@@ -52,20 +52,12 @@
                             </table>
                         </div>
                         <ul class="list-unstyled form-control" id="list-action">
-                            @if($rewash->item_transaksi->transaksi->is_done_cuci === 1 && $rewash->item_transaksi->transaksi->is_done_setrika === 1)
-                                @if(in_array("Menyatakan Selesai Proses Rewash", Session::get('permissions')) || Session::get('role') == 'administrator')
-                                <li id="action-finish">Rewash Selesai</li>
-                                @endif
-                            @else
-                                <li onclick="alert('Pastikan proses cuci, setrika, dan packing selesai')">Rewash Selesai</li>
+                            @if(in_array("Menyatakan Selesai Proses Rewash", Session::get('permissions')) || Session::get('role') == 'administrator')
+                            <li id="action-finish">Rewash Selesai</li>
                             @endif
                             <li id="action-receipt">Tanda Terima</li>
-                            @if($rewash->item_transaksi->transaksi->is_done_cuci === 1 || $rewash->item_transaksi->transaksi->is_done_setrika === 1)
-                            <li onclick="alert('Tidak bisa dilakukan karena proses rewash telah berjalan')">Hapus data</li>
-                            @else
-                                @if(in_array("Menghapus Data Proses Rewash", Session::get('permissions')) || Session::get('role') == 'administrator')
-                                <li id="action-delete">Hapus data</li>
-                                @endif
+                            @if(in_array("Menghapus Data Proses Rewash", Session::get('permissions')) || Session::get('role') == 'administrator')
+                            <li id="action-delete">Hapus data</li>
                             @endif
                         </ul>
                         @if(in_array("Menambah Data Proses Rewash", Session::get('permissions')) || Session::get('role') == 'administrator')
